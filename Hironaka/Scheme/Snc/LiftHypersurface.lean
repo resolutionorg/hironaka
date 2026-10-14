@@ -224,7 +224,7 @@ theorem hasSncWith_append_of_comap_of_isClosedImmersion (g : Y ⟶ X) [IsClosedI
     intro i e he
     have hex : ∃ e' : {e : (E.comap g).ι // y ∈ ((E.comap g).component e).support},
         i.1 = toLex (Sum.inl (e'.1 : E.ι)) := ⟨e, he⟩
-    simp only [cidx, dif_pos hex]
+    simp only [cidx, dite_eq_left hex]
     congr 1
     apply congrArg c'
     apply Subtype.ext
@@ -239,7 +239,7 @@ theorem hasSncWith_append_of_comap_of_isClosedImmersion (g : Y ⟶ X) [IsClosedI
       rintro ⟨e, he⟩
       rw [hi] at he
       exact Sum.inr_ne_inl (toLex.injective he)
-    simp only [cidx, dif_neg hnex]
+    simp only [cidx, dite_eq_right hnex]
   refine ⟨n' + 1, z, ⟨⟨hzspan, hzdim⟩, cidx, ?_, ?_⟩, ?_⟩
   · -- injectivity of the index map
     intro i i' hii'

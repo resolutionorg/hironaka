@@ -47,7 +47,7 @@ theorem subset_range_sigmaDesc_of_subset_iUnion {X : Scheme.{u}} {ι : Type u} (
     S ⊆ Set.range (Sigma.desc g).base :=
   h.trans (Set.iUnion_subset fun i => by
     rintro _ ⟨y, rfl⟩
-    exact ⟨(Sigma.ι W i).base y, by rw [← Sigma.ι_desc g i]; rfl⟩)
+    exact ⟨(Sigma.ι W i).base y, by rw [← Sigma.ι_comp_desc g i]; rfl⟩)
 
 /-- A pair of étale morphisms `ψ, ψ' : U ⟶ X` whose images both contain the set `S` (in the
 application, the cosupport of a marked ideal): the "étale surjections `ψ, ψ' : U ⇉ X`" of

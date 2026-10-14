@@ -334,12 +334,12 @@ theorem ord_specIdealSheaf_span_singleton_X (i : Fin n) (a : Fin n → K) :
       exact Ideal.derivation_apply_mem_derivative (pderiv i) (Ideal.mem_span_singleton_self _)
     exact (ratPoint a).isPrime.ne_top ((Ideal.eq_top_iff_one _).mpr (h hone))
   by_cases ha : a i = 0
-  · rw [if_pos ha]
+  · rw [ite_eq_left ha]
     refine le_antisymm ?_ (h1.mpr ha)
     rw [← not_lt]
     intro hlt
     exact h2 (by rw [← one_add_one_eq_two]; exact (ENat.add_one_le_iff ENat.one_ne_top).mpr hlt)
-  · rw [if_neg ha]
+  · rw [ite_eq_right ha]
     exact Order.lt_one_iff.mp (not_le.mp fun h => ha (h1.mp h))
 
 open scoped Classical in

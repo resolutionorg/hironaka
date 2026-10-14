@@ -156,7 +156,7 @@ noncomputable def ambientIdeal (x : Kn.{u} K n) :
 theorem ambientIdeal_of_mem {x : Kn.{u} K n} (h : x ∈ G) :
     ambientIdeal K n G f x =
       Ideal.span (Set.range fun i => (affine K n).toLocallyRingedSpace.presheaf.germ G x h (f i)) :=
-  dif_pos h
+  dite_eq_left h
 
 /-- The stalk map of `(G, 𝒜_G) ⟶ (Kⁿ, 𝒜)` carries the ambient germ of `g` to the germ of `g` as a
 global section of `𝒜_G`. -/

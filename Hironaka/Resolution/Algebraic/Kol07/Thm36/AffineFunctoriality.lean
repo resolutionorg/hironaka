@@ -97,7 +97,7 @@ theorem BRAffine_eq_eraseEmpty_pullback_of_charts {ι : Type u} [Finite ι] [Non
     ⟨Sigma.desc (fun i => (c i).e) ≫ (Y ↘ Spec (CommRingCat.of k))⟩
   have hoverE : HomIsOver (Sigma.desc fun i => (c i).e) (Spec (CommRingCat.of k)) := ⟨rfl⟩
   have hdesc : (Sigma.desc fun i => (c i).e ≫ h) = Sigma.desc (fun i => (c i).e) ≫ h :=
-    Sigma.hom_ext _ _ fun i => by rw [Sigma.ι_desc, Sigma.ι_desc_assoc]
+    Sigma.hom_ext _ _ fun i => by rw [Sigma.ι_comp_desc, Sigma.ι_comp_desc_assoc]
   have hoverEh : HomIsOver (Sigma.desc fun i => (c i).e ≫ h) (Spec (CommRingCat.of k)) := by
     constructor
     rw [hdesc, Category.assoc, HomIsOver.comp_over (f := h) (S := Spec (CommRingCat.of k))]
@@ -110,7 +110,7 @@ theorem BRAffine_eq_eraseEmpty_pullback_of_charts {ι : Type u} [Finite ι] [Non
   have hZ : (∐ fun i => (c i).W).IsReducedEquidimensional k :=
     .sigma _ (fun i => (c i).e) (fun i => by
       change Sigma.ι _ i ≫ Sigma.desc (fun i => (c i).e) ≫ (Y ↘ Spec (CommRingCat.of k)) = _
-      rw [← Category.assoc, Sigma.ι_desc]) hY
+      rw [← Category.assoc, Sigma.ι_comp_desc]) hY
   have hZqc : QuasiCompact ((∐ fun i => (c i).W) ↘ Spec (CommRingCat.of k)) := by
     have := isAffineHom_of_isAffine ((∐ fun i => (c i).W) ↘ Spec (CommRingCat.of k))
     infer_instance
@@ -152,7 +152,7 @@ theorem BRAffine_eq_eraseEmpty_pullback_of_charts {ι : Type u} [Finite ι] [Non
   have key := hbY.symm.trans hbX
   refine eq_of_pullback_of_covers _ _ (fun i => (c i).e) hcov fun i => ?_
   have hi : (c i).e = Sigma.ι (fun i => (c i).W) i ≫ Sigma.desc (fun i => (c i).e) :=
-    (Sigma.ι_desc (fun i => (c i).e) i).symm
+    (Sigma.ι_comp_desc (fun i => (c i).e) i).symm
   rw [hi, pullback_comp, pullback_comp, key]
 
 /-- Commutation of `BRAffine` with a smooth `h` of relative dimension `d` between affine reduced

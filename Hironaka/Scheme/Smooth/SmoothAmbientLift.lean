@@ -6,6 +6,8 @@ Authors: Chris Elliott (Resolution): formalization performed by Claude Fable 5.1
 module
 
 public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import Hironaka.Algebra.Smooth.StandardSmoothLift
 import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
 

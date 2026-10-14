@@ -291,7 +291,7 @@ theorem isMulBoundaryMonomial_globalStrictTransform :
     if h : (ofLex p).1 ≤ m then α (D.iter h (ofLex p).2) else 0 with hα'
   have hα'g : ∀ j, α' (g j) = α j := fun j => by
     change (if h : (D.birth m j).1 ≤ m then α (D.iter h (D.birth m j).2) else 0) = α j
-    rw [dif_pos (D.birth_le m j)]
+    rw [dite_eq_left (D.birth_le m j)]
     exact congrArg α (D.iter_birth m j)
   refine ⟨s.image g, α', fun p hp => ?_, ?_⟩
   · obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hp

@@ -216,11 +216,11 @@ theorem eval_homogeneousPoly (f : MvPowerSeries (Fin m) K) (n : ℕ) (x : Fin m 
   rfl
 
 theorem coeff_homogeneousPoly (f : MvPowerSeries (Fin m) K) {n : ℕ} {ν : Fin m →₀ ℕ}
-    (hν : ν.degree = n) : MvPolynomial.coeff ν (homogeneousPoly f n) = coeff ν f := by
+    (hν : ν.degree = n) : (homogeneousPoly f n).coeff ν = coeff ν f := by
   classical
   rw [homogeneousPoly, MvPolynomial.coeff_sum]
   simp only [MvPolynomial.coeff_monomial]
-  rw [Finset.sum_ite_eq' (degreeSet m n) ν, if_pos (mem_degreeSet.mpr hν)]
+  rw [Finset.sum_ite_eq' (degreeSet m n) ν, ite_eq_left (mem_degreeSet.mpr hν)]
 
 /-- Uniqueness of coefficients: two convergent series whose functions agree on a neighbourhood of
 `0` are equal. -/
@@ -244,7 +244,7 @@ theorem eq_of_evalSeries_eventuallyEq {f g : MvPowerSeries (Fin m) K} (hf : f �
     rw [nsmul_eq_mul] at e1 e2
     rw [e1, e2, hd]
   ext ν
-  have := congrArg (MvPolynomial.coeff ν) (hparts ν.degree)
+  have := congrArg (AddMonoidAlgebra.coeff · ν) (hparts ν.degree)
   rwa [coeff_homogeneousPoly f rfl, coeff_homogeneousPoly g rfl] at this
 
 end Analytic

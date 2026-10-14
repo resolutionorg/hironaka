@@ -372,13 +372,13 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.restrict_maximalContact_of
     intro x hx k
     rw [extendSection_of_mem 𝕜 E _ hx]
     by_cases hk : k = σ i₀
-    · rw [if_pos hk]
+    · rw [ite_eq_left hk]
       change (f k) ⟨x, hx⟩ = _
-      simp only [f, if_pos hk]
+      simp only [f, ite_eq_left hk]
       rfl
-    · rw [if_neg hk]
+    · rw [ite_eq_right hk]
       change (f k) ⟨x, hx⟩ = _
-      simp only [f, if_neg hk]
+      simp only [f, ite_eq_right hk]
       change ψ (φ x) k + -ψ (φ y) k = _
       ring
   have hf0 : ∀ k, f k ⟨y, hyU₀⟩ = 0 := by
@@ -395,11 +395,11 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.restrict_maximalContact_of
       else coord E ψ φ hφ1 hyφ k + const 𝕜 E M y (-ψ (φ y) k) := by
     intro k
     by_cases hk : k = σ i₀
-    · rw [if_pos hk]
-      simp only [f, if_pos hk]
+    · rw [ite_eq_left hk]
+      simp only [f, ite_eq_left hk]
       exact (structureSheaf 𝕜 E M).presheaf.germ_res_apply _ y hyU₀ _
-    · rw [if_neg hk]
-      simp only [f, if_neg hk]
+    · rw [ite_eq_right hk]
+      simp only [f, ite_eq_right hk]
       rw [map_add, (structureSheaf 𝕜 E M).presheaf.germ_res_apply _ y hyU₀,
         (structureSheaf 𝕜 E M).presheaf.germ_res_apply _ y hyU₀]
       rfl
@@ -414,9 +414,9 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.restrict_maximalContact_of
       rw [hgerm k]
       by_cases hk : k = σ i₀
       · subst hk
-        rw [if_pos rfl, Function.update_self]
-      · rw [if_neg hk, Function.update_of_ne hk, map_add, linearPart_const, add_zero,
-          linearPart_coord_eq_single, if_neg (fun h => hk h.1), add_zero]
+        rw [ite_eq_left rfl, Function.update_self]
+      · rw [ite_eq_right hk, Function.update_of_ne hk, map_add, linearPart_const, add_zero,
+          linearPart_coord_eq_single, ite_eq_right (fun h => hk h.1), add_zero]
     rw [h1]
     exact linearIndependent_update_tilt (σ i₀) (σ i₀) _ (hv ▸ hi₀) (fun h => absurd rfl h)
   -- the chart `e` with the coordinates `f` (`exists_chart_of_linearIndependent_linearPart`)
@@ -428,13 +428,13 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.restrict_maximalContact_of
   have hE1 : ∀ (j : {j // y ∈ F.hyp j}), ∀ x ∈ e.source,
       x ∈ F.hyp j.1 ↔ ψ (e x) (σe (cidx j)) = 0 := by
     intro j x hx
-    rw [← hecoord x hx, hfval x (hesub hx), if_neg (hne j i₀),
+    rw [← hecoord x hx, hfval x (hesub hx), ite_eq_right (hne j i₀),
       (hφ.2.2.1 j y hyφ).mp j.2, sub_zero]
     exact hφ.2.2.1 j x (heφ x hx)
   -- (E2) `H` is the coordinate hyperplane `σe (σ i₀)` of `e`
   have hE2 : ∀ x ∈ e.source, x ∈ H ↔ ψ (e x) (σe (σ i₀)) = 0 := by
     intro x hx
-    rw [← hecoord x hx, hfval x (hesub hx), if_pos rfl, hφH.2 x (heH x hx)]
+    rw [← hecoord x hx, hfval x (hesub hx), ite_eq_left rfl, hφH.2 x (heH x hx)]
     exact ⟨fun h => h 0, fun h i => by rw [Subsingleton.elim i 0]; exact h⟩
   -- (E3) the coordinate germs of `e`: `σe (σ i)`, `i ≠ i₀`, is `z_{σ i}`; `σe (σ i₀)` is `u`
   have hE3 : ∀ x (hx : x ∈ e.source) i, i ≠ i₀ →
@@ -442,13 +442,13 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.restrict_maximalContact_of
     intro x hx i hi
     refine coord_eq_coord_of_eventuallyEq E he hx hφ1 (heφ x hx) ?_
     filter_upwards [e.open_source.mem_nhds hx] with z hz
-    rw [← hecoord z hz, hfval z (hesub hz), if_neg (σ.injective.ne hi), hz0 i, sub_zero]
+    rw [← hecoord z hz, hfval z (hesub hz), ite_eq_right (σ.injective.ne hi), hz0 i, sub_zero]
   have hE4 : ∀ x (hx : x ∈ e.source),
       coord E ψ e he hx (σe (σ i₀)) = coord E ψ φH hφH1 (heH x hx) (τ 0) := by
     intro x hx
     refine coord_eq_coord_of_eventuallyEq E he hx hφH1 (heH x hx) ?_
     filter_upwards [e.open_source.mem_nhds hx] with z hz
-    rw [← hecoord z hz, hfval z (hesub hz), if_pos rfl]
+    rw [← hecoord z hz, hfval z (hesub hz), ite_eq_left rfl]
   -- (E5) `J` on the source of `e` is spanned by the coordinates `σe (σ i)`
   have hE5 : ∀ x (hx : x ∈ e.source),
       J.stalkIdeal x = Ideal.span (Set.range fun i => coord E ψ e he hx (σe (σ i))) := by
@@ -700,9 +700,9 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.of_restrict_maximalContact
     exact (complEquiv τ).apply_symm_apply m
   let f : Fin n → (structureSheaf 𝕜 E M).presheaf.obj (op U₀) := fun k =>
     if hk : k ∈ Set.range τ then usec else wsec (complEquiv τ ⟨k, hk⟩)
-  have hfτ : f (τ 0) = usec := dif_pos (Set.mem_range_self 0)
+  have hfτ : f (τ 0) = usec := dite_eq_left (Set.mem_range_self 0)
   have hfkk : ∀ m, f (kk m) = wsec m := fun m => by
-    rw [show f (kk m) = wsec (complEquiv τ ⟨kk m, hkkτ m⟩) from dif_neg (hkkτ m), hmkk m]
+    rw [show f (kk m) = wsec (complEquiv τ ⟨kk m, hkkτ m⟩) from dite_eq_right (hkkτ m), hmkk m]
   -- the values of the sections
   have husec : ∀ x (hx : x ∈ U₀), extendSection 𝕜 E usec x = ψ (φa x) (τ 0) := fun x hx => by
     rw [extendSection_of_mem 𝕜 E _ hx]
@@ -720,7 +720,7 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.of_restrict_maximalContact
       rw [extendSection_of_mem 𝕜 E _ hyU₀] at this
       rw [this]
       exact hu0
-    · simp only [f, dif_neg hk]
+    · simp only [f, dite_eq_right hk]
       have := hwsec (complEquiv τ ⟨k, hk⟩) y hyU₀
       rw [extendSection_of_mem 𝕜 E _ hyU₀] at this
       rw [this, hry, sub_self]
@@ -791,7 +791,7 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.of_restrict_maximalContact
     · have h0 : projCompl τ (Pi.single i (1 : 𝕜)) = 0 := by
         funext k
         simp only [projCompl, Pi.zero_apply, Pi.single_apply]
-        rw [if_neg]
+        rw [ite_eq_right]
         rintro rfl
         exact ((complEquiv τ).symm k).2 hi
       rw [h0, map_zero]
@@ -811,7 +811,7 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.of_restrict_maximalContact
           rw [Equiv.symm_apply_apply]
       rw [h1]
       change _ = embedCompl τ (Lχ m) i
-      simp only [embedCompl, dif_neg hi, hLχ]
+      simp only [embedCompl, dite_eq_right hi, hLχ]
       -- `χ` carries `hH.chartedSpace`, the coordinate germ of `φH` the bundled manifold's instance:
       -- defeq at default transparency only, hence `erw`
       erw [linearPart_apply, ← eval_coordDerivStalk, eval_coordDerivStalk_germ]
@@ -894,7 +894,7 @@ theorem HypersurfaceFamily.IsSmoothTransversalIdealAt.of_restrict_maximalContact
     rw [hG2 x hx, hp₀j, sub_zero, ← hrxj]
     change x ∈ F.hyp j.1 ↔ (r x : M) ∈ F.hyp j.1
     rw [hca.2.2.1 j x (hU₀φ x hxU), hca.2.2.1 j (r x) (hrφ x hxD), hrcoord x hxD]
-    simp only [embedCompl, dif_neg (hcaτ j), projCompl, Equiv.symm_apply_apply]
+    simp only [embedCompl, dite_eq_right (hcaτ j), projCompl, Equiv.symm_apply_apply]
   have hcidx_inj : Function.Injective fun j : {j // y ∈ F.hyp j} =>
       σe (kk (cidx' ⟨j.1, j.2⟩)) := by
     intro j j' h

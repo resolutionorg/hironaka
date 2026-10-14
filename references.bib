@@ -1,26 +1,27 @@
 % The sources of the library: its one bibliography.
 %
-% The key of an entry is the key by which everything cites the source: the attribute
-% `source KEY "locator" "page"` on a declaration, the docstrings and comments ([Hir64, Main
-% Theorem I], [Wlo05, §4.6]), the blueprint and the Markdown files. Item numbers in citations
+% The key of an entry is the key by which everything cites the source: the docstrings and
+% comments ([Hir64, Main Theorem I], [Wlo05, §4.6]), among them the paragraphs
+% `Source statement: [KEY, locator, page]` of the theorems that formalize an item of a source, the
+% blueprint and the Markdown files. Item numbers in citations
 % ([Kol07, Theorem 68]) are the source's own. 
 %
 % What reads this file:
-% - HironakaReferences.lean registers every entry for the source attribute when it is
-%   compiled (Lake rebuilds it when this file changes; see lakefile.toml). The attribute links a
-%   citation to the url field of the entry, or else to the address of its doi.
+% - scripts/sync_formalization.lean checks that each `Source statement:` paragraph cites a key of
+%   this file, and writes the key as the authors' last names and the year ("Hironaka 1964") in the
+%   alignment table of formalization.yaml.
+% - blueprint/Blueprint/References.lean registers every entry for the blueprint's citations
+%   ({cite Hir64}[Main Theorem I] in the chapters, [Hir64, Main Theorem I] in the annotation items
+%   taken from docstrings) and its bibliography, which lists the entries the blueprint cites.
 % - scripts/check_references.py checks that a source is listed here exactly when some file of the
-%   package cites it, and writes the Sources list of the blueprint (blueprint/Blueprint/
-%   Conventions.lean) from the entries that the blueprint cites (--write).
+%   package cites it.
 % - scripts/check_formalization_yaml.py compares the sources of formalization.yaml with the
-%   entries of the same title (and their authors), and lets its alignment table write a key as
-%   the authors' last names and the year ("Hironaka 1964").
+%   entries of the same title (and their authors).
 % - scripts/build_docs.py gives this file to doc-gen4 for the bibliography of the API
 %   documentation (doc-gen4 reads only ASCII keys, so the script stands in for the others).
 %
 % To add a source: add its entry here and cite it (the check fails on an entry that nothing
-% cites); if the blueprint cites it, python3 scripts/check_references.py --write adds it to the
-% blueprint's list. To drop a source, delete its entry with its last citation.
+% cites). To drop a source, delete its entry with its last citation.
 %
 % The file is written in the part of BibTeX that all of these read: an entry is
 % `type{key, field = {value}, ...}` after the at sign, a value is in braces or is a bare number,
@@ -42,7 +43,7 @@
 }
 
 % Kol07: the text consulted is the arXiv version of Chapter 3, and item numbers follow it; the url
-% field makes the source attribute link to that version.
+% field points to that version.
 @Book{Kol07,
   author = {Kollár, János},
   title = {Lectures on Resolution of Singularities},
@@ -90,7 +91,7 @@
 }
 
 % BM97: only Chapter I, the arXiv text, was consulted, and item numbers follow it; the url field
-% makes the source attribute link to it.
+% points to it.
 @Article{BM97,
   author = {Bierstone, Edward and Milman, Pierre D.},
   title = {Canonical desingularization in characteristic zero by blowing up the maximum strata of a local invariant},

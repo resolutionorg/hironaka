@@ -250,8 +250,8 @@ theorem agreeOnSubspace_blowUpLift {U : AnalyticManifold.{u} 𝕜 E} (f g : Anal
       have hAa' : ∀ k, A (σ k) = A (σ i) * a' k := fun k => by
         by_cases hk : k = i
         · subst hk
-          simp only [a', if_true, mul_one]
-        · simp only [a', if_neg hk]
+          simp only [a', ite_true, mul_one]
+        · simp only [a', ite_eq_right hk]
           rw [hak k hk, hai]
       have hee : e = e * (At i * ∑ k, r k * a' k) := by
         calc e = ∑ k, r k * A (σ k) := hr.symm

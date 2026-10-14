@@ -76,12 +76,12 @@ noncomputable def chartYOf (i : Fin n) : Localization.Away d :=
 noncomputable abbrev chartY : Fin n → Localization.Away (x r) := chartYOf x r (x r)
 
 theorem chartYOf_of_lt {i : Fin n} (h : i < r) :
-    chartYOf x r d i = Localization.mk (x i) ⟨d, Submonoid.mem_powers d⟩ := if_pos h
+    chartYOf x r d i = Localization.mk (x i) ⟨d, Submonoid.mem_powers d⟩ := ite_eq_left h
 
 theorem chartYOf_of_not_lt {i : Fin n} (h : ¬ i < r) : chartYOf x r d i = algebraMap R _ (x i) :=
-  if_neg h
+  ite_eq_right h
 
-theorem chartYOf_self : chartYOf x r d r = algebraMap R _ (x r) := if_neg (lt_irrefl r)
+theorem chartYOf_self : chartYOf x r d r = algebraMap R _ (x r) := ite_eq_right (lt_irrefl r)
 
 /-- With a general denominator `d`: the subalgebra `R[xᵢ/d : i < r]` of `R[1/d]`. -/
 noncomputable def chartRingOf : Subalgebra R (Localization.Away d) :=
@@ -169,7 +169,7 @@ of the chart to the point `a` (the proof of [Kol07, Lemma 61]): `x'ᵢ = xᵢ �
 noncomputable def shiftCoords (a : Fin n → R) : Fin n → R :=
   fun i => if i < r then x i - a i * x r else x i
 
-theorem shiftCoords_self (a : Fin n → R) : shiftCoords x r a r = x r := if_neg (lt_irrefl r)
+theorem shiftCoords_self (a : Fin n → R) : shiftCoords x r a r = x r := ite_eq_right (lt_irrefl r)
 
 /-- The other `K`-rational points of the exceptional fibre,
 `𝔪'_a = ⟨yᵢ − ãᵢ (i < r), x_r, x_{r+1}, …, xₙ⟩ R'`, the points the linear change of coordinates
@@ -224,14 +224,14 @@ noncomputable def chartDeriv (j : Fin n) :
 
 theorem chartDeriv_of_lt {j : Fin n} (h : j < r) :
     c.chartDeriv r j = algebraMap R (Localization.Away (c.x r)) (c.x r) • c.awayPderiv r j :=
-  if_pos h
+  ite_eq_left h
 
 theorem chartDeriv_self :
     c.chartDeriv r r = c.awayPderiv r r +
       ∑ i ∈ Finset.univ.filter (fun i : Fin n => i < r), chartY c.x r i • c.awayPderiv r i := by
-  rw [chartDeriv, if_neg (lt_irrefl r), if_pos rfl]
+  rw [chartDeriv, ite_eq_right (lt_irrefl r), ite_eq_left rfl]
 
 theorem chartDeriv_of_gt {j : Fin n} (h : r < j) : c.chartDeriv r j = c.awayPderiv r j := by
-  rw [chartDeriv, if_neg (not_lt.mpr h.le), if_neg h.ne']
+  rw [chartDeriv, ite_eq_right (not_lt.mpr h.le), ite_eq_right h.ne']
 
 end IsLocalRing.RegularCoords

@@ -153,9 +153,9 @@ theorem coeff_subst_chartSubst (f : MvPowerSeries (Fin n) K) (α : Fin n →₀ 
     coeff (chartExp r α) (subst (chartSubst r) f) = coeff α f := by
   classical
   rw [coeff_subst (hasSubst_chartSubst r), finsum_eq_single _ α]
-  · rw [chartSubst_prod, coeff_monomial, if_pos rfl, smul_eq_mul, mul_one]
+  · rw [chartSubst_prod, coeff_monomial, ite_eq_left rfl, smul_eq_mul, mul_one]
   · intro d hd
-    rw [chartSubst_prod, coeff_monomial, if_neg (fun h => hd (chartExp_injective r h).symm),
+    rw [chartSubst_prod, coeff_monomial, ite_eq_right (fun h => hd (chartExp_injective r h).symm),
       smul_zero]
 
 /-- Every monomial of `φ̂ f` is `y^{σ(d)}` for a monomial `x^d` of `f`. -/
@@ -167,7 +167,7 @@ theorem coeff_subst_chartSubst_eq_zero {f : MvPowerSeries (Fin n) K} {β : Fin n
   refine finsum_eq_zero_of_forall_eq_zero fun d => ?_
   by_cases hd : coeff d f = 0
   · rw [hd, zero_smul]
-  · rw [chartSubst_prod, coeff_monomial, if_neg (fun h => hβ d hd h.symm), smul_zero]
+  · rw [chartSubst_prod, coeff_monomial, ite_eq_right (fun h => hβ d hd h.symm), smul_zero]
 
 /-- If every monomial of `f` has `x₀..x_r`-degree `≥ m` (`f ∈ P̂ᵐ`), then every monomial of `φ̂ f`
 has `y_r`-exponent `≥ m`. -/

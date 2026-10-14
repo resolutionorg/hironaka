@@ -133,7 +133,7 @@ theorem exists_smoothDivisor_of_ordElem_eq_one (J : IdealSheaf (structureSheaf �
     refine ⟨?_, σ 0, ?_⟩
     · rw [eval_coord, ← hcoord y hy, ← hext y hy]
       exact hy0
-    · rw [coordDerivStalk_coord_eq_ite he hy, if_pos rfl, map_one]
+    · rw [coordDerivStalk_coord_eq_ite he hy, ite_eq_left rfl, map_one]
       exact one_ne_zero
 
 variable [FiniteDimensional 𝕜 E] (I : IdealSheaf (structureSheaf 𝕜 E M))

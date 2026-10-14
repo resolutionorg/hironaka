@@ -27,8 +27,7 @@ it, which elaboration unfolds. The script checks that
 * every module of `Hironaka` named `Defs` declares some of the statement vocabulary, so that the
   name means the same thing throughout the library;
 * the Challenge files (`Challenge.lean` and every file under `Challenge/`) import only modules
-  named `Defs` from `Hironaka` (besides them they import `SourceAttr` and `HironakaReferences`,
-  for the `@[source]` tags, and Mathlib).
+  named `Defs` from `Hironaka` (besides them they import only Mathlib).
 
 It prints each violation and exits with a nonzero status if there is one. The walk that computes the
 statement vocabulary is repeated in `scripts/check_blueprint.lean` and

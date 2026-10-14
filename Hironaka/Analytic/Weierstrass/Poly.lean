@@ -63,11 +63,11 @@ theorem coeff_cons_liftTail_mul_X_pow (a : MvPowerSeries (Fin m) K) (n k : ℕ) 
   have hle : (Finsupp.single (0 : Fin (m + 1)) n ≤ Finsupp.cons k x) ↔ n ≤ k := by
     rw [Finsupp.single_le_iff, Finsupp.cons_zero]
   by_cases h : n ≤ k
-  · rw [if_pos (hle.mpr h), cons_sub_single_zero, coeff_cons_liftTail, mul_one]
+  · rw [ite_eq_left (hle.mpr h), cons_sub_single_zero, coeff_cons_liftTail, mul_one]
     by_cases hk : k = n
-    · rw [if_pos hk, if_pos (by omega)]
-    · rw [if_neg hk, if_neg (by omega)]
-  · rw [if_neg (fun h' => h (hle.mp h')), if_neg (by omega)]
+    · rw [ite_eq_left hk, ite_eq_left (by omega)]
+    · rw [ite_eq_right hk, ite_eq_right (by omega)]
+  · rw [ite_eq_right (fun h' => h (hle.mp h')), ite_eq_right (by omega)]
 
 theorem coeff_cons_X_pow (d k : ℕ) (x : Fin m →₀ ℕ) :
     coeff (Finsupp.cons k x) (X 0 ^ d : MvPowerSeries (Fin (m + 1)) K) =
@@ -75,8 +75,8 @@ theorem coeff_cons_X_pow (d k : ℕ) (x : Fin m →₀ ℕ) :
   classical
   rw [coeff_X_pow, ← cons_zero_eq_single]
   by_cases h : k = d ∧ x = 0
-  · rw [if_pos h, if_pos (cons_eq_cons_iff.mpr h)]
-  · rw [if_neg h, if_neg (fun h' => h (cons_eq_cons_iff.mp h'))]
+  · rw [ite_eq_left h, ite_eq_left (cons_eq_cons_iff.mpr h)]
+  · rw [ite_eq_right h, ite_eq_right (fun h' => h (cons_eq_cons_iff.mp h'))]
 
 /-- The coefficient of `x_0^k x'^x` in a Weierstrass polynomial: the terms have distinct
 `x_0`-degrees, so the coefficient is read off term by term. -/
@@ -95,8 +95,8 @@ theorem coeff_cons_weierstrassPoly (d : ℕ) (c : Fin d → MvPowerSeries (Fin m
 theorem order_weierstrassPoly_le (d : ℕ) (c : Fin d → MvPowerSeries (Fin m) K) :
     (weierstrassPoly d c).order ≤ d := by
   have h : coeff (Finsupp.single 0 d) (weierstrassPoly d c) ≠ 0 := by
-    rw [← cons_zero_eq_single, coeff_cons_weierstrassPoly, if_pos ⟨rfl, rfl⟩,
-      Finset.sum_eq_zero fun j _ => if_neg (by omega), add_zero]
+    rw [← cons_zero_eq_single, coeff_cons_weierstrassPoly, ite_eq_left ⟨rfl, rfl⟩,
+      Finset.sum_eq_zero fun j _ => ite_eq_right (by omega), add_zero]
     exact one_ne_zero
   have := order_le h
   rwa [Finsupp.degree_single] at this
@@ -117,9 +117,9 @@ theorem order_weierstrassPoly_eq_iff (d : ℕ) (c : Fin d → MvPowerSeries (Fin
       have : Finsupp.degree x < (j : ℕ) + 1 := by exact_mod_cast hlt
       omega
     have hcoeff : coeff (Finsupp.cons (d - 1 - j) x) (weierstrassPoly d c) ≠ 0 := by
-      rw [coeff_cons_weierstrassPoly, if_neg (fun h => by have := h.1; omega), zero_add,
-        Finset.sum_eq_single j (fun i _ hi => if_neg fun h => hi (Fin.ext (by omega)))
-          (fun h => absurd (Finset.mem_univ j) h), if_pos rfl]
+      rw [coeff_cons_weierstrassPoly, ite_eq_right (fun h => by have := h.1; omega), zero_add,
+        Finset.sum_eq_single j (fun i _ hi => ite_eq_right fun h => hi (Fin.ext (by omega)))
+          (fun h => absurd (Finset.mem_univ j) h), ite_eq_left rfl]
       exact hx
     apply hcoeff
     apply coeff_of_lt_order
@@ -129,8 +129,8 @@ theorem order_weierstrassPoly_eq_iff (d : ℕ) (c : Fin d → MvPowerSeries (Fin
     refine le_antisymm (order_weierstrassPoly_le d c) (nat_le_order fun μ hμ => ?_)
     have hμ' : μ 0 + Finsupp.degree μ.tail < d := by
       rw [← degree_cons, Finsupp.cons_tail]; exact hμ
-    rw [← Finsupp.cons_tail μ, coeff_cons_weierstrassPoly, if_neg (fun h => by have := h.1; omega),
-      zero_add]
+    rw [← Finsupp.cons_tail μ, coeff_cons_weierstrassPoly,
+      ite_eq_right (fun h => by have := h.1; omega), zero_add]
     refine Finset.sum_eq_zero fun j _ => ?_
     split_ifs with h
     · apply coeff_of_lt_order
@@ -211,13 +211,13 @@ theorem coe_trunc_eq_sum (f : PowerSeries (MvPowerSeries (Fin m) K)) (d : ℕ) :
   rw [Polynomial.coeff_coe, PowerSeries.coeff_trunc, map_sum]
   simp only [PowerSeries.coeff_C_mul_X_pow]
   by_cases hn : n < d
-  · rw [if_pos hn, Finset.sum_eq_single ⟨d - 1 - n, by omega⟩]
-    · rw [if_pos (by change n = d - 1 - (d - 1 - n); omega)]
+  · rw [ite_eq_left hn, Finset.sum_eq_single ⟨d - 1 - n, by omega⟩]
+    · rw [ite_eq_left (by change n = d - 1 - (d - 1 - n); omega)]
       congr 2
       change n = d - 1 - (d - 1 - n)
       omega
     · intro b _ hb
-      rw [if_neg]
+      rw [ite_eq_right]
       intro h
       apply hb
       ext
@@ -225,10 +225,10 @@ theorem coe_trunc_eq_sum (f : PowerSeries (MvPowerSeries (Fin m) K)) (d : ℕ) :
       omega
     · intro h
       exact absurd (Finset.mem_univ _) h
-  · rw [if_neg hn]
+  · rw [ite_eq_right hn]
     symm
     refine Finset.sum_eq_zero fun j _ => ?_
-    rw [if_neg]
+    rw [ite_eq_right]
     omega
 
 /-- `x_0^d - r`, for `r` of `x_0`-degree `< d`, is the Weierstrass polynomial with coefficients

@@ -123,9 +123,9 @@ theorem chartOriginAt_eq_of_sub_mem (a b : Fin n → R) (hab : ∀ i, a i - b i 
     refine Ideal.span_le.mpr ?_
     rintro _ ⟨i, rfl⟩
     by_cases hi : i < r
-    · simp only [if_pos hi]
+    · simp only [ite_eq_left hi]
       have h1 : chartYR x r i - algebraMap R _ (b i) ∈ chartOriginAt x r b :=
-        Ideal.subset_span ⟨i, by simp only [if_pos hi]⟩
+        Ideal.subset_span ⟨i, by simp only [ite_eq_left hi]⟩
       have h2 : algebraMap R (chartRing x r) (a i - b i) ∈ chartOriginAt x r b :=
         hm (Ideal.mem_map_of_mem _ (hab i))
       have : chartYR x r i - algebraMap R (chartRing x r) (a i) =
@@ -133,8 +133,8 @@ theorem chartOriginAt_eq_of_sub_mem (a b : Fin n → R) (hab : ∀ i, a i - b i 
         rw [map_sub]; ring
       rw [this]
       exact Ideal.sub_mem _ h1 h2
-    · simp only [if_neg hi]
-      exact Ideal.subset_span ⟨i, by simp only [if_neg hi]⟩
+    · simp only [ite_eq_right hi]
+      exact Ideal.subset_span ⟨i, by simp only [ite_eq_right hi]⟩
   exact le_antisymm (key a b hab) (key b a fun i => by
     have := (maximalIdeal R).neg_mem (hab i)
     rwa [neg_sub] at this)
@@ -308,11 +308,11 @@ theorem exists_shiftCoords_chartOrigin {j : Fin n} (hj : n - kk ≤ j.val)
   set w : Fin n → (blowUp Z).presheaf.stalk a' := fun i =>
     if i.val < n - kk ∨ i = j then (blowUpπ Z).stalkMap a' (z i) else yy i with hw_def
   have hw : ∀ i : Fin n, i.val < n - kk ∨ i = j → w i = (blowUpπ Z).stalkMap a' (z i) :=
-    fun i hi => if_pos hi
+    fun i hi => ite_eq_left hi
   have hw' : ∀ i : Fin n, n - kk ≤ i.val → i ≠ j →
       (blowUpπ Z).stalkMap a' (z i) = w i * (blowUpπ Z).stalkMap a' (z j) := by
     intro i h1 h2
-    have : w i = yy i := if_neg (by omega)
+    have : w i = yy i := ite_eq_right (by omega)
     rw [this]
     exact hyy i h1
   -- Kollár's indexing, made opaque
@@ -374,7 +374,7 @@ theorem exists_shiftCoords_chartOrigin {j : Fin n} (hj : n - kk ≤ j.val)
         have hgen : chartYR (z ∘ σ.symm) ρ (σ p) -
             algebraMap _ (chartRing (z ∘ σ.symm) ρ) (α (σ p)) ∈ 𝔮 := by
           rw [hα]
-          exact Ideal.subset_span ⟨σ p, by simp only [if_pos hlt]⟩
+          exact Ideal.subset_span ⟨σ p, by simp only [ite_eq_left hlt]⟩
         have hαp : α (σ p) ∈ maximalIdeal (X.presheaf.stalk (blowUpπ Z a')) := by
           rw [← hcomap, Ideal.mem_comap]
           have := 𝔮.sub_mem hmem hgen

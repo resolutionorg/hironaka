@@ -58,13 +58,13 @@ theorem rename_mem_conv (e : Fin d ↪ Fin n) {f : MvPowerSeries (Fin d) K} (hf 
   let ρ' : Fin n → ℝ≥0 := fun j => if h : ∃ i, e i = j then ρ h.choose else 1
   have hρ' : ∀ i, ρ' (e i) = ρ i := fun i => by
     have h : ∃ i', e i' = e i := ⟨i, rfl⟩
-    simp only [ρ', dif_pos h]
+    simp only [ρ', dite_eq_left h]
     rw [e.injective h.choose_spec]
   refine ⟨⟨ρ', fun j => ?_⟩, ?_⟩
   · by_cases h : ∃ i, e i = j
-    · simp only [ρ', dif_pos h]
+    · simp only [ρ', dite_eq_left h]
       exact ρ.pos _
-    · simp only [ρ', dif_neg h]
+    · simp only [ρ', dite_eq_right h]
       exact one_pos
   · change ConvNorm ρ' (rename e f) ≠ ⊤
     rw [convNorm_rename]

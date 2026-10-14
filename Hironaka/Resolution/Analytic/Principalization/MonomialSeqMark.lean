@@ -271,12 +271,12 @@ theorem pullbackIsMonomialAtLast_of_isBoundaryMonomialAt (L : BlowUpSequence ψ�
     congr 1
     · refine (Finset.prod_congr rfl fun j hj => ?_).trans
         (Finset.prod_subset Finset.subset_union_left fun j _ hj => ?_)
-      · rw [if_pos hj]
-      · rw [if_neg hj, pow_zero]
+      · rw [ite_eq_left hj]
+      · rw [ite_eq_right hj, pow_zero]
     · refine (Finset.prod_congr rfl fun j hj => ?_).trans
         (Finset.prod_subset Finset.subset_union_right fun j _ hj => ?_)
-      · rw [if_pos hj]
-      · rw [if_neg hj, pow_zero]
+      · rw [ite_eq_left hj]
+      · rw [ite_eq_right hj, pow_zero]
 
 end AnalyticManifold.BlowUpSequence
 

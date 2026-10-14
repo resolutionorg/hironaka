@@ -43,9 +43,9 @@ variable {𝕜 : Type} [RCLike 𝕜] {n c : ℕ}
 theorem contDiff_embedCompl (σ : Fin c ↪ Fin n) : ContDiff 𝕜 ω (embedCompl (𝕜 := 𝕜) σ) := by
   refine (contDiff_pi (𝕜 := 𝕜)).mpr fun j => ?_
   by_cases h : j ∈ Set.range σ
-  · simp only [embedCompl, dif_pos h]
+  · simp only [embedCompl, dite_eq_left h]
     exact contDiff_const
-  · simp only [embedCompl, dif_neg h]
+  · simp only [embedCompl, dite_eq_right h]
     exact contDiff_apply 𝕜 𝕜 _
 
 /-- The projection `𝕜^n → 𝕜^{n-c}` onto the coordinates outside `σ` is analytic (it is linear). -/

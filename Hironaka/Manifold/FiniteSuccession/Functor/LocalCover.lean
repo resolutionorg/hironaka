@@ -54,7 +54,7 @@ def inclusionInv (x : U) : M → M.restrict U := fun y => if h : y ∈ U then �
 open scoped Classical in
 theorem inclusionInv_of_mem (x : U) {y : M} (hy : y ∈ U) : inclusionInv M U x y = ⟨y, hy⟩ := by
   unfold inclusionInv
-  exact dif_pos hy
+  exact dite_eq_left hy
 
 open scoped Classical in
 theorem val_inclusionInv_of_mem (x : U) {y : M} (hy : y ∈ U) :

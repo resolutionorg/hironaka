@@ -6,7 +6,6 @@ Authors: Chris Elliott (Resolution): formalization performed by Claude Fable 5.1
 import Lean
 import Hironaka
 import HironakaExamples
-import SourceAttrTest
 
 /-!
 # Axiom audit
@@ -31,7 +30,7 @@ open Lean
 namespace CheckAxioms
 
 /-- The libraries. -/
-def libraries : List String := ["Hironaka", "HironakaExamples", "SourceAttrTest"]
+def libraries : List String := ["Hironaka", "HironakaExamples"]
 
 /-- The axioms a constant may depend on. -/
 def allowedAxioms : List Name := [``propext, ``Classical.choice, ``Quot.sound]

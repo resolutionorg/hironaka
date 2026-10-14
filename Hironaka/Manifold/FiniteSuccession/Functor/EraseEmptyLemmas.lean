@@ -79,12 +79,12 @@ theorem eraseEmpty_cons {Y : Set M} {c : ℕ} (hY : IsClosedSubmanifold ψ₀ Y 
 theorem eraseEmpty_cons_of_ne_empty {Y : Set M} {c : ℕ} (hY : IsClosedSubmanifold ψ₀ Y c)
     (rest : BlowUpSequence ψ₀ (blowUp ψ₀ hY)) (hne : Y ≠ ∅) :
     (cons hY rest).eraseEmpty = cons hY rest.eraseEmpty := by
-  rw [eraseEmpty_cons, eraseEmptyCons, dif_neg hne]
+  rw [eraseEmpty_cons, eraseEmptyCons, dite_eq_right hne]
 
 theorem eraseEmpty_cons_of_eq_empty {Y : Set M} {c : ℕ} (hY : IsClosedSubmanifold ψ₀ Y c)
     (rest : BlowUpSequence ψ₀ (blowUp ψ₀ hY)) (hY₀ : Y = ∅) :
     (cons hY rest).eraseEmpty = rest.eraseEmpty.map (emptyBlowUpDiffeomorph hY hY₀) := by
-  rw [eraseEmpty_cons, eraseEmptyCons, dif_pos hY₀]
+  rw [eraseEmpty_cons, eraseEmptyCons, dite_eq_left hY₀]
 
 theorem eraseEmpty_cons_empty {Y : Set M} {c : ℕ} (hY : IsClosedSubmanifold ψ₀ Y c)
     (rest : BlowUpSequence ψ₀ (blowUp ψ₀ hY)) (hY₀ : Y = ∅) :

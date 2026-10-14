@@ -233,13 +233,13 @@ theorem EDFunctor_seq_of_pos [NoetherianSpace X]
     (EDFunctor k).seq X Y =
       BED (⟨.of X, hX, coreIdeal Y, isNonzeroEverywhere_coreIdeal Y, DivisorFamily.empty X,
         isSnc_empty_of_smooth (X ↘ Spec (CommRingCat.of k))⟩ : Triple k) :=
-  dif_pos hX
+  dite_eq_left hX
 
 /-- Off the equidimensional schemes the functor assigns the empty succession. -/
 theorem EDFunctor_seq_of_neg
     (hX : ¬ ∃ n : ℕ, SmoothOfRelativeDimension n (X ↘ Spec (CommRingCat.of k))) :
     (EDFunctor k).seq X Y = BlowUpSequence.nil X :=
-  dif_neg hX
+  dite_eq_right hX
 
 /-- The inputs of the sources: for `Y` reduced and nonzero everywhere on the equidimensional `X`,
 the functor is `BED ⟨X, hX, Y, hY, ∅, _⟩` on the nose. -/

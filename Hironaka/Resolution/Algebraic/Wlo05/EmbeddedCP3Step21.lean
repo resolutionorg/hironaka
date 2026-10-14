@@ -125,7 +125,7 @@ theorem cp3For_step21Seq
   | succ j ih =>
     simp only [step21Seq]
     by_cases hj : j < Fintype.card T.E.ι
-    · rw [dif_pos hj]
+    · rw [dite_eq_left hj]
       refine cp3For_concat _ _ T.I T.E ih ?_
       have h := cp3For_bdData_seq Dom B hDom hB hsm hbc
         (T.induced (step21Seq T hn hmax (fun j => bdData N 1 j Dom B (hDom 1) hB hsm hbc) j).1
@@ -136,7 +136,7 @@ theorem cp3For_step21Seq
           (step21Seq T hn hmax (fun j => bdData N 1 j Dom B (hDom 1) hB hsm hbc) j).2.2 hj) hcp3
       rwa [IsOrderSeq.markedTransformSeq_eq_weakTransformSeq (T.X.left ↘ Spec (.of k)) n'
         (step21Seq T hn hmax (fun j => bdData N 1 j Dom B (hDom 1) hB hsm hbc) j).2.1]
-    · rw [dif_neg hj]
+    · rw [dite_eq_right hj]
       exact ih
 
 end Step2

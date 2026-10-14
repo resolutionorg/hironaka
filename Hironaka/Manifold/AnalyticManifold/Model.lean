@@ -11,9 +11,9 @@ public import Hironaka.Manifold.AnalyticManifold.Defs
 # The model space as an analytic manifold
 
 `AnalyticManifold.of 𝕜 E` bundles the model space `E` itself as an analytic manifold. No statement
-of a main theorem of this release uses it, and `scripts/check_defs.lean` admits in a module named
-`Defs` only what some statement needs, so it is declared here, beside `Defs`, for the proofs that
-use it (the monomialization of `Hironaka/Resolution/Standard/Analytic.lean`).
+of a main theorem uses it, and `scripts/check_defs.lean` admits in a module named `Defs` only what
+some statement needs, so it is declared here, beside `Defs`, for the proofs that use it (the
+monomialization of `Hironaka/Resolution/Standard/Analytic.lean`).
 -/
 
 @[expose] public section

@@ -78,8 +78,8 @@ theorem coordDeriv_coordSection (i j : Fin n) :
   rw [ContinuousLinearEquiv.apply_symm_apply]
   by_cases h : i = j
   · subst h
-    rw [Pi.single_eq_same, if_pos rfl]
-  · rw [Pi.single_eq_of_ne (Ne.symm h), if_neg h]
+    rw [Pi.single_eq_same, ite_eq_left rfl]
+  · rw [Pi.single_eq_of_ne (Ne.symm h), ite_eq_right h]
 
 /-- `∂_i` commutes with restriction to a smaller open `W ⊆ V`: the derivative at `φ(x)` only sees
 the germ of `f ∘ φ⁻¹` at `φ(x)`. -/
@@ -167,7 +167,7 @@ transport. -/
 theorem IsTaylorHom.pderiv
     {T : (structureSheaf 𝕜 E M).presheaf.stalk a →+* MvPowerSeries (Fin n) 𝕜}
     (hT : IsTaylorHom E ψ φ a T) (i : Fin n) (s : (structureSheaf 𝕜 E M).presheaf.stalk a) :
-    T (coordDerivStalk E ψ φ hφ ha i s) = MvPowerSeries.pderiv 𝕜 i (T s) := by
+    T (coordDerivStalk E ψ φ hφ ha i s) = MvPowerSeries.pderiv (R := 𝕜) i (T s) := by
   have h := IsTaylorHom.pderiv' E ψ φ ha hφ hT (isChartTransport_chartTransport E φ ha hφ) i
     (chartTransport E φ ha hφ s)
   rwa [RingEquiv.symm_apply_apply] at h

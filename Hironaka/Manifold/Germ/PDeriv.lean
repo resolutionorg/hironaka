@@ -105,14 +105,14 @@ theorem monomialEval_half_le (ρ : Fin n → ℝ≥0) (μ : Fin n →₀ ℕ) (i
 /-- The formal derivative of a convergent series is convergent:
 `‖∂_{X_i} c‖_{ρ/2} · ρ_i ≤ 2 ‖c‖_ρ`. -/
 theorem pderiv_mem_conv {c : MvPowerSeries (Fin n) 𝕜} (hc : c ∈ Conv 𝕜 n) (i : Fin n) :
-    MvPowerSeries.pderiv 𝕜 i c ∈ Conv 𝕜 n := by
+    MvPowerSeries.pderiv (R := 𝕜) i c ∈ Conv 𝕜 n := by
   obtain ⟨ρ, hρ⟩ := hc
   refine ⟨⟨fun k => ρ k / 2, fun k => by have := ρ.2 k; positivity⟩, fun h => ?_⟩
-  have hle : ConvNorm (fun k => ρ k / 2) (MvPowerSeries.pderiv 𝕜 i c) * (ρ i : ℝ≥0∞) ≤
+  have hle : ConvNorm (fun k => ρ k / 2) (MvPowerSeries.pderiv (R := 𝕜) i c) * (ρ i : ℝ≥0∞) ≤
       2 * ConvNorm ρ c := by
     unfold ConvNorm
     rw [← ENNReal.tsum_mul_right, ← ENNReal.tsum_mul_left]
-    calc ∑' μ : Fin n →₀ ℕ, ‖coeff μ (MvPowerSeries.pderiv 𝕜 i c)‖ₑ *
+    calc ∑' μ : Fin n →₀ ℕ, ‖coeff μ (MvPowerSeries.pderiv (R := 𝕜) i c)‖ₑ *
             (monomialEval (fun k => ρ k / 2) μ : ℝ≥0∞) * (ρ i : ℝ≥0∞)
         ≤ ∑' μ : Fin n →₀ ℕ, 2 * (‖coeff (μ + Finsupp.single i 1) c‖ₑ *
             (monomialEval ρ (μ + Finsupp.single i 1) : ℝ≥0∞)) := by
@@ -135,7 +135,8 @@ theorem pderiv_mem_conv {c : MvPowerSeries (Fin n) 𝕜} (hc : c ∈ Conv 𝕜 n
                   ((monomialEval ρ μ : ℝ≥0∞) * (ρ i : ℝ≥0∞))) := by
                 rw [ENNReal.coe_mul, ENNReal.coe_ofNat]; ring
       _ ≤ ∑' ν : Fin n →₀ ℕ, 2 * (‖coeff ν c‖ₑ * (monomialEval ρ ν : ℝ≥0∞)) :=
-          ENNReal.tsum_comp_le_tsum_of_injective (add_left_injective (Finsupp.single i 1)) _
+          ENNReal.tsum_comp_le_tsum_of_injective (add_left_injective (Finsupp.single i 1))
+            (fun ν => 2 * (‖coeff ν c‖ₑ * (monomialEval ρ ν : ℝ≥0∞)))
   rw [h, ENNReal.top_mul (ENNReal.coe_ne_zero.mpr (ρ.2 i).ne')] at hle
   exact ENNReal.mul_ne_top ENNReal.ofNat_ne_top hρ (top_le_iff.mp hle)
 
@@ -144,7 +145,8 @@ theorem pderiv_mem_conv {c : MvPowerSeries (Fin n) 𝕜} (hc : c ∈ Conv 𝕜 n
 `∂_i (evalSeries c) = evalSeries (∂_{X_i} c)`. -/
 theorem fderiv_evalSeries_single {ρ : Radius n} {c : MvPowerSeries (Fin n) 𝕜}
     (hρ : ConvNorm ρ c ≠ ⊤) {x : Fin n → 𝕜} (hx : ∀ k, ‖x k‖ < (ρ k : ℝ) / 2) (i : Fin n) :
-    fderiv 𝕜 (evalSeries c) x (Pi.single i 1) = evalSeries (MvPowerSeries.pderiv 𝕜 i c) x := by
+    fderiv 𝕜 (evalSeries c) x (Pi.single i 1) =
+      evalSeries (MvPowerSeries.pderiv (R := 𝕜) i c) x := by
   classical
   set P : (Fin n →₀ ℕ) → 𝕜 := fun ν => ∏ k ∈ univ.erase i, x k ^ ν k with hP
   set g : (Fin n →₀ ℕ) → 𝕜 → 𝕜 := fun ν y => coeff ν c * (y ^ ν i * P ν) with hg
@@ -159,7 +161,7 @@ theorem fderiv_evalSeries_single {ρ : Radius n} {c : MvPowerSeries (Fin n) 𝕜
   have hu_sum : Summable u := (summable_weighted hρ).mul_left _
   have hP_le : ∀ ν, ‖P ν‖ ≤ ∏ k ∈ univ.erase i, (ρ k : ℝ) ^ ν k := fun ν => by
     rw [hP, norm_prod]
-    exact Finset.prod_le_prod (fun k _ => norm_nonneg _) fun k _ => by
+    exact Finset.prod_le_prod₀ (fun k _ => norm_nonneg _) fun k _ => by
       rw [norm_pow]; exact pow_le_pow_left₀ (norm_nonneg _) (hxle k) _
   have hradius : ∀ ν, (monomialEval ρ ν : ℝ) =
       (ρ i : ℝ) ^ ν i * ∏ k ∈ univ.erase i, (ρ k : ℝ) ^ ν k := fun ν => by
@@ -234,7 +236,8 @@ theorem fderiv_evalSeries_single {ρ : Radius n} {c : MvPowerSeries (Fin n) 𝕜
   have h2 : P (μ + Finsupp.single i 1) = P μ := by
     rw [hP]
     refine Finset.prod_congr rfl fun k hk => ?_
-    rw [Finsupp.add_apply, Finsupp.single_apply, if_neg (Finset.ne_of_mem_erase hk).symm, add_zero]
+    rw [Finsupp.add_apply, Finsupp.single_apply, ite_eq_right (Finset.ne_of_mem_erase hk).symm,
+      add_zero]
   rw [hg']
   dsimp only
   rw [h1, h2, Nat.add_sub_cancel, monomialEval_eq_mul_prod_erase x i, coeff_pderiv]
@@ -257,7 +260,7 @@ power series of `g`. -/
 theorem IsSeriesOf.pderiv {b : E} {f : E → 𝕜} {c : MvPowerSeries (Fin n) 𝕜}
     (hc : IsSeriesOf ψ b (↑f) c) (i : Fin n) :
     IsSeriesOf ψ b ↑(fun z => fderiv 𝕜 f z (ψ.symm (Pi.single i 1)))
-      (MvPowerSeries.pderiv 𝕜 i c) := by
+      (MvPowerSeries.pderiv (R := 𝕜) i c) := by
   obtain ⟨ρ, hρ⟩ := hc.1
   refine ⟨pderiv_mem_conv hc.1 i, ?_⟩
   have h2 := hc.2
@@ -292,7 +295,7 @@ theorem IsSeriesOf.pderiv {b : E} {f : E → 𝕜} {c : MvPowerSeries (Fin n) �
 /-- `taylorGerm (∂_i g) = ∂_{X_i} (taylorGerm g)`. -/
 theorem taylorGerm_pderivGerm (b : E) (i : Fin n) (g : analyticGermsAt 𝕜 E b) :
     (taylorGerm ψ b (pderivGerm E ψ i b g) : MvPowerSeries (Fin n) 𝕜) =
-      MvPowerSeries.pderiv 𝕜 i (taylorGerm ψ b g) := by
+      MvPowerSeries.pderiv (R := 𝕜) i (taylorGerm ψ b g) := by
   obtain ⟨g0, f, rfl, hfa⟩ := g
   rw [coe_taylorGerm]
   exact taylorGermFun_eq_of_isSeriesOf ψ _
@@ -312,7 +315,7 @@ theorem IsTaylorHom.pderiv'
     (hT : IsTaylorHom E ψ φ a T)
     {e : (structureSheaf 𝕜 E M).presheaf.stalk a ≃+* analyticGermsAt 𝕜 E (φ a)}
     (he : IsChartTransport 𝕜 E φ a e) (i : Fin n) (g : analyticGermsAt 𝕜 E (φ a)) :
-    T (e.symm (pderivGerm E ψ i (φ a) g)) = MvPowerSeries.pderiv 𝕜 i (T (e.symm g)) := by
+    T (e.symm (pderivGerm E ψ i (φ a) g)) = MvPowerSeries.pderiv (R := 𝕜) i (T (e.symm g)) := by
   obtain rfl := IsTaylorHom.eq E ψ φ hT (isTaylorHom_taylorHom E ψ φ ha hφ)
   obtain rfl := IsChartTransport.eq E φ he (isChartTransport_chartTransport E φ ha hφ)
   rw [taylorHom_apply, taylorHom_apply, RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply]

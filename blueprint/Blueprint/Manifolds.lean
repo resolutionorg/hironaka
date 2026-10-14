@@ -1,6 +1,7 @@
 import Verso
 import VersoManual
 import VersoBlueprint
+import Blueprint.References
 import Blueprint.SchemeVocabulary
 import Hironaka.Manifold.Snc.Defs
 import Hironaka.Manifold.Jacobian.Defs
@@ -12,6 +13,9 @@ open Set Filter Topology TopologicalSpace
 open AnalyticManifold Manifold
 
 set_option verso.blueprint.autoDeps true
+-- Infer from directly referenced declarations only, as before v4.34; walking through unassociated
+-- helpers would traverse Mathlib.
+set_option verso.blueprint.autoDeps.expandUntagged false
 
 #doc (Manual) "Ideal sheaves, submanifolds and blow-ups" =>
 %%%
@@ -22,7 +26,7 @@ file := "manifolds"
 The analytic theorems are written in a vocabulary collected in the namespace `AnalyticManifold`,
 built on an infrastructure in the namespace `Manifold`: the sheaf of analytic functions on a
 manifold and its germs, locally finitely generated ideal sheaves, closed submanifolds and blow-ups
-with smooth centre in the sense of Bierstone–Milman \[BM88, Definition 4.1\], simple normal
+with smooth centre in the sense of Bierstone–Milman {cite BM88}[Definition 4.1], simple normal
 crossings families of hypersurfaces, and the Jacobian ideal. The field is `𝕜` (`ℝ` for the main
 theorems, `ℝ` or `ℂ` where `RCLike 𝕜` suffices) and the model space a normed space `E`.
 
@@ -132,7 +136,7 @@ those of the general ideal sheaves ({bpref "def:ideal_sheaf_general"}[]). The pr
 
 `J.regularLocus` is the set of simple points of the subspace, the points at which
 $`\mathcal{O}_{M,x}/J_x` is a regular local ring: Włodarczyk's $`\operatorname{Reg}(Y)`
-\[Wlo09, Theorem 2.0.2 (2)\]. A point off the subspace is not in it, the zero ring not being local,
+{cite Wlo09}[Theorem 2.0.2 (2)]. A point off the subspace is not in it, the zero ring not being local,
 and `J.IsNonsingular` holds exactly when the support lies in the simple locus.
 
 Hironaka's "reduced" and "everywhere of codimension one" for the boundary are not hypotheses of
@@ -167,7 +171,7 @@ sheaf if none exists; existence and uniqueness are lemmas of the library).
 
 ::::definition "def:manifold_blowup" (lean := "Manifold.blowUpChartMap, Manifold.IsBlowUpChart, Manifold.IsBlowUp, Manifold.IsBlowUp.contMDiff, AnalyticMap.IsMonoidalTransformation")
 Blow-ups of manifolds are characterized rather than constructed, following Bierstone–Milman's
-definition of blowing up \[BM88, Definition 4.1\]. `IsBlowUp ψ Y c π` says that $`\pi \colon M' \to
+definition of blowing up {cite BM88}[Definition 4.1]. `IsBlowUp ψ Y c π` says that $`\pi \colon M' \to
     M`
 is the blowing-up of $`M` with centre the closed submanifold $`Y`: $`M'` is an analytic manifold,
 $`\pi` is proper and analytic ({decl}`IsBlowUp.contMDiff`), (1) $`\pi` is an analytic isomorphism
@@ -193,7 +197,7 @@ Transforms of an ideal sheaf along a blow-up of manifolds:
 
 - the total transform $`\pi^{-1}(I) = \pi^* I \cdot \mathcal{O}_{M'}` (`IdealSheaf.totalTransform`);
 - the order of $`J` along a centre, $`\nu_{D,a}(J) = \sup\{p : J_a \subseteq D_a^p\}`
-  ({decl}`ordAlongIdeal`, \[BM97, §3\]), and its generic value along the connected component of the
+  ({decl}`ordAlongIdeal`, {cite BM97}[§3]), and its generic value along the connected component of the
   centre through $`a` ({decl}`genericOrdAlong`);
 - {decl}`IsDivExceptional`: $`J'` is the quotient of the total transform by the exceptional ideal to
   the generic order, stalkwise a colon ideal;
@@ -231,11 +235,11 @@ The statements use two predicates on an ideal sheaf $`B`:
 - `IsSncBoundary B`: $`B` is the reduced ideal sheaf of a simple normal crossings hypersurface
   family, for some coordinates;
 - `IsSncBoundaryWith B D`: moreover the family has simple normal crossings with the closed
-  subspace $`D` \[Kol07, Definition 24 (4)\]; \[Wlo09, Definition 3.2.4 (2)\].
+  subspace $`D` {cite Kol07}[Definition 24 (4)]; {cite Wlo09}[Definition 3.2.4 (2)].
 
 {decl}`IsNormalCrossingsDivisor` is Bierstone–Milman's normal-crossings divisor: a principal ideal
 sheaf generated at every point by a monomial $`\prod z_i^{\alpha_i}` in a regular system of
-parameters ({bpref "def:regular_system"}[]) \[BM97, Theorem 1.10\].
+parameters ({bpref "def:regular_system"}[]) {cite BM97}[Theorem 1.10].
 ::::
 
 ::::definition "def:embedded_snc" (lean := "AnalyticManifold.IdealSheaf.IsSncBoundaryTransversalTo, AnalyticManifold.IdealSheaf.IsMulBoundaryMonomial")
@@ -253,12 +257,12 @@ ideal sheaves $`B`, $`Y` and $`J`:
   codimension may vary from point to point, as it does for the strict transform of a subspace that
   is not equidimensional; and no component through $`a` may contain $`Y` near $`a`, which Kollár's
   Definition 24 (4) allows. This is the reading of "$`\tilde Y` has only simple normal crossings
-  with the exceptional divisor $`E_r`" \[Wlo09, Theorem 2.0.2 (3)\].
+  with the exceptional divisor $`E_r`" {cite Wlo09}[Theorem 2.0.2 (3)].
 - `J.IsMulBoundaryMonomial Y B`: $`J = I_Y \cdot I_{\tilde E}` for a divisor $`\tilde E` that is,
   near every point, an effective combination of the hypersurfaces of a simple normal crossings
   family whose reduced ideal sheaf is $`B`: at every point $`x` the stalk $`J_x` is the product of
   $`(I_Y)_x` with a monomial in the vanishing ideals of hypersurfaces of the family through $`x`
-  ({bpref "def:vanishing"}[]), the exponents read at $`x` \[Wlo09, Theorem 2.0.2 (6)\].
+  ({bpref "def:vanishing"}[]), the exponents read at $`x` {cite Wlo09}[Theorem 2.0.2 (6)].
 ::::
 
 # The Jacobian ideal and analytic isomorphisms
@@ -277,5 +281,5 @@ change of charts multiplies the determinant by a unit.
 
 `AnalyticMap.IsIsoOver f U`: $`f` restricts to an analytic isomorphism $`f^{-1}(U) \to U`,
 that is, a local diffeomorphism on $`f^{-1}(U)` and a bijection onto $`U` (condition (1) of
-\[BM88, Definition 4.1\], off the centre).
+{cite BM88}[Definition 4.1], off the centre).
 ::::

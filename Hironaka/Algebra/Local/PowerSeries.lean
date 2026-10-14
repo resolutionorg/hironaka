@@ -48,14 +48,14 @@ variable {σ : Type*} {R : Type*} [CommSemiring R]
 
 /-- The formal partial derivatives of a multivariate power series commute. -/
 theorem pderiv_pderiv_comm (i j : σ) (f : MvPowerSeries σ R) :
-    pderiv R i (pderiv R j f) = pderiv R j (pderiv R i f) := by
+    pderiv (R := R) i (pderiv (R := R) j f) = pderiv (R := R) j (pderiv (R := R) i f) := by
   classical
   ext n
   simp only [coeff_pderiv, Finsupp.add_apply, Finsupp.single_apply]
   rw [add_right_comm n (Finsupp.single j 1) (Finsupp.single i 1)]
   by_cases h : i = j
   · subst h; ring
-  · simp only [h, Ne.symm h, if_false, add_zero]; ring
+  · simp only [h, Ne.symm h, ite_false, add_zero]; ring
 
 end MvPowerSeries
 
@@ -84,10 +84,10 @@ theorem exists_eq_sum_X_mul (s : Finset σ) (f : MvPowerSeries σ R)
       intro m
       rw [X_def, coeff_monomial_mul]
       by_cases h : 1 ≤ m a
-      · rw [if_pos (Finsupp.single_le_iff.mpr h), if_pos h, one_mul]
+      · rw [ite_eq_left (Finsupp.single_le_iff.mpr h), ite_eq_left h, one_mul]
         change coeff (m - Finsupp.single a 1 + Finsupp.single a 1) f = coeff m f
         rw [tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr h)]
-      · rw [if_neg (fun h' => h (Finsupp.single_le_iff.mp h')), if_neg h]
+      · rw [ite_eq_right (fun h' => h (Finsupp.single_le_iff.mp h')), ite_eq_right h]
     set φ₁ : MvPowerSeries σ R := fun m => if m a = 0 then coeff m f else 0 with hφ₁
     have hφ₁c : ∀ m, coeff m φ₁ = if m a = 0 then coeff m f else 0 := fun m => rfl
     have hsplit : f = φ₁ + X a * ga := by
@@ -100,12 +100,12 @@ theorem exists_eq_sum_X_mul (s : Finset σ) (f : MvPowerSeries σ R)
       intro m hm
       rw [hφ₁c]
       by_cases h : m a = 0
-      · rw [if_pos h]
+      · rw [ite_eq_left h]
         exact hf m fun i hi => by
           rcases Finset.mem_insert.mp hi with rfl | hi
           · exact h
           · exact hm i hi
-      · exact if_neg h
+      · exact ite_eq_right h
     obtain ⟨g', hg', hsupp⟩ := ih φ₁ hφ₁'
     refine ⟨Function.update g' a ga, ?_, ?_⟩
     · rw [Finset.sum_insert hat, Function.update_self, hsplit, hg', add_comm]
@@ -224,7 +224,7 @@ noncomputable def mvPowerSeries [IsRegularLocalRing (MvPowerSeries (Fin n) K)]
     (hcard : (n : WithBot ℕ∞) = ringKrullDim (MvPowerSeries (Fin n) K)) :
     RegularCoords (MvPowerSeries (Fin n) K) n where
   x := X
-  pderiv i := (MvPowerSeries.pderiv K i).restrictScalars ℚ
+  pderiv i := (MvPowerSeries.pderiv (R := K) i).restrictScalars ℚ
   span_x := hspan
   card := hcard
   pderiv_x i j := by

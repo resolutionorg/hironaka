@@ -183,7 +183,7 @@ theorem span_image_chartDlog_le (h : Fin n) (K : Ideal (chartRing c.x r)) :
     · -- `∂'_h k ∈ ∂'_h K`
       exact Ideal.mem_sup_right (c.le_chartDlog r h _ (Ideal.subset_span ⟨g, hg, rfl⟩))
     · -- `∂'_h (y_h ∂'_h k) = y_h ∂'_h (∂'_h k) + ∂'_h k`
-      rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.chartDerivRing_chartYR r, if_pos rfl,
+      rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.chartDerivRing_chartYR r, ite_eq_left rfl,
         mul_one]
       refine Ideal.mem_sup_right (add_mem (c.chartYR_mul_chartDerivRing_mem_chartDlog r h ?_)
         (c.le_chartDlog r h _ ?_)) <;> exact Ideal.subset_span ⟨k, hk, rfl⟩

@@ -64,7 +64,7 @@ theorem mem_preservingDer {J : Ideal R} {δ : Derivation ℚ R R} :
 theorem pderiv_mem_span_x_of_ne' (i : Fin n) {j : Fin n} (hj : j ≠ i) {f : R}
     (hf : f ∈ Ideal.span {c.x i}) : c.pderiv j f ∈ Ideal.span {c.x i} := by
   obtain ⟨g, rfl⟩ := Ideal.mem_span_singleton.mp hf
-  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, if_neg hj, mul_zero, add_zero]
+  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, ite_eq_right hj, mul_zero, add_zero]
   exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _)
 
 /-- `Der(−log E)`, the derivations in the span of the `∂ᵢ` that preserve every `⟨xᵢ⟩`, `i ∈ E`
@@ -87,8 +87,8 @@ theorem sum_smul_pderiv_apply_x (a : Fin n → R) (i : Fin n) :
     (∑ l, a l • c.pderiv l) (c.x i) = a i := by
   rw [Derivation.finset_sum_apply]
   simp only [Derivation.smul_apply, smul_eq_mul, c.pderiv_x]
-  rw [Finset.sum_eq_single i (fun l _ hl => by rw [if_neg hl, mul_zero]) (by simp)]
-  rw [if_pos rfl, mul_one]
+  rw [Finset.sum_eq_single i (fun l _ hl => by rw [ite_eq_right hl, mul_zero]) (by simp)]
+  rw [ite_eq_left rfl, mul_one]
 
 /-- `δ = ∑ᵢ aᵢ ∂ᵢ` preserves every `⟨xᵢ⟩`, `i ∈ E`, iff `aᵢ ∈ ⟨xᵢ⟩` for every `i ∈ E`. -/
 theorem sum_smul_pderiv_mem_logDerE_iff (E : Finset (Fin n)) (a : Fin n → R) :

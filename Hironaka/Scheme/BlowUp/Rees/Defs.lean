@@ -89,7 +89,7 @@ theorem reesAlgebra.eq_monomial_of_mem_grading {n : ℕ} {p : reesAlgebra I}
 /-- An element of the Rees algebra that is a monomial of degree `i` lies in the `i`-th piece. -/
 theorem reesAlgebra.mem_grading_of_coe_eq_monomial {i : ℕ} {p : reesAlgebra I} {c : R}
     (hp : (p : R[X]) = monomial i c) : p ∈ reesAlgebra.grading I i :=
-  fun j hj => by rw [hp, coeff_monomial, if_neg (Ne.symm hj)]
+  fun j hj => by rw [hp, coeff_monomial, ite_eq_right (Ne.symm hj)]
 
 /-- The `n`-th piece consists of the monomials `c tⁿ`, `c ∈ I ^ n`. -/
 theorem reesAlgebra.mem_grading_iff_exists {n : ℕ} {p : reesAlgebra I} :

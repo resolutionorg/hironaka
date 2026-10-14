@@ -138,8 +138,8 @@ theorem transform_pderiv_lt {j : Fin n} (hj : j < r) {m : ℕ} {f : R}
       c.chartDerivRing r j (transformElem c.x r f hf) := by
   refine Subtype.ext ?_
   rw [coe_chartDerivRing, coe_transformElem_eq, coe_transformElem_eq, chartDeriv_of_lt _ _ hj,
-    Derivation.smul_apply, awayPderiv_algebraMap_mul_invX_pow, if_neg hj.ne, mul_zero, nsmul_zero,
-    sub_zero, smul_eq_mul, mul_left_comm, algebraMap_mul_invX_pow_succ]
+    Derivation.smul_apply, awayPderiv_algebraMap_mul_invX_pow, ite_eq_right hj.ne, mul_zero,
+    nsmul_zero, sub_zero, smul_eq_mul, mul_left_comm, algebraMap_mul_invX_pow_succ]
 
 /-- [Kol07, (75.2)]: for `j > r` and `f ∈ Pᵐ⁺¹`, `π⁻¹_*(∂ⱼ f, m) = y_r ∂'ⱼ π⁻¹_*(f, m+1)`. -/
 theorem transform_pderiv_gt {j : Fin n} (hj : r < j) {m : ℕ} {f : R}
@@ -150,7 +150,8 @@ theorem transform_pderiv_gt {j : Fin n} (hj : r < j) {m : ℕ} {f : R}
   refine Subtype.ext ?_
   rw [Subalgebra.coe_mul, coe_chartDerivRing, coe_transformElem_eq, coe_transformElem_eq,
     chartDeriv_of_gt _ _ hj, coe_chartYROf, chartYOf_self, awayPderiv_algebraMap_mul_invX_pow,
-    if_neg hj.ne', mul_zero, nsmul_zero, sub_zero, mul_left_comm, algebraMap_mul_invX_pow_succ]
+    ite_eq_right hj.ne', mul_zero, nsmul_zero, sub_zero, mul_left_comm,
+    algebraMap_mul_invX_pow_succ]
 
 /-- [Kol07, (75.3)], by the chain rule (also [Wlo05, Lemma 2.6.3] and [BM08, Lemma 3.1]): for
 `f ∈ Pᵐ⁺¹`,
@@ -177,20 +178,20 @@ theorem transform_pderiv_eq {m : ℕ} {f : R} (hf : f ∈ chartCenter c.x r ^ (m
     have hi' := (Finset.mem_filter.mp hi).2
     rw [Subalgebra.coe_mul, coe_chartDerivRing, coe_transformElem_eq, chartDeriv_of_lt _ _ hi',
       Derivation.smul_apply, smul_eq_mul, coe_chartYROf, awayPderiv_algebraMap_mul_invX_pow,
-      if_neg hi'.ne, mul_zero, nsmul_zero, sub_zero]
+      ite_eq_right hi'.ne, mul_zero, nsmul_zero, sub_zero]
     ring
   have hinner : ∀ i ∈ Finset.univ.filter (· < r),
       (chartY c.x r i • c.awayPderiv r i) (algebraMap R _ f * invX c.x r ^ (m + 1)) =
         chartY c.x r i * (algebraMap R _ (c.pderiv i f) * invX c.x r ^ (m + 1)) := by
     intro i hi
     have hi' := (Finset.mem_filter.mp hi).2
-    rw [Derivation.smul_apply, smul_eq_mul, awayPderiv_algebraMap_mul_invX_pow, if_neg hi'.ne,
+    rw [Derivation.smul_apply, smul_eq_mul, awayPderiv_algebraMap_mul_invX_pow, ite_eq_right hi'.ne,
       mul_zero, nsmul_zero, sub_zero]
   rw [Subalgebra.coe_add, Subalgebra.coe_sub, Subalgebra.coe_mul, AddSubmonoidClass.coe_finsetSum,
     Finset.sum_congr rfl hsum, ← Finset.mul_sum, AddSubmonoidClass.coe_nsmul, coe_chartDerivRing,
     coe_transformElem_eq, coe_transformElem_eq, chartDeriv_self, Derivation.add_apply,
     Derivation.finset_sum_apply, Finset.sum_congr rfl hinner, coe_chartYROf, chartYOf_self,
-    awayPderiv_algebraMap_mul_invX_pow, if_pos rfl, mul_one, nsmul_eq_mul, nsmul_eq_mul]
+    awayPderiv_algebraMap_mul_invX_pow, ite_eq_left rfl, mul_one, nsmul_eq_mul, nsmul_eq_mul]
   linear_combination (-(algebraMap R (Localization.Away (c.x r)) (c.pderiv r f))) * hx1 +
     (((m + 1 : ℕ) : Localization.Away (c.x r)) * algebraMap R (Localization.Away (c.x r)) f) * hx2
 
@@ -325,7 +326,7 @@ theorem le_Dimg_chartRing (J : Ideal (chartRing c.x r)) : J ≤ Dimg J := by
     refine Subtype.ext ?_
     rw [coe_chartDerivRing, Subalgebra.coe_add, Subalgebra.coe_mul, Subalgebra.coe_mul,
       coe_chartDerivRing, Derivation.leibniz, smul_eq_mul, smul_eq_mul, coe_chartYROf,
-      chartDeriv_chartY, if_pos rfl, mul_one, add_comm]
+      chartDeriv_chartY, ite_eq_left rfl, mul_one, add_comm]
   have h2 : z = c.chartDerivRing r r (chartYR c.x r r * z) -
       chartYR c.x r r * c.chartDerivRing r r z := by rw [h1]; ring
   rw [h2]

@@ -12,6 +12,8 @@ import Hironaka.Analytic.Rueckert.Slices
 import Hironaka.Analytic.Rueckert.Subst
 import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
 import Mathlib.Tactic.Positivity.Finset
+import Mathlib.RingTheory.Finiteness.Finsupp
+import Mathlib.RingTheory.Noetherian.Basic
 
 /-!
 # Rückert's basis theorem: `Conv K m` is Noetherian

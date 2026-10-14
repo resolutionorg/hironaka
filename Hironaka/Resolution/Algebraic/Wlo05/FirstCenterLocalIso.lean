@@ -76,7 +76,7 @@ theorem le_firstCenterIndex_of_forall_lt_not (S : BlowUpSequence A) (I : A.Ideal
   · by_contra hlt
     exact h _ (not_le.mp hlt) (firstCenterIndex_of_exists hex)
   · unfold firstCenterIndex
-    rw [dif_neg hex]
+    rw [dite_eq_right hex]
     exact hn
 
 /-- At a stage `i ≤ firstCenterIndex S I`, a point `y` over the generic point `η` of the integral

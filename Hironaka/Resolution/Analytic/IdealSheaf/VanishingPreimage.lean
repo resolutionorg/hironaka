@@ -66,9 +66,9 @@ theorem Germ.vanishesOn_compTendsto_of_isLocalDiffeomorphAt' {h : N → M}
       have e1 : Filter.map h (𝓝[h ⁻¹' Z] b) = Filter.map ⇑Φ (𝓝[h ⁻¹' Z] b) :=
         Filter.map_congr ((hev.mono fun y hy => heq hy).filter_mono nhdsWithin_le_nhds)
       have hset : (h ⁻¹' Z : Set N) =ᶠ[𝓝 b] (⇑Φ ⁻¹' Z) :=
-        Filter.eventuallyEq_set.mpr (hev.mono fun y hy => by
+        Filter.eventuallyEqSet_iff.mpr (hev.mono fun y hy => by
           rw [Set.mem_preimage, Set.mem_preimage, heq hy])
-      rw [e1, nhdsWithin_eq_iff_eventuallyEq.mpr hset, heq hbΦ]
+      rw [e1, nhdsWithin_eq_iff_eventuallyEqSet.mpr hset, heq hbΦ]
       exact Φ.toOpenPartialHomeomorph.map_nhdsWithin_preimage_eq hbΦ Z
     rw [← hmap, Filter.eventually_map]
     exact Iff.rfl

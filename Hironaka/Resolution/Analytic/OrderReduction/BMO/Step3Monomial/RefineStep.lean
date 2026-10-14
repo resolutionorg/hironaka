@@ -154,22 +154,22 @@ theorem mem_preimageFaces {S : Finset (Finset ℕ)} {Q : Finset ℕ} :
 theorem extendParent_of_lt (S' S : Finset (Finset ℕ)) {c : ℕ} (hc : c < Ψ.nextComp) :
     Ψ.extendParent Φ p S' S c = p c := by
   unfold extendParent
-  rw [if_pos hc]
+  rw [ite_eq_left hc]
 
 theorem extendParent_newComp (S' S : Finset (Finset ℕ)) {Q : Finset ℕ} (hQ : Q ∈ S') :
     Ψ.extendParent Φ p S' S (Ψ.newComp S' Q) = Φ.newComp S (Q.image p) := by
   classical
   unfold extendParent
-  rw [if_neg (not_lt.mpr (Ψ.nextComp_le_newComp' S' Q)), Ψ.filter_newComp_eq S' hQ,
+  rw [ite_eq_right (not_lt.mpr (Ψ.nextComp_le_newComp' S' Q)), Ψ.filter_newComp_eq S' hQ,
     Finset.sup_singleton]
 
 theorem extendLabel_of_lt {ℓ : ℕ} (hℓ : ℓ < Ψ.nextLabel) : Ψ.extendLabel Φ σ ℓ = σ ℓ := by
   unfold extendLabel
-  rw [if_pos hℓ]
+  rw [ite_eq_left hℓ]
 
 theorem extendLabel_nextLabel : Ψ.extendLabel Φ σ Ψ.nextLabel = Φ.nextLabel := by
   unfold extendLabel
-  rw [if_neg (lt_irrefl _)]
+  rw [ite_eq_right (lt_irrefl _)]
 
 /-- Transporting an analytic map along an equality of its domain keeps surjectivity. -/
 theorem _root_.Hironaka.Manifold.AnalyticMap.surjective_castDom

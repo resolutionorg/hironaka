@@ -96,19 +96,19 @@ theorem ofDivisorFamily_realizes (hE : E.IsSnc) : (ofDivisorFamily E a e σ).Rea
       rw [mem_finset_sup_iff]
       refine ⟨c.1, Finset.mem_filter.mpr ⟨Finset.mem_range.mpr c.2, ?_⟩, ?_⟩
       · change (if h : c.1 < k then (e (σ ⟨c.1, h⟩).1 : ℕ) else 0) = (e j : ℕ)
-        rw [dif_pos c.2, hc']
+        rw [dite_eq_left c.2, hc']
       · change x ∈ (if h : c.1 < k then Closeds.closure {((σ ⟨c.1, h⟩).2 : X)} else ⊥)
-        rw [dif_pos c.2, hc']
+        rw [dite_eq_left c.2, hc']
         exact specializes_iff_mem_closure.mp hηx
     · rw [Finset.sup_le_iff]
       intro c hc
       obtain ⟨hcr, hlab⟩ := Finset.mem_filter.mp hc
       have hck : c < k := Finset.mem_range.mp hcr
       have hlab' : (if h : c < k then (e (σ ⟨c, h⟩).1 : ℕ) else 0) = (e j : ℕ) := hlab
-      rw [dif_pos hck] at hlab'
+      rw [dite_eq_left hck] at hlab'
       have hj : (σ ⟨c, hck⟩).1 = j := e.injective (Fin.ext hlab')
       change (if h : c < k then Closeds.closure {((σ ⟨c, h⟩).2 : X)} else ⊥) ≤ _
-      rw [dif_pos hck]
+      rw [dite_eq_left hck]
       rcases hp : σ ⟨c, hck⟩ with ⟨jc, ηc⟩
       rw [hp] at hj
       change jc = j at hj
@@ -119,11 +119,11 @@ theorem ofDivisorFamily_realizes (hE : E.IsSnc) : (ofDivisorFamily E a e σ).Rea
     have hck' : c' < k := hc'
     have hlab' : (if h : c < k then (e (σ ⟨c, h⟩).1 : ℕ) else 0) =
         (if h : c' < k then (e (σ ⟨c', h⟩).1 : ℕ) else 0) := hlab
-    rw [dif_pos hck, dif_pos hck'] at hlab'
+    rw [dite_eq_left hck, dite_eq_left hck'] at hlab'
     have hj : (σ ⟨c, hck⟩).1 = (σ ⟨c', hck'⟩).1 := e.injective (Fin.ext hlab')
     change Disjoint (if h : c < k then Closeds.closure {((σ ⟨c, h⟩).2 : X)} else ⊥)
       (if h : c' < k then Closeds.closure {((σ ⟨c', h⟩).2 : X)} else ⊥)
-    rw [dif_pos hck, dif_pos hck', disjoint_iff_inf_le]
+    rw [dite_eq_left hck, dite_eq_left hck', disjoint_iff_inf_le]
     intro x hx
     rw [← SetLike.mem_coe, Closeds.coe_inf] at hx
     obtain ⟨h1, h2⟩ := hx

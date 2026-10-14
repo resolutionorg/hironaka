@@ -8,6 +8,7 @@ module
 public import Hironaka.Scheme.IdealSheaf.Order.Constructible
 public import Mathlib.RingTheory.AdicCompletion.LocalRing
 public import Hironaka.Algebra.Local.Defs
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
 import Hironaka.Algebra.Local.CompletionCoords
 import Hironaka.Algebra.Local.TransformOrder
 import Hironaka.Scheme.IdealSheaf.Order.Basic

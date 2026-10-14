@@ -8,6 +8,7 @@ module
 public import Hironaka.Resolution.Algebraic.MaximalContact.EtaleEquiv
 public import Hironaka.Resolution.Algebraic.MaximalContact.FormalEquiv
 public import Hironaka.Scheme.Smooth.GraphFormal
+public import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 import Hironaka.Algebra.Local.DerivativeCompletion
 import Hironaka.Scheme.BlowUp.GlueIdealSheaf
 import Hironaka.Scheme.IdealSheaf.StalkLe

@@ -73,8 +73,8 @@ noncomputable def etaleEquivOfFamily [Smooth f] (I : X.IdealSheafData) (m : ℕ)
     EtaleEquiv f I m E H H' := by
   classical
   have hdesc : Etale (Sigma.desc ψ) := IsZariskiLocalAtSource.sigmaDesc fun _ => inferInstance
-  have hι : ∀ i, Sigma.ι W i ≫ Sigma.desc ψ = ψ i := fun i => Sigma.ι_desc _ _
-  have hι' : ∀ i, Sigma.ι W i ≫ Sigma.desc ψ' = ψ' i := fun i => Sigma.ι_desc _ _
+  have hι : ∀ i, Sigma.ι W i ≫ Sigma.desc ψ = ψ i := fun i => Sigma.ι_comp_desc _ _
+  have hι' : ∀ i, Sigma.ι W i ≫ Sigma.desc ψ' = ψ' i := fun i => Sigma.ι_comp_desc _ _
   refine EtaleEquiv.mk (EtaleImagePair.sigma W ψ ψ' hcov hcov') ?_ ?_ ?_ ?_ ?_
   · change Sigma.desc ψ ≫ f = Sigma.desc ψ' ≫ f
     refine Sigma.hom_ext _ _ fun i => ?_

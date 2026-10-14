@@ -100,7 +100,7 @@ theorem _root_.Hironaka.Manifold.contMDiff_sigmaProj (i : σ) (x : N i) :
   by_cases hk : k = i
   · subst hk
     exact contMDiff_id.congr fun z => sigmaProj_mk N _ x z
-  · exact contMDiff_const.congr fun z => dif_neg hk
+  · exact contMDiff_const.congr fun z => dite_eq_right hk
 
 /-- The projection is a local analytic isomorphism at the points of
 its summand — the inverse of `sigmaMkPartialDiffeomorph`. -/

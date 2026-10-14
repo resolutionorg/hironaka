@@ -77,14 +77,14 @@ theorem eq_sum_liftTail_coeff_mul_X_pow {r : MvPowerSeries (Fin (m + 1)) K} {d :
   simp_rw [coeff_cons_liftTail_mul_X_pow]
   by_cases hk : k < d
   · rw [Finset.sum_eq_single k]
-    · rw [if_pos rfl, coeff_coeff_finSuccEquiv]
+    · rw [ite_eq_left rfl, coeff_coeff_finSuccEquiv]
     · intro i _ hi
-      rw [if_neg (Ne.symm hi)]
+      rw [ite_eq_right (Ne.symm hi)]
     · intro h
       exact absurd (Finset.mem_range.mpr hk) h
   · rw [hr _ (by rw [Finsupp.cons_zero]; exact not_lt.mp hk)]
     refine (Finset.sum_eq_zero fun i hi => ?_).symm
-    rw [if_neg]
+    rw [ite_eq_right]
     rintro rfl
     exact hk (Finset.mem_range.mp hi)
 

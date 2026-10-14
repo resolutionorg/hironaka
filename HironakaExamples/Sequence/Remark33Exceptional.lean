@@ -118,14 +118,14 @@ theorem map_centerIdeal_two_subst2 (j : Fin 3) (hj : j.val < 2) :
       exact Ideal.mem_span_singleton_self _
   · rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe]
     have h : (X j : MvPolynomial (Fin 3) k) = subst2 k j (X j) := by
-      rw [subst2_X, if_neg (fun h => h.2 rfl)]
+      rw [subst2_X, ite_eq_right (fun h => h.2 rfl)]
     rw [h]
     exact Ideal.mem_map_of_mem _ (X_mem_centerIdeal k 3 2 hj)
 
 /-- The plane `z = 0` is untouched by the charts of `B_{V(x,y)} 𝔸³`. -/
 theorem map_span_X_two_subst2 (j : Fin 3) :
     (Ideal.span {(X 2 : MvPolynomial (Fin 3) k)}).map (subst2 k j) = Ideal.span {X 2} := by
-  rw [Ideal.map_span, Set.image_singleton, subst2_X, if_neg]
+  rw [Ideal.map_span, Set.image_singleton, subst2_X, ite_eq_right]
   rintro ⟨h, -⟩
   exact absurd h (by decide)
 

@@ -8,6 +8,7 @@ module
 public import Hironaka.Algebra.RegularSmooth.Defs
 public import Hironaka.Scheme.IdealSheaf.Defs
 public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
 import Hironaka.Algebra.Local.Regular
 import Hironaka.Algebra.Local.RegularSystem
 import Hironaka.Scheme.Smooth.AdaptedCoordinates

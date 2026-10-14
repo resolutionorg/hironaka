@@ -109,7 +109,7 @@ theorem le_ordAlongIdeal_finset_prod {ι : Type*} (F : Finset ι) (G : ι → Id
     ((∑ i ∈ F, c i : ℕ) : ℕ∞) ≤ IdealSheaf.ordAlongIdeal D (∏ i ∈ F, G i) a := by
   rw [IdealSheaf.le_ordAlongIdeal_iff, IdealSheaf.stalkIdeal_finset_prod,
     ← Finset.prod_pow_eq_pow_sum]
-  exact Finset.prod_le_prod' fun i hi => (IdealSheaf.le_ordAlongIdeal_iff _ _ _ _).mp (hG i hi)
+  exact Finset.prod_le_prod fun i hi => (IdealSheaf.le_ordAlongIdeal_iff _ _ _ _).mp (hG i hi)
 
 end OrderAlong
 

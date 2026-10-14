@@ -273,7 +273,7 @@ theorem chainIdeal_eq_span_mul_chainIdeal_succAbove {r : ℕ} (f M : Fin (r + 1)
     (t : Fin (r + 1)) (ht : ∀ i : Fin (r + 1), i.val < t.val → M i = 1) (h0 : f t = 0) :
     chainIdeal f M = Ideal.span {M 0} * chainIdeal (f ∘ t.succAbove) (M ∘ Fin.succ) := by
   unfold chainIdeal
-  rw [Ideal.span_mul_span', Set.singleton_mul, ← Set.range_comp]
+  rw [Ideal.span_mul_span, Set.singleton_mul, ← Set.range_comp]
   apply le_antisymm
   · refine Ideal.span_le.mpr ?_
     rintro _ ⟨i, rfl⟩
@@ -341,7 +341,7 @@ theorem chainKIdeal_eq_span_mul_chainKIdeal_succAbove {r : ℕ} (f M : Fin (r + 
       rw [hf]
       exact descent_generator_eq M t ht j _
     unfold chainKIdeal chainIdeal
-    rw [Ideal.span_mul_span', Set.singleton_mul, ← Set.range_comp]
+    rw [Ideal.span_mul_span, Set.singleton_mul, ← Set.range_comp]
     apply le_antisymm
     · refine Ideal.span_le.mpr ?_
       rintro _ ⟨i, rfl⟩

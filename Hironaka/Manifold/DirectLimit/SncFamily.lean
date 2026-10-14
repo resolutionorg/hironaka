@@ -294,7 +294,7 @@ theorem glue_hyp (p : Σₗ m : ℕ, (D.H m).ι) : D.glue.hyp p = D.glueHyp (ofL
 theorem glueHyp_of_not_born {m : ℕ} {j : (D.H m).ι} (hj : ¬ D.Born m j) : D.glueHyp m j = ∅ := by
   classical
   unfold glueHyp
-  rw [if_neg hj]
+  rw [ite_eq_right hj]
 
 /-- **The trace of a glued member on a piece**: the descendant of the member at that level, if the
 level is at or above the birth level, and empty below it. -/
@@ -304,7 +304,7 @@ theorem preimage_toLimit_glueHyp {m : ℕ} {j : (D.H m).ι} (hj : D.Born m j) (m
   classical
   ext x
   unfold glueHyp
-  rw [if_pos hj]
+  rw [ite_eq_left hj]
   simp only [mem_preimage, mem_iUnion, mem_image]
   constructor
   · rintro ⟨m', h, y, hy, hxy⟩
@@ -316,7 +316,7 @@ theorem preimage_toLimit_glueHyp {m : ℕ} {j : (D.H m).ι} (hj : D.Born m j) (m
       exact hy
     rw [← hx₀] at hy₀
     by_cases hmm : m ≤ m''
-    · rw [dif_pos hmm]
+    · rw [dite_eq_left hmm]
       have e := D.iter_trans hmm (le_max_right m' m'') j
       rw [← e, ← mem_preimage, D.preimage_iter_hyp_iter] at hy₀
       exact hy₀
@@ -338,15 +338,15 @@ theorem preimage_toLimit_glueHyp {m : ℕ} {j : (D.H m).ι} (hj : D.Born m j) (m
       exact hy₀
   · intro hx
     by_cases hmm : m ≤ m''
-    · rw [dif_pos hmm] at hx
+    · rw [dite_eq_left hmm] at hx
       exact ⟨m'', hmm, x, hx, rfl⟩
-    · rw [dif_neg hmm] at hx
+    · rw [dite_eq_right hmm] at hx
       exact absurd hx (notMem_empty x)
 
 /-- The trace of the glued member of the birth of a member `b` of a piece is `b`. -/
 theorem preimage_toLimit_glueHyp_birth (m' : ℕ) (b : (D.H m').ι) :
     c.toLimit m' ⁻¹' D.glueHyp (D.birth m' b).1 (D.birth m' b).2 = (D.H m').hyp b := by
-  rw [D.preimage_toLimit_glueHyp (D.born_birth m' b), dif_pos (D.birth_le m' b), D.iter_birth]
+  rw [D.preimage_toLimit_glueHyp (D.born_birth m' b), dite_eq_left (D.birth_le m' b), D.iter_birth]
 
 /-- The membership of a point of the limit over a piece in a glued member. -/
 theorem toLimit_mem_glueHyp_iff (m : ℕ) (j : (D.H m).ι) (m'' : ℕ) (x : c.X m'') :
@@ -355,9 +355,9 @@ theorem toLimit_mem_glueHyp_iff (m : ℕ) (j : (D.H m).ι) (m'' : ℕ) (x : c.X 
   by_cases hj : D.Born m j
   · rw [← mem_preimage, D.preimage_toLimit_glueHyp hj]
     by_cases hmm : m ≤ m''
-    · rw [dif_pos hmm]
+    · rw [dite_eq_left hmm]
       exact ⟨fun hx => ⟨hj, hmm, hx⟩, fun ⟨_, _, hx⟩ => hx⟩
-    · rw [dif_neg hmm]
+    · rw [dite_eq_right hmm]
       exact ⟨fun hx => absurd hx (notMem_empty x), fun ⟨_, h, _⟩ => absurd h hmm⟩
   · rw [D.glueHyp_of_not_born hj]
     exact ⟨fun hx => absurd hx (notMem_empty _), fun ⟨h, _⟩ => absurd h hj⟩
@@ -417,7 +417,7 @@ theorem isClosedSubmanifold_glueHyp (hH : ∀ m, (D.H m).IsSnc ψ) (m : ℕ) (j 
   obtain ⟨φ, σ, hxφ, hadapt⟩ := ((hH m'').1 (D.iter h j)).exists_adaptedChart x hx
   refine ⟨c.limitChart m'' φ, σ, c.toLimit_mem_limitChart_source m'' φ hxφ,
     c.isAdaptedChart_limitChart ψ m'' ?_ hadapt⟩
-  rw [D.preimage_toLimit_glueHyp hj, dif_pos h]
+  rw [D.preimage_toLimit_glueHyp hj, dite_eq_left h]
 
 /-- The member of a piece through `x` corresponding to a glued member through the image of `x`:
 its descendant at that level (`toLimit_mem_glueHyp_iff`). -/

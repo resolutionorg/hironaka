@@ -137,7 +137,7 @@ theorem closedUnderSigma_hasDim (n : ℕ) :
       Sigma.desc fun i => (Ts i).X.left ↘ Spec (.of k) := by
     apply Sigma.hom_ext
     intro i
-    rw [Sigma.ι_desc_assoc, Sigma.ι_desc, h.2.1 i]
+    rw [Sigma.ι_comp_desc_assoc, Sigma.ι_comp_desc, h.2.1 i]
   have hloc : IsZariskiLocalAtSource (@SmoothOfRelativeDimension n) :=
     @HasRingHomProperty.instIsZariskiLocalAtSource _ _ inferInstance
   have hP : SmoothOfRelativeDimension n (Sigma.desc fun i => (Ts i).X.left ↘ Spec (.of k)) :=

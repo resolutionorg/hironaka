@@ -102,13 +102,14 @@ theorem span_image_pow_eq_span_monomials (s : Set (Fin n)) (m : ℕ) :
         (1 : R) = ∏ i, x i ^ α i := ⟨0, ⟨by simp, fun _ _ => rfl⟩, by simp⟩
     exact ((Ideal.eq_top_iff_one _).mpr (Ideal.subset_span h1)).symm
   | succ m ih =>
-    rw [pow_succ, ih, Ideal.span_mul_span']
+    rw [pow_succ, ih, Ideal.span_mul_span]
     refine le_antisymm (Ideal.span_le.mpr ?_) (Ideal.span_le.mpr ?_)
     · rintro _ ⟨a, ⟨α, ⟨hα, hs⟩, rfl⟩, b, ⟨i, hi, rfl⟩, rfl⟩
       refine Ideal.subset_span ⟨α + Finsupp.single i 1, ⟨?_, ?_⟩, ?_⟩
       · rw [map_add, hα, Finsupp.degree_single]
       · intro j hj
-        rw [Finsupp.add_apply, hs j hj, Finsupp.single_apply, if_neg (fun h : i = j => hj (h ▸ hi))]
+        rw [Finsupp.add_apply, hs j hj, Finsupp.single_apply,
+          ite_eq_right (fun h : i = j => hj (h ▸ hi))]
         rfl
       · rw [prod_pow_add, prod_pow_single]
     · rintro _ ⟨α, ⟨hα, hs⟩, rfl⟩
@@ -700,7 +701,7 @@ is `Q(y)` for a polynomial `Q` of degree `≤ m` with a coefficient outside `�
 theorem exists_transformElem_eq_chartPresentation {f : R} {m : ℕ} (hf : f ∈ chartCenter x r ^ m)
     (hord : ordElem f = m) :
     ∃ Q : MvPolynomial (Fin r) R, transformElem x r f hf = chartPresentation x r Q ∧
-      Q.totalDegree ≤ m ∧ ∃ β, coeff β Q ∉ maximalIdeal R := by
+      Q.totalDegree ≤ m ∧ ∃ β, Q.coeff β ∉ maximalIdeal R := by
   classical
   obtain ⟨S, c, hS, hfeq, α₀, hα₀S, hc⟩ :=
     exists_sum_monomials_unit_coeff_of_mem_chartCenter_pow x hx r hf hord
@@ -725,9 +726,9 @@ theorem exists_transformElem_eq_chartPresentation {f : R} {m : ℕ} (hf : f ∈ 
       simp only [restrictExp_apply, id]
     omega
   · rw [coeff_sum, Finset.sum_eq_single α₀]
-    · rwa [coeff_monomial, if_pos rfl]
+    · rwa [coeff_monomial, ite_eq_left rfl]
     · intro α hα hne
-      rw [coeff_monomial, if_neg]
+      rw [coeff_monomial, ite_eq_right]
       exact fun h => hne (eq_of_restrictExp_eq' r (hS α hα).1 (hS α₀ hα₀S).1 (hS α hα).2
         (hS α₀ hα₀S).2 h)
     · intro h
@@ -741,7 +742,7 @@ theorem exists_algebraMap_eq_pow_mul_chartPresentation (f : R) (m : ℕ) (hf : o
     ∃ Q : MvPolynomial (Fin r) R,
       algebraMap R (chartRing x r) f =
           algebraMap R (chartRing x r) (x r) ^ m * chartPresentation x r Q ∧
-        ∃ β, coeff β Q ∉ maximalIdeal R := by
+        ∃ β, Q.coeff β ∉ maximalIdeal R := by
   have hmem : f ∈ chartCenter x r ^ m := by
     rw [chartCenter_eq_span_range_of_succ_eq x r hr, ← hx]
     exact mem_maximalIdeal_pow_iff_le_ordElem.mpr (by rw [hf])
@@ -794,8 +795,9 @@ theorem algebraMap_notMem_span_pow_succ (f : R) (m : ℕ) (hf : ordElem f = m) :
       at this
     rw [hmk, map_zero] at this
     exact this.symm
-  have := congrArg (MvPolynomial.coeff β) h0
-  rw [MvPolynomial.coeff_map, MvPolynomial.coeff_zero, IsLocalRing.residue_eq_zero_iff] at this
+  have := congrArg (AddMonoidAlgebra.coeff · β) h0
+  rw [MvPolynomial.coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply,
+    IsLocalRing.residue_eq_zero_iff] at this
   exact hβ this
 
 include hx hn hr in

@@ -318,7 +318,7 @@ theorem Dimg_eq_D (hs : c.SpansDerivations ℚ) (hn : n ≠ 0) (I : Ideal R) : D
   · intro f hf
     obtain ⟨i⟩ : Nonempty (Fin n) := ⟨⟨0, Nat.pos_of_ne_zero hn⟩⟩
     have key : f = c.pderiv i (c.x i * f) - c.x i * c.pderiv i f := by
-      rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, if_pos rfl, mul_one]
+      rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, ite_eq_left rfl, mul_one]
       ring
     rw [key]
     refine Ideal.sub_mem _ ?_ (Ideal.mul_mem_left _ _ ?_)
@@ -579,7 +579,7 @@ theorem D_span_singleton_x_pow (i : Fin n) {m : ℕ} (hm : 1 ≤ m) :
   · rw [Ideal.span_singleton_le_iff_mem]
     have hu : IsUnit (m : R) := isUnit_natCast R (by omega)
     have h1 : c.pderiv i (c.x i ^ m) = (m : R) * c.x i ^ (m - 1) := by
-      rw [Derivation.leibniz_pow, c.pderiv_x, if_pos rfl, smul_eq_mul, mul_one, nsmul_eq_mul]
+      rw [Derivation.leibniz_pow, c.pderiv_x, ite_eq_left rfl, smul_eq_mul, mul_one, nsmul_eq_mul]
     have h2 := Ideal.mul_mem_left _ (↑hu.unit⁻¹ : R)
       (c.pderiv_mem_D (Ideal.mem_span_singleton_self (c.x i ^ m)) i)
     rwa [h1, ← mul_assoc, IsUnit.val_inv_mul, one_mul] at h2

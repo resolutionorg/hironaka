@@ -146,7 +146,7 @@ theorem blowUpChartMap_embedCompl (σ : Fin c ↪ Fin n) (τ : Fin s ↪ Fin c) 
     rw [projCompl_embedCompl] at h1
     simp only [projCompl, Equiv.symm_apply_apply] at h1
     rw [h1]
-    simp only [embedCompl, dif_neg hj]
+    simp only [embedCompl, dite_eq_right hj]
 
 end Manifold
 

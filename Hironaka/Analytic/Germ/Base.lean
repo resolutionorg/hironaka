@@ -100,14 +100,14 @@ theorem embDomain_swapEmb_apply_zero (k : Fin (n + 1)) (ν : Fin (n + 1) →₀ 
   have h : (0 : Fin (n + 1)) = swapEmb k k := by rw [swapEmb_apply, Equiv.swap_apply_right]
   conv_lhs => rw [h]
   rw [Finsupp.embDomain_eq_mapDomain]
-  exact Finsupp.mapDomain_apply (swapEmb k).injective ν k
+  exact Finsupp.mapDomain_apply_of_injective (swapEmb k).injective ν k
 
 theorem embDomain_swapEmb_apply_k (k : Fin (n + 1)) (ν : Fin (n + 1) →₀ ℕ) :
     Finsupp.embDomain (swapEmb k) ν k = ν 0 := by
   have h : k = swapEmb k 0 := by rw [swapEmb_apply, Equiv.swap_apply_left]
   conv_lhs => rw [h]
   rw [Finsupp.embDomain_eq_mapDomain]
-  exact Finsupp.mapDomain_apply (swapEmb k).injective ν 0
+  exact Finsupp.mapDomain_apply_of_injective (swapEmb k).injective ν 0
 
 /-! ### Splitting an exponent along a set of coordinates -/
 

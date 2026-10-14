@@ -150,7 +150,7 @@ theorem strictTransformSubspace_eq_ofStalks (hY : IsClosedSubmanifold ψ Y c) (h
     (I : Manifold.IdealSheaf (structureSheaf 𝕜 E M)) :
     strictTransformSubspace hY h I =
       IdealSheaf.ofStalks _ _ (saturationStalk_hasLocalGenerators hY h I) := by
-  rw [strictTransformSubspace, dif_pos (saturationStalk_hasLocalGenerators hY h I)]
+  rw [strictTransformSubspace, dite_eq_left (saturationStalk_hasLocalGenerators hY h I)]
 
 end EqOfStalks
 

@@ -283,11 +283,12 @@ theorem right_factor (hjℓ : j ≠ ℓ) :
           (degreeOne_mem (genX A n r i hiS.1)) := by
         rw [RingEquiv.symm_apply_eq]
         exact (chartAwayEquiv_isLocalizationElem A n r ℓ hℓ hiS.1 hiS.2).symm
-      rw [hψ, overlapEquiv_awayMap_isLocalizationElem A n r j ℓ hj hℓ hjℓ hiS.1, if_neg hiS.2]
+      rw [hψ, overlapEquiv_awayMap_isLocalizationElem A n r j ℓ hj hℓ hjℓ hiS.1, ite_eq_right hiS.2]
       by_cases hij : i = j
       · subst hij
-        rw [if_pos rfl, isLocalizationElem_self, map_one, map_one, one_mul]
-      · rw [if_neg hij, if_pos hiS.1, chartAwayEquiv_isLocalizationElem A n r j hj hiS.1 hij]
+        rw [ite_eq_left rfl, isLocalizationElem_self, map_one, map_one, one_mul]
+      · rw [ite_eq_right hij, ite_eq_left hiS.1,
+          chartAwayEquiv_isLocalizationElem A n r j hj hiS.1 hij]
     · -- `x_ℓ` and the variables outside the center: constants of the chart ring
       have hψ : ψℓ.symm (X i) = fromZeroRingHom (grading (centerIdeal A n r)) _
           ((gradingZeroEquiv (centerIdeal A n r)).symm (X i)) := by
@@ -295,11 +296,11 @@ theorem right_factor (hjℓ : j ≠ ℓ) :
       rw [hψ, awayMap_fromZeroRingHom, overlapEquiv_fromZeroRingHom, chartAwayEquiv_fromZeroRingHom]
       by_cases hiℓ : i = ℓ
       · subst hiℓ
-        rw [if_pos rfl, chartSubst_X_of_mem A (center n r) j hℓ (Ne.symm hjℓ), mul_comm]
+        rw [ite_eq_left rfl, chartSubst_X_of_mem A (center n r) j hℓ (Ne.symm hjℓ), mul_comm]
       · have hir : ¬ i.val < r := fun h => hiS ⟨h, hiℓ⟩
         have hij : i ≠ j := fun h => hir (h ▸ hj)
-        rw [if_neg hiℓ, if_neg hij, if_neg hir, chartSubst_X_of_not A (center n r) j
-          (fun h => hir h.1)]
+        rw [ite_eq_right hiℓ, ite_eq_right hij, ite_eq_right hir,
+          chartSubst_X_of_not A (center n r) j (fun h => hir h.1)]
 
 /-- The left-hand side of the gluing identity through the chart of `f g`. -/
 theorem lhs_factor (hjℓ : j ≠ ℓ) :

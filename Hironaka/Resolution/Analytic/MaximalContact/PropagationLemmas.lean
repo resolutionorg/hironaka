@@ -129,11 +129,11 @@ theorem PartialDiffeomorph.isLocalDiffeomorph_comp_subtype_val
       map_target' := fun _ _ => mem_univ _
       left_inv' := by
         intro x _
-        rw [dif_pos (hleft x)]
+        rw [dite_eq_left (hleft x)]
         exact Subtype.ext (Φ.toPartialEquiv.left_inv' (hU x.2))
       right_inv' := by
         rintro _ ⟨x, hxU, rfl⟩
-        rw [dif_pos (hleft ⟨x, hxU⟩)]
+        rw [dite_eq_left (hleft ⟨x, hxU⟩)]
         exact Φ.toPartialEquiv.right_inv' (Φ.toPartialEquiv.map_source' (hU hxU))
       open_source := isOpen_univ
       open_target := (Φ.toOpenPartialHomeomorph.isOpen_image_iff_of_subset_source hU).mpr U.2
@@ -146,7 +146,7 @@ theorem PartialDiffeomorph.isLocalDiffeomorph_comp_subtype_val
           exact Φ.toPartialEquiv.map_source' (hU hxU)
         · rintro _ ⟨x, hxU, rfl⟩
           have h := hleft ⟨x, hxU⟩
-          simp only [Function.comp_apply, dif_pos h] }
+          simp only [Function.comp_apply, dite_eq_left h] }
   exact Ψ.isLocalDiffeomorphAt _ _ _ (mem_univ x₀)
 
 end Subtype

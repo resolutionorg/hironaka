@@ -173,7 +173,7 @@ theorem restrictInvFunOfPreimage_of_mem (Ψ : PartialDiffeomorph 𝓘(𝕜, E) �
         rw [(hΨ hm).trans (Ψ.right_inv hy)]
         exact (y : S).2⟩ := by
   unfold restrictInvFunOfPreimage
-  exact dif_pos hy
+  exact dite_eq_left hy
 
 omit hfd in
 /-- A local inverse of `h` restricted to the bundled hypersurfaces `h⁻¹(S)` and `S` is a partial

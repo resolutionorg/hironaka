@@ -184,7 +184,7 @@ theorem subdividesOn_cosupp_exceptionalFamily_append :
       (Fin.last _) a), q b = some (toLex (Sum.inl
         (⟨b, hb⟩ :
           ((step21Seq T hn hmax (bd m) (Fintype.card T.E.ι)).1.exceptionalFamily T.E).ι))) :=
-    fun b hb => dif_pos hb
+    fun b hb => dite_eq_left hb
   refine ⟨q, ?_, ?_⟩
   · intro b b' hb hb' heq
     have h1 := fun a => notOriginal_of_mem_cosupp_step21 T hn hmax bd hx hb a

@@ -69,16 +69,18 @@ theorem exists_prod_pow_vanishingStalk_mul {X : AnalyticManifold.{u} 𝕜 E} (G 
     congr 1
     · calc ∏ j ∈ s, vanishingStalk (𝕜 := 𝕜) (E := E) (G.hyp j) x ^ α j
           = ∏ j ∈ s, vanishingStalk (𝕜 := 𝕜) (E := E) (G.hyp j) x ^ (if j ∈ s then α j else 0) :=
-            Finset.prod_congr rfl fun j hj => by rw [if_pos hj]
+            Finset.prod_congr rfl fun j hj => by rw [ite_eq_left hj]
         _ = ∏ j ∈ s ∪ t,
               vanishingStalk (𝕜 := 𝕜) (E := E) (G.hyp j) x ^ (if j ∈ s then α j else 0) :=
-            Finset.prod_subset Finset.subset_union_left fun j _ hj => by rw [if_neg hj, pow_zero]
+            Finset.prod_subset Finset.subset_union_left fun j _ hj => by rw [ite_eq_right hj,
+              pow_zero]
     · calc ∏ j ∈ t, vanishingStalk (𝕜 := 𝕜) (E := E) (G.hyp j) x ^ β j
           = ∏ j ∈ t, vanishingStalk (𝕜 := 𝕜) (E := E) (G.hyp j) x ^ (if j ∈ t then β j else 0) :=
-            Finset.prod_congr rfl fun j hj => by rw [if_pos hj]
+            Finset.prod_congr rfl fun j hj => by rw [ite_eq_left hj]
         _ = ∏ j ∈ s ∪ t,
               vanishingStalk (𝕜 := 𝕜) (E := E) (G.hyp j) x ^ (if j ∈ t then β j else 0) :=
-            Finset.prod_subset Finset.subset_union_right fun j _ hj => by rw [if_neg hj, pow_zero]
+            Finset.prod_subset Finset.subset_union_right fun j _ hj => by rw [ite_eq_right hj,
+              pow_zero]
 
 /-- If the Jacobian stalk of `σ` and the stalk of `J` are, at every point, monomials in the
 vanishing ideals of members of the snc family `G` through the point, then `jacobianIdeal σ · J` is

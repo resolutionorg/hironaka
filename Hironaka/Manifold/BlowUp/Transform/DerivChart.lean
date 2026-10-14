@@ -174,18 +174,19 @@ theorem chartRingHom_chartDerivRing_eq_coordDerivStalk (j : Fin n) (g : chartRin
     have h1 : τ j ≠ τ m := τ.injective.ne (Ne.symm hmj)
     have h2 : τ j ≠ τ r := τ.injective.ne hjr
     rcases lt_trichotomy m r with hm | rfl | hm
-    · rw [hδx_lt m hm, if_neg h1, if_neg h2, mul_zero, mul_zero, add_zero]
-    · rw [hδx_r, if_neg h2]
-    · rw [hδx_gt m hm, if_neg h1]
+    · rw [hδx_lt m hm, ite_eq_right h1, ite_eq_right h2, mul_zero, mul_zero, add_zero]
+    · rw [hδx_r, ite_eq_right h2]
+    · rw [hδx_gt m hm, ite_eq_right h1]
   have hδx_self : j ≠ r → coordDerivStalk E ψ Φ hΦ.mem_maximalAtlas ha' (τ j)
       (germMap π h.contMDiff a' (κ.x j)) =
         if j < r then coord E ψ Φ hΦ.mem_maximalAtlas ha' (τ r) else 1 := by
     intro hjr
     have h2 : τ j ≠ τ r := τ.injective.ne hjr
     rcases lt_trichotomy j r with hj | hj | hj
-    · rw [hδx_lt j hj, if_pos rfl, if_neg h2, if_pos hj, mul_one, mul_zero, add_zero]
+    · rw [hδx_lt j hj, ite_eq_left rfl, ite_eq_right h2, ite_eq_left hj, mul_one, mul_zero,
+        add_zero]
     · exact absurd hj hjr
-    · rw [hδx_gt j hj, if_pos rfl, if_neg (not_lt.mpr hj.le)]
+    · rw [hδx_gt j hj, ite_eq_left rfl, ite_eq_right (not_lt.mpr hj.le)]
   -- the chain rule, reindexed by `τ`
   have hchain : ∀ f, coordDerivStalk E ψ Φ hΦ.mem_maximalAtlas ha' (τ j)
       (germMap π h.contMDiff a' f) =
@@ -213,7 +214,7 @@ theorem chartRingHom_chartDerivRing_eq_coordDerivStalk (j : Fin n) (g : chartRin
       rw [hL, map_mul, hχ, hχ, germMap_x_self h hφ hΦ ha' haY κ.x r τ hτr hτ,
         Finset.sum_eq_single j (fun m _ hm => by rw [hδx_ne hj.ne m hm, zero_mul])
           (fun hj' => absurd (Finset.mem_univ j) hj'),
-        hδx_self hj.ne, if_pos hj]
+        hδx_self hj.ne, ite_eq_left hj]
     · -- (75.3): `∂'_r = ∂_r + ∑_{i<r} y_i ∂_i`
       have hL : κ.chartDerivRing j j (algebraMap _ _ f) =
           algebraMap _ _ (κ.pderiv j f) +
@@ -237,13 +238,13 @@ theorem chartRingHom_chartDerivRing_eq_coordDerivStalk (j : Fin n) (g : chartRin
             else if m = j then germMap π h.contMDiff a' (κ.pderiv j f) else 0 := by
         intro m
         rcases lt_trichotomy m j with hm | rfl | hm
-        · rw [hδx_lt m hm, if_pos hm, if_neg (τ.injective.ne hm.ne'), if_pos rfl, mul_zero,
-            zero_add, mul_one]
-        · rw [hδx_r, if_pos rfl, if_neg (lt_irrefl m), if_pos rfl, one_mul]
-        · rw [hδx_gt m hm, if_neg (τ.injective.ne hm.ne), if_neg (not_lt.mpr hm.le),
-            if_neg hm.ne', zero_mul]
+        · rw [hδx_lt m hm, ite_eq_left hm, ite_eq_right (τ.injective.ne hm.ne'), ite_eq_left rfl,
+            mul_zero, zero_add, mul_one]
+        · rw [hδx_r, ite_eq_left rfl, ite_eq_right (lt_irrefl m), ite_eq_left rfl, one_mul]
+        · rw [hδx_gt m hm, ite_eq_right (τ.injective.ne hm.ne), ite_eq_right (not_lt.mpr hm.le),
+            ite_eq_right hm.ne', zero_mul]
       rw [Finset.sum_congr rfl fun m _ => hR m, Finset.sum_ite, Finset.sum_ite_eq',
-        if_pos (by simp), add_comm]
+        ite_eq_left (by simp), add_comm]
       congr 1
       refine Finset.sum_congr rfl fun m hm => ?_
       rw [map_mul, hχy m (Finset.mem_filter.mp hm).2, hχ]
@@ -256,7 +257,7 @@ theorem chartRingHom_chartDerivRing_eq_coordDerivStalk (j : Fin n) (g : chartRin
       rw [hL, hχ,
         Finset.sum_eq_single j (fun m _ hm => by rw [hδx_ne hj.ne' m hm, zero_mul])
           (fun hj' => absurd (Finset.mem_univ j) hj'),
-        hδx_self hj.ne', if_neg (not_lt.mpr hj.le), one_mul]
+        hδx_self hj.ne', ite_eq_right (not_lt.mpr hj.le), one_mul]
   -- on the `y_k`
   have hGy : ∀ k, k < r → χ (κ.chartDerivRing r j (chartYR κ.x r k)) =
       coordDerivStalk E ψ Φ hΦ.mem_maximalAtlas ha' (τ j) (χ (chartYR κ.x r k)) := by

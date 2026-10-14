@@ -114,7 +114,7 @@ theorem ordElem_le_of_completionMap_eq_subst
   have hΨr : Ψ (X r) = algebraMap B (AdicCompletion (maximalIdeal B) B) (φ (x r)) := by
     have h := hΨ (X r)
     rw [cohenEquiv_X, completionMap_algebraMap, subst_X (hasSubst_chartSubst r),
-      chartSubst, if_neg (lt_irrefl r)] at h
+      chartSubst, ite_eq_right (lt_irrefl r)] at h
     exact h.symm
   -- `Ψ G' = ι' g`, cancelling `ι' (φ (x r)) ^ m` in the domain `B̂`
   have hcancel : algebraMap B (AdicCompletion (maximalIdeal B) B) (φ (x r)) ^ m * Ψ G' =
@@ -129,7 +129,7 @@ theorem ordElem_le_of_completionMap_eq_subst
     rw [← hΨr]
     refine (map_ne_zero_iff Ψ Ψ.injective).mpr fun hX => ?_
     have h := congrArg (coeff (Finsupp.single r 1)) hX
-    rw [coeff_X, if_pos rfl, map_zero] at h
+    rw [coeff_X, ite_eq_left rfl, map_zero] at h
     exact one_ne_zero h
   have hΨG : Ψ G' = algebraMap B (AdicCompletion (maximalIdeal B) B) g :=
     mul_left_cancel₀ (pow_ne_zero m hne) hcancel

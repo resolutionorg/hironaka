@@ -62,7 +62,7 @@ theorem map_centerIdeal_three_subst (j : Fin 3) :
       exact Ideal.mem_span_singleton_self _
   · rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe]
     have h : (X j : MvPolynomial (Fin 3) k) = subst k j (X j) := by
-      rw [subst_X, if_neg (fun h => h rfl)]
+      rw [subst_X, ite_eq_right (fun h => h rfl)]
     rw [h]
     exact Ideal.mem_map_of_mem _ (X_mem_centerIdeal k 3 3 j.isLt)
 
@@ -81,21 +81,21 @@ theorem map_centerIdeal_two_subst_of_lt (j : Fin 3) (hj : j.val < 2) :
       exact Ideal.mem_span_singleton_self _
   · rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe]
     have h : (X j : MvPolynomial (Fin 3) k) = subst k j (X j) := by
-      rw [subst_X, if_neg (fun h => h rfl)]
+      rw [subst_X, ite_eq_right (fun h => h rfl)]
     rw [h]
     exact Ideal.mem_map_of_mem _ (X_mem_centerIdeal k 3 2 hj)
 
 /-- The `z`-axis' ideal `(x, y)` becomes `(xz, yz) = (z) · (x, y)` in the chart of `z`. -/
 theorem map_centerIdeal_two_subst_two :
     (centerIdeal k 3 2).map (subst k 2) = Ideal.span {X 2} * centerIdeal k 3 2 := by
-  rw [centerIdeal, coordinateIdeal, Ideal.map_span, Ideal.span_mul_span', Set.singleton_mul,
+  rw [centerIdeal, coordinateIdeal, Ideal.map_span, Ideal.span_mul_span, Set.singleton_mul,
     Set.image_image, Set.image_image]
   congr 1
   refine Set.image_congr fun i hi => ?_
   have hi2 : i ≠ 2 := by
     rintro rfl
     exact absurd hi (by decide)
-  rw [subst_X, if_pos hi2, mul_comm]
+  rw [subst_X, ite_eq_left hi2, mul_comm]
 
 /-- `(x, y)` is the kernel of killing the variables `x` and `y` (`killPred`). -/
 theorem centerIdeal_two_eq_ker :

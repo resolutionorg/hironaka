@@ -211,7 +211,7 @@ theorem markedTransform_W_le (hm : I.LeOrdAlong Z.support (m : ℕ∞)) :
         hPtr x.1
     _ ≤ ∏ j : Fin (m + 1),
           (I.markedTransform Z m).derivativeIter (Z.blowUpπ ≫ f) j ^ x.1 j :=
-        Finset.prod_le_prod (fun j _ => bot_le) fun j _ =>
+        Finset.prod_le_prod₀ (fun j _ => bot_le) fun j _ =>
           pow_le_pow_left₀ bot_le
             (markedTransform_derivativeIter_le f n Z I hm (Nat.lt_succ_iff.mp j.2)) _
     _ ≤ W (Z.blowUpπ ≫ f) (I.markedTransform Z m) m s := prod_le_W _ x.2

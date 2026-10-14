@@ -179,13 +179,13 @@ proof of [Kol07, Theorem 103]). -/
 theorem ofTunedClass_seq_of_maxOrd_eq (T : Triple k) (hT : C T) (h : T.I.maxOrd = m) :
     (OrderSeqAssignment.ofTunedClass B hmC hDom).seq T hT =
       B.seq (T.tuned m (hmC T hT)) (hDom T hT h) :=
-  dif_pos h
+  dite_eq_left h
 
 /-- Below the mark, the reduced functor on `C` returns the empty sequence (the remark after
 [Kol07, Theorem 68]: the case `max-ord I < m` is trivial). -/
 theorem ofTunedClass_seq_of_maxOrd_lt (T : Triple k) (hT : C T) (h : T.I.maxOrd < m) :
     (OrderSeqAssignment.ofTunedClass B hmC hDom).seq T hT = BlowUpSequence.nil T.X.left :=
-  dif_neg h.ne
+  dite_eq_right h.ne
 
 /-- The value of the reduced functor on `C` is a smooth blow-up sequence of order `m` starting
 with `(X, I, E)`: the first proof field of `ofTunedClass`. -/
@@ -312,13 +312,13 @@ variable [CharZero k] {n m : ℕ} {Dom' : Triple k → Prop}
 theorem ofTuned_seq_of_maxOrd_eq (T : Triple k) (hT : Triple.BOClass n m T)
     (h : T.I.maxOrd = m) :
     (OrderSeqAssignment.ofTuned B hDom).seq T hT = B.seq (T.tuned m hT.1) (hDom T hT h) :=
-  dif_pos h
+  dite_eq_left h
 
 /-- Below the mark, the reduced functor returns the empty sequence. -/
 theorem ofTuned_seq_of_maxOrd_lt (T : Triple k) (hT : Triple.BOClass n m T)
     (h : T.I.maxOrd < m) : (OrderSeqAssignment.ofTuned B hDom).seq T hT =
       BlowUpSequence.nil T.X.left :=
-  dif_neg h.ne
+  dite_eq_right h.ne
 
 /-- The value of the reduced functor is a smooth blow-up sequence of order `m` starting with
 `(X, I, E)`: the first proof field of `ofTuned`. -/

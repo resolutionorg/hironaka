@@ -187,7 +187,7 @@ theorem cosupport_strictTransformSubspace_eq_closure_of_hasLocalGenerators
   -- a finitely generated ideal below a directed union lies below one member
   have hcomp : IsCompactElement ((hY.idealSheaf.pullback π h.contMDiff).stalkIdeal a' ^ k) :=
     (Submodule.fg_iff_compact _).mp (IsNoetherian.noetherian _)
-  obtain ⟨s, hs⟩ := CompleteLattice.IsCompactElement.exists_finset_of_le_iSup (hk := hcomp)
+  obtain ⟨s, hs⟩ := IsCompactElement.exists_finset_of_le_iSup (hk := hcomp)
     (f := fun j : ℕ => Submodule.colon ((I.pullback π h.contMDiff).stalkIdeal a')
       (SetLike.coe ((hY.idealSheaf.pullback π h.contMDiff).stalkIdeal a' ^ j))) (h := hk)
   have hmono : Monotone fun j : ℕ => Submodule.colon ((I.pullback π h.contMDiff).stalkIdeal a')

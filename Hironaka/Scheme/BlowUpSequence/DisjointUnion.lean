@@ -96,7 +96,7 @@ theorem IsSigmaOf.isIso_sigmaDesc (h : T.IsSigmaOf Ts ι) : IsIso (Sigma.desc ι
 theorem IsSigmaOf.isOpenImmersion (h : T.IsSigmaOf Ts ι) (i : σ) : IsOpenImmersion (ι i) := by
   have := h.isIso_sigmaDesc
   have : IsOpenImmersion (Sigma.ι (fun i => (Ts i).X.left) i) := (sigmaOpenCover _).map_prop i
-  rw [← Sigma.ι_desc ι i]
+  rw [← Sigma.ι_comp_desc ι i]
   infer_instance
 
 /-- The pieces of a disjoint union cover it. -/
@@ -107,7 +107,7 @@ theorem IsSigmaOf.iUnion_range (h : T.IsSigmaOf Ts ι) :
   obtain ⟨y, rfl⟩ := (Sigma.desc ι).homeomorph.surjective x
   obtain ⟨⟨i, z⟩, rfl⟩ := (sigmaMk fun i => (Ts i).X.left).surjective y
   refine Set.mem_iUnion.2 ⟨i, z, ?_⟩
-  simp only [Scheme.Hom.homeomorph_apply, sigmaMk_mk, ← Scheme.Hom.comp_apply, Sigma.ι_desc]
+  simp only [Scheme.Hom.homeomorph_apply, sigmaMk_mk, ← Scheme.Hom.comp_apply, Sigma.ι_comp_desc]
 
 /-- Distinct pieces of a disjoint union are disjoint. -/
 theorem IsSigmaOf.disjoint_range (h : T.IsSigmaOf Ts ι) {i j : σ} (hij : i ≠ j) :
@@ -117,7 +117,7 @@ theorem IsSigmaOf.disjoint_range (h : T.IsSigmaOf Ts ι) {i j : σ} (hij : i ≠
   rintro x ⟨a, rfl⟩ ⟨b, hb⟩
   have e : Sigma.ι (fun i => (Ts i).X.left) j b = Sigma.ι (fun i => (Ts i).X.left) i a := by
     apply (Sigma.desc ι).homeomorph.injective
-    simpa only [Scheme.Hom.homeomorph_apply, ← Scheme.Hom.comp_apply, Sigma.ι_desc] using hb
+    simpa only [Scheme.Hom.homeomorph_apply, ← Scheme.Hom.comp_apply, Sigma.ι_comp_desc] using hb
   exact hij (congrArg Sigma.fst ((sigmaι_eq_iff _ _ _ _ _).1 e)).symm
 
 /-- The class of triples with affine underlying scheme is closed under finite disjoint unions

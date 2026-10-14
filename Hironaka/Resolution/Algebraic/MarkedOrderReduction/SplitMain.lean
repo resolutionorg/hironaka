@@ -140,9 +140,9 @@ theorem le_monomialPart (I : X.IdealSheafData) : I ≤ monomialPart I E := by
     by_cases h : x ∈ (E.component i).support
     · rw [finprod_stalk_eq_of_specializes E hE (hη i h).1 (hη i h).2, hs i h,
         Ideal.span_singleton_pow]
-      simp only [q, dif_pos h]
+      simp only [q, dite_eq_left h]
     · rw [finprod_stalk_eq_one_of_notMem E h]
-      simp only [q, dif_neg h, Ideal.span_singleton_one, Ideal.one_eq_top]
+      simp only [q, dite_eq_right h, Ideal.span_singleton_one, Ideal.one_eq_top]
   rw [Finset.prod_congr rfl fun i _ => hF i, Ideal.prod_span_singleton]
   intro g hg
   rw [Ideal.mem_span_singleton]
@@ -151,22 +151,22 @@ theorem le_monomialPart (I : X.IdealSheafData) : I ≤ monomialPart I E := by
     by_cases hd : x ∈ (E.component d).support
     · refine Or.inr ⟨z (c ⟨d, hd⟩), prime_of_parameters hz.1.symm hz.2 _,
         ⟨(I.ord (Classical.choose (exists_genericPoint_specializes _ hd))).toNat, by
-          simp only [q, dif_pos hd]⟩, ?_⟩
+          simp only [q, dite_eq_left hd]⟩, ?_⟩
       intro i _ hid
       by_cases hi : x ∈ (E.component i).support
-      · simp only [q, dif_pos hi]
+      · simp only [q, dite_eq_left hi]
         intro hdvd
         exact not_dvd_of_ne hz.1.symm hz.2 (fun e => hid (congrArg Subtype.val (hc e)).symm)
           ((prime_of_parameters hz.1.symm hz.2 _).dvd_of_dvd_pow hdvd)
-      · simp only [q, dif_neg hi]
+      · simp only [q, dite_eq_right hi]
         exact (prime_of_parameters hz.1.symm hz.2 _).not_dvd_one
-    · exact Or.inl (by simp only [q, dif_neg hd]; exact isUnit_one)
+    · exact Or.inl (by simp only [q, dite_eq_right hd]; exact isUnit_one)
   · intro i _
     by_cases hi : x ∈ (E.component i).support
-    · simp only [q, dif_pos hi]
+    · simp only [q, dite_eq_left hi]
       have := stalkIdeal_le_pow_of_specializes f E hE I (hη i hi).1 (hη i hi).2 hg
       rwa [hs i hi, Ideal.span_singleton_pow, Ideal.mem_span_singleton] at this
-    · simp only [q, dif_neg hi]
+    · simp only [q, dite_eq_right hi]
       exact one_dvd g
 
 /-- `M(I)` divides `I`: `I ⊆ M(I)` and `M(I)` is invertible. -/

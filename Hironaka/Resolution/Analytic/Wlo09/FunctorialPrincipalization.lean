@@ -14,8 +14,6 @@ public import Hironaka.Resolution.Analytic.ModelTransport.Principalization
 public import Hironaka.Resolution.Analytic.ModelTransport.Pushforward
 public import Hironaka.Resolution.Analytic.OrderReduction.Stage.Concrete
 public import Hironaka.Resolution.Analytic.Principalization.Assembly
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
-import SourceAttr
 import Hironaka.Manifold.FiniteSuccession.BoundaryFamily
 import Hironaka.Manifold.FiniteSuccession.Functor.Pullback
 import Hironaka.Manifold.IdealSheaf.Pullback
@@ -569,9 +567,11 @@ Relation to the source.
   than single blow-up sequences, as Kollár's passage to analytic spaces provides them [Kol07, 44];
   the commutation with smooth morphisms [Kol07, 34.1] is asserted, in Włodarczyk's form, for local
   analytic isomorphisms only, the smooth morphisms of relative dimension zero; and the commutation
-  with change of fields [Kol07, 34.2] has no counterpart. -/
-@[source Wlo09 "Theorem 2.0.3" "p. 35",
-  source Kol07 "Theorem 35" (comment := "analytic manifolds, empty boundary; item 44")]
+  with change of fields [Kol07, 34.2] has no counterpart.
+
+Source statement: [Wlo09, Theorem 2.0.3, p. 35]
+
+Source statement: [Kol07, Theorem 35] (analytic manifolds, empty boundary; item 44) -/
 theorem exists_functorial_principalization (𝕜 : Type) [RCLike 𝕜] :
     ∃ P : CompatibleFamilyAssignment (IdealSheafPair.{u, v} 𝕜),
       -- (1)–(3)

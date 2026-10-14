@@ -158,7 +158,8 @@ theorem cp1BOAt_succ_of_cp1BMOAt (n : ℕ) (h : CP1BMOAt k n) : CP1BOAt k (n + 1
         (Scheme.IdealSheafData.le_maxOrd _ η')
   change CP1For ((((tower stage0 (n + 1)).bo 1).functor k).seq T' hbo') T'.I T'.E η'
   rw [tower_succ_bo, boOfBMO_functor,
-    Hironaka.BO.functor_seq_localClass (n + 1) 1 _ T' hbo' hH hmaxc, maxContactCase, dif_pos h1']
+    Hironaka.BO.functor_seq_localClass (n + 1) 1 _ T' hbo' hH hmaxc, maxContactCase,
+    dite_eq_left h1']
   -- CP1 for the tuned triple; its ideal is `T'.I`
   have hIt : (T'.tuned 1 hbo'.1).I = T'.I := Scheme.IdealSheafData.W_tuningParam_one _ _
   have hη'' : η' ∈ (T'.tuned 1 hbo'.1).I.support.genericPoints := by

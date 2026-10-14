@@ -103,7 +103,7 @@ instance : IsAffine T.coverScheme := isAffine_coverScheme T
 @[reassoc]
 theorem ι_comp_coverDesc (i : T.affineCover.I₀) :
     Sigma.ι (fun i => T.affineCover.X i) i ≫ T.coverDesc = T.affineCover.f i :=
-  Sigma.ι_desc _ _
+  Sigma.ι_comp_desc _ _
 
 set_option backward.isDefEq.respectTransparency.types false in
 /-- `g` is smooth: locality on the source (`IsZariskiLocalAtSource.sigmaDesc`; the unifier option
@@ -153,7 +153,7 @@ theorem coverDesc_comp :
     T.coverDesc ≫ (T.X.left ↘ Spec (CommRingCat.of k)) =
       Sigma.desc fun i => T.affineCover.f i ≫ (T.X.left ↘ Spec (CommRingCat.of k)) :=
   Sigma.hom_ext _ _ fun i => by
-    rw [ι_comp_coverDesc_assoc, Sigma.ι_desc]
+    rw [ι_comp_coverDesc_assoc, Sigma.ι_comp_desc]
 
 -- Same unifier option as `smooth_coverDesc` above: `IsZariskiLocalAtSource.sigmaDesc` needs the
 -- instance `IsZariskiLocalAtSource (@SmoothOfRelativeDimension n)`, which the

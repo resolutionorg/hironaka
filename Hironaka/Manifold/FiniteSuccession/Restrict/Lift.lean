@@ -376,13 +376,13 @@ def liftToBlowUp (p : D.hS'.toAnalyticManifold) : D.space :=
 theorem liftToBlowUp_of_mem {p : D.hS'.toAnalyticManifold}
     (hp : π (p : strictTransformSet π Y S).1 ∈ Y) :
     D.liftToBlowUp p = (D.fChartB p hp).symm (D.fChartS' p hp p) := by
-  rw [liftToBlowUp, dif_pos hp]
+  rw [liftToBlowUp, dite_eq_left hp]
 
 theorem liftToBlowUp_of_notMem {p : D.hS'.toAnalyticManifold}
     (hp : π (p : strictTransformSet π Y S).1 ∉ Y) :
     D.liftToBlowUp p = (D.isBlowUp_proj.bijOn_compl.surjOn
       (show D.blowDown p ∈ (D.hS.preimageVal Y)ᶜ from hp)).choose := by
-  rw [liftToBlowUp, dif_neg hp]
+  rw [liftToBlowUp, dite_eq_right hp]
 
 /-- The lift is over `S`. -/
 theorem proj_liftToBlowUp (p : D.hS'.toAnalyticManifold) :
@@ -489,13 +489,13 @@ def liftFromBlowUp (q : D.space) : D.hS'.toAnalyticManifold :=
 theorem liftFromBlowUp_of_mem {q : D.space}
     (hq : ((D.proj q : D.hS.toAnalyticManifold) : S).1 ∈ Y) :
     D.liftFromBlowUp q = (D.rChartS' q hq).symm (D.rChartB q hq q) := by
-  rw [liftFromBlowUp, dif_pos hq]
+  rw [liftFromBlowUp, dite_eq_left hq]
 
 theorem liftFromBlowUp_of_notMem {q : D.space}
     (hq : ((D.proj q : D.hS.toAnalyticManifold) : S).1 ∉ Y) :
     D.liftFromBlowUp q = ((bijOn_restrictMap_compl D.hS D.isBlowUp D.hS').surjOn
       (show D.proj q ∈ (D.hS.preimageVal Y)ᶜ from hq)).choose := by
-  rw [liftFromBlowUp, dif_neg hq]
+  rw [liftFromBlowUp, dite_eq_right hq]
 
 /-- The lift is over `S`. -/
 theorem blowDown_liftFromBlowUp (q : D.space) : D.blowDown (D.liftFromBlowUp q) = D.proj q := by

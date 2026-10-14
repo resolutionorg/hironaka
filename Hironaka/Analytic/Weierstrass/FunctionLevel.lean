@@ -87,9 +87,9 @@ theorem evalSeries_liftTail (a : MvPowerSeries (Fin m) K) (x : Fin (m + 1) → K
       beta_reduce
       rw [← h, Finsupp.cons_tail]⟩
     have : coeff μ (liftTail a : MvPowerSeries (Fin (m + 1)) K) = 0 := by
-      rw [← Finsupp.cons_tail μ, coeff_cons_liftTail, if_neg h0]
+      rw [← Finsupp.cons_tail μ, coeff_cons_liftTail, ite_eq_right h0]
     simp [this]
-  · rw [coeff_cons_liftTail, if_pos rfl, monomialEval_cons, pow_zero, one_mul]
+  · rw [coeff_cons_liftTail, ite_eq_left rfl, monomialEval_cons, pow_zero, one_mul]
 
 theorem monomialEval_pi_single (t : K) (ν : Fin (m + 1) →₀ ℕ) :
     monomialEval (Pi.single 0 t) ν = if ν = Finsupp.single 0 (ν 0) then t ^ ν 0 else 0 := by
@@ -118,7 +118,7 @@ theorem evalSeries_axis (F : MvPowerSeries (Fin (m + 1)) K) (y : Fin 1 → K) :
     rw [monomialEval_pi_single] at hμ'
     have hμeq : μ = Finsupp.single 0 (μ 0) := by
       by_contra h
-      exact hμ' (if_neg h)
+      exact hμ' (ite_eq_right h)
     exact ⟨Finsupp.single 0 (μ 0), by
       beta_reduce
       rw [Finsupp.single_eq_same, ← hμeq]⟩
@@ -133,11 +133,12 @@ theorem isRegularIn_of_axis_eq {F : MvPowerSeries (Fin (m + 1)) K} {E : MvPowerS
       if d ≤ k then coeff (Finsupp.single 0 (k - d)) E else 0 := fun k => by
     rw [← coeff_single_axis, h, X_pow_eq, coeff_monomial_mul]
     by_cases hdk : d ≤ k
-    · rw [if_pos (Finsupp.single_le_iff.mpr (by rwa [Finsupp.single_eq_same])), if_pos hdk,
-        one_mul, ← Finsupp.single_tsub]
-    · rw [if_neg (fun h' => hdk (by simpa using Finsupp.single_le_iff.mp h')), if_neg hdk]
-  refine ⟨fun k hk => by rw [key, if_neg (not_le.mpr hk)], ?_⟩
-  rw [key, if_pos le_rfl, tsub_self, Finsupp.single_zero, coeff_zero_eq_constantCoeff_apply]
+    · rw [ite_eq_left (Finsupp.single_le_iff.mpr (by rwa [Finsupp.single_eq_same])),
+        ite_eq_left hdk, one_mul, ← Finsupp.single_tsub]
+    · rw [ite_eq_right (fun h' => hdk (by simpa using Finsupp.single_le_iff.mp h')),
+        ite_eq_right hdk]
+  refine ⟨fun k hk => by rw [key, ite_eq_right (not_le.mpr hk)], ?_⟩
+  rw [key, ite_eq_left le_rfl, tsub_self, Finsupp.single_zero, coeff_zero_eq_constantCoeff_apply]
   exact hE
 
 /-! ### Preparation at function level -/

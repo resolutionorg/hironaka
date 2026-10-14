@@ -210,7 +210,7 @@ theorem exists_coords_x_zero_eq_over (hk : c.IsLinearOver k) (hs : c.SpansDeriva
   · rw [reindex_x, Equiv.swap_apply_left, hx]
   · have := ((c.changeCoordsOfLinearSpans hk hs _ hi).reindex
       (Equiv.swap ⟨0, i.pos⟩ i)).pderiv_x ⟨0, i.pos⟩ ⟨0, i.pos⟩
-    rwa [if_pos rfl, reindex_x, Equiv.swap_apply_left, hx] at this
+    rwa [ite_eq_left rfl, reindex_x, Equiv.swap_apply_left, hx] at this
 
 /-- The local construction of maximal contact [Kol07, 51.2] over `k`: for `ord I = m ≥ 1` some
 `h ∈ MC_m(I)` of order `1` is the first coordinate of a coordinate system `x'` with `∂'₁ h = 1`. -/
@@ -257,7 +257,7 @@ theorem derivation_coe_eq_sum
     (δ : Derivation K (MvPowerSeries (Fin n) K) (MvPowerSeries (Fin n) K))
     (P : MvPolynomial (Fin n) K) :
     δ (P : MvPowerSeries (Fin n) K) =
-      ∑ i, δ (X i) * MvPowerSeries.pderiv K i (P : MvPowerSeries (Fin n) K) := by
+      ∑ i, δ (X i) * MvPowerSeries.pderiv (R := K) i (P : MvPowerSeries (Fin n) K) := by
   classical
   induction P using MvPolynomial.induction_on with
   | C a =>
@@ -274,12 +274,12 @@ theorem derivation_coe_eq_sum
     ring
   | mul_X p i hp =>
     rw [MvPolynomial.coe_mul, MvPolynomial.coe_X, Derivation.leibniz, smul_eq_mul, smul_eq_mul, hp]
-    have hpd : ∀ j, MvPowerSeries.pderiv K j ((p : MvPowerSeries (Fin n) K) * X i) =
+    have hpd : ∀ j, MvPowerSeries.pderiv (R := K) j ((p : MvPowerSeries (Fin n) K) * X i) =
         (p : MvPowerSeries (Fin n) K) * (if i = j then 1 else 0) +
-          X i * MvPowerSeries.pderiv K j (p : MvPowerSeries (Fin n) K) := fun j => by
+          X i * MvPowerSeries.pderiv (R := K) j (p : MvPowerSeries (Fin n) K) := fun j => by
       rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, MvPowerSeries.pderiv_X, Pi.single_apply]
     simp only [hpd, mul_add, Finset.sum_add_distrib, mul_ite, mul_one, mul_zero]
-    rw [Finset.sum_ite_eq Finset.univ i, if_pos (Finset.mem_univ i), Finset.mul_sum]
+    rw [Finset.sum_ite_eq Finset.univ i, ite_eq_left (Finset.mem_univ i), Finset.mul_sum]
     congr 1
     · ring
     · exact Finset.sum_congr rfl fun j _ => by ring
@@ -291,7 +291,7 @@ variable (K n) [CharZero K]
 theorem mvPowerSeries_isLinearOver :
     (RegularCoords.stdMvPowerSeries K n).IsLinearOver K := by
   intro i a
-  change (MvPowerSeries.pderiv K i).restrictScalars ℚ
+  change (MvPowerSeries.pderiv (R := K) i).restrictScalars ℚ
     (algebraMap K (MvPowerSeries (Fin n) K) a) = 0
   rw [Derivation.restrictScalars_apply, MvPowerSeries.algebraMap_apply, Algebra.algebraMap_self,
     RingHom.id_apply, MvPowerSeries.pderiv_C]
@@ -303,8 +303,8 @@ coefficients. -/
 theorem mvPowerSeries_spansDerivations :
     (RegularCoords.stdMvPowerSeries K n).SpansDerivations K := by
   intro δ f
-  change δ f = ∑ i, δ (X i) * MvPowerSeries.pderiv K i f
-  have hmem : ∀ N : ℕ, δ f - ∑ i, δ (X i) * MvPowerSeries.pderiv K i f ∈
+  change δ f = ∑ i, δ (X i) * MvPowerSeries.pderiv (R := K) i f
+  have hmem : ∀ N : ℕ, δ f - ∑ i, δ (X i) * MvPowerSeries.pderiv (R := K) i f ∈
       maximalIdeal (MvPowerSeries (Fin n) K) ^ N := by
     intro N
     have hr := sub_truncTotal_mem f N
@@ -313,13 +313,15 @@ theorem mvPowerSeries_spansDerivations :
         maximalIdeal (MvPowerSeries (Fin n) K) ^ N := by
       rw [← map_sub]
       exact derivation_mem_maximalIdeal_pow δ N hr
-    have h2 : ∑ i, δ (X i) * MvPowerSeries.pderiv K i f -
-        ∑ i, δ (X i) * MvPowerSeries.pderiv K i (truncTotal (N + 1) f : MvPolynomial (Fin n) K) ∈
+    have h2 : ∑ i, δ (X i) * MvPowerSeries.pderiv (R := K) i f -
+        ∑ i, δ (X i) *
+          MvPowerSeries.pderiv (R := K) i (truncTotal (N + 1) f : MvPolynomial (Fin n) K) ∈
         maximalIdeal (MvPowerSeries (Fin n) K) ^ N := by
       rw [← Finset.sum_sub_distrib]
       refine Ideal.sum_mem _ fun i _ => ?_
       rw [← mul_sub, ← map_sub]
-      exact Ideal.mul_mem_left _ _ (derivation_mem_maximalIdeal_pow (MvPowerSeries.pderiv K i) N hr)
+      exact Ideal.mul_mem_left _ _
+        (derivation_mem_maximalIdeal_pow (MvPowerSeries.pderiv (R := K) i) N hr)
     have := Ideal.sub_mem _ h1 h2
     rwa [hP, sub_sub_sub_cancel_right] at this
   have := mem_of_forall_mem_sup_pow (I := (⊥ : Ideal (MvPowerSeries (Fin n) K)))

@@ -15,6 +15,7 @@ import Hironaka.Algebra.RegularSmooth.SmoothImpliesRegular
 import Hironaka.Algebra.RegularSmooth.Trdeg
 import Hironaka.Scheme.Smooth.AdaptedCoordinates
 import Hironaka.Scheme.Smooth.SubschemeStalk
+import Mathlib.AlgebraicGeometry.Morphisms.Finite
 
 /-!
 # Smooth divisors are smooth of relative dimension `n − 1`

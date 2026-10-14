@@ -262,10 +262,10 @@ theorem subdivides_collapse (F : DivisorFamily X) (p : F.ι → Prop) [Decidable
   -- `WithBot {a // ¬ p a}` only by unfolding)
   let q : F.ι → Option (WithBot {a : F.ι // ¬ p a}) := fun j =>
     if hj : p j then some ⊥ else some ((⟨j, hj⟩ : {a : F.ι // ¬ p a}) : WithBot {a : F.ι // ¬ p a})
-  have hq_pos : ∀ j (hj : p j), q j = some ⊥ := fun j hj => dif_pos hj
+  have hq_pos : ∀ j (hj : p j), q j = some ⊥ := fun j hj => dite_eq_left hj
   have hq_neg : ∀ j (hj : ¬ p j),
       q j = some ((⟨j, hj⟩ : {a : F.ι // ¬ p a}) : WithBot {a : F.ι // ¬ p a}) :=
-    fun j hj => dif_neg hj
+    fun j hj => dite_eq_right hj
   refine ⟨q, ?_, ?_⟩
   · change ∀ j j', x ∈ (F.component j).support → x ∈ (F.component j').support → q j = q j' →
       j = j'

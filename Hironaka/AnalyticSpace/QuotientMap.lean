@@ -479,9 +479,9 @@ noncomputable def liftStalk (x : X) : Ideal (X.presheaf.stalk x) :=
 theorem liftStalk_of_mem {x : X} (h : x ∈ J.support) :
     liftStalk X J J' x =
       (stalkIdeal (quotientSpace X J) J' ⟨x, h⟩).comap ((ι X J).stalkMap ⟨x, h⟩).hom :=
-  dif_pos h
+  dite_eq_left h
 
-theorem liftStalk_of_notMem {x : X} (h : x ∉ J.support) : liftStalk X J J' x = ⊤ := dif_neg h
+theorem liftStalk_of_notMem {x : X} (h : x ∉ J.support) : liftStalk X J J' x = ⊤ := dite_eq_right h
 
 /-- The stalk map of `ι` carries the germ of an ambient section to the germ of its class family. -/
 theorem stalkMap_ι_germ (W : Opens X) (z : support X J) (hz : z.1 ∈ W) (a : X.presheaf.obj (op W)) :

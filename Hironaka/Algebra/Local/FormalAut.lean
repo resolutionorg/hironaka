@@ -489,7 +489,7 @@ theorem bijective_substAlgHom_of_isUnit_linearPart {a : Fin n → MvPowerSeries 
           (A⁻¹ * A) j l • (X l : MvPowerSeries (Fin n) K) := fun l => by
         rw [Matrix.mul_apply, Finset.sum_smul]
       simp only [this, Matrix.nonsing_inv_mul _ hdet, Matrix.one_apply, ite_smul, one_smul,
-        zero_smul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+        zero_smul, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
     rw [key]
     exact Ideal.sum_mem _ fun i _ =>
       Submodule.smul_of_tower_mem _ _ (sub_linearSubst_linearPart_mem_sq ha i)
@@ -504,7 +504,7 @@ theorem bijective_substAlgHom_of_isUnit_linearPart {a : Fin n → MvPowerSeries 
     have : ∀ l, ∑ j, (A i j * A⁻¹ j l) • a l = (A * A⁻¹) i l • a l := fun l => by
       rw [Matrix.mul_apply, Finset.sum_smul]
     simp only [this, Matrix.mul_nonsing_inv _ hdet, Matrix.one_apply, ite_smul, one_smul,
-      zero_smul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      zero_smul, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
   have hfun : ⇑(substAlgHom (R := K) ha) =
       ⇑(substAlgHom (R := K) hbS) ∘ ⇑(substAlgHom (R := K) (hasSubst_linearSubst A)) :=
     funext hcomp
@@ -599,11 +599,13 @@ theorem linearPart_shiftSubst (i : Fin n) (c : MvPowerSeries (Fin n) K) :
     rw [shiftSubst_self, map_add, coeff_X, Pi.single_eq_same, one_mul]
     by_cases hl : j = l
     · subst hl; simp
-    · rw [if_neg hl, if_neg fun h' => hl (Finsupp.single_left_injective one_ne_zero h').symm]
+    · rw [ite_eq_right hl,
+        ite_eq_right fun h' => hl (Finsupp.single_left_injective one_ne_zero h').symm]
   · rw [shiftSubst_of_ne h, coeff_X, Pi.single_eq_of_ne h, zero_mul, add_zero]
     by_cases hl : j = l
     · subst hl; simp
-    · rw [if_neg hl, if_neg fun h' => hl (Finsupp.single_left_injective one_ne_zero h').symm]
+    · rw [ite_eq_right hl,
+        ite_eq_right fun h' => hl (Finsupp.single_left_injective one_ne_zero h').symm]
 
 theorem det_linearPart_shiftSubst (i : Fin n) (c : MvPowerSeries (Fin n) K) :
     (linearPart (shiftSubst i c)).det = 1 + coeff (Finsupp.single i 1) c := by

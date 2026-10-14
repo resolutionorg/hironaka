@@ -196,17 +196,17 @@ noncomputable def ofTunedClass {m : ℕ} {C Dom' : Triple k → Prop}
     else Scheme.BlowUpSequence.nil T.X.left
   isOrderSeq T hT := by
     by_cases h : T.I.maxOrd = m
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       obtain ⟨d, hd⟩ := T.smoothOfRelativeDimension
       exact (Hironaka.BD.isOrderSeq_iff_tuned (T.X.left ↘ Spec (.of k)) d _ T.I T.E m h
         (hmC T hT)).mpr (B.isOrderSeq (T.tuned m (hmC T hT)) (hDom T hT h))
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       exact ⟨isSmooth_nil _, fun i => i.elim0⟩
   noEmptyCenters T hT := by
     by_cases h : T.I.maxOrd = m
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       exact B.noEmptyCenters _ _
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       exact fun i => i.elim0
 
 /-- **The reduction to the tuned ideal**, Step 1 of the proof of [Kol07, Theorem 103] ("thus from

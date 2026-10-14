@@ -150,8 +150,8 @@ theorem mem_partialPresentationIdeal_of_C_mul_mem (h : IsWeaklyRegular A (a :: L
     intro _ p hp
     rw [partialPresentationIdeal_zero, Ideal.mem_bot] at hp ⊢
     ext m
-    have := congrArg (coeff m) hp
-    rw [coeff_C_mul, coeff_zero] at this
+    have := congrArg (AddMonoidAlgebra.coeff · m) hp
+    rw [coeff_C_mul, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
     exact isSMulRegular_head a g h (by simpa using this)
   | succ j ih =>
     intro hj p hp

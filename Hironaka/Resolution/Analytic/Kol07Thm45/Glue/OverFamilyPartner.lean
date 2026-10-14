@@ -93,9 +93,9 @@ theorem index_eq_of_span_singleton_eq_of_span_range_eq {R : Type*} [CommRing R]
         (fun i => (IsLocalRing.maximalIdeal R).toCotangent ⟨z i, hz i⟩) i = 0 := by
     rw [Finset.sum_pair hab]
     beta_reduce
-    rw [if_pos rfl, if_neg (Ne.symm hab), one_smul, neg_smul, ← hva, add_neg_cancel]
+    rw [ite_eq_left rfl, ite_eq_right (Ne.symm hab), one_smul, neg_smul, ← hva, add_neg_cancel]
   have h0 := linearIndependent_iff'.mp hli {a, b} _ hsum a (Finset.mem_insert_self a {b})
-  rw [if_pos rfl] at h0
+  rw [ite_eq_left rfl] at h0
   exact one_ne_zero h0
 
 end IsRegularLocalRing

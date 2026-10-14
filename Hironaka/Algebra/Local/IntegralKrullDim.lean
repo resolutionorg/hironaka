@@ -63,7 +63,7 @@ theorem ringKrullDim_le_of_isIntegral (f : A →+* B) (hf : f.IsIntegral) :
   refine Order.krullDim_le_of_strictMono (PrimeSpectrum.comap f) ?_
   intro p q hpq
   rw [← PrimeSpectrum.asIdeal_lt_asIdeal] at hpq ⊢
-  exact Ideal.IsIntegral.comap_lt_comap (R := A) hpq
+  exact Ideal.IsIntegral.under_lt_under (R := A) hpq
 
 /-- Lying over: for an injective integral homomorphism every prime of `A` is the preimage of a
 prime of `B` containing a given prime `Q₀` whose preimage lies below it (going up; `Q₀ = ⊥`
@@ -164,7 +164,7 @@ theorem ringKrullDim_quotient_eq_krullDim_zeroLocus (I : Ideal R) :
 theorem ringKrullDim_quotient_radical (I : Ideal R) :
     ringKrullDim (R ⧸ I.radical) = ringKrullDim (R ⧸ I) := by
   rw [ringKrullDim_quotient_eq_krullDim_zeroLocus, ringKrullDim_quotient_eq_krullDim_zeroLocus]
-  exact Order.krullDim_eq_of_orderIso (OrderIso.setCongr _ _ (PrimeSpectrum.zeroLocus_radical I))
+  exact Order.krullDim_eq_of_orderIso (Set.orderIsoOfEq _ _ (PrimeSpectrum.zeroLocus_radical I))
 
 /-- A quotient by a larger ideal has smaller dimension. -/
 theorem ringKrullDim_quotient_le_quotient_of_le {I J : Ideal R} (h : I ≤ J) :

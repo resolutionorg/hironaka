@@ -261,7 +261,7 @@ noncomputable def parentOf {k' : ℕ} (σ' : Fin k' ≃ Components (E.comap h)) 
 omit [Flat h] in
 theorem parentOf_of_lt {k' : ℕ} (σ' : Fin k' ≃ Components (E.comap h)) {c' : ℕ} (hc : c' < k') :
     Φ.parentOf h σ' c' = (Φ.faceAt (h ((σ' ⟨c', hc⟩).2 : Y))).sup id :=
-  dif_pos hc
+  dite_eq_left hc
 
 include f in
 /-- The parent of a component: the image of the generic point is a generic point of the parent
@@ -302,18 +302,18 @@ theorem refinesAlong_ofDivisorFamily (hE : E.IsSnc) (hΦ : Φ.Realizes E e)
       c' ≤ (Φ.piece (Φ.parentOf h σ' c')).preimage h.continuous := by
     intro c' hc'
     change (if hc : c' < k' then Closeds.closure {((σ' ⟨c', hc⟩).2 : Y)} else ⊥) ≤ _
-    rw [dif_pos hc']
+    rw [dite_eq_left hc']
     exact Closeds.closure_le.mpr (Set.singleton_subset_iff.mpr (hspec c' hc').2.2.1)
   refine ⟨rfl, fun c' hc' => (hspec c' hc').1, fun c' hc' => ?_, fun c' hc' => ?_, hle, ?_, ?_⟩
   · have hck : c' < k' := hc'
     change Φ.label (Φ.parentOf h σ' c') =
       (if hc : c' < k' then ((e (σ' ⟨c', hc⟩).1 : Fin Φ.nextLabel) : ℕ) else 0)
-    rw [dif_pos hck]
+    rw [dite_eq_left hck]
     exact (hspec c' hck).2.1
   · have hck : c' < k' := hc'
     change Φ.a (Φ.parentOf h σ' c') =
       (if hc : c' < k' then Φ.exponentAt (h ((σ' ⟨c', hc⟩).2 : Y)) else 0)
-    rw [dif_pos hck]
+    rw [dite_eq_left hck]
     exact (hspec c' hck).2.2.2.2.symm
   · -- the preimage of a piece is the union of its children
     intro c hc
@@ -355,7 +355,7 @@ theorem refinesAlong_ofDivisorFamily (hE : E.IsSnc) (hΦ : Φ.Realizes E e)
       refine ⟨(σ'.symm p : ℕ), Finset.mem_filter.mpr ⟨Finset.mem_range.mpr hc', hρc⟩, ?_⟩
       change y ∈ (if hc'' : (σ'.symm p : ℕ) < k' then
         Closeds.closure {((σ' ⟨(σ'.symm p : ℕ), hc''⟩).2 : Y)} else ⊥)
-      rw [dif_pos hc', hσ]
+      rw [dite_eq_left hc', hσ]
       exact specializes_iff_mem_closure.mp hη'y
     · rw [Finset.sup_le_iff]
       intro c' hc'
@@ -372,7 +372,7 @@ theorem refinesAlong_ofDivisorFamily (hE : E.IsSnc) (hΦ : Φ.Realizes E e)
       rw [← (hspec c₁ hk₁).2.1, ← (hspec c₂ hk₂).2.1, hρeq]
     change Disjoint (if hc : c₁ < k' then Closeds.closure {((σ' ⟨c₁, hc⟩).2 : Y)} else ⊥)
       (if hc : c₂ < k' then Closeds.closure {((σ' ⟨c₂, hc⟩).2 : Y)} else ⊥)
-    rw [dif_pos hk₁, dif_pos hk₂, disjoint_iff_inf_le]
+    rw [dite_eq_left hk₁, dite_eq_left hk₂, disjoint_iff_inf_le]
     intro y hy
     rw [← SetLike.mem_coe, Closeds.coe_inf] at hy
     obtain ⟨h1, h2⟩ := hy

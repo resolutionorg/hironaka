@@ -44,21 +44,22 @@ label. -/
 def extendLabel (ℓ : ℕ) : ℕ := if ℓ < D.nextLabel then σ ℓ else P.nextLabel
 
 theorem extendComp_of_lt {c : ℕ} (hc : c < D.nextComp) : extendComp ρ D P S_D S c = ρ c :=
-  if_pos hc
+  ite_eq_left hc
 
 theorem extendComp_newComp {Q : Finset ℕ} (hQ : Q ∈ S_D) :
     extendComp ρ D P S_D S (D.newComp S_D Q) = P.newComp S (Q.image ρ) := by
-  rw [extendComp, if_neg (not_lt.mpr (D.nextComp_le_newComp S_D Q))]
+  rw [extendComp, ite_eq_right (not_lt.mpr (D.nextComp_le_newComp S_D Q))]
   have : (S_D.filter fun Q' => D.newComp S_D Q' = D.newComp S_D Q) = {Q} :=
     Finset.eq_singleton_iff_unique_mem.mpr ⟨Finset.mem_filter.mpr ⟨hQ, rfl⟩,
       fun Q' hQ' =>
         D.newComp_injOn S_D (Finset.mem_filter.mp hQ').1 hQ (Finset.mem_filter.mp hQ').2⟩
   rw [this, Finset.sup_singleton]
 
-theorem extendLabel_of_lt {ℓ : ℕ} (hℓ : ℓ < D.nextLabel) : extendLabel σ D P ℓ = σ ℓ := if_pos hℓ
+theorem extendLabel_of_lt {ℓ : ℕ} (hℓ : ℓ < D.nextLabel) : extendLabel σ D P ℓ = σ ℓ :=
+  ite_eq_left hℓ
 
 theorem extendLabel_nextLabel : extendLabel σ D P D.nextLabel = P.nextLabel :=
-  if_neg (lt_irrefl _)
+  ite_eq_right (lt_irrefl _)
 
 theorem image_extendComp_of_lt {T : Finset ℕ} (hT : ∀ c ∈ T, c < D.nextComp) :
     T.image (extendComp ρ D P S_D S) = T.image ρ :=

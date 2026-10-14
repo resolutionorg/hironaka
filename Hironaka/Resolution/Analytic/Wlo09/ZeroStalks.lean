@@ -73,12 +73,12 @@ theorem hasLocalGenerators_unitOn (Z : Set M) (hZ : IsClopen Z) :
   by_cases ha : a ∈ Z
   · refine ⟨⟨Z, hZ.isOpen⟩, ha, Unit, inferInstance, fun _ => 1, fun b hb => ?_⟩
     beta_reduce
-    rw [if_pos (show b ∈ Z from hb), eq_comm, Ideal.eq_top_iff_one]
+    rw [ite_eq_left (show b ∈ Z from hb), eq_comm, Ideal.eq_top_iff_one]
     exact Ideal.subset_span ⟨(), map_one _⟩
   · refine ⟨⟨Zᶜ, hZ.isClosed.isOpen_compl⟩, ha, Empty, inferInstance, fun i => i.elim,
       fun b hb => ?_⟩
     beta_reduce
-    rw [if_neg (show b ∉ Z from hb)]
+    rw [ite_eq_right (show b ∉ Z from hb)]
     simp only [Set.range_eq_empty, Ideal.span_empty]
 
 open scoped Classical in
@@ -89,12 +89,12 @@ def unitOn (Z : Set M) (hZ : IsClopen Z) : IdealSheaf M :=
 theorem stalkIdeal_unitOn_of_mem {Z : Set M} (hZ : IsClopen Z) {x : M} (hx : x ∈ Z) :
     (unitOn Z hZ).stalkIdeal x = ⊤ := by
   classical
-  rw [unitOn, Manifold.IdealSheaf.stalkIdeal_ofStalks, if_pos hx]
+  rw [unitOn, Manifold.IdealSheaf.stalkIdeal_ofStalks, ite_eq_left hx]
 
 theorem stalkIdeal_unitOn_of_notMem {Z : Set M} (hZ : IsClopen Z) {x : M} (hx : x ∉ Z) :
     (unitOn Z hZ).stalkIdeal x = ⊥ := by
   classical
-  rw [unitOn, Manifold.IdealSheaf.stalkIdeal_ofStalks, if_neg hx]
+  rw [unitOn, Manifold.IdealSheaf.stalkIdeal_ofStalks, ite_eq_right hx]
 
 /-! ### An ideal sheaf made the unit ideal on the components where it vanishes -/
 

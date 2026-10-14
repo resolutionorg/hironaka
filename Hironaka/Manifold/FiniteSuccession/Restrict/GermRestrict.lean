@@ -88,11 +88,11 @@ theorem coord_notMem_span_coord_sub_const (ψ : E ≃L[𝕜] (Fin n → 𝕜))
     const 𝕜 E M a (eval 𝕜 E M a (coord E ψ Φ hΦ ha (v j))) with hy
   obtain ⟨cf, hcf⟩ := Ideal.mem_span_range_iff_exists_fun.mp h
   have h1 : coordDerivStalk E ψ Φ hΦ ha k (coord E ψ Φ hΦ ha k) = 1 := by
-    rw [coordDerivStalk_coord_eq_ite, if_pos rfl]
+    rw [coordDerivStalk_coord_eq_ite, ite_eq_left rfl]
   have hδy : ∀ j, coordDerivStalk E ψ Φ hΦ ha k (y j) = 0 := fun j => by
     rw [hy]
-    simp only [map_sub, coordDerivStalk_coord_eq_ite, coordDerivStalk_const, if_neg (hv j).symm,
-      sub_zero]
+    simp only [map_sub, coordDerivStalk_coord_eq_ite, coordDerivStalk_const,
+      ite_eq_right (hv j).symm, sub_zero]
   have h2 : (1 : (structureSheaf 𝕜 E M).presheaf.stalk a) ∈ Ideal.span (Set.range y) := by
     rw [← h1, ← hcf, map_sum]
     refine Ideal.sum_mem _ fun j _ => ?_

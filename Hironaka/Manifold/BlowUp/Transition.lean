@@ -222,7 +222,7 @@ theorem analyticOnNhd_blowUpTransition :
   · subst hik; rw [blowUpTransition_self]; exact analyticAt_id
   have hvk : v (σ k) ≠ 0 := (mem_blowUpTransitionDomain σ v hik).mp hv
   refine analyticAt_pi_of_forall fun j => ?_
-  simp only [blowUpTransition, hik, if_false]
+  simp only [blowUpTransition, hik, ite_false]
   split_ifs
   · exact (analyticAt_apply _ _).mul (analyticAt_apply _ _)
   · exact (analyticAt_apply _ _).inv hvk

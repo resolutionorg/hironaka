@@ -74,23 +74,23 @@ noncomputable def mixLinear (i₀ : Fin n) (c : Fin n → ℂ) (hc : c i₀ = 1)
       simp only [LinearMap.comp_apply, LinearMap.id_apply, mixFwd_apply, mixBwd_apply]
       by_cases hi : i = i₀
       · subst hi
-        simp only [if_true]
+        simp only [ite_true]
         rw [← Finset.add_sum_erase _ _ (Finset.mem_univ i), hc, one_mul]
         have : ∀ j ∈ Finset.univ.erase i,
             c j * (if j = i then x i - ∑ k ∈ Finset.univ.erase i, c k * x k else x j) =
               c j * x j :=
-          fun j hj => by rw [if_neg (Finset.ne_of_mem_erase hj)]
-        rw [Finset.sum_congr rfl this]; simp only [if_true]; ring
+          fun j hj => by rw [ite_eq_right (Finset.ne_of_mem_erase hj)]
+        rw [Finset.sum_congr rfl this]; simp only [ite_true]; ring
       · simp [hi])
     (LinearMap.ext fun x => funext fun i => by
       classical
       simp only [LinearMap.comp_apply, LinearMap.id_apply, mixFwd_apply, mixBwd_apply]
       by_cases hi : i = i₀
       · subst hi
-        simp only [if_true]
+        simp only [ite_true]
         have : ∀ j ∈ Finset.univ.erase i,
             c j * (if j = i then ∑ k, c k * x k else x j) = c j * x j :=
-          fun j hj => by rw [if_neg (Finset.ne_of_mem_erase hj)]
+          fun j hj => by rw [ite_eq_right (Finset.ne_of_mem_erase hj)]
         rw [Finset.sum_congr rfl this, ← Finset.add_sum_erase _ _ (Finset.mem_univ i), hc,
           one_mul]
         ring
@@ -116,7 +116,7 @@ theorem substConv_mixLinear_convX_self (i₀ : Fin n) (c : Fin n → ℂ) (hc : 
     (evalSeries_conv_mul_eventually _ _).trans (Eventually.of_forall fun x => by
       simp only [evalSeries_algebraMap_conv, evalSeries_convX])
   refine ((Filter.eventually_all.2 h1).mono fun x hx => ?_)
-  simp only [Function.comp_apply, evalSeries_convX, mixLinear_apply, if_true]
+  simp only [Function.comp_apply, evalSeries_convX, mixLinear_apply, ite_true]
   exact (Finset.sum_congr rfl fun j _ => (hx j).symm)
 
 /-- Substituting `mixLinear` fixes the coordinate series `X_i`, `i ≠ i₀`. -/
@@ -125,7 +125,7 @@ theorem substConv_mixLinear_convX_of_ne (i₀ : Fin n) (c : Fin n → ℂ) (hc :
     substConv (mixLinear i₀ c hc : (Fin n → ℂ) →L[ℂ] (Fin n → ℂ)) (convX ℂ i) = convX ℂ i := by
   refine Conv.ext_of_evalSeries_eventuallyEq
     ((evalSeries_substConv _ _).trans (Eventually.of_forall fun x => ?_))
-  simp only [Function.comp_apply, evalSeries_convX, mixLinear_apply, if_neg hi]
+  simp only [Function.comp_apply, evalSeries_convX, mixLinear_apply, ite_eq_right hi]
 
 /-- Substituting `mixLinear` fixes every series embedded from the base along an injection `e`
 whose range avoids `i₀` (the base coordinates are untouched). -/
@@ -139,7 +139,7 @@ theorem substConv_mixLinear_convEmbed (i₀ : Fin n) (c : Fin n → ℂ) (hc : c
   congr 1
   funext j
   simp only [Function.comp_apply, mixLinear_apply]
-  rw [if_neg]
+  rw [ite_eq_right]
   exact fun h => hi₀ ⟨j, h⟩
 
 end Analytic

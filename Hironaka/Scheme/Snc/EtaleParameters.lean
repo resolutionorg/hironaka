@@ -93,7 +93,7 @@ theorem linearIndependent_toCotangent_of_derivations {k : Type v} [CommRing k] [
     have : ∀ j, D i (a j * w j) = (if i = j then a j else 0) + w j * D i (a j) := by
       intro j
       rw [(D i).leibniz, hD i j, smul_eq_mul, smul_eq_mul, mul_ite, mul_one, mul_zero]
-    simp only [this, Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    simp only [this, Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
   have hai : a i ∈ maximalIdeal R := by
     have h1 : D i (∑ j, a j * w j) ∈ maximalIdeal R :=
       (D i).map_mem_maximalIdeal_of_mem_sq hmem
@@ -137,11 +137,11 @@ theorem exists_span_eq_maximalIdeal_of_linearIndependent {ι : Type*} (w : ι �
   have hℓ : ∀ x : B, (maximalIdeal R).toCotangent ⟨ℓ x, hℓmem x⟩ = x := by
     intro x
     by_cases h : (x : CotangentSpace R) ∈ Set.range v
-    · have h1 : ℓ x = w (Classical.choose h) := dif_pos h
+    · have h1 : ℓ x = w (Classical.choose h) := dite_eq_left h
       have h2 : v (Classical.choose h) = x := Classical.choose_spec h
       rw [← h2]
       exact congrArg _ (Subtype.ext h1)
-    · have h1 : ℓ x = (ℓ₀ x : R) := dif_neg h
+    · have h1 : ℓ x = (ℓ₀ x : R) := dite_eq_right h
       rw [← hℓ₀ x]
       exact congrArg _ (Subtype.ext h1)
   obtain ⟨hspan, hcard⟩ :=
@@ -161,7 +161,7 @@ theorem exists_span_eq_maximalIdeal_of_linearIndependent {ι : Type*} (w : ι �
     rw [Equiv.symm_apply_apply]
     change (if h : (v i : CotangentSpace R) ∈ Set.range v then w (Classical.choose h)
       else (ℓ₀ ⟨v i, hvB i⟩ : R)) = w i
-    rw [dif_pos h]
+    rw [dite_eq_left h]
     exact congrArg w (hli.injective (Classical.choose_spec h))
 
 end Regular
@@ -213,7 +213,7 @@ theorem exists_span_eq_maximalIdeal_of_etale_coordinates
     by_cases hcc : c = c'
     · subst hcc
       simp
-    · rw [Pi.single_eq_of_ne (Ne.symm hcc), if_neg hcc, map_zero]
+    · rw [Pi.single_eq_of_ne (Ne.symm hcc), ite_eq_right hcc, map_zero]
   choose D hDy using hD
   -- localize to `A_q`
   let w : {c : Fin n // y c ∈ q} → Localization.AtPrime q := fun c => algebraMap A _ (y c.1)
@@ -229,7 +229,7 @@ theorem exists_span_eq_maximalIdeal_of_etale_coordinates
     by_cases hij : i = j
     · subst hij
       simp
-    · rw [if_neg hij, if_neg (fun h => hij (Subtype.ext h)), map_zero]
+    · rw [ite_eq_right hij, ite_eq_right (fun h => hij (Subtype.ext h)), map_zero]
   exact exists_span_eq_maximalIdeal_of_linearIndependent w hw
     (linearIndependent_toCotangent_of_derivations w hw Dl hDl)
 

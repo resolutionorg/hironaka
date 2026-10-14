@@ -87,7 +87,7 @@ noncomputable def relabel (c : ℕ) : ℕ :=
   if h : c < k₂ then (σ₁.symm (σ₂ ⟨c, h⟩) : ℕ) else 0
 
 theorem relabel_of_lt {c : ℕ} (hc : c < k₂) : relabel σ₁ σ₂ c = (σ₁.symm (σ₂ ⟨c, hc⟩) : ℕ) :=
-  dif_pos hc
+  dite_eq_left hc
 
 theorem relabel_lt {c : ℕ} (hc : c < k₂) : relabel σ₁ σ₂ c < k₁ := by
   rw [relabel_of_lt σ₁ σ₂ hc]
@@ -103,15 +103,15 @@ variable {L : ℕ} (a : X → ℕ) (e : E.ι ≃o Fin L)
 
 theorem ofDivisorFamily_piece_of_lt' {k : ℕ} (σ : Fin k ≃ Components E) {c : ℕ} (hc : c < k) :
     (ofDivisorFamily E a e σ).piece c = Closeds.closure {((σ ⟨c, hc⟩).2 : X)} :=
-  dif_pos hc
+  dite_eq_left hc
 
 theorem ofDivisorFamily_label_of_lt' {k : ℕ} (σ : Fin k ≃ Components E) {c : ℕ} (hc : c < k) :
     (ofDivisorFamily E a e σ).label c = (e (σ ⟨c, hc⟩).1 : ℕ) :=
-  dif_pos hc
+  dite_eq_left hc
 
 theorem ofDivisorFamily_a_of_lt' {k : ℕ} (σ : Fin k ≃ Components E) {c : ℕ} (hc : c < k) :
     (ofDivisorFamily E a e σ).a c = a ((σ ⟨c, hc⟩).2 : X) :=
-  dif_pos hc
+  dite_eq_left hc
 
 /-- The piece of the relabelled index is the piece itself. -/
 theorem piece_relabel {c : ℕ} (hc : c < k₂) :

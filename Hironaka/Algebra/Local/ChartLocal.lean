@@ -313,7 +313,7 @@ theorem chartChain_lt_succ (hx : maximalIdeal R = Ideal.span (Set.range x))
     (hn : (n : WithBot ℕ∞) = ringKrullDim R) {i : ℕ} (hi : i < n) :
     chartChain x r i < chartChain x r (i + 1) := by
   unfold chartChain
-  rw [if_pos hi]
+  rw [ite_eq_left hi]
   split_ifs with h
   · exact chartPrime_lt_succ x r hx hn (by omega)
   · have : i = n - 1 := by omega
@@ -334,7 +334,7 @@ theorem natCast_le_height_chartOrigin (hx : maximalIdeal R = Ideal.span (Set.ran
     rw [← PrimeSpectrum.asIdeal_le_asIdeal]
     change chartChain x r n ≤ chartOrigin x r
     unfold chartChain
-    rw [if_neg (lt_irrefl n)]
+    rw [ite_eq_right (lt_irrefl n)]
   have h := Order.length_le_height hlast
   rw [PrimeSpectrum.height_eq_orderHeight ⟨_, hP⟩]
   exact h

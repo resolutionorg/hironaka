@@ -247,7 +247,7 @@ theorem chartDeriv_chartY (j k : Fin n) :
   rcases lt_trichotomy j r with hj | hjr | hj
   · rw [c.chartDeriv_of_lt r hj, Derivation.smul_apply, smul_eq_mul]
     by_cases hk : k < r
-    · rw [awayPderiv_chartY_of_lt c r j hk, if_neg hj.ne]
+    · rw [awayPderiv_chartY_of_lt c r j hk, ite_eq_right hj.ne]
       split_ifs
       · linear_combination hu
       · ring
@@ -257,13 +257,14 @@ theorem chartDeriv_chartY (j k : Fin n) :
   · rw [hjr, c.chartDeriv_self r, Derivation.add_apply, Derivation.finset_sum_apply]
     simp only [Derivation.smul_apply, smul_eq_mul]
     by_cases hk : k < r
-    · rw [awayPderiv_chartY_of_lt c r r hk, if_pos (rfl : r = r), if_neg hk.ne']
+    · rw [awayPderiv_chartY_of_lt c r r hk, ite_eq_left (rfl : r = r), ite_eq_right hk.ne']
       rw [Finset.sum_eq_single k]
-      · rw [awayPderiv_chartY_of_lt c r k hk, if_pos (rfl : k = k), if_neg hk.ne,
+      · rw [awayPderiv_chartY_of_lt c r k hk, ite_eq_left (rfl : k = k), ite_eq_right hk.ne,
           chartY_of_lt c.x r hk]
         ring
       · intro i hi hik
-        rw [awayPderiv_chartY_of_lt c r i hk, if_neg hik, if_neg (Finset.mem_filter.mp hi).2.ne]
+        rw [awayPderiv_chartY_of_lt c r i hk, ite_eq_right hik,
+          ite_eq_right (Finset.mem_filter.mp hi).2.ne]
         ring
       · intro hk'
         exact absurd (Finset.mem_filter.mpr ⟨Finset.mem_univ k, hk⟩ :
@@ -273,11 +274,11 @@ theorem chartDeriv_chartY (j k : Fin n) :
           chartY c.x r i * c.awayPderiv r i (chartY c.x r k) = 0 := by
         intro i hi
         rw [awayPderiv_chartY_of_not_lt c r i hk,
-          if_neg (fun (h : i = k) => hk (h ▸ (Finset.mem_filter.mp hi).2)), mul_zero]
+          ite_eq_right (fun (h : i = k) => hk (h ▸ (Finset.mem_filter.mp hi).2)), mul_zero]
       rw [Finset.sum_eq_zero this, add_zero]
   · rw [c.chartDeriv_of_gt r hj]
     by_cases hk : k < r
-    · rw [awayPderiv_chartY_of_lt c r j hk, if_neg hj.ne', if_neg (hk.trans hj).ne']
+    · rw [awayPderiv_chartY_of_lt c r j hk, ite_eq_right hj.ne', ite_eq_right (hk.trans hj).ne']
       ring
     · exact awayPderiv_chartY_of_not_lt c r j hk
 
@@ -514,9 +515,10 @@ section Shift
 variable (x : Fin n → R) (r : Fin n) (a : Fin n → R)
 
 theorem shiftCoords_of_lt {i : Fin n} (hi : i < r) : shiftCoords x r a i = x i - a i * x r :=
-  if_pos hi
+  ite_eq_left hi
 
-theorem shiftCoords_of_not_lt {i : Fin n} (hi : ¬ i < r) : shiftCoords x r a i = x i := if_neg hi
+theorem shiftCoords_of_not_lt {i : Fin n} (hi : ¬ i < r) : shiftCoords x r a i = x i :=
+  ite_eq_right hi
 
 /-- `x'ᵢ/x_r = yᵢ − ãᵢ` for `i < r`. -/
 theorem mk_shiftCoords_of_lt {i : Fin n} (hi : i < r) :
@@ -604,9 +606,9 @@ theorem coe_chartYROf_shiftCoords (i : Fin n) :
         Localization.Away (x r)) := by
   rw [coe_chartYROf]
   by_cases hi : i < r
-  · rw [if_pos hi, chartYOf_of_lt _ _ _ hi, mk_shiftCoords_of_lt x r a hi, Subalgebra.coe_sub,
+  · rw [ite_eq_left hi, chartYOf_of_lt _ _ _ hi, mk_shiftCoords_of_lt x r a hi, Subalgebra.coe_sub,
       Subalgebra.coe_algebraMap, coe_chartYROf, chartYOf_of_lt _ _ _ hi]
-  · rw [if_neg hi, chartYOf_of_not_lt _ _ _ hi, coe_chartYROf, chartYOf_of_not_lt _ _ _ hi,
+  · rw [ite_eq_right hi, chartYOf_of_not_lt _ _ _ hi, coe_chartYROf, chartYOf_of_not_lt _ _ _ hi,
       shiftCoords_of_not_lt x r a hi]
 
 /-- `𝔪'_a` is the origin of the chart for the shifted coordinates (membership correspondence
@@ -782,7 +784,7 @@ theorem _root_.exists_equiv_image_eq {n : ℕ} (s : Finset (Fin n)) {kk : Fin n}
   let τ : Fin r ≃ Fin r := Equiv.swap i₀ ρ₀
   let f₀ : Fin n → Fin n := fun i => if h : i.val < r then g₀ (τ ⟨i.val, h⟩) else i
   let s₀ : Finset (Fin n) := Finset.univ.filter fun i => i.val < r
-  have hf₀ : ∀ i (h : i.val < r), f₀ i = g₀ (τ ⟨i.val, h⟩) := fun i h => dif_pos h
+  have hf₀ : ∀ i (h : i.val < r), f₀ i = g₀ (τ ⟨i.val, h⟩) := fun i h => dite_eq_left h
   have hinj : Set.InjOn f₀ ↑s₀ := by
     intro i hi j hj hij
     have hi' : i.val < r := (Finset.mem_filter.mp (Finset.mem_coe.mp hi)).2

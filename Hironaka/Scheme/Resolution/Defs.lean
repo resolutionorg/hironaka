@@ -12,8 +12,8 @@ public import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
 /-!
 # The vocabulary of the algebraic main theorems
 
-The notions in which the algebraic main theorems are stated: Hironaka's Main Theorems II and II(N)
-and Corollaries 1 and 3 [Hir64], Kollár's Theorems 35 and 36 [Kol07] and Włodarczyk's embedded
+The notions in which the algebraic main theorems are stated: [Hironaka's Main Theorems II and II(N)
+and Corollaries 1 and 3][Hir64], [Kollár's Theorems 35 and 36][Kol07] and Włodarczyk's embedded
 desingularization [Wlo05, Theorem 1.0.2]. The functorial theorems assert the existence of a
 *blow-up sequence functor* [Kol07, Definition 31] with a property of each value and a
 functoriality package [Kol07, 34]; they differ in the inputs of the functor and in the property of

@@ -14,6 +14,8 @@ import Hironaka.Manifold.Submanifold.Generators
 import Hironaka.Manifold.Submanifold.Manifold
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ContDiff
 import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+import Mathlib.Geometry.Manifold.MFDeriv.NormedSpace
+import Mathlib.LinearAlgebra.Dual.Lemmas
 
 /-!
 # Adapted charts from generators

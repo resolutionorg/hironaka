@@ -127,7 +127,7 @@ theorem transformElem_not_mem :
     Ideal.mem_span_singleton, X_pow_dvd_iff] at h0
   have h2 := h0 2 (by norm_num)
   rw [show c * X ^ 2 + X ^ 2 = C (-(1 / 2 : ℚ) + 1) * X ^ 2 by rw [C_add, C_1]; ring,
-    coeff_C_mul_X_pow, if_pos rfl] at h2
+    coeff_C_mul_X_pow, ite_eq_left rfl] at h2
   norm_num at h2
 
 end Hironaka.Examples.Theorem88

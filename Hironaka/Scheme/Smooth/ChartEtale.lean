@@ -140,7 +140,7 @@ theorem aeval_chartCoordinates_eq
     rw [MvPolynomial.aeval_X, AlgHom.comp_apply, AlgEquiv.coe_toAlgHom, hσ,
       AlgHom.restrictScalars_apply]
     by_cases h : i.val < r ∧ i ≠ j
-    · rw [dif_pos h]
+    · rw [dite_eq_left h]
       have hm : modelHom k (center n r) j (MvPolynomial.X i) =
           frac (a := MvPolynomial.X j) (X_mem_coordinateIdeal k (center n r) h.1) :=
         Subtype.ext (by rw [coe_modelHom, modelAux_X_of_mem k (center n r) j h.1 h.2, coe_frac])
@@ -150,7 +150,7 @@ theorem aeval_chartCoordinates_eq
         change awayFrac _ 1 (E.v i) = awayFrac _ 1 (algebraMap (MvPolynomial (Fin n) k) Γ(X, E.U)
           (MvPolynomial.X i))
         rw [hv i])
-    · rw [dif_neg h]
+    · rw [dite_eq_right h]
       have mem : algebraMap (MvPolynomial (Fin n) k) (Localization.Away (MvPolynomial.X (R := k) j))
           (MvPolynomial.X i) ∈
             affineBlowUpAlgebra (centerIdeal k n r) (MvPolynomial.X (R := k) j) :=

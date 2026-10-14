@@ -70,16 +70,16 @@ variable {𝕜 : Type} [RCLike 𝕜] {n : ℕ}
 /-- The formal partial derivatives `∂_{X_i}` commute: on coefficients,
 `(ν_i + 1)(ν_j + δ_ij + 1) = (ν_j + 1)(ν_i + δ_ji + 1)`. -/
 theorem pderiv_comm (i j : Fin n) (F : MvPowerSeries (Fin n) 𝕜) :
-    MvPowerSeries.pderiv 𝕜 i (MvPowerSeries.pderiv 𝕜 j F) =
-      MvPowerSeries.pderiv 𝕜 j (MvPowerSeries.pderiv 𝕜 i F) := by
+    MvPowerSeries.pderiv (R := 𝕜) i (MvPowerSeries.pderiv (R := 𝕜) j F) =
+      MvPowerSeries.pderiv (R := 𝕜) j (MvPowerSeries.pderiv (R := 𝕜) i F) := by
   ext ν
   rw [MvPowerSeries.coeff_pderiv, MvPowerSeries.coeff_pderiv, MvPowerSeries.coeff_pderiv,
     MvPowerSeries.coeff_pderiv, add_right_comm ν (Finsupp.single i 1) (Finsupp.single j 1),
     Finsupp.add_apply, Finsupp.add_apply, Finsupp.single_apply, Finsupp.single_apply]
   by_cases h : i = j
   · subst h
-    rw [if_pos rfl]
-  · rw [if_neg h, if_neg (Ne.symm h)]
+    rw [ite_eq_left rfl]
+  · rw [ite_eq_right h, ite_eq_right (Ne.symm h)]
     push_cast
     ring
 
@@ -171,7 +171,7 @@ theorem derivation_eq_sum_coordDerivStalk
     intro j
     rw [hδ', Derivation.sub_apply, derivation_sum_apply, sub_eq_zero]
     simp only [Derivation.smul_apply, smul_eq_mul, coordDerivStalk_centredCoord, mul_boole,
-      Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   have hδ'poly : ∀ p ∈ Algebra.adjoin 𝕜 (Set.range (centredCoord E ψ φ hφ ha)), δ' p = 0 := by
     intro p hp
     induction hp using Algebra.adjoin_induction with

@@ -353,7 +353,7 @@ theorem strictTransformSubspace_radicalSubspace_of_hasLocalGenerators
   rw [stalkIdeal_strictTransformSubspace_of_hasLocalGenerators _ _ _ hex',
     IdealSheaf.stalkIdeal_radicalSubspace_of_hasLocalGenerators _ hR,
     stalkIdeal_strictTransformSubspace_of_hasLocalGenerators hY h I hex,
-    saturationStalk_radical hY h I hI a', IdealSheaf.radicalSubspace, dif_pos hI]
+    saturationStalk_radical hY h I hI a', IdealSheaf.radicalSubspace, dite_eq_left hI]
 
 end Reduced
 

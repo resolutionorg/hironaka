@@ -16,6 +16,7 @@ import Mathlib.Data.EReal.Operations
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Topology.MetricSpace.Bounded
+import Mathlib.AlgebraicGeometry.Morphisms.Immersion
 
 /-!
 # The proof of Theorem 105: the local cover, the kernel pair, uniqueness of the extension
@@ -319,7 +320,7 @@ theorem exists_isLocalCover [CharZero k] (D : GlobalizationData openImmersionCop
     intro x
     obtain ⟨i, y, hy⟩ := hcov x
     exact ⟨Sigma.ι (fun i => (Ts i).X.left) i y,
-      by rw [← hy, ← Scheme.Hom.comp_apply, Sigma.ι_desc]⟩
+      by rw [← hy, ← Scheme.Hom.comp_apply, Sigma.ι_comp_desc]⟩
   have hsm : Smooth g' := openImmersionCoprods.smooth hM'
   have hsep : IsSeparated g' := openImmersionCoprods_isSeparated hM'
   have het : Etale g' := openImmersionCoprods_etale g' hM'
@@ -344,13 +345,13 @@ theorem exists_isLocalCover [CharZero k] (D : GlobalizationData openImmersionCop
     (fun i => Sigma.ι (fun i => (Ts i).X.left) i)
     ⟨⟨coproductIsCoproduct (fun i => (Ts i).X.left)⟩, fun i => ?_, fun i => ?_, fun i => ?_⟩ hL
   · change Sigma.ι (fun i => (Ts i).X.left) i ≫ (g' ≫ (T.X.left ↘ Spec (CommRingCat.of k))) = _
-    rw [Sigma.ι_desc_assoc]
+    rw [Sigma.ι_comp_desc_assoc]
     exact (hp i).1
   · change (Ts i).I = (T.I.comap g').comap (Sigma.ι (fun i => (Ts i).X.left) i)
-    rw [← Scheme.IdealSheafData.comap_comp, Sigma.ι_desc]
+    rw [← Scheme.IdealSheafData.comap_comp, Sigma.ι_comp_desc]
     exact (hp i).2.1
   · change (Ts i).E = (T.E.comap g').comap (Sigma.ι (fun i => (Ts i).X.left) i)
-    rw [← DivisorFamily.comap_comp, Sigma.ι_desc]
+    rw [← DivisorFamily.comap_comp, Sigma.ι_comp_desc]
     exact (hp i).2.2
 
 /-! ### The kernel pair `X'' = X' ×_X X'` -/

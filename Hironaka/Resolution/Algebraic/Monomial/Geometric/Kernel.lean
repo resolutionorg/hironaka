@@ -431,7 +431,7 @@ theorem mem_blowUpPieces_piece_of_le {S : Finset (Finset ℕ)} {c : ℕ} (hc : �
   change x' ∈ (if c < Φ.nextComp then strictTransformCloseds (Φ.centerOf S) (Φ.piece c) else
     (S.filter fun P => Φ.newComp S P = c).sup fun P =>
       (Φ.faceSet P).preimage (Φ.centerOf S).blowUpπ.continuous) ↔ _
-  rw [if_neg hlt, mem_finset_sup_iff]
+  rw [ite_eq_right hlt, mem_finset_sup_iff]
   constructor
   · rintro ⟨P, hP, hx⟩
     exact ⟨P, (Finset.mem_filter.mp hP).1, (Finset.mem_filter.mp hP).2, hx⟩
@@ -648,7 +648,7 @@ theorem filter_label_blowUpPieces_of_lt {S : Finset (Finset ℕ)} {l : ℕ} (hl 
     · rw [Φ.blowUpPieces_label_of_lt S hck] at hlab
       exact ⟨hck, hlab⟩
     · exfalso
-      have : (Φ.blowUpPieces S m).label c = Φ.nextLabel := if_neg hck
+      have : (Φ.blowUpPieces S m).label c = Φ.nextLabel := ite_eq_right hck
       omega
   · rintro ⟨hck, hlab⟩
     exact ⟨hck.trans_le (Nat.le_add_right _ _), (Φ.blowUpPieces_label_of_lt S hck).trans hlab⟩
@@ -666,7 +666,7 @@ theorem mem_filter_label_blowUpPieces_nextLabel {S : Finset (Finset ℕ)} {c : �
     rw [Φ.blowUpPieces_label_of_lt S (not_le.mp hck)] at hlab
     exact absurd hlab (Φ.label_lt c (not_le.mp hck)).ne
   · rintro ⟨hck, hc⟩
-    exact ⟨hc, if_neg (not_lt.mpr hck)⟩
+    exact ⟨hc, ite_eq_right (not_lt.mpr hck)⟩
 
 omit [Smooth f] in
 include f in
@@ -733,11 +733,11 @@ theorem realizes_blowUpPieces [LocallyOfFiniteType f] (_hE : E.IsSnc) (hΦ : Φ.
           (Φ.π_mem_piece_of_mem_blowUpPieces_piece f hck' h2)
       · -- an old and a new piece have different labels
         rw [Φ.blowUpPieces_label_of_lt S hck] at hlab
-        have : (Φ.blowUpPieces S m).label c' = Φ.nextLabel := if_neg hck'
+        have : (Φ.blowUpPieces S m).label c' = Φ.nextLabel := ite_eq_right hck'
         exact absurd (hlab.trans this) (Φ.label_lt c hck).ne
     · by_cases hck' : c' < Φ.nextComp
       · rw [Φ.blowUpPieces_label_of_lt S hck'] at hlab
-        have : (Φ.blowUpPieces S m).label c = Φ.nextLabel := if_neg hck
+        have : (Φ.blowUpPieces S m).label c = Φ.nextLabel := ite_eq_right hck
         exact absurd (this.symm.trans hlab) (Φ.label_lt c' hck').ne'
       · -- two new pieces: their faces pass through a common point, so they coincide
         obtain ⟨P, hP, hPc, hxP⟩ := (Φ.mem_blowUpPieces_piece_of_le (not_lt.mp hck)).mp h1

@@ -187,7 +187,8 @@ theorem convNorm_axis_le (ρ : Fin (m + 1) → ℝ≥0) (f : MvPowerSeries (Fin 
         refine tsum_congr fun ν => ?_
         beta_reduce
         rw [coeff_axis, monomialEval_fin1, monomialEval_single_pow]
-    _ ≤ _ := ENNReal.tsum_comp_le_tsum_of_injective Fin1.single_apply_injective _
+    _ ≤ _ := ENNReal.tsum_comp_le_tsum_of_injective Fin1.single_apply_injective
+          (fun μ => ‖coeff μ f‖ₑ * (monomialEval ρ μ : ℝ≥0∞))
 
 theorem axis_mem_conv {f : MvPowerSeries (Fin (m + 1)) K} (hf : f ∈ Conv K (m + 1)) :
     axis f ∈ Conv K 1 := by
@@ -202,11 +203,11 @@ theorem axis_liftTail (a : MvPowerSeries (Fin m) K) :
   ext ν
   rw [coeff_axis, coeff_C]
   by_cases h : ν 0 = 0
-  · rw [if_pos ((Fin1.eq_zero_iff ν).mpr h), h, Finsupp.single_zero]
+  · rw [ite_eq_left ((Fin1.eq_zero_iff ν).mpr h), h, Finsupp.single_zero]
     have := coeff_embDomain_rename (Fin.succEmb m) a 0
     rw [Finsupp.embDomain_zero] at this
     exact this.trans (coeff_zero_eq_constantCoeff_apply a)
-  · rw [if_neg (fun h' => h ((Fin1.eq_zero_iff ν).mp h'))]
+  · rw [ite_eq_right (fun h' => h ((Fin1.eq_zero_iff ν).mp h'))]
     apply coeff_rename_eq_zero
     rintro ⟨y, hy⟩
     have h0 : (Finsupp.mapDomain Fin.succ y) 0 = (Finsupp.single (0 : Fin (m + 1)) (ν 0)) 0 :=

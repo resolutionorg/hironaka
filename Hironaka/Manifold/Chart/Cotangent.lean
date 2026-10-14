@@ -79,7 +79,7 @@ theorem linearPart_apply (s : (structureSheaf 𝕜 E M).presheaf.stalk a) (i : F
 /-- The linear part kills the constants. -/
 theorem linearPart_const (c : 𝕜) : linearPart E ψ φ hφ ha (const 𝕜 E M a c) = 0 := by
   ext i
-  rw [linearPart_apply, taylorHom_const, MvPowerSeries.coeff_C, if_neg (by simp)]
+  rw [linearPart_apply, taylorHom_const, MvPowerSeries.coeff_C, ite_eq_right (by simp)]
   rfl
 
 /-- The linear part kills `𝔪_a²` (the Taylor series has order `≥ 2`). -/

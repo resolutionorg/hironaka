@@ -133,7 +133,7 @@ theorem cp3BOAt_succ_of_cp3BMOAt (n : ℕ) (h : CP3BMOAt k n) : CP3BOAt k (n + 1
   rw [tower_succ_bo, boOfBMO_functor,
     Hironaka.BO.functor_seq_localClass (n + 1) 1 _ T' hbo' hH hmaxc, maxContactCase]
   by_cases h1' : T'.I.maxOrd = ((1 : ℕ) : ℕ∞)
-  · rw [dif_pos h1']
+  · rw [dite_eq_left h1']
     have hIt : (T'.tuned 1 hbo'.1).I = T'.I := Scheme.IdealSheafData.W_tuningParam_one _ _
     have key := cp3For_step2Seq_of_eq_one (N := n + 1) (amalgamDom n)
       (fun k _ _ => amalgam (tower stage0 n).bmo k)
@@ -145,7 +145,7 @@ theorem cp3BOAt_succ_of_cp3BMOAt (n : ℕ) (h : CP3BMOAt k n) : CP3BOAt k (n + 1
       (le_of_eq (maxOrd_tuned h1' hbo'.1)) (one_le_tuningParam 1)
       (retune_keeps_maxContact h1' hbo'.1 hmaxc) hcp3
     exact (congrArg (fun J => CP3For _ J T'.E) hIt).mp key
-  · rw [dif_neg h1']
+  · rw [dite_eq_right h1']
     intro i
     exact i.elim0
 

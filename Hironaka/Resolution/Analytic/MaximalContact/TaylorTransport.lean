@@ -84,7 +84,7 @@ theorem D_map_taylorHom (c : RegularCoords ((structureSheaf 𝕜 E M).presheaf.s
       (c.D J).map (taylorHom E ψ φ ha hφ) := by
   refine RegularCoords.D_map c (RegularCoords.stdMvPowerSeries 𝕜 n) (taylorHom E ψ φ ha hφ) id
     (fun i f => ?_) (fun j hj => absurd ⟨j, rfl⟩ hj) J
-  change (MvPowerSeries.pderiv 𝕜 i).restrictScalars ℚ (taylorHom E ψ φ ha hφ f) = _
+  change (MvPowerSeries.pderiv (R := 𝕜) i).restrictScalars ℚ (taylorHom E ψ φ ha hφ f) = _
   rw [hcp, Derivation.restrictScalars_apply, Derivation.restrictScalars_apply,
     IsTaylorHom.pderiv E ψ φ hφ ha (isTaylorHom_taylorHom E ψ φ ha hφ)]
 

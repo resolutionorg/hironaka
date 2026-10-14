@@ -22,10 +22,8 @@ import Mathlib.Data.EReal.Operations
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Topology.MetricSpace.Bounded
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
 public import Hironaka.Scheme.FiniteType
 public import Hironaka.Scheme.BlowUpSequence.Defs
-import SourceAttr
 public import Hironaka.Scheme.ReducedEquidimensional
 public import Hironaka.Scheme.Resolution.Defs
 import Hironaka.Scheme.Resolution.Basic
@@ -231,8 +229,9 @@ Relation to the source.
   contain no simple point of $X_i$ (b), and along which $X_i$ is normally flat (c), and Main Theorem
   I*: both rest on the Hilbert–Samuel function and normal flatness, whereas the library follows the
   route through the order of an ideal and hypersurfaces of maximal contact, as in Włodarczyk's and
-  Kollár's proofs. The statement here is Main Theorem I as printed. -/
-@[source Hir64 "Main Theorem I" "p. 132"]
+  Kollár's proofs. The statement here is Main Theorem I as printed.
+
+Source statement: [Hir64, Main Theorem I, p. 132] -/
 theorem exists_support_eq_singularLocus_isRegular_blowUp {k : Type u} [Field k]
     [CharZero k] (X : AlgScheme k) [IsIntegral X.left] :
     ∃ D : X.left.IdealSheafData,
@@ -258,8 +257,9 @@ Relation to the source.
   `D.blowUpπ` over $U$ is an isomorphism.
 * **Interpretation.** As in Main Theorem I, Hironaka's "say reduced and irreducible" is read as a
   hypothesis (`IsIntegral`), although his Introduction [Hir64, p. 112] describes Main Theorem I for
-  every reduced $X$. -/
-@[source Hir64 "the paragraph after Main Theorem I" "p. 132"]
+  every reduced $X$.
+
+Source statement: [Hir64, the paragraph after Main Theorem I, p. 132] -/
 theorem exists_dense_isIso_restrict_isRegular_blowUp {k : Type u} [Field k] [CharZero k]
     (X : AlgScheme k) [IsIntegral X.left] :
     ∃ D : X.left.IdealSheafData,

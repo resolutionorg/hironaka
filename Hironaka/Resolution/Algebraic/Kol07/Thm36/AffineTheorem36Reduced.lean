@@ -218,7 +218,7 @@ theorem centerContains_firstCenterIndex_BP_of_class (hne : Nonempty X)
     by_contra hno
     have h0 : firstCenterIndex (BP TA) TA.I = (BP TA).length := by
       unfold firstCenterIndex
-      rw [dif_neg hno]
+      rw [dite_eq_right hno]
     omega
   exact firstCenterIndex_of_exists hex
 
@@ -237,7 +237,7 @@ theorem centerContains_component_firstCenterIndex
     have h0 : firstCenterIndex (BP TA) ((X.irreducibleComponentIdeal C hC).map emb) =
         (BP TA).length := by
       unfold firstCenterIndex
-      rw [dif_neg hno]
+      rw [dite_eq_right hno]
     change componentIndex k X TA emb C hC = (BP TA).length at h0
     omega
   exact firstCenterIndex_of_exists hex

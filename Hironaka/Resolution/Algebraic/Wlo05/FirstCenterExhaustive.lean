@@ -52,7 +52,7 @@ length of `S`. -/
 theorem firstCenterIndex_eq_length_of_forall_not (S : BlowUpSequence A) (I : A.IdealSheafData)
     (h : ∀ n, ¬ CenterContains S I n) : firstCenterIndex S I = S.length := by
   unfold firstCenterIndex
-  rw [dif_neg fun ⟨n, hn⟩ => h n hn]
+  rw [dite_eq_right fun ⟨n, hn⟩ => h n hn]
 
 /-- **Exhaustiveness** [Kol07, Corollary 22, proof; Wlo05, 4.6]: if the marked transform of
 `(I, c)` at the end of `S` is the unit ideal, the strict transform of an integral `V(J)`, whose

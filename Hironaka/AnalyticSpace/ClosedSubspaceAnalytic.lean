@@ -119,7 +119,7 @@ theorem ambientIdealOf_of_mem {x : Kn.{u} K n}
     (h : x ∈ imageIn K n G O) :
     ambientIdealOf K n G O g x =
       Ideal.span (Set.range fun i => (affine K n).toLocallyRingedSpace.presheaf.germ _ x h (g i)) :=
-  dif_pos h
+  dite_eq_left h
 
 omit hG hO in
 /-- On `O`, the stalks of `J` are the images of the ambient ideals. -/

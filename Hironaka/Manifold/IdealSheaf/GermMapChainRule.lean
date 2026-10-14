@@ -110,7 +110,7 @@ theorem derivation_germMap_eq_sum_coordDerivStalk (φ : OpenPartialHomeomorph M 
   have hFx : ∀ j, F (centredCoord E ψ φ hφ hb j) = 0 := by
     intro j
     simp only [hF, coordDerivStalk_centredCoord, apply_ite ρ, map_one, map_zero, mul_ite, mul_one,
-      mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, hc, sub_self]
+      mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true, hc, sub_self]
   have hFalg : ∀ a : 𝕜, F (algebraMap 𝕜 _ a) = 0 := by
     intro a
     simp only [hF, hρ, germMap_algebraMap, Derivation.map_algebraMap, map_zero, mul_zero,

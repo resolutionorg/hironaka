@@ -102,7 +102,7 @@ theorem labelMapOfIsTopErasure_apply {E' E : DivisorFamily X} (e : E'.ι ↪o E.
     (f' : E'.ι ≃o Fin L') (f : E.ι ≃o Fin L) (i : E'.ι) :
     labelMapOfIsTopErasure e f' f (f' i : ℕ) = (f (e i) : ℕ) := by
   unfold labelMapOfIsTopErasure
-  rw [dif_pos (Fin.isLt _)]
+  rw [dite_eq_left (Fin.isLt _)]
   have h1 : (⟨((f' i : Fin L') : ℕ), Fin.isLt _⟩ : Fin L') = f' i := Fin.ext rfl
   rw [h1, OrderIso.symm_apply_apply]
 
@@ -134,13 +134,13 @@ theorem rel_ofDivisorFamily_of_isTopErasure {E' E : DivisorFamily X} {e : E'.ι 
     have h₁ : ℓ₁ < L' := hℓ₁
     have h₂ : ℓ₂ < L' := hℓ₂
     unfold labelMapOfIsTopErasure
-    rw [dif_pos h₁, dif_pos h₂]
+    rw [dite_eq_left h₁, dite_eq_left h₂]
     exact Fin.lt_def.mp (f.strictMono (e.strictMono (f'.symm.strictMono (Fin.mk_lt_mk.mpr hlt))))
   σlt := by
     intro ℓ hℓ
     have h₁ : ℓ < L' := hℓ
     unfold labelMapOfIsTopErasure
-    rw [dif_pos h₁]
+    rw [dite_eq_left h₁]
     exact Fin.isLt _
   nerve_eq := by
     have hpiece : (ofDivisorFamily E a f (σ.trans (compEquivOfIsTopErasure he))).piece =
@@ -150,7 +150,7 @@ theorem rel_ofDivisorFamily_of_isTopErasure {E' E : DivisorFamily X} {e : E'.ι 
       · rw [ofDivisorFamily_piece_of_lt' a f (σ.trans (compEquivOfIsTopErasure he)) hc,
           ofDivisorFamily_piece_of_lt' a f' σ hc, Equiv.trans_apply, compEquivOfIsTopErasure_snd]
       · change (if h : c < k then _ else ⊥) = (if h : c < k then _ else ⊥)
-        rw [dif_neg hc, dif_neg hc]
+        rw [dite_eq_right hc, dite_eq_right hc]
     have hnc : (ofDivisorFamily E a f (σ.trans (compEquivOfIsTopErasure he))).nextComp =
         (ofDivisorFamily E' a f' σ).nextComp := rfl
     have hnerve : (ofDivisorFamily E a f (σ.trans (compEquivOfIsTopErasure he))).nerve =

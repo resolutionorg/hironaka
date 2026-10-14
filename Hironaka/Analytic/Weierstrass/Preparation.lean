@@ -61,7 +61,7 @@ theorem coeff_single_eq_zero_of_X_pow_eq {g q r : MvPowerSeries (Fin (m + 1)) K}
     have h2 := congrArg axis hXq
     rw [axis_X_zero_pow, axis_add, axis_mul, axis_eq_X_pow_mul hlow] at h2
     linear_combination (-1 : MvPowerSeries (Fin 1) K) * h2
-  rw [← coeff_single_axis, h1, X_pow_eq, coeff_monomial_mul, if_neg]
+  rw [← coeff_single_axis, h1, X_pow_eq, coeff_monomial_mul, ite_eq_right]
   rw [Finsupp.single_le_iff, Finsupp.single_eq_same]
   omega
 
@@ -80,7 +80,7 @@ theorem coeff_single_of_mul_weierstrassPoly {g u' : MvPowerSeries (Fin (m + 1)) 
     {c' : Fin d → MvPowerSeries (Fin m) K} (hc' : ∀ j, constantCoeff (c' j) = 0)
     (hg : g = u' * weierstrassPoly d c') : coeff (Finsupp.single 0 d) g = constantCoeff u' := by
   rw [← coeff_single_axis, hg, axis_mul, axis_weierstrassPoly hc', X_pow_eq, coeff_mul_monomial,
-    if_pos le_rfl, tsub_self, mul_one, coeff_zero_eq_constantCoeff_apply, constantCoeff_axis]
+    ite_eq_left le_rfl, tsub_self, mul_one, coeff_zero_eq_constantCoeff_apply, constantCoeff_axis]
 
 /-- A factorization `g = u P` with `P` a Weierstrass polynomial with coefficients vanishing at `0`
 and `u(0) ≠ 0` is a Weierstrass factorization over the tail ring. -/

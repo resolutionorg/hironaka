@@ -18,11 +18,9 @@ import Mathlib.Data.EReal.Operations
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Topology.MetricSpace.Bounded
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
 public import Hironaka.Scheme.FiniteType
 public import Hironaka.Scheme.BlowUpSequence.Defs
 public import Hironaka.Scheme.Resolution.Defs
-import SourceAttr
 import Hironaka.Algebra.RegularSmooth.RegularSmoothEquiv
 import Hironaka.Algebra.RegularSmooth.SingularLocus
 import Hironaka.Scheme.BlowUpSequence.Triple
@@ -186,8 +184,9 @@ Relation to the source.
   [Sta, Tag 01VB] and fpqc local on the base [Sta, Tag 02VL], an étale morphism has reduced source
   when its target is reduced [Sta, Tag 033B], and smoothness descends along smooth surjections
   [Sta, Tag 02K5]. These stability facts are not formalized: applying (4) to a given base change
-  requires showing that it is an input. -/
-@[source Kol07 "Theorem 36"]
+  requires showing that it is an input.
+
+Source statement: [Kol07, Theorem 36] -/
 theorem exists_functorial_resolution :
     ∃ BR : ∀ (k : Type u) [Field k] [CharZero k],
         BlowUpSequenceFunctor (ReducedEquidimensionalScheme k),
@@ -251,8 +250,9 @@ Relation to the source.
   this. It matches Kollár's construction: his $R(X)$ is the birational transform of $X$ that is a
   centre $Z_j$ of a succession of smooth blow-ups of an ambient smooth $P$, and by restriction
   [Kol07, 30.2] his $\Pi$ is the composite of the blow-ups of the birational transforms of $X$ along
-  their intersections with the earlier centres, which may be singular [Kol07, Warning 23]. -/
-@[source Kol07 "Theorem 27"]
+  their intersections with the earlier centres, which may be singular [Kol07, Warning 23].
+
+Source statement: [Kol07, Theorem 27] -/
 theorem exists_strong_resolution {k : Type u} [Field k] [CharZero k] (X : AlgScheme k)
     [IsIntegral X.left] :
     ∃ S : Scheme.BlowUpSequence X.left, S.IsStrongResolution := by

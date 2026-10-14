@@ -8,6 +8,7 @@ module
 public import Hironaka.Analytic.Rueckert.ZeroSet
 public import Hironaka.Analytic.Germ.Coordinate
 public import Hironaka.Analytic.Rueckert.Subst
+public import Mathlib.RingTheory.Ideal.MinimalPrime.Basic
 import Hironaka.Analytic.ConvSeries.Units
 import Hironaka.Analytic.Germ.Prime
 import Hironaka.Analytic.Rueckert.Basic
@@ -205,7 +206,7 @@ theorem not_nullstellensatz_real :
         intro h
         have := DFunLike.congr_fun h (1 : Fin 2)
         simp at this
-      rw [if_neg hne, if_pos rfl, zero_add] at h1
+      rw [ite_eq_right hne, ite_eq_left rfl, zero_add] at h1
       exact one_ne_zero h1
 
 end Analytic

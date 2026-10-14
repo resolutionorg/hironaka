@@ -13,9 +13,8 @@ public import Challenge.Standard
 # The main theorems, stated against the definitions only
 
 The main theorems of the library with every proof replaced by `sorry`, in files that import only the
-modules defining the vocabulary of the statements (and `SourceAttr` with `HironakaReferences`, for
-the `@[source]` tags the statements carry). These files and the import closure of those modules are the audit surface of
-what the library claims.
+modules defining the vocabulary of the statements. These files and the import closure of those
+modules are the audit surface of what the library claims.
 
 [leanprover/comparator](https://github.com/leanprover/comparator) (`comparator.json`) checks that
 each statement here is structurally identical to the library's theorem of the same name and replays

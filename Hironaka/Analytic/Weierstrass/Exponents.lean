@@ -10,7 +10,7 @@ public import Mathlib.Algebra.Polynomial.Degree.Defs
 public import Mathlib.Algebra.Polynomial.Eval.Defs
 import Mathlib.Algebra.Polynomial.Monic
 import Mathlib.Data.EReal.Operations
-import Mathlib.Data.NNReal.Basic
+import Mathlib.Basic.NNReal.Basic
 import Mathlib.Tactic.ContinuousFunctionalCalculus
 import Mathlib.Tactic.Positivity.Finset
 import Mathlib.Topology.Algebra.InfiniteSum.Order
@@ -60,7 +60,7 @@ theorem monomialEval_tailScale_le (ρ : Fin (m + 1) → ℝ≥0) {t : ℝ≥0} (
   have hjs : j ∈ ν.support := Finsupp.mem_support_iff.mpr hν
   calc ∏ k ∈ ν.support, (if k = 0 then ρ 0 else t * ρ k) ^ ν k
       ≤ ∏ k ∈ ν.support, (if k = j then t else 1) * ρ k ^ ν k := by
-        refine Finset.prod_le_prod (fun k _ => zero_le) fun k _ => ?_
+        refine Finset.prod_le_prod₀ (fun k _ => zero_le) fun k _ => ?_
         split_ifs with hk0 hkj hkj
         · exact absurd (hkj.symm.trans hk0) hj
         · rw [hk0, one_mul]
@@ -69,7 +69,7 @@ theorem monomialEval_tailScale_le (ρ : Fin (m + 1) → ℝ≥0) {t : ℝ≥0} (
         · rw [mul_pow, one_mul]
           exact mul_le_of_le_one_left (zero_le) (pow_le_one₀ (zero_le) ht)
     _ = t * ∏ k ∈ ν.support, ρ k ^ ν k := by
-        rw [Finset.prod_mul_distrib, Finset.prod_ite_eq', if_pos hjs]
+        rw [Finset.prod_mul_distrib, Finset.prod_ite_eq', ite_eq_left hjs]
 
 /-- A monomial exponent with no tail variable is a pure `x_0`-power. -/
 theorem eq_single_zero_of_tail_eq_zero {ν : Fin (m + 1) →₀ ℕ} (hν : ∀ j, j ≠ 0 → ν j = 0) :
@@ -142,7 +142,7 @@ theorem embDomain_succEmb (x : Fin m →₀ ℕ) :
     rintro ⟨j, hj⟩
     exact Fin.succ_ne_zero j hj
   · rw [Finsupp.cons_succ, Finsupp.embDomain_eq_mapDomain]
-    exact Finsupp.mapDomain_apply (Fin.succEmb m).injective x j
+    exact Finsupp.mapDomain_apply_of_injective (Fin.succEmb m).injective x j
 
 theorem cons_sub_single_zero (k n : ℕ) (x : Fin m →₀ ℕ) :
     Finsupp.cons k x - Finsupp.single 0 n = Finsupp.cons (k - n) x := by
@@ -163,13 +163,13 @@ noncomputable def weierstrassPolynomial (d : ℕ) (c : Fin d → R) : Polynomial
 theorem coeff_weierstrassPolynomial_of_lt (d : ℕ) (c : Fin d → R) {n : ℕ}
     (hn : n < d) : (weierstrassPolynomial d c).coeff n = c ⟨d - 1 - n, by omega⟩ := by
   unfold weierstrassPolynomial
-  rw [Polynomial.coeff_add, Polynomial.coeff_X_pow, if_neg hn.ne, zero_add,
+  rw [Polynomial.coeff_add, Polynomial.coeff_X_pow, ite_eq_right hn.ne, zero_add,
     Polynomial.finsetSum_coeff]
   simp only [Polynomial.coeff_C_mul_X_pow]
   rw [Finset.sum_eq_single ⟨d - 1 - n, by omega⟩]
-  · rw [if_pos (by change n = d - 1 - (d - 1 - n); omega)]
+  · rw [ite_eq_left (by change n = d - 1 - (d - 1 - n); omega)]
   · intro b _ hb
-    rw [if_neg]
+    rw [ite_eq_right]
     intro h
     apply hb
     ext
@@ -189,16 +189,16 @@ theorem coeff_weierstrassPolynomial_rev (d : ℕ) (c : Fin d → R)
 theorem coeff_weierstrassPolynomial_self (d : ℕ) (c : Fin d → R) :
     (weierstrassPolynomial d c).coeff d = 1 := by
   unfold weierstrassPolynomial
-  rw [Polynomial.coeff_add, Polynomial.coeff_X_pow, if_pos rfl, Polynomial.finsetSum_coeff]
+  rw [Polynomial.coeff_add, Polynomial.coeff_X_pow, ite_eq_left rfl, Polynomial.finsetSum_coeff]
   simp only [Polynomial.coeff_C_mul_X_pow]
-  rw [Finset.sum_eq_zero fun j _ => if_neg (by omega), add_zero]
+  rw [Finset.sum_eq_zero fun j _ => ite_eq_right (by omega), add_zero]
 
 theorem coeff_weierstrassPolynomial_of_gt (d : ℕ) (c : Fin d → R) {n : ℕ} (hn : d < n) :
     (weierstrassPolynomial d c).coeff n = 0 := by
   unfold weierstrassPolynomial
-  rw [Polynomial.coeff_add, Polynomial.coeff_X_pow, if_neg hn.ne', Polynomial.finsetSum_coeff]
+  rw [Polynomial.coeff_add, Polynomial.coeff_X_pow, ite_eq_right hn.ne', Polynomial.finsetSum_coeff]
   simp only [Polynomial.coeff_C_mul_X_pow]
-  rw [Finset.sum_eq_zero fun j _ => if_neg (by omega), add_zero]
+  rw [Finset.sum_eq_zero fun j _ => ite_eq_right (by omega), add_zero]
 
 theorem degree_weierstrassPolynomial_sum_lt (d : ℕ) (c : Fin d → R) :
     (∑ j : Fin d, Polynomial.C (c j) * Polynomial.X ^ (d - 1 - (j : ℕ))).degree <
@@ -251,7 +251,7 @@ theorem Radius.exists_le_forall {ι : Type*} [Finite ι] (s : ι → Radius m) :
   calc ∏ i', Min.min 1 (s i' k) ≤ Min.min 1 (s i k) := by
         rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ i)]
         exact mul_le_of_le_one_right zero_le
-          (Finset.prod_le_one (fun _ _ => zero_le) fun _ _ => _root_.min_le_left _ _)
+          (Finset.prod_le_one₀ (fun _ _ => zero_le) fun _ _ => _root_.min_le_left _ _)
     _ ≤ s i k := _root_.min_le_right _ _
 
 end Analytic

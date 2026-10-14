@@ -221,7 +221,7 @@ theorem smooth_composite_BR_affine_of_smooth_center (TA : Triple k) {X : Scheme.
     by_contra hno
     have : firstCenterIndex (BP TA) TA.I = (BP TA).length := by
       unfold firstCenterIndex
-      rw [dif_neg hno]
+      rw [dite_eq_right hno]
     omega
   obtain ⟨hj', hle⟩ := firstCenterIndex_of_exists hex
   have : IsNoetherian TA.X.left := (TA.X.left ↘ Spec (CommRingCat.of k)).isNoetherian_of_field

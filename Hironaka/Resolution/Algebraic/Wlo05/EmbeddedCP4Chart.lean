@@ -181,11 +181,11 @@ theorem exists_inducedCoords {n : ℕ} {z : Fin n → X.presheaf.stalk (blowUpπ
   set wR : Fin n → (blowUp Z).presheaf.stalk q := fun i =>
     if i.val < n - kk ∨ i = j then (blowUpπ Z).stalkMap q (zR i) else yy i with hwR
   have hw : ∀ i : Fin n, i.val < n - kk ∨ i = j → wR i = (blowUpπ Z).stalkMap q (zR i) :=
-    fun i hi => if_pos hi
+    fun i hi => ite_eq_left hi
   have hw' : ∀ i : Fin n, n - kk ≤ i.val → i ≠ j →
       (blowUpπ Z).stalkMap q (zR i) = wR i * (blowUpπ Z).stalkMap q (zR j) := by
     intro i h1 h2
-    have : wR i = yy i := if_neg fun h => h.elim (fun h => by omega) h2
+    have : wR i = yy i := ite_eq_right fun h => h.elim (fun h => by omega) h2
     rw [this]
     exact hyy i h1 h2
   obtain ⟨m, z', hz', τ', hτ'inj, hτ'⟩ :=
@@ -346,12 +346,12 @@ theorem stalkMap_eq (i : Fin n) :
   classical
   by_cases hi : i = D.c₀
   · subst hi
-    rw [wHat, Function.update_self, if_pos D.mem, one_mul, ε_def]
+    rw [wHat, Function.update_self, ite_eq_left D.mem, one_mul, ε_def]
   · rw [wHat, Function.update_of_ne hi]
     by_cases hiC : i ∈ C
-    · rw [if_pos hiC, ε_def]
+    · rw [ite_eq_left hiC, ε_def]
       exact D.hw' i hiC hi
-    · rw [if_neg hiC, mul_one]
+    · rw [ite_eq_right hiC, mul_one]
       exact (D.hw i (Or.inl hiC)).symm
 
 /-- The pull-back of a monomial: `π^* z^a = ŵ^a · ε^{a(C)}`. -/

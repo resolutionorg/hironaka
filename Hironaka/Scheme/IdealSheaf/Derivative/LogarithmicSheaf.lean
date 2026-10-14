@@ -6,6 +6,7 @@ Authors: Chris Elliott (Resolution): formalization performed by Claude Fable 5.1
 module
 
 public import Hironaka.Scheme.IdealSheaf.Derivative.Logarithmic
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
 import Hironaka.Scheme.BlowUp.Descent
 import Hironaka.Scheme.BlowUp.InvertibleSheaf
 import Hironaka.Scheme.IdealSheaf.Derivative.LogarithmicLocalization

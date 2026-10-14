@@ -398,8 +398,7 @@ noncomputable def toTensor : Complexified A →ₐ[ℝ] A ⊗[ℝ] ℂ where
     toTensor z = z.re ⊗ₜ 1 + z.im ⊗ₜ Complex.I := rfl
 
 theorem toTensor_ofTensor (t : A ⊗[ℝ] ℂ) : toTensor (ofTensor t) = t := by
-  induction t using TensorProduct.induction_on with
-  | zero => simp
+  induction t using TensorProduct.inductionOn with
   | tmul a c =>
     simp only [ofTensor_tmul, toTensor_apply, mul_re, mul_im, ofReal_re, ofReal_im, zero_mul,
       sub_zero, add_zero]

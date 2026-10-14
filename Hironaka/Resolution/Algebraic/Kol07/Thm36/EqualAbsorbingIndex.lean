@@ -171,7 +171,7 @@ theorem componentIndex_le {d : ℕ}
     by_contra hno
     have h0 : firstCenterIndex S ((X.irreducibleComponentIdeal C' hC').map emb) = S.length := by
       unfold firstCenterIndex
-      rw [dif_neg hno]
+      rw [dite_eq_right hno]
     omega
   obtain ⟨hj', hleZ⟩ := firstCenterIndex_of_exists hex'
   have hx₀A : emb x₀ ∈ ((X.irreducibleComponentIdeal C' hC').map emb).support := by
@@ -318,13 +318,13 @@ theorem firstCenterIndex_eq_of_forall (C : Set X) (hC : C ∈ irreducibleCompone
           have h0 : firstCenterIndex S ((X.irreducibleComponentIdeal C' hC').map emb) =
             S.length := by
             unfold firstCenterIndex
-            rw [dif_neg hno]
+            rw [dite_eq_right hno]
           rw [h C' hC'] at h0
           omega
         have := firstCenterIndex_of_exists hex
         rwa [h C' hC'] at this
       unfold firstCenterIndex
-      rw [dif_pos ⟨j, hcc⟩]
+      rw [dite_eq_left ⟨j, hcc⟩]
       exact Nat.find_min' _ hcc
     · rw [hjeq]
       exact firstCenterIndex_le_length _ _
@@ -334,7 +334,7 @@ theorem firstCenterIndex_eq_of_forall (C : Set X) (hC : C ∈ irreducibleCompone
       rw [not_le] at hlt
       exact hbefore _ hlt (firstCenterIndex_of_exists hex)
     · unfold firstCenterIndex
-      rw [dif_neg hex]
+      rw [dite_eq_right hex]
       exact hjle
 
 end Identification

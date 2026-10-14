@@ -102,7 +102,7 @@ theorem exists_disjoint_open_same_chart (s : Shrink.{u} (AdaptedChart ψ Y c)) (
     have hb1 : ‖(b : Fin n → 𝕜) (pieceEmb (s, k) k)‖ < 1 := hb
     rw [hbk, norm_inv] at hb1
     have hpos : 0 < ‖(a : Fin n → 𝕜) (pieceEmb (s, k) k')‖ := norm_pos_iff.mpr hdom'.2
-    have hlt := mul_lt_one_of_nonneg_of_lt_one_left (norm_nonneg _) ha1 hb1.le
+    have hlt := (mul_le_of_le_one_right (norm_nonneg _) hb1.le).trans_lt ha1
     rw [mul_inv_cancel₀ hpos.ne'] at hlt
     exact lt_irrefl _ hlt
 

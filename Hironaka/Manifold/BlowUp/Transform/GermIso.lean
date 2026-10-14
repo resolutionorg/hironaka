@@ -190,7 +190,7 @@ theorem germMap_val_surjective (U : Opens M) (p : U) :
   let h' : M → 𝕜 := fun x => if hx : x ∈ U then h ⟨x, hx⟩ else 0
   have hh' : h' ∘ (Subtype.val : U → M) = h := by
     funext x
-    simp only [h', Function.comp_apply, dif_pos x.2]
+    simp only [h', Function.comp_apply, dite_eq_left x.2]
   have hW' : IsOpen ((Subtype.val : U → M) '' W) := U.isOpen.isOpenMap_subtype_val _ W.2
   have hsm : ContMDiffOn 𝓘(𝕜, E) 𝓘(𝕜) ω h' ((Subtype.val : U → M) '' W) := by
     rintro _ ⟨y, hy, rfl⟩

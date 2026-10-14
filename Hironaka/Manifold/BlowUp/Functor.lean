@@ -211,7 +211,7 @@ omit [IsManifold 𝓘(𝕜, E) ω M₁] in
 theorem liftPointG_of_mem {p : M₁'} (hp : π₁ p ∈ g.source) (hY : π₁ p ∈ Y₁) :
     liftPointG g hg hY₁ h₁ h₂ p =
       (bChart₂G g hg hY₁ h₁ h₂ hp hY).symm (bChart₁G g hY₁ h₁ hp hY p) := by
-  rw [liftPointG, dif_pos hp, dif_pos hY]
+  rw [liftPointG, dite_eq_left hp, dite_eq_left hY]
 
 omit [IsManifold 𝓘(𝕜, E) ω M₁] in
 /-- The lift commutes with the blow-downs over `g`: `π₂ ∘ liftPointG = g ∘ π₁` on `π₁⁻¹(g.source)`.
@@ -223,7 +223,7 @@ theorem blowDown_liftPointG {p : M₁'} (hp : π₁ p ∈ g.source) :
     exact (bChart₁G_spec g hY₁ h₁ hp hY).1.blowDown_symm_apply_transport g
       (adChartG_source_subset g hY₁ hY) (bChart₂G_spec g hg hY₁ h₁ h₂ hp hY)
       (bChart₁G_spec g hY₁ h₁ hp hY).2
-  · rw [liftPointG, dif_pos hp, dif_neg hY]
+  · rw [liftPointG, dite_eq_left hp, dite_eq_right hY]
     exact (h₂.bijOn_compl.surjOn (show g (π₁ p) ∈ Y₂ᶜ from
       fun h => hY ((mem_iff_apply_mem_of_image_eq g hg hp).mpr h))).choose_spec.2
 
@@ -233,7 +233,7 @@ theorem liftPointG_eq_of_notMem {p : M₁'} (hp : π₁ p ∈ g.source) (hY : π
     (hq : π₂ q = g (π₁ p)) : liftPointG g hg hY₁ h₁ h₂ p = q := by
   have hgp : g (π₁ p) ∉ Y₂ := fun h => hY ((mem_iff_apply_mem_of_image_eq g hg hp).mpr h)
   have hmem : liftPointG g hg hY₁ h₁ h₂ p ∈ π₂ ⁻¹' Y₂ᶜ := by
-    rw [liftPointG, dif_pos hp, dif_neg hY]
+    rw [liftPointG, dite_eq_left hp, dite_eq_right hY]
     exact (h₂.bijOn_compl.surjOn (show g (π₁ p) ∈ Y₂ᶜ from
       fun h => hY ((mem_iff_apply_mem_of_image_eq g hg hp).mpr h))).choose_spec.1
   have hq' : q ∈ π₂ ⁻¹' Y₂ᶜ := by

@@ -294,7 +294,7 @@ theorem stalkIdeal_comap_pieceIdeal_eq (hE : E.IsSnc) (hΦ : Φ.Realizes E e)
         exact hc'Q
       obtain ⟨u, hu, hstalk⟩ := exists_stalkIdeal_strictTransformAlong_eq_span_of_mem f
         Φ.pieceIdeal (Φ.centerOf S) hZp ⟨c, hc⟩ x' hx'F hz.1 hZs hjc hjcs hF
-      rw [if_pos hcQ, pow_one, hF,
+      rw [ite_eq_left hcQ, pow_one, hF,
         show ((vanishingIdeal (Φ.piece c)).strictTransformAlong
             (IdealSheafData.blowUpπ (Φ.centerOf S)) ((Φ.centerOf S).comap
             (IdealSheafData.blowUpπ (Φ.centerOf S)))).stalkIdeal x' = span {u} from hstalk,
@@ -309,7 +309,7 @@ theorem stalkIdeal_comap_pieceIdeal_eq (hE : E.IsSnc) (hΦ : Φ.Realizes E e)
           by_contra hne
           exact notMem_span_singleton_of_ne hz.1.1 hz.1.2 (fun h => hne h.symm) hzz
         exact hjcs (hjj ▸ hj)
-      rw [if_neg hcQ, pow_zero, mul_one]
+      rw [ite_eq_right hcQ, pow_zero, mul_one]
       exact (stalkIdeal_strictTransformAlong_of_notMem f Φ.pieceIdeal (Φ.centerOf S) hZp ⟨c, hc⟩
         x' hx'F hz.1 hZs hjc hjcs).symm
   · -- `x` off the piece: both sides are the unit ideal
@@ -318,7 +318,8 @@ theorem stalkIdeal_comap_pieceIdeal_eq (hE : E.IsSnc) (hΦ : Φ.Realizes E e)
         by
       rw [Hironaka.Sequence.support_vanishingIdeal_eq]
       exact hxc
-    rw [if_neg hcQ, pow_zero, mul_one, stalkIdeal_comap, stalkIdeal_eq_top_of_notMem_support _ hxc',
+    rw [ite_eq_right hcQ, pow_zero, mul_one, stalkIdeal_comap,
+      stalkIdeal_eq_top_of_notMem_support _ hxc',
       Ideal.map_top, stalkIdeal_eq_top_of_notMem_support]
     intro h
     exact hxc' (π_mem_support_of_mem_support_strictTransformAlong (Φ.centerOf S) _ x' h)

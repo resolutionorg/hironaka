@@ -109,7 +109,7 @@ theorem firstCenterIndex_eraseEmpty [IsLocallyNoetherian X] (S : BlowUpSequence 
     have h' : ∃ n, CenterContains S.eraseEmpty J n := ⟨_, hc⟩
     apply le_antisymm
     · unfold firstCenterIndex
-      rw [dif_pos h']
+      rw [dite_eq_left h']
       exact Nat.find_min' h' hc
     · by_contra hlt'
       push Not at hlt'
@@ -124,7 +124,7 @@ theorem firstCenterIndex_eraseEmpty [IsLocallyNoetherian X] (S : BlowUpSequence 
       rw [← he] at hn'
       exact h ⟨n, (centerContains_eraseEmpty_iff S J n hn hne).1 hn'⟩
     unfold firstCenterIndex
-    rw [dif_neg h, dif_neg h', eraseIdx_length]
+    rw [dite_eq_right h, dite_eq_right h', eraseIdx_length]
 
 /-- The truncations at the first containing index correspond under the deletion of empty blow-ups
 (`eraseEmpty_take`). -/

@@ -1,6 +1,7 @@
 import Verso
 import VersoManual
 import VersoBlueprint
+import Blueprint.References
 import Blueprint.Spaces
 import Hironaka.Resolution.Analytic.Wlo09.HironakaAssembly
 import Hironaka.Resolution.Analytic.BM97.JacobianAssembly
@@ -16,6 +17,9 @@ open AnalyticManifold Manifold AnalyticSpace
 open scoped CategoryTheory
 
 set_option verso.blueprint.autoDeps true
+-- Infer from directly referenced declarations only, as before v4.34; walking through unassociated
+-- helpers would traverse Mathlib.
+set_option verso.blueprint.autoDeps.expandUntagged false
 
 #doc (Manual) "Analytic manifolds and analytic spaces" =>
 %%%
@@ -33,7 +37,7 @@ complex space.
 On a manifold that is not compact no finite succession of blow-ups can be expected to resolve
 everything, and Hironaka states his global analytic theorems I′(n), II′(N), I″(n) and II″(N) for
 locally finite successions indexed by a countable well-ordered set. The library uses instead the
-form of Włodarczyk's locally finite principalization \[Wlo09, Theorem 2.0.3\]: a proper analytic
+form of Włodarczyk's locally finite principalization {cite Wlo09}[Theorem 2.0.3]: a proper analytic
 map $`\sigma \colon \tilde M \to M` which, over an open neighbourhood $`U_K` of every compact
 $`K \subseteq M`, is a finite succession of blow-ups, the successions for different compacts being
 compatible ({bpref "def:compatible_family"}[]). Over a compact manifold, $`K = M` gives one finite
@@ -68,11 +72,11 @@ $`M` with centres $`C_i`; they are the analytic forms of those of the algebraic 
 
 - `S.HasSncBoundaries B`: the boundaries $`E_i` started at $`B`
   ({bpref "def:succession_transforms"}[]) have simple normal crossings with the centres, and the
-  last one has simple normal crossings ({bpref "def:snc_boundary"}[]) \[Hir64, Main Theorem II′(N)
-  (iii) and the first half of (iv)\]; \[Wlo09, Theorem 2.0.3 (2)\]. Started at the unit ideal `⊤`,
+  last one has simple normal crossings ({bpref "def:snc_boundary"}[]) {cite Hir64}[Main Theorem II′(N)
+  (iii) and the first half of (iv)]; {cite Wlo09}[Theorem 2.0.3 (2)]. Started at the unit ideal `⊤`,
   the empty boundary, the $`E_i` are the exceptional divisors;
 - `S.HasConstantPositiveOrderAlongCenters J`: for every $`i` the order of the weak transform $`J_i`
-  is a positive constant along $`C_i` \[Hir64, Main Theorem II′(N) (ii)\].
+  is a positive constant along $`C_i` {cite Hir64}[Main Theorem II′(N) (ii)].
 ::::
 
 ::::theorem "thm:mt2pp" (lean := "AnalyticManifold.exists_extensionCompatibleFamily_weakTransformSeq_eq_top")
@@ -110,7 +114,7 @@ The hypothesis `hE₀` provides coordinates $`E \cong \mathbb{R}^n` and a simple
 hypersurface family whose reduced ideal sheaf is $`E_0`. Transporting $`X`, $`J_0` and the family
 along the coordinates gives a triple on the standard model, to which the order-reduction
 algorithm is applied: the real-analytic form of the blow-up sequence functors of
-\[Kol07, Theorem 103\] and, for marked ideals, \[Kol07, Theorem 107\], assembled functorially over
+{cite Kol07}[Theorem 103] and, for marked ideals, {cite Kol07}[Theorem 107], assembled functorially over
 the exhaustion of the manifold by compacts. This yields a compatible family with proper blow-down
 satisfying the conditions on the model, and each condition is carried back along the coordinates.
 :::
@@ -185,8 +189,8 @@ every $`U_K` has compact closure; the centres are smooth; `(F.seq K).HasSncBound
 every point the ideal of an effective combination of the components of $`E_r`
 ({decl}`IsMulBoundaryMonomial` with the unit ideal as its first factor,
 {bpref "def:embedded_snc"}[]); the total transform $`\mathrm{prin}_I^*(I)` is a normal-crossings
-divisor; and $`\mathrm{prin}_I` is an isomorphism off the support of $`I` \[Wlo09, Theorem 2.0.3
-(1)–(3); Lemma 4.0.3\]. It is the analogue on manifolds of {decl}`Triple.IsPrincipalizedBy` on
+divisor; and $`\mathrm{prin}_I` is an isomorphism off the support of $`I` {cite Wlo09}[Theorem 2.0.3
+(1)–(3); Lemma 4.0.3]. It is the analogue on manifolds of {decl}`Triple.IsPrincipalizedBy` on
 schemes ({bpref "def:principalized_by"}[]), with properness and the compact closures of the $`U_K`
 added and each condition stated over every compact.
 ::::
@@ -203,7 +207,7 @@ Włodarczyk's principalization, Kollár's triple $`(X, I, \emptyset)` with an em
 ({bpref "def:triple"}[]). The model space is part of the input, so that one assignment covers the
 manifolds of every dimension. `T.pullback g hg` is the pair $`(N, g^* I)` over a local analytic
 isomorphism $`g \colon N \to M` of manifolds modelled on one space, the source of the morphism of
-pairs over $`g` \[Wlo09, Theorem 3.5.1\].
+pairs over $`g` {cite Wlo09}[Theorem 3.5.1].
 ::::
 
 *Compatible family assignments.*
@@ -218,7 +222,7 @@ counterpart of {decl}`HasUnderlyingScheme`, {bpref "def:functors"}[]); the pairs
 are such a type. A *compatible family assignment* on $`C` ({decl}`CompatibleFamilyAssignment`) is a
 compatible family of finite successions of blow-ups ({bpref "def:compatible_family"}[]) of the
 underlying manifold of every input: Włodarczyk's $`\mathrm{prin}` and $`\mathrm{res}` as rules on
-all pairs, the counterpart on manifolds of a blow-up sequence functor \[Kol07, Definition 31\].
+all pairs, the counterpart on manifolds of a blow-up sequence functor {cite Kol07}[Definition 31].
 Its properties are the clauses of the functorial theorems.
 ::::
 
@@ -251,19 +255,19 @@ Włodarczyk's "embeddings of ambient varieties".
 paperIdentity := some { label := "[Wlo09, Theorem 2.0.3, p. 35; Theorem 3.5.1 (2); Theorem 2.0.1 (3)]", href := "https://gokovagt.org/proceedings/2008/ggt08-wlodarczyk.pdf" }
 %%%
 `IdealSheafPair.CommutesWithLocalAnalyticIsomorphisms P`, for a compatible family assignment
-$`P` on the pairs: the last sentence of \[Wlo09, Theorem 2.0.3\] for local analytic isomorphisms,
+$`P` on the pairs: the last sentence of {cite Wlo09}[Theorem 2.0.3] for local analytic isomorphisms,
 in two forms. Over every pair of compact sets: for a local analytic isomorphism
 $`g \colon N \to M` of manifolds modelled on one space, the pair $`(N, g^* I)` and compacts
 $`K' \subseteq N`, $`K \subseteq M` with $`g(U_{K'}) \subseteq U_K`, the succession of
 $`P(N, g^* I)` over $`U_{K'}` is the pull-back along $`g` of the succession of $`P(M, I)` over
 $`U_K`, up to blow-ups with empty centre ({bpref "def:pullback_up_to_empty"}[]), the form of
-\[Wlo09, Theorem 3.5.1 (2)\]. Globally: writing $`\mathrm{prin}_I \colon \tilde M \to M` and
+{cite Wlo09}[Theorem 3.5.1 (2)]. Globally: writing $`\mathrm{prin}_I \colon \tilde M \to M` and
 $`\mathrm{prin}_J \colon \tilde N \to N` for the maps of $`P(M, I)` and $`P(N, J)`, $`J = g^* I`,
 there is an analytic map $`\tilde g \colon \tilde N \to \tilde M` with
 $`\mathrm{prin}_I \circ \tilde g = g \circ \mathrm{prin}_J` which is a local analytic
 isomorphism, maps the fibre of $`\mathrm{prin}_J` over every point $`y` bijectively onto the fibre
 of $`\mathrm{prin}_I` over $`g(y)`, and is the only continuous map $`\tilde N \to \tilde M` over
-$`g`: the "natural lifting" of \[Wlo09, Theorem 2.0.1 (3)\], whose fibre bijection is the
+$`g`: the "natural lifting" of {cite Wlo09}[Theorem 2.0.1 (3)], whose fibre bijection is the
 identification of $`\tilde N` with the fibre product $`N \times_M \tilde M` stated pointwise, and
 whose uniqueness makes the lift of a composite the composite of the lifts. The two forms are
 bundled as the two conditions of Kollár's 34.1 are in {decl}`CommutesWithSmoothMorphisms`
@@ -283,9 +287,9 @@ $`\tau \colon N \to M` along which $`I` is the push-forward of $`J`
 $`\tau(U_{K'}) \subseteq U_K`, the succession of $`P(M, I)` over $`U_K` is the push-forward along
 $`\tau` of the succession of $`P(N, J)` over $`U_{K'}`, up to blow-ups whose centres lie outside
 the part over $`\tau(U_{K'})` ({bpref "def:pushforward_up_to_empty"}[]). This is the rest of the
-last sentence of \[Wlo09, Theorem 2.0.3\], "commutes with … embeddings of ambient varieties", read
-as Kollár's commutation with closed embeddings \[Kol07, Theorem 35 (5)\] in the form of
-\[Kol07, 34.3\], $`B(X, I_X, E) = j_* B(Y, I_Y, E|_Y)` for an empty $`E`, over every pair of
+last sentence of {cite Wlo09}[Theorem 2.0.3], "commutes with … embeddings of ambient varieties", read
+as Kollár's commutation with closed embeddings {cite Kol07}[Theorem 35 (5)] in the form of
+{cite Kol07}[34.3], $`B(X, I_X, E) = j_* B(Y, I_Y, E|_Y)` for an empty $`E`, over every pair of
 compact sets; the counterpart on manifolds of {decl}`CommutesWithClosedEmbeddingsOfEmptyBoundary`
 ({bpref "def:commutes_closed_embeddings"}[]).
 ::::
@@ -342,16 +346,16 @@ push-forward along a closed embedding ({bpref "def:pushforward_up_to_empty"}[]).
 :::proof "thm:wlo09_principalization"
 The model space is identified with $`\mathbb{K}^n`. On a manifold modelled on $`\mathbb{K}^n` the
 value at $`I` is Kollár's order reduction of the marked ideal $`(M, I, \emptyset, 1)`
-\[Kol07, 72\], over $`\mathbb{R}` or $`\mathbb{C}` alike: the marked family of the concrete
-order-reduction tower at the mark $`1` (\[Kol07, Theorem 107\], the three-step construction of
-\[Kol07, 111\]), over the relatively compact opens, glued along the exhaustion of the manifold.
+{cite Kol07}[72], over $`\mathbb{R}` or $`\mathbb{C}` alike: the marked family of the concrete
+order-reduction tower at the mark $`1` ({cite Kol07}[Theorem 107], the three-step construction of
+{cite Kol07}[111]), over the relatively compact opens, glued along the exhaustion of the manifold.
 Over every relatively compact open its value is a smooth blow-up sequence of order at least $`1`
 for $`(I, \emptyset)` whose marked transform has order less than $`1` at the end; so its
 exceptional divisors are simple normal crossings families having simple normal crossings with the
 centres, which gives (1) and (2), the total transform of $`I` is Kollár's monomial in the final
-exceptional divisor \[Kol07, 72\], which gives (3), and the centres lie over the support of $`I`,
+exceptional divisor {cite Kol07}[72], which gives (3), and the centres lie over the support of $`I`,
 which gives the isomorphism off the support. The marked family commutes with local analytic
-isomorphisms \[Kol07, Theorem 107 (2)\]: the value of $`g^* I` over a relatively compact open of
+isomorphisms {cite Kol07}[Theorem 107 (2)]: the value of $`g^* I` over a relatively compact open of
 $`N` is the pull-back of the value of $`I` over its image with the empty blow-ups erased, and by the
 compatibility of the family the pull-back up to empty blow-ups of the value over any larger
 relatively compact open. On a manifold modelled on $`E` the value is the value on the re-modelled
@@ -366,14 +370,14 @@ a piece of $`\tilde N` to $`\tilde M` over $`g`; two such maps agree on an overl
 over $`g` is determined on the dense set over which the composite blow-down of $`U_K` is injective
 and $`\tilde M` is Hausdorff, so the pieces glue, and the same argument gives the uniqueness.
 
-The commutation with closed embeddings is Kollár's Claim 71.2 \[Kol07, 72\]: the marked family at
+The commutation with closed embeddings is Kollár's Claim 71.2 {cite Kol07}[72]: the marked family at
 the mark $`1` in dimension $`n` commutes with closed embeddings of empty divisor through the marked
-family in dimension $`n - s`. For a hypersurface this is \[Kol07, Theorem 107 (3)\] at the mark
+family in dimension $`n - s`. For a hypersurface this is {cite Kol07}[Theorem 107 (3)] at the mark
 $`1`, which the three-step construction satisfies because an ideal containing the ideal of a
 hypersurface has order at most $`1`, so that its marked order reduction at the mark $`1` is a single
-round of the order reduction of \[Kol07, Theorem 103\], whose commutation with closed embeddings
-is \[Kol07, Theorem 103 (3)\]; the general codimension follows along a flag of hypersurfaces
-\[Kol07, 108\]. On the standard models a closed embedding $`\tau \colon N \to M` identifies $`N`
+round of the order reduction of {cite Kol07}[Theorem 103], whose commutation with closed embeddings
+is {cite Kol07}[Theorem 103 (3)]; the general codimension follows along a flag of hypersurfaces
+{cite Kol07}[108]. On the standard models a closed embedding $`\tau \colon N \to M` identifies $`N`
 with the bundled closed submanifold $`\tau(N)`, by the universal property of the embedding, which
 fixes the dimension of $`N`; the value over $`U_K` is the push-forward of the value over the trace
 of $`U_K` on $`\tau(N)`, the value over $`U_{K'}` is the pull-back up to empty blow-ups of that
@@ -407,7 +411,7 @@ over a point of $`\operatorname{Reg}(Y)`; the support of $`E_r` is the preimage 
 $`\operatorname{Sing}(Y) = Y \setminus \operatorname{Reg}(Y)`; $`\tilde Y` is smooth and
 {decl}`IsSncBoundaryTransversalTo` holds for $`E_r` and $`\tilde Y`; and
 $`\sigma^*(I_Y) = I_{\tilde Y} \cdot I_{\tilde E}` ({decl}`IsMulBoundaryMonomial`,
-{bpref "def:embedded_snc"}[]) \[Wlo09, Theorem 2.0.2 (1)–(3), (6)\]. It is the analogue on manifolds
+{bpref "def:embedded_snc"}[]) {cite Wlo09}[Theorem 2.0.2 (1)–(3), (6)]. It is the analogue on manifolds
 of {decl}`EmbeddedPair.IsDesingularizedBy` on schemes ({bpref "def:desingularized_by"}[]).
 ::::
 
@@ -465,7 +469,7 @@ on one space, the embedded pair $`(N, g^{-1}(Y))` and compacts $`K' \subseteq N`
 $`K \subseteq M` with $`g(U_{K'}) \subseteq U_K`, the succession of $`R(N, g^{-1}(Y))` over
 $`U_{K'}` is the pull-back along $`g` of the succession of $`R(M, Y)` over $`U_K`, up to blow-ups
 with empty centre ({bpref "def:pullback_up_to_empty"}[]): the first half of
-\[Wlo09, Theorem 2.0.2 (4)\], read as \[Wlo09, Theorem 3.5.1 (2)\], the per-compact form of
+{cite Wlo09}[Theorem 2.0.2 (4)], read as {cite Wlo09}[Theorem 3.5.1 (2)], the per-compact form of
 {bpref "def:commutes_local_iso"}[] (the lift of the local isomorphism is not stated for the
 embedded desingularization).
 ::::
@@ -485,8 +489,8 @@ sheaf of $`Y'` has nonzero stalks, Kollár's $`0 \neq I_Y`), and compacts $`K' \
 $`K \subseteq M` with $`\tau(U_{K'}) \subseteq U_K`, the succession of $`R(M, Y)` over $`U_K` is
 the push-forward along $`\tau` of the succession of $`R(N, Y')` over $`U_{K'}`, up to blow-ups
 whose centres lie outside the part over $`\tau(U_{K'})`
-({bpref "def:pushforward_up_to_empty"}[]): the second half of \[Wlo09, Theorem 2.0.2 (4)\],
-"embeddings of ambient varieties", read as \[Kol07, 34.3\] as {bpref "def:commutes_closed_analytic"}[]
+({bpref "def:pushforward_up_to_empty"}[]): the second half of {cite Wlo09}[Theorem 2.0.2 (4)],
+"embeddings of ambient varieties", read as {cite Kol07}[34.3] as {bpref "def:commutes_closed_analytic"}[]
 reads the last sentence of Theorem 2.0.3.
 ::::
 
@@ -538,7 +542,7 @@ $`C_i` and composite $`\sigma_K \colon U_r \to U_K` — such that:
 
 Włodarczyk's (5), that the factorization over a larger compact restricts to the factorization over
 a smaller one, is the compatibility of the family: the succession over $`K \subseteq K'`,
-restricted to $`U_K`, is an extension of the succession over $`K` \[Wlo09, Definition 3.2.6\].
+restricted to $`U_K`, is an extension of the succession over $`K` {cite Wlo09}[Definition 3.2.6].
 This is the analytic counterpart of Włodarczyk's algebraic embedded desingularization
 ({bpref "thm:embedded"}[]), in the locally finite form of {bpref "thm:mt2pp"}[], chosen for all
 embedded pairs at once, by one rule, compatibly with local analytic isomorphisms and with closed
@@ -563,10 +567,10 @@ through the push-forward along a closed embedding ({bpref "def:pushforward_up_to
 The model space is identified with $`\mathbb{K}^n` and $`I` is transported to the model, where,
 made the unit ideal on the connected components of $`M` on which it vanishes (a union of
 components, by the identity theorem), it forms a triple with the empty boundary family. Włodarczyk's modification of the resolution
-algorithm for the marked ideal $`(M, I, \emptyset, 1)` (the proof of \[Wlo09, Theorem 7.4.1\]: the
+algorithm for the marked ideal $`(M, I, \emptyset, 1)` (the proof of {cite Wlo09}[Theorem 7.4.1]: the
 algorithm is stopped as soon as the controlled transform is the ideal of a smooth hypersurface of
 maximal contact), run on the real- or complex-analytic form of the blow-up sequence functors of
-\[Kol07, Theorem 103\] and \[Kol07, Theorem 107\], gives an embedded desingularization functor over
+{cite Kol07}[Theorem 103] and {cite Kol07}[Theorem 107], gives an embedded desingularization functor over
 the relatively compact opens of the model, which is glued along the exhaustion of the manifold to
 a compatible family with a proper blow-down. Its centres lie over $`Y` by the order condition of the
 algorithm, hence over $`\operatorname{Sing}(Y)` by (2), so the blow-down is an isomorphism over the
@@ -579,13 +583,13 @@ families of the pieces glue to a locally finite simple normal crossings family o
 space, each member born on the piece where it first appears and continued along the embeddings of
 the pieces, which carry exceptional families to exceptional families; $`E` is its reduced ideal
 sheaf, and $`\tilde Y` is the saturation of the total transform $`\mathrm{res}_{Y,M}^*(I)` by $`E`,
-which on each piece is the last strict transform \[BM97, Proposition 3.13\], the strict transform
+which on each piece is the last strict transform {cite BM97}[Proposition 3.13], the strict transform
 being, at a point of the last stage, the saturation of the total transform by the exceptional
 ideal: near a point of $`\tilde Y` the exceptional ideal is a product of coordinates and the ideal
 of $`\tilde Y` a prime generated by coordinates not among them, so the saturation changes
 nothing. The conditions on $`E` and $`\tilde Y` are read on the pieces through the inclusions,
 which are local analytic isomorphisms. The functor commutes with local analytic isomorphisms
-\[Kol07, 34.1\]: the value of $`g^* I` over a relatively compact
+{cite Kol07}[34.1]: the value of $`g^* I` over a relatively compact
 open is the pull-back of the value of $`I` over its image with the empty blow-ups erased, and by
 the compatibility of the family the pull-back up to empty blow-ups of the value over any larger
 relatively compact open. The commutation with closed embeddings of ambient manifolds is that of
@@ -628,12 +632,12 @@ paperIdentity := some { label := "[Kol07, (2) and (3)]", href := "https://arxiv.
 For a morphism $`\pi \colon R \to X` of $`K`-analytic spaces:
 
 - `π.IsResolution`: $`R` is non-singular, $`\pi` is proper, and $`\pi` is bimeromorphic
-  (Kollár: birational \[Kol07, (2)\]; \[Wlo09, Theorem 2.0.1\]), read onto its image: an
+  (Kollár: birational {cite Kol07}[(2)]; {cite Wlo09}[Theorem 2.0.1]), read onto its image: an
   isomorphism over an open subset $`U \subseteq X` whose preimage is dense in $`R`. Kollár asks
   for $`\pi` projective; only the properness that projectivity implies is recorded. The density is
   asked of the preimage and not of $`U`: over $`\mathbb{R}` the simple locus of a reduced space
   need not be dense, and then no resolution is an isomorphism over a dense open subset of $`X`.
-- `π.IsStrongResolution` \[Kol07, (3)\], conditions (1)–(3) of Kollár's Theorem 45: a resolution
+- `π.IsStrongResolution` {cite Kol07}[(3)], conditions (1)–(3) of Kollár's Theorem 45: a resolution
   that is an isomorphism over the simple locus `X.regularLocus` and such that
   $`\pi^{-1}(\operatorname{Sing} X)` is the support of a closed subspace `E` with
   `E.IsSncBoundary` ({bpref "def:closed_subspace"}[]).
@@ -663,8 +667,8 @@ open $`U` ({decl}`Hom.AmbientBlowUpFactorization`) consists of finitely many ope
 covering $`U`, closed embeddings of the $`X|_{U_i}` into open subsets $`G_i \subseteq K^n`, a
 finite succession of blow-ups of the ambient $`A` with smooth centres, the strict transforms of
 $`\bigsqcup X|_{U_i}`, the last one a closed submanifold, and isomorphisms over each $`U_i`
-identifying $`f^{-1}(U_i) \to U_i` with the restricted composite \[Kol07, Warning 23\];
-\[Wlo09, Theorem 2.0.2\]. `f.IsLocallyFiniteAmbientBlowUpComposite` asks for such a factorization
+identifying $`f^{-1}(U_i) \to U_i` with the restricted composite {cite Kol07}[Warning 23];
+{cite Wlo09}[Theorem 2.0.2]. `f.IsLocallyFiniteAmbientBlowUpComposite` asks for such a factorization
 over every relatively compact open $`U \subseteq X`.
 ::::
 
@@ -693,7 +697,7 @@ unique, they
 respect identities and composition: $`R` is a functor on the groupoid of isomorphisms between open
 subspaces of inputs and on the local analytic isomorphisms between inputs. The first form stands
 for condition (5) of Kollár's Theorem 45, "$`R` commutes with smooth $`K`-morphisms", for the étale
-morphisms that are injective, and the second is \[Wlo09, Theorem 2.0.1 (3)\] and the case of étale
+morphisms that are injective, and the second is {cite Wlo09}[Theorem 2.0.1 (3)] and the case of étale
 morphisms of Kollár's (5); the two are bundled as the two conditions of Kollár's 34.1 are in
 {decl}`CommutesWithSmoothMorphisms` ({bpref "def:commutes_smooth"}[]). Smooth morphisms that are not
 étale are not lifted. For strong resolutions, the second form follows from the first by gluing the
@@ -740,7 +744,7 @@ This is resolution of singularities for analytic spaces, functorial for local an
 isomorphisms: the lifts are unique, so they respect identities and composition, and the resolution
 is local on the space. Kollár's condition (5) asks more, the commutation with all smooth morphisms;
 the lifting of local analytic isomorphisms is its case of étale morphisms and is
-\[Wlo09, Theorem 2.0.1 (3)\]. Conditions (1)–(3), with properness, bimeromorphy and the image
+{cite Wlo09}[Theorem 2.0.1 (3)]. Conditions (1)–(3), with properness, bimeromorphy and the image
 clause, are {decl}`Hom.IsStrongResolutionOntoClosureRegularLocus`
 ({bpref "def:space_resolution"}[]), condition (4) is
 {decl}`Hom.IsLocallyFiniteAmbientBlowUpComposite` ({bpref "def:ambient_factorization"}[]), and

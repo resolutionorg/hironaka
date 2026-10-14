@@ -100,12 +100,12 @@ theorem not_dvd_coord_of_ne {i j : Fin n} (h0 : ψ (φ b) i = 0) (h0' : ψ (φ b
   have h := congrArg (taylorHom E ψ φ hb hφ) hw
   rw [map_mul, taylorHom_coord, taylorHom_coord, h0, h0', map_zero, add_zero, add_zero] at h
   have hc := congrArg (MvPowerSeries.coeff (Finsupp.single j 1)) h
-  rw [MvPowerSeries.coeff_X, if_pos rfl, MvPowerSeries.coeff_mul] at hc
+  rw [MvPowerSeries.coeff_X, ite_eq_left rfl, MvPowerSeries.coeff_mul] at hc
   refine one_ne_zero (hc.trans (Finset.sum_eq_zero fun q hq => ?_))
-  rw [MvPowerSeries.coeff_X, if_neg, zero_mul]
+  rw [MvPowerSeries.coeff_X, ite_eq_right, zero_mul]
   intro hq1
   have hi := DFunLike.congr_fun (Finset.HasAntidiagonal.mem_antidiagonal.mp hq) i
-  simp only [Finsupp.add_apply, hq1, Finsupp.single_apply, hij.symm, if_true, if_false] at hi
+  simp only [Finsupp.add_apply, hq1, Finsupp.single_apply, hij.symm, ite_true, ite_false] at hi
   omega
 
 end NotDvd

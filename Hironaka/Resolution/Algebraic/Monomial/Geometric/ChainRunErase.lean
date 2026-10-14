@@ -86,37 +86,37 @@ theorem chainRunE_nil : chainRunE ρ Y N [] = [] := rfl
 
 theorem chainRunE_cons_of_eq_empty (h : (Y.nerve.filter fun Q => Q.image ρ ∈ S) = ∅) :
     chainRunE ρ Y N (S :: Ns) = chainRunE ρ Y (N.blowUp S) Ns := by
-  rw [chainRunE, if_pos h]
+  rw [chainRunE, ite_eq_left h]
 
 theorem chainRunE_cons_of_ne_empty (h : (Y.nerve.filter fun Q => Q.image ρ ∈ S) ≠ ∅) :
     chainRunE ρ Y N (S :: Ns) = (Y.nerve.filter fun Q => Q.image ρ ∈ S) ::
       chainRunE (extendComp ρ Y N (Y.nerve.filter fun Q => Q.image ρ ∈ S) S)
         (Y.blowUp (Y.nerve.filter fun Q => Q.image ρ ∈ S)) (N.blowUp S) Ns := by
-  rw [chainRunE, if_neg h]
+  rw [chainRunE, ite_eq_right h]
 
 theorem chainMapE_nil : chainMapE ρ Y N [] = ρ := rfl
 
 theorem chainMapE_cons_of_eq_empty (h : (Y.nerve.filter fun Q => Q.image ρ ∈ S) = ∅) :
     chainMapE ρ Y N (S :: Ns) = chainMapE ρ Y (N.blowUp S) Ns := by
-  rw [chainMapE, if_pos h]
+  rw [chainMapE, ite_eq_left h]
 
 theorem chainMapE_cons_of_ne_empty (h : (Y.nerve.filter fun Q => Q.image ρ ∈ S) ≠ ∅) :
     chainMapE ρ Y N (S :: Ns) =
       chainMapE (extendComp ρ Y N (Y.nerve.filter fun Q => Q.image ρ ∈ S) S)
         (Y.blowUp (Y.nerve.filter fun Q => Q.image ρ ∈ S)) (N.blowUp S) Ns := by
-  rw [chainMapE, if_neg h]
+  rw [chainMapE, ite_eq_right h]
 
 theorem chainStateYE_nil : chainStateYE ρ Y N [] = Y := rfl
 
 theorem chainStateYE_cons_of_eq_empty (h : (Y.nerve.filter fun Q => Q.image ρ ∈ S) = ∅) :
     chainStateYE ρ Y N (S :: Ns) = chainStateYE ρ Y (N.blowUp S) Ns := by
-  rw [chainStateYE, if_pos h]
+  rw [chainStateYE, ite_eq_left h]
 
 theorem chainStateYE_cons_of_ne_empty (h : (Y.nerve.filter fun Q => Q.image ρ ∈ S) ≠ ∅) :
     chainStateYE ρ Y N (S :: Ns) =
       chainStateYE (extendComp ρ Y N (Y.nerve.filter fun Q => Q.image ρ ∈ S) S)
         (Y.blowUp (Y.nerve.filter fun Q => Q.image ρ ∈ S)) (N.blowUp S) Ns := by
-  rw [chainStateYE, if_neg h]
+  rw [chainStateYE, ite_eq_right h]
 
 /-- The chain with skips along a concatenation. -/
 theorem chainRunE_append (ρ : ℕ → ℕ) : ∀ (Y N : MonomialState) (N₁ N₂ : List (Finset (Finset ℕ))),

@@ -20,11 +20,9 @@ import Mathlib.Data.EReal.Operations
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Topology.MetricSpace.Bounded
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
 public import Hironaka.Scheme.FiniteType
 public import Hironaka.Scheme.BlowUpSequence.Defs
 public import Hironaka.Scheme.Resolution.Defs
-import SourceAttr
 import Hironaka.Scheme.Resolution.Basic
 
 /-!
@@ -103,8 +101,9 @@ Relation to the source.
   extension is again a triple.
 * **Gap.** Kollár's $E$ is an unordered simple normal crossing divisor. Here it is an ordered family
   (`DivisorFamily`), and clause (4) compares values on families with the induced orders; nothing
-  relates the values at two orderings of one divisor. -/
-@[source Kol07 "Theorem 35"]
+  relates the values at two orderings of one divisor.
+
+Source statement: [Kol07, Theorem 35] -/
 theorem exists_functorial_principalization :
     ∃ BP : ∀ (k : Type u) [Field k] [CharZero k], BlowUpSequenceFunctor (Triple k),
       -- (1)–(3)

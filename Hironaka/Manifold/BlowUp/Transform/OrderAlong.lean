@@ -200,9 +200,9 @@ theorem analyticAt_embedCompl (σ : Fin c ↪ Fin n) (w : Fin (n - c) → 𝕜) 
   rw [analyticAt_pi_iff]
   intro j
   by_cases h : j ∈ Set.range σ
-  · simp only [embedCompl, dif_pos h]
+  · simp only [embedCompl, dite_eq_left h]
     exact analyticAt_const
-  · simp only [embedCompl, dif_neg h]
+  · simp only [embedCompl, dite_eq_right h]
     exact (ContinuousLinearMap.proj (R := 𝕜) (φ := fun _ : Fin (n - c) => 𝕜)
       (complEquiv σ ⟨j, h⟩)).analyticAt w
 

@@ -20,11 +20,9 @@ import Mathlib.Data.EReal.Operations
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Topology.MetricSpace.Bounded
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
 public import Hironaka.Scheme.FiniteType
 public import Hironaka.Scheme.BlowUpSequence.Defs
 public import Hironaka.Scheme.Resolution.Defs
-import SourceAttr
 import Hironaka.Scheme.Resolution.Basic
 
 /-!
@@ -376,8 +374,9 @@ Relation to the source.
   [Kol07, 34.2] (`CommutesWithChangeOfFields`) does. The functor built here is not Włodarczyk's
   single invariant-driven run, and functoriality for closed embeddings is, in Kollár's words, "quite
   delicate" [Kol07, 34 and Claim 71.2]: he proves it only for an empty boundary, whereas the later
-  rounds here run with the exceptional divisors of the earlier ones as boundary. -/
-@[source Wlo05 "Theorem 1.0.2"]
+  rounds here run with the exceptional divisors of the earlier ones as boundary.
+
+Source statement: [Wlo05, Theorem 1.0.2] -/
 theorem exists_functorial_embeddedDesingularization :
     ∃ ED : ∀ (k : Type u) [Field k] [CharZero k], BlowUpSequenceFunctor (EmbeddedPair k),
       (∀ (k : Type u) [Field k] [CharZero k] (P : EmbeddedPair k),

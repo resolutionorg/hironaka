@@ -132,7 +132,7 @@ theorem exists_eval_homogeneousPoly_ne_zero {f : MvPowerSeries (Fin n) K} (hf : 
   have hdeg' : d.degree = f.order.toNat := by
     exact_mod_cast hdeg.trans hfin.symm
   have h2 := coeff_homogeneousPoly f hdeg'
-  rw [hP, MvPolynomial.coeff_zero] at h2
+  rw [hP, AddMonoidAlgebra.coeff_zero] at h2
   exact hd h2.symm
 
 /-- Evaluating a monomial on a multiple of `v`: `(t v)^ν = t^{|ν|} v^ν`. -/
@@ -189,7 +189,7 @@ theorem nnnorm_monomialEval_mul_pow_le {ρ : Fin n → ℝ≥0} {r : ℝ≥0} {v
   rw [← hν, Finsupp.degree_eq_sum, monomialEval, Finsupp.prod_pow, nnnorm_prod, monomialEval,
     Finsupp.prod_fintype _ _ (fun k => pow_zero _), ← Finset.prod_pow_eq_pow_sum,
     ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod' fun k _ => ?_
+  refine Finset.prod_le_prod fun k _ => ?_
   rw [nnnorm_pow, ← mul_pow, mul_comm]
   exact pow_le_pow_left' (hrv k) _
 
@@ -359,7 +359,7 @@ theorem eval_single_homogeneousPoly {m : ℕ} (f : MvPowerSeries (Fin (m + 1)) K
   rw [eval_homogeneousPoly, Finset.sum_eq_single (Finsupp.single 0 e)]
   · rw [monomialEval_single_pow, Pi.single_eq_same, one_pow, mul_one]
   · intro ν hν hne
-    rw [monomialEval_pi_single, if_neg, mul_zero]
+    rw [monomialEval_pi_single, ite_eq_right, mul_zero]
     intro h
     apply hne
     have h1 := mem_degreeSet.mp hν

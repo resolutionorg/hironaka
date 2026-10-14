@@ -30,10 +30,8 @@ import Hironaka.Scheme.IdealSheaf.Order.Invariance
 import Hironaka.Scheme.IdealSheaf.StalkIdeal
 import Hironaka.Scheme.IdealSheaf.StalkLe
 import Hironaka.Scheme.Snc.DictionaryOrder
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
 public import Hironaka.Scheme.FiniteType
 public import Hironaka.Scheme.BlowUpSequence.Defs
-import SourceAttr
 public import Hironaka.Scheme.DisjointIntegralComponents
 public import Hironaka.Scheme.Resolution.Defs
 import Hironaka.Scheme.Resolution.Basic
@@ -1011,8 +1009,9 @@ Relation to the source.
 * **Out of scope.** Hironaka's remark that the theorem remains true over any local ring of his class
   ℬ [Hir64, p. 151; ℬ defined on p. 161], which he uses for local rings of analytic spaces (Main
   Theorem II′, p. 152). The base here is a field of characteristic zero, as in the print ("a field
-  **B** of characteristc [sic] zero"). -/
-@[source Hir64 "Main Theorem II" "pp. 142–143"]
+  **B** of characteristc [sic] zero").
+
+Source statement: [Hir64, Main Theorem II, pp. 142–143] -/
 theorem exists_blowUpSequence_ord_weakTransformSeq_lt {k : Type u} [Field k] [CharZero k]
     (X : AlgScheme k) [Smooth (X.left ↘ Spec (.of k))]
     (J : X.left.IdealSheafData) (hJ : IsNonzeroEverywhere J)
@@ -1084,8 +1083,9 @@ Relation to the source.
 * **Restatement.** Hironaka states the theorem for $X$ of dimension $N$, the index of the
   fundamental theorem II₂^N from which he deduces it [Hir64, p. 176]; $N$ does not appear in the
   conclusion. The statement here is II(N) for all $N$ at once. As in the print, `X` may have several
-  irreducible components (Hironaka reduces the proof to irreducible $X$). -/
-@[source Hir64 "Main Theorem II(N)" "p. 176"]
+  irreducible components (Hironaka reduces the proof to irreducible $X$).
+
+Source statement: [Hir64, Main Theorem II(N), p. 176] -/
 theorem exists_blowUpSequence_weakTransformSeq_eq_top {k : Type u} [Field k] [CharZero k]
     (X : AlgScheme k) [Smooth (X.left ↘ Spec (.of k))]
     (J : X.left.IdealSheafData) (hJ : IsNonzeroEverywhere J)

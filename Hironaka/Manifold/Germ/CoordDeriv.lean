@@ -108,7 +108,7 @@ theorem extendSection_add (f g : (structureSheaf 𝕜 E M).presheaf.obj (op V)) 
   · rw [Pi.add_apply, extendSection_of_mem 𝕜 E _ hy, extendSection_of_mem 𝕜 E f hy,
       extendSection_of_mem 𝕜 E g hy]
     rfl
-  · simp only [Pi.add_apply, extendSection, extendBy0, dif_neg hy, add_zero]
+  · simp only [Pi.add_apply, extendSection, extendBy0, dite_eq_right hy, add_zero]
 
 theorem extendSection_mul (f g : (structureSheaf 𝕜 E M).presheaf.obj (op V)) :
     extendSection 𝕜 E (f * g) = extendSection 𝕜 E f * extendSection 𝕜 E g := by
@@ -117,7 +117,7 @@ theorem extendSection_mul (f g : (structureSheaf 𝕜 E M).presheaf.obj (op V)) 
   · rw [Pi.mul_apply, extendSection_of_mem 𝕜 E _ hy, extendSection_of_mem 𝕜 E f hy,
       extendSection_of_mem 𝕜 E g hy]
     rfl
-  · simp only [Pi.mul_apply, extendSection, extendBy0, dif_neg hy, mul_zero]
+  · simp only [Pi.mul_apply, extendSection, extendBy0, dite_eq_right hy, mul_zero]
 
 theorem extendSection_smul (c : 𝕜) (f : (structureSheaf 𝕜 E M).presheaf.obj (op V)) :
     extendSection 𝕜 E (c • f) = c • extendSection 𝕜 E f := by
@@ -125,7 +125,7 @@ theorem extendSection_smul (c : 𝕜) (f : (structureSheaf 𝕜 E M).presheaf.ob
   by_cases hy : y ∈ V
   · rw [Pi.smul_apply, extendSection_of_mem 𝕜 E _ hy, extendSection_of_mem 𝕜 E f hy]
     rfl
-  · simp only [Pi.smul_apply, extendSection, extendBy0, dif_neg hy, smul_zero]
+  · simp only [Pi.smul_apply, extendSection, extendBy0, dite_eq_right hy, smul_zero]
 
 end ExtendSection
 

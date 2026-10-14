@@ -10,9 +10,7 @@ public import Hironaka.Manifold.FiniteSuccession.CompatibleFamily.Defs
 public import Hironaka.Manifold.Jacobian.Defs
 public import Hironaka.Manifold.Resolution.Defs
 public import Hironaka.Manifold.Snc.Defs
-public import HironakaReferences
 public import Mathlib.Analysis.Complex.Basic
-import SourceAttr
 
 /-!
 # Resolution of singularities: the analytic main theorems
@@ -221,9 +219,11 @@ Relation to the source.
 * **Restatement.** The reducedness and invertibility of `E₀`, which Hironaka assumes ("reduced
   analytic subspace everywhere of codimension one"), are not separate hypotheses: both follow from
   the family of smooth hypersurfaces with simple normal crossings that `hE₀` provides, whose reduced
-  ideal sheaf is `E₀`. -/
-@[source Hir64 "Main Theorem II″(N)" "pp. 158–159",
-  source Wlo09 "Theorem 2.0.3 (1) and (4)"]
+  ideal sheaf is `E₀`.
+
+Source statement: [Hir64, Main Theorem II″(N), pp. 158–159]
+
+Source statement: [Wlo09, Theorem 2.0.3 (1) and (4)] -/
 theorem exists_extensionCompatibleFamily_weakTransformSeq_eq_top {E : Type v}
     [NormedAddCommGroup E] [NormedSpace ℝ E] (X : AnalyticManifold.{u} ℝ E)
     (E₀ : IdealSheaf X) (hE₀ : E₀.IsSncBoundary)
@@ -289,8 +289,11 @@ Relation to the source.
   [BM97, after (1.2)], and [Wlo09, Theorem 2.0.3 (2)] at $i = r$.
 * **Strengthening.** The clause that $\sigma$ is an isomorphism over the complement of the support
   of $I$ (`F.map.IsIsoOver I.supportᶜ`) is not in [BM97, Theorem 1.10] or [Wlo09, Theorem 2.0.3]; it
-  is [Wlo09, Lemma 4.0.3], cf. [Kol07, Theorem 35 (3)]. -/
-@[source BM97 "Theorem 1.10", source Wlo09 "Theorem 2.0.3" (comment := "compatible-family form")]
+  is [Wlo09, Lemma 4.0.3], cf. [Kol07, Theorem 35 (3)].
+
+Source statement: [BM97, Theorem 1.10]
+
+Source statement: [Wlo09, Theorem 2.0.3] (compatible-family form) -/
 theorem exists_extensionCompatibleFamily_isNormalCrossingsDivisor_jacobianIdeal_mul_pullback
     {E : Type v} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     (M : AnalyticManifold.{u} ℝ E) (I : IdealSheaf M) (hI : I.IsNonzeroEverywhere) :
@@ -679,9 +682,11 @@ Relation to the source.
   than single blow-up sequences, as Kollár's passage to analytic spaces provides them [Kol07, 44];
   the commutation with smooth morphisms [Kol07, 34.1] is asserted, in Włodarczyk's form, for local
   analytic isomorphisms only, the smooth morphisms of relative dimension zero; and the commutation
-  with change of fields [Kol07, 34.2] has no counterpart. -/
-@[source Wlo09 "Theorem 2.0.3" "p. 35",
-  source Kol07 "Theorem 35" (comment := "analytic manifolds, empty boundary; item 44")]
+  with change of fields [Kol07, 34.2] has no counterpart.
+
+Source statement: [Wlo09, Theorem 2.0.3, p. 35]
+
+Source statement: [Kol07, Theorem 35] (analytic manifolds, empty boundary; item 44) -/
 theorem exists_functorial_principalization (𝕜 : Type) [RCLike 𝕜] :
     ∃ P : CompatibleFamilyAssignment (IdealSheafPair.{u, v} 𝕜),
       -- (1)–(3)
@@ -986,8 +991,9 @@ Relation to the source.
   a centre of codimension at least two of $M$, so the deletion is incompatible with the
   commutation with closed embeddings in its push-forward form. Włodarczyk notes that such blow-ups
   "may occur for some marked ideals induced on subvarieties of ambient varieties" and "determine
-  blow-ups of ambient varieties which are not isomorphisms" [Wlo09, Remark after Lemma 5.3.7]. -/
-@[source Wlo09 "Theorem 2.0.2"]
+  blow-ups of ambient varieties which are not isomorphisms" [Wlo09, Remark after Lemma 5.3.7].
+
+Source statement: [Wlo09, Theorem 2.0.2] -/
 theorem exists_embeddedDesingularization (𝕜 : Type) [RCLike 𝕜] :
     ∃ R : CompatibleFamilyAssignment (EmbeddedPair.{u, v} 𝕜),
       -- (1)–(3), (6), with `res_{Y,M}` proper and bimeromorphic, `E` and `Ỹ` on `M̃`
@@ -1173,8 +1179,11 @@ Relation to the source.
   subspaces, and the naturality follows from the uniqueness. The lift is glued from those lifts
   over the opens on which $\varphi$ is injective, and the uniqueness rests on the rigidity of
   morphisms out of a non-singular space: two morphisms that agree on a dense open subspace
-  agree. -/
-@[source Kol07 "Theorem 45", source Wlo09 "Theorem 2.0.1"]
+  agree.
+
+Source statement: [Kol07, Theorem 45]
+
+Source statement: [Wlo09, Theorem 2.0.1] -/
 theorem exists_functorial_resolution (K : Type) [RCLike K] :
     ∃ R : ResolutionAssignment (ReducedSpace.{u} K),
       (∀ X : ReducedSpace.{u} K,
@@ -1208,10 +1217,12 @@ Relation to the source.
   opens.
 * **Strengthening.** Surjectivity is not a printed clause. It is what Włodarczyk's "proper
   bimeromorphic" gives for a reduced complex space, whose simple locus is dense [Hir64,
-  Introduction]. -/
-@[source Kol07 "Theorem 45 (1)–(4)",
-  source Wlo09 "Theorem 2.0.1"
-    (comment := "surjectivity from the density of the simple locus over ℂ")]
+  Introduction].
+
+Source statement: [Kol07, Theorem 45 (1)–(4)]
+
+Source statement: [Wlo09, Theorem 2.0.1] (surjectivity from the density of the simple locus over
+ℂ) -/
 theorem exists_surjective_resolution_of_isReduced (X : AnalyticSpace.{u} ℂ) (hX : X.IsReduced) :
     ∃ (R : AnalyticSpace.{u} ℂ) (π : R ⟶ X),
       -- (1)–(3)

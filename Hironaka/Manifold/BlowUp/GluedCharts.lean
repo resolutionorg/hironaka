@@ -79,15 +79,15 @@ def gluedChart : OpenPartialHomeomorph (Glued ψ Y c) E where
     exact u.2
   map_target' v hv := by
     rw [Set.mem_preimage] at hv
-    simp only [dif_pos hv]
+    simp only [dite_eq_left hv]
     exact ⟨_, rfl⟩
   left_inv' := by
     rintro _ ⟨u, rfl⟩
     simp only [pieceEmbChart_symm_toGlued, ψ.apply_symm_apply]
-    rw [dif_pos u.2]
+    rw [dite_eq_left u.2]
   right_inv' v hv := by
     rw [Set.mem_preimage] at hv
-    simp only [dif_pos hv, pieceEmbChart_symm_toGlued, ψ.symm_apply_apply]
+    simp only [dite_eq_left hv, pieceEmbChart_symm_toGlued, ψ.symm_apply_apply]
   open_source := (isOpenEmbedding_toGlued j).isOpen_range
   open_target := (isOpen_pieceSet j).preimage ψ.continuous
   continuousOn_toFun := by
@@ -99,7 +99,7 @@ def gluedChart : OpenPartialHomeomorph (Glued ψ Y c) E where
     have h : Continuous fun v : ψ ⁻¹' pieceSet j => toGlued j ⟨ψ v.1, v.2⟩ :=
       (continuous_toGlued j).comp ((ψ.continuous.comp continuous_subtype_val).subtype_mk _)
     refine h.congr fun v => ?_
-    rw [Set.domRestrict_apply, dif_pos (Set.mem_preimage.mp v.2)]
+    rw [Set.domRestrict_apply, dite_eq_left (Set.mem_preimage.mp v.2)]
 
 /-- The source of a glued chart is the image of its piece. -/
 theorem gluedChart_source : (gluedChart j hj).source = Set.range (toGlued j) := rfl
@@ -118,7 +118,7 @@ theorem gluedChart_symm_apply {v : E} (hv : ψ v ∈ pieceSet j) :
     (gluedChart j hj).symm v = toGlued j ⟨ψ v, hv⟩ := by
   change (if h : ψ v ∈ pieceSet j then toGlued j ⟨ψ v, h⟩
     else toGlued j ⟨hj.some, hj.some_mem⟩) = _
-  rw [dif_pos hv]
+  rw [dite_eq_left hv]
 
 /-- Points of a piece lie in the source of its glued chart. -/
 theorem toGlued_mem_gluedChart_source (u : pieceSet j) :

@@ -221,7 +221,7 @@ theorem taylor_aeval_add (P : MvPolynomial (Fin n) A) (g b : Fin n → S) {d : F
         ((multiFactorial α : ℚ)⁻¹ • aeval g (pderivPow α P)) * ∏ i, b i ^ α i := by
   classical
   have hP : ∀ α, aeval g (pderivPow α P) =
-      ∑ β ∈ P.support, aeval g (pderivPow α (monomial β (coeff β P))) := fun α => by
+      ∑ β ∈ P.support, aeval g (pderivPow α (monomial β (P.coeff β))) := fun α => by
     conv_lhs => rw [P.as_sum]
     rw [map_sum, map_sum]
   simp_rw [hP, Finset.smul_sum, Finset.sum_mul]
@@ -263,10 +263,10 @@ variable {K : Type*} [Field K] {n : ℕ}
 
 /-- `∂ᵢ = pderiv K i` as a `K`-linear endomorphism of `K⟦X⟧`. -/
 noncomputable abbrev pderivEnd' (i : Fin n) : Module.End K (MvPowerSeries (Fin n) K) :=
-  (MvPowerSeries.pderiv K i).toLinearMap
+  (MvPowerSeries.pderiv (R := K) i).toLinearMap
 
 theorem pderivEnd'_apply (i : Fin n) (f : MvPowerSeries (Fin n) K) :
-    pderivEnd' i f = MvPowerSeries.pderiv K i f :=
+    pderivEnd' i f = MvPowerSeries.pderiv (R := K) i f :=
   rfl
 
 theorem pderivEnd'_commute (i j : Fin n) :
@@ -340,7 +340,7 @@ theorem constantCoeff_eq_zero_of_mem_maximalIdeal {f : MvPowerSeries (Fin n) K}
 `RegularCoords.D_maximalIdeal_pow`). -/
 theorem pderiv_mem_maximalIdeal_pow {k : ℕ} {f : MvPowerSeries (Fin n) K}
     (hf : f ∈ maximalIdeal (MvPowerSeries (Fin n) K) ^ (k + 1)) (i : Fin n) :
-    MvPowerSeries.pderiv K i f ∈ maximalIdeal (MvPowerSeries (Fin n) K) ^ k := by
+    MvPowerSeries.pderiv (R := K) i f ∈ maximalIdeal (MvPowerSeries (Fin n) K) ^ k := by
   classical
   rw [mem_maximalIdeal_pow_iff_le_order] at hf ⊢
   refine MvPowerSeries.le_order fun d hd => ?_
@@ -390,7 +390,7 @@ theorem sub_truncTotal_mem (f : MvPowerSeries (Fin n) K) (s : ℕ) :
       maximalIdeal (MvPowerSeries (Fin n) K) ^ (s + 1) := by
   rw [mem_maximalIdeal_pow_iff_le_order]
   refine MvPowerSeries.le_order fun d hd => ?_
-  have hc : MvPolynomial.coeff d (truncTotal (s + 1) f) = MvPowerSeries.coeff d f :=
+  have hc : (truncTotal (s + 1) f).coeff d = MvPowerSeries.coeff d f :=
     coeff_truncTotal f (by exact_mod_cast hd)
   rw [map_sub, MvPolynomial.coeff_coe, hc, sub_self]
 

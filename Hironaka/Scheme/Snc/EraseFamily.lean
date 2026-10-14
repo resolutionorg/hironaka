@@ -89,11 +89,11 @@ theorem append_erase_component_eraseAppendEquiv_symm (E : DivisorFamily X) (j : 
   · subst h
     change Sum.elim (E.erase i).component (fun _ => E.component i)
       (if h : i = i then Sum.inr PUnit.unit else Sum.inl ⟨i, h⟩) = E.component i
-    rw [dif_pos rfl]
+    rw [dite_eq_left rfl]
     rfl
   · change Sum.elim (E.erase j).component (fun _ => E.component j)
       (if h : i = j then Sum.inr PUnit.unit else Sum.inl ⟨i, h⟩) = E.component i
-    rw [dif_neg h]
+    rw [dite_eq_right h]
     rfl
 
 /-- If `E` is snc, so is `(E − E^j) + E^j` (the reindexing lemma `isSnc_of_equiv`). -/

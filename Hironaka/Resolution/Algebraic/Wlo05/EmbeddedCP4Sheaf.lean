@@ -129,7 +129,7 @@ theorem stalkIdeal_markedTransform_inf_of_mem {q : blowUp Z}
       funext i
       by_cases hi : i = Fin.last r
       · subst hi
-        rw [Function.update_self, δAdm, if_neg (by simp only [Fin.val_last]; omega)]
+        rw [Function.update_self, δAdm, ite_eq_right (by simp only [Fin.val_last]; omega)]
       · rw [Function.update_of_ne hi]
     have hposI := one_le_epsOrderC_I σ s a b hb' l h₁
     have hmonoI := epsOrderC_I_mono σ s a b ha' l hl h₂

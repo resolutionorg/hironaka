@@ -124,7 +124,7 @@ variable (n : ℕ)
 /-- `(x, y, z^{n−1})² ⊆ (xy, x², y², xz^{n−1}, yz^{n−1}, zⁿ)` for `2 ≤ n`
 (`z^{2n−2} = z^{n−2} · zⁿ`). -/
 theorem D_sq_le_T (hn : 2 ≤ n) : example52D n ^ 2 ≤ example52T n := by
-  rw [pow_two, Ideal.span_mul_span', Ideal.span_le]
+  rw [pow_two, Ideal.span_mul_span, Ideal.span_le]
   rintro g ⟨a, ha, b, hb, rfl⟩
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
   dsimp only

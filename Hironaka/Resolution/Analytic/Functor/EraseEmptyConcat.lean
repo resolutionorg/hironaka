@@ -178,7 +178,7 @@ theorem eraseEmptyLastCons_of_eq_empty {Y : Set M} {c : ℕ} (hY : IsClosedSubma
     eraseEmptyLastCons hY rest T =
       (T.trans (rest.eraseEmpty.mapLast (emptyBlowUpDiffeomorph hY hY₀))).trans
         (stageOfEq (eraseEmpty_cons_of_eq_empty hY rest hY₀).symm) := by
-  rw [eraseEmptyLastCons, dif_pos hY₀]
+  rw [eraseEmptyLastCons, dite_eq_left hY₀]
 
 theorem eraseEmptyLastCons_of_ne_empty {Y : Set M} {c : ℕ} (hY : IsClosedSubmanifold ψ₀ Y c)
     (rest : BlowUpSequence ψ₀ (blowUp ψ₀ hY))
@@ -188,7 +188,7 @@ theorem eraseEmptyLastCons_of_ne_empty {Y : Set M} {c : ℕ} (hY : IsClosedSubma
     eraseEmptyLastCons hY rest T =
       T.trans (stageOfEq (L₁ := cons hY rest.eraseEmpty)
         (eraseEmpty_cons_of_ne_empty hY rest hY₀).symm) := by
-  rw [eraseEmptyLastCons, dif_neg hY₀]
+  rw [eraseEmptyLastCons, dite_eq_right hY₀]
 
 /-- [Kol07, 34.1], the analogue of `eraseEmptyLastHom` for schemes: **the isomorphism from
 the last stage of a list to the last stage of its cleaned list** — by recursion, one step

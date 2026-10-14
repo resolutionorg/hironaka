@@ -7,8 +7,6 @@ module
 
 public import Hironaka.Resolution.Analytic.Wlo09.FamilyExt
 public import Hironaka.Manifold.Resolution.Defs
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
-import SourceAttr
 import Hironaka.Resolution.Analytic.ModelTransport.Family
 import Hironaka.Resolution.Analytic.ModelTransport.SncFamily
 import Hironaka.Resolution.Analytic.OrderReduction.Stage.Concrete
@@ -196,9 +194,11 @@ Relation to the source.
 * **Restatement.** The reducedness and invertibility of `E₀`, which Hironaka assumes ("reduced
   analytic subspace everywhere of codimension one"), are not separate hypotheses: both follow from
   the family of smooth hypersurfaces with simple normal crossings that `hE₀` provides, whose reduced
-  ideal sheaf is `E₀`. -/
-@[source Hir64 "Main Theorem II″(N)" "pp. 158–159",
-  source Wlo09 "Theorem 2.0.3 (1) and (4)"]
+  ideal sheaf is `E₀`.
+
+Source statement: [Hir64, Main Theorem II″(N), pp. 158–159]
+
+Source statement: [Wlo09, Theorem 2.0.3 (1) and (4)] -/
 theorem exists_extensionCompatibleFamily_weakTransformSeq_eq_top {E : Type v}
     [NormedAddCommGroup E] [NormedSpace ℝ E] (X : AnalyticManifold.{u} ℝ E)
     (E₀ : IdealSheaf X) (hE₀ : E₀.IsSncBoundary)

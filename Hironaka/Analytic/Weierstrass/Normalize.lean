@@ -60,8 +60,8 @@ theorem axis_wR_eq_zero {g : MvPowerSeries (Fin (m + 1)) K} {d : ℕ}
   ext ν
   rw [coeff_axis, coeff_wR, (coeff ν).map_zero]
   by_cases h : ν 0 < d
-  · rw [if_pos (by rwa [Finsupp.single_eq_same]), hg _ h]
-  · rw [if_neg (by rwa [Finsupp.single_eq_same])]
+  · rw [ite_eq_left (by rwa [Finsupp.single_eq_same]), hg _ h]
+  · rw [ite_eq_right (by rwa [Finsupp.single_eq_same])]
 
 /-- `g(x_0, 0) = x_0^d · e(x_0)` with `e = axis (wQ d g)`. -/
 theorem axis_eq_X_pow_mul {g : MvPowerSeries (Fin (m + 1)) K} {d : ℕ}

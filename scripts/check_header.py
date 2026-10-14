@@ -10,7 +10,7 @@ offenders.
 """
 import os, re, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LIBS = ["Hironaka", "HironakaExamples", "SourceAttrTest"]
+LIBS = ["Hironaka", "HironakaExamples"]
 HDR = open(os.path.join(ROOT, "scripts", "header.txt"), encoding="utf-8").read().rstrip("\n").split("\n")
 assert len(HDR) == 5 and HDR[0] == "/-" and HDR[4] == "-/"
 

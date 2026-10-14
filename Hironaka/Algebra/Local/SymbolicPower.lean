@@ -142,15 +142,15 @@ theorem mem_span_X_mul_weightedOrderIdeal (T : Finset (Fin n)) (m : ℕ) (T' : F
       · have hnle : ¬ Finsupp.single a 1 ≤ d := by
           rw [Finsupp.single_le_iff]
           omega
-        rw [if_neg hnle, zero_add]
-        exact (if_pos hda).symm
+        rw [ite_eq_right hnle, zero_add]
+        exact (ite_eq_left hda).symm
       · have hle : Finsupp.single a 1 ≤ d := by
           rw [Finsupp.single_le_iff]
           omega
-        rw [if_pos hle, one_mul]
+        rw [ite_eq_left hle, one_mul]
         change coeff d F =
           coeff (d - Finsupp.single a 1 + Finsupp.single a 1) F + if d a = 0 then coeff d F else 0
-        rw [tsub_add_cancel_of_le hle, if_neg hda, add_zero]
+        rw [tsub_add_cancel_of_le hle, ite_eq_right hda, add_zero]
     rw [hsplit]
     refine Ideal.add_mem _ (Ideal.mul_mem_mul
       (Ideal.subset_span ⟨a, hT (Finset.mem_insert_self a T'), rfl⟩) ?_)
@@ -165,8 +165,9 @@ theorem mem_span_X_mul_weightedOrderIdeal (T : Finset (Fin n)) (m : ℕ) (T' : F
     · intro d hd
       have hda : d a = 0 := by
         by_contra h
-        exact hd (if_neg h)
-      obtain ⟨hw, i, hi, hdi⟩ := hF d (by rwa [show coeff d F' = coeff d F from if_pos hda] at hd)
+        exact hd (ite_eq_right h)
+      obtain ⟨hw, i, hi, hdi⟩ :=
+        hF d (by rwa [show coeff d F' = coeff d F from ite_eq_left hda] at hd)
       refine ⟨hw, i, ?_, hdi⟩
       rcases Finset.mem_insert.mp hi with rfl | hi'
       · exact absurd hda hdi

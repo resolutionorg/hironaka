@@ -80,7 +80,7 @@ theorem chartDeriv_commutator_of_lt {i j : Fin n} (hij : i < j) :
   · -- `i < j < r`
     rw [c.chartDeriv_of_lt r (hij.trans hj), c.chartDeriv_of_lt r hj,
       Derivation.commutator_smul_smul _ _ (hE i j), awayPderiv_algebraMap_x,
-      awayPderiv_algebraMap_x, if_neg (hij.trans hj).ne, if_neg hj.ne]
+      awayPderiv_algebraMap_x, ite_eq_right (hij.trans hj).ne, ite_eq_right hj.ne]
     simp
   · -- `i < j = r`
     rw [hj]
@@ -89,7 +89,7 @@ theorem chartDeriv_commutator_of_lt {i j : Fin n} (hij : i < j) :
     have h1 : ⁅algebraMap R (Localization.Away (c.x r)) (c.x r) • c.awayPderiv r i,
         c.awayPderiv r r⁆ = -c.awayPderiv r i := by
       rw [← one_smul (Localization.Away (c.x r)) (c.awayPderiv r r),
-        Derivation.commutator_smul_smul _ _ (hE i r), awayPderiv_algebraMap_x, if_pos rfl,
+        Derivation.commutator_smul_smul _ _ (hE i r), awayPderiv_algebraMap_x, ite_eq_left rfl,
         Derivation.map_one_eq_zero]
       simp
     have h2 : ∀ k ∈ Finset.univ.filter (fun k : Fin n => k < r),
@@ -97,8 +97,8 @@ theorem chartDeriv_commutator_of_lt {i j : Fin n} (hij : i < j) :
           chartY c.x r k • c.awayPderiv r k⁆ = if i = k then c.awayPderiv r i else 0 := by
       intro k hk
       have hk' : k < r := (Finset.mem_filter.mp hk).2
-      rw [Derivation.commutator_smul_smul _ _ (hE i k), awayPderiv_algebraMap_x, if_neg hk'.ne,
-        awayPderiv_chartY_of_lt c r i hk', if_neg hir.ne]
+      rw [Derivation.commutator_smul_smul _ _ (hE i k), awayPderiv_algebraMap_x,
+        ite_eq_right hk'.ne, awayPderiv_chartY_of_lt c r i hk', ite_eq_right hir.ne]
       by_cases hik : i = k
       · subst hik
         simp [algebraMap_mul_invX]
@@ -111,7 +111,7 @@ theorem chartDeriv_commutator_of_lt {i j : Fin n} (hij : i < j) :
     · -- `i < r < j`
       rw [c.chartDeriv_of_lt r hi, ← one_smul (Localization.Away (c.x r)) (c.awayPderiv r j),
         Derivation.commutator_smul_smul _ _ (hE i j), Derivation.map_one_eq_zero,
-        awayPderiv_algebraMap_x, if_neg hj.ne']
+        awayPderiv_algebraMap_x, ite_eq_right hj.ne']
       simp
     · -- `i = r < j`
       rw [hi, c.chartDeriv_self r, add_lie, sum_lie, hE r j, zero_add]
@@ -119,7 +119,7 @@ theorem chartDeriv_commutator_of_lt {i j : Fin n} (hij : i < j) :
       have hk' : k < r := (Finset.mem_filter.mp hk).2
       rw [← one_smul (Localization.Away (c.x r)) (c.awayPderiv r j),
         Derivation.commutator_smul_smul _ _ (hE k j), Derivation.map_one_eq_zero,
-        awayPderiv_chartY_of_lt c r j hk', if_neg (hk'.trans hj).ne', if_neg hj.ne']
+        awayPderiv_chartY_of_lt c r j hk', ite_eq_right (hk'.trans hj).ne', ite_eq_right hj.ne']
       simp
     · -- `r < i < j`
       rw [c.chartDeriv_of_gt r hi, hE i j]

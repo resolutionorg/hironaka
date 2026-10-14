@@ -597,7 +597,7 @@ theorem geometricStrictTransform_eq_strictTransform_of_subset :
     geometricStrictTransform hY h hS.idealSheaf = strictTransformSubspace hY h hS.idealSheaf := by
   have hg := isGreatest_geometricCandidates_strictTransform_of_subset hY h hS hYS
   have hex : ∃ J, IsGreatest (geometricCandidates hY h hS.idealSheaf) J := ⟨_, hg⟩
-  rw [geometricStrictTransform, dif_pos hex]
+  rw [geometricStrictTransform, dite_eq_left hex]
   exact (Classical.choose_spec hex).unique hg
 
 end

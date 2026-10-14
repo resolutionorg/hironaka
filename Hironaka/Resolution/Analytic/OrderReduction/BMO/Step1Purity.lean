@@ -255,7 +255,7 @@ theorem exists_mem_componentSet_inr_of_ratios
     if ∃ k, k ≠ i ∧ σ k = j then s j else ψ (Φ a') j
   have hgi : ∀ s, g s (σ i) = ψ (Φ a') (σ i) := fun s => by
     simp only [g]
-    rw [if_neg]
+    rw [ite_eq_right]
     rintro ⟨k, hk, hkσ⟩
     exact hk (σ.injective hkσ)
   have hmap : ∀ s, blowUpChartMap σ i (g s) = blowUpChartMap σ i (ψ (Φ a')) := by
@@ -267,7 +267,7 @@ theorem exists_mem_componentSet_inr_of_ratios
         zero_mul]
     · have hgj : g s j = ψ (Φ a') j := by
         simp only [g]
-        rw [if_neg hj]
+        rw [ite_eq_right hj]
       by_cases hji : j = σ i
       · rw [hji, blowUpChartMap_apply_scaling, blowUpChartMap_apply_scaling, hgi]
       · have hoff : ∀ k, σ k ≠ j := fun k hkj => by
@@ -302,9 +302,9 @@ theorem exists_mem_componentSet_inr_of_ratios
   have hgc : Continuous g := by
     refine continuous_pi fun j => ?_
     by_cases hj : ∃ k, k ≠ i ∧ σ k = j
-    · simp only [g, if_pos hj]
+    · simp only [g, ite_eq_left hj]
       exact continuous_apply j
-    · simp only [g, if_neg hj]
+    · simp only [g, ite_eq_right hj]
       exact continuous_const
   have hqcont : ContinuousOn q univ :=
     Φ.continuousOn_symm.comp (ψ.symm.continuous.comp hgc).continuousOn fun s _ => htarget s
@@ -362,7 +362,7 @@ theorem exists_mem_componentSet_inr_birationalTransform_stalkIdeal_eq_top
   set Qb : MvPolynomial (Fin r) 𝕜 := MvPolynomial.map (eval 𝕜 E M a) Q with hQb
   have hQb0 : Qb ≠ 0 := by
     intro h0
-    have hc : MvPolynomial.coeff β Qb = 0 := by rw [h0, MvPolynomial.coeff_zero]
+    have hc : Qb.coeff β = 0 := by rw [h0, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply]
     rw [hQb, MvPolynomial.coeff_map] at hc
     exact hβ ((mem_maximalIdeal_iff_eval E _).mpr hc)
   obtain ⟨t, ht⟩ : ∃ t : Fin r → 𝕜, MvPolynomial.eval t Qb ≠ 0 := by
@@ -375,7 +375,7 @@ theorem exists_mem_componentSet_inr_birationalTransform_stalkIdeal_eq_top
   let s : Fin n → 𝕜 := fun m => t' (τ.symm m)
   have hs : ∀ j : Fin r, s (τ (Fin.castLE r.2.le j)) = t j := fun j => by
     simp only [s, t', Equiv.symm_apply_apply, Fin.val_castLE]
-    rw [dif_pos j.2]
+    rw [dite_eq_left j.2]
   obtain ⟨a'', ha''α, ha''Φ, hπ, hΦa''⟩ :=
     exists_mem_componentSet_inr_of_ratios F α hφ hΦ ha'Φ hα s
   rw [hgen] at hπ
@@ -416,7 +416,7 @@ theorem exists_mem_componentSet_inr_birationalTransform_stalkIdeal_eq_top
       have hj : ∃ k, k ≠ i ∧ σ k = τ (Fin.castLE r.2.le j) := by
         obtain ⟨k, hk, hkτ⟩ := (hlt _).mp (hlt' j)
         exact ⟨k, hk, hkτ.symm⟩
-      simp only [if_pos hj]
+      simp only [ite_eq_left hj]
       exact hs j
   rw [hval]
   exact ht

@@ -174,7 +174,7 @@ theorem restrictInvFun_of_mem (Ψ : PartialDiffeomorph 𝓘(𝕜, E) 𝓘(𝕜, 
     restrictInvFun hS hS' Ψ hΨ p₀ y =
       ⟨Ψ.invFun (y : S).1, invFun_mem_strictTransform Ψ hΨ hy.1 (y : S).2 hy.2⟩ := by
   unfold restrictInvFun
-  exact dif_pos hy
+  exact dite_eq_left hy
 
 /-- The local inverse of `π` at a point of `S'` off the centre, restricted to the submanifolds:
 a partial diffeomorphism of the bundled `S'` and `S` agreeing with the restricted blow-down on

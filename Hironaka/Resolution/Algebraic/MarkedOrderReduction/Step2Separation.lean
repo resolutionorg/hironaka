@@ -415,7 +415,7 @@ decreasing_by exact sepOrder_step2Triple_lt bo T hT hs
 /-- At the exit (`s = 0`), Step 2 is the empty sequence. -/
 theorem step2_of_eq_zero (T : MarkedTriple k) (hT : MarkedTriple.BMOClass n m T)
     (h : sepOrder T = 0) : (step2 bo T hT).1 = BlowUpSequence.nil T.X.left := by
-  rw [step2, dif_neg (not_lt.mpr h.le)]
+  rw [step2, dite_eq_right (not_lt.mpr h.le)]
 
 /-- For `s ≥ 1`, Step 2 is one round followed by Step 2 of the induced marked triple (the loop
 unrolled once). -/
@@ -424,7 +424,7 @@ theorem step2_of_pos (T : MarkedTriple k) (hT : MarkedTriple.BMOClass n m T)
     (step2 bo T hT).1 =
       (step2Round bo T hT hs).concat
         (step2 bo (step2Triple bo T hT hs) (bmoClass_step2Triple bo T hT hs)).1 := by
-  rw [step2, dif_pos hs]
+  rw [step2, dite_eq_left hs]
 
 /-- Step 2 is a smooth blow-up sequence of order `≥ m` starting with `(X, I, m, E)`
 ([Kol07, Definition 66] for `Π_2`). -/

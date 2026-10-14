@@ -7,6 +7,7 @@ module
 
 public import Mathlib.AlgebraicGeometry.IdealSheaf.IrreducibleComponent
 public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
 import Hironaka.Resolution.Algebraic.Smooth.GeometricallyReduced
 import Hironaka.Scheme.BlowUpSequence.SmoothCenter
 import Hironaka.Scheme.BlowUpSequence.StrictTransformIntegral

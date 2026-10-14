@@ -75,15 +75,15 @@ theorem span_topPderivSet_le (I : Ideal R) (r : ℕ) :
 `∂ⱼ f = ∂ⱼ∂ᵢ(xᵢ f) − xᵢ ∂ⱼ∂ᵢ f`. -/
 theorem pderiv_eq_of_ne {i j : Fin n} (h : j ≠ i) (f : R) :
     c.pderiv j f = c.pderiv j (c.pderiv i (c.x i * f)) - c.x i * c.pderiv j (c.pderiv i f) := by
-  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, if_pos rfl, mul_one, map_add,
-    Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, if_neg h, mul_zero, add_zero]
+  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, ite_eq_left rfl, mul_one, map_add,
+    Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, ite_eq_right h, mul_zero, add_zero]
   ring
 
 /-- Kollár's second identity [Kol07, Definition 73]: `2 ∂ᵢ f = ∂ᵢ²(xᵢ f) − xᵢ ∂ᵢ² f`. -/
 theorem two_nsmul_pderiv (i : Fin n) (f : R) :
     2 • c.pderiv i f = c.pderiv i (c.pderiv i (c.x i * f)) - c.x i * c.pderiv i (c.pderiv i f) := by
-  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, if_pos rfl, mul_one, map_add,
-    Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, if_pos rfl, mul_one, two_smul]
+  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, ite_eq_left rfl, mul_one, map_add,
+    Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, ite_eq_left rfl, mul_one, two_smul]
   ring
 
 /-- The general form of Kollár's identities: `∂^l(xᵢ f) = xᵢ ∂^l f + k ∂^{l ∖ i} f`, where `k` is
@@ -98,14 +98,14 @@ theorem iterPderiv_x_mul (l : List (Fin n)) (i : Fin n) (f : R) :
       map_nsmul, ← iterPderiv_cons, ← iterPderiv_cons]
     by_cases hij : j = i
     · subst hij
-      rw [if_pos rfl, mul_one, List.count_cons_self, List.erase_cons_head, add_smul, one_smul]
+      rw [ite_eq_left rfl, mul_one, List.count_cons_self, List.erase_cons_head, add_smul, one_smul]
       by_cases hmem : j ∈ l
       · rw [c.iterPderiv_perm (List.perm_cons_erase hmem).symm]
         simp only [nsmul_eq_mul]
         ring
       · rw [List.count_eq_zero.mpr hmem]
         simp
-    · rw [if_neg hij, mul_zero, add_zero, List.count_cons_of_ne hij,
+    · rw [ite_eq_right hij, mul_zero, add_zero, List.count_cons_of_ne hij,
         List.erase_cons_tail (by simpa using hij)]
 
 /-- In characteristic zero, every `r`-th partial of an element of `I` is a combination of

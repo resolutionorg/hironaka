@@ -87,7 +87,7 @@ theorem monomialEval_pos {ρ : Fin m → ℝ≥0} (hρ : ∀ k, 0 < ρ k) (ν : 
 
 theorem monomialEval_le_monomialEval {ρ ρ' : Fin m → ℝ≥0} (h : ∀ k, ρ k ≤ ρ' k) (ν : Fin m →₀ ℕ) :
     monomialEval ρ ν ≤ monomialEval ρ' ν :=
-  Finset.prod_le_prod' fun k _ => pow_le_pow_left' (h k) _
+  Finset.prod_le_prod fun k _ => pow_le_pow_left' (h k) _
 
 theorem coe_monomialEval (ρ : Fin m → ℝ≥0) (ν : Fin m →₀ ℕ) :
     ((monomialEval ρ ν : ℝ≥0) : ℝ) = ν.prod fun k n => (ρ k : ℝ) ^ n := by
@@ -129,7 +129,7 @@ theorem exists_le (ρ : Radius m) : ∃ r : ℝ≥0, 0 < r ∧ ∀ k, r ≤ ρ k
         (Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ k)).symm
     _ ≤ Min.min 1 (ρ k) * 1 :=
         mul_le_mul' le_rfl
-          (Finset.prod_le_one (fun _ _ => zero_le) fun j _ => _root_.min_le_left _ _)
+          (Finset.prod_le_one₀ (fun _ _ => zero_le) fun j _ => _root_.min_le_left _ _)
     _ ≤ ρ k := by rw [mul_one]; exact _root_.min_le_right _ _
 
 end Radius
@@ -159,7 +159,7 @@ theorem mem_degreeSet {n : ℕ} {ν : Fin m →₀ ℕ} : ν ∈ degreeSet m n �
 theorem pow_le_monomialEval {ρ : Fin m → ℝ≥0} {r : ℝ≥0} (hr : ∀ k, r ≤ ρ k) {n : ℕ}
     {ν : Fin m →₀ ℕ} (hν : ν.degree = n) : r ^ n ≤ monomialEval ρ ν := by
   rw [← hν, Finsupp.degree_eq_sum, monomialEval_eq_prod, ← Finset.prod_pow_eq_pow_sum]
-  exact Finset.prod_le_prod' fun k _ => pow_le_pow_left' (hr k) _
+  exact Finset.prod_le_prod fun k _ => pow_le_pow_left' (hr k) _
 
 /-- The degree sets are pairwise disjoint. -/
 theorem pairwiseDisjoint_degreeSet (s : Finset ℕ) :

@@ -68,7 +68,7 @@ theorem linearIndependent_coordFunctional (ψ : E ≃L[𝕜] (Fin n → 𝕜)) (
   simp only [sum_apply, smul_apply, coordFunctional_apply, ContinuousLinearEquiv.apply_symm_apply,
     zero_apply, smul_eq_mul] at this
   rwa [Finset.sum_eq_single j (fun i _ hi => by
-      rw [Pi.single_apply, if_neg (σ.injective.ne hi), mul_zero])
+      rw [Pi.single_apply, ite_eq_right (σ.injective.ne hi), mul_zero])
     (fun h => absurd (Finset.mem_univ j) h), Pi.single_eq_same, mul_one] at this
 
 /-- The adapted coordinates `ψ_{σ i} ∘ φ` have independent differentials at every point of the

@@ -49,10 +49,10 @@ theorem hasFDerivAt_blowUpChartMap :
   classical
   refine hasFDerivAt_pi.mpr fun j => ?_
   by_cases h : ∃ k, k ≠ i ∧ σ k = j
-  · simp only [blowUpChartMap, h, if_true]
+  · simp only [blowUpChartMap, h, ite_true]
     have := (hasFDerivAt_apply (𝕜 := 𝕜) (σ i) u).mul (hasFDerivAt_apply (𝕜 := 𝕜) j u)
     exact this
-  · simp only [blowUpChartMap, h, if_false]
+  · simp only [blowUpChartMap, h, ite_false]
     exact hasFDerivAt_apply (𝕜 := 𝕜) j u
 
 /-- The Fréchet derivative of `π_i`, as an equation. -/
@@ -86,31 +86,31 @@ theorem toMatrix'_blowUpChartMapDeriv :
   simp only [blowUpChartMapDeriv, ContinuousLinearMap.pi_apply]
   by_cases hk : k = σ i
   · subst hk
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     by_cases h : ∃ l, l ≠ i ∧ σ l = j
     · have hj : j ≠ σ i := fun hji => not_exists_ne_and_apply_eq_self σ i (hji ▸ h)
-      rw [if_pos h, _root_.add_apply, _root_.smul_apply, _root_.smul_apply,
+      rw [ite_eq_left h, _root_.add_apply, _root_.smul_apply, _root_.smul_apply,
         ContinuousLinearMap.proj_apply, ContinuousLinearMap.proj_apply, Pi.single_apply,
-        Pi.single_apply, if_neg hj, if_pos rfl,
+        Pi.single_apply, ite_eq_right hj, ite_eq_left rfl,
         smul_eq_mul, smul_eq_mul, mul_zero, mul_one, zero_add, diagonal_apply_ne _ hj, zero_add,
-        jacobianCol, if_pos h]
-    · rw [if_neg h, ContinuousLinearMap.proj_apply, Pi.single_apply, jacobianCol, if_neg h,
-        add_zero]
+        jacobianCol, ite_eq_left h]
+    · rw [ite_eq_right h, ContinuousLinearMap.proj_apply, Pi.single_apply, jacobianCol,
+        ite_eq_right h, add_zero]
       by_cases hj : j = σ i
       · subst hj
-        rw [if_pos rfl, diagonal_apply_eq, jacobianDiag,
-          if_neg (not_exists_ne_and_apply_eq_self σ i)]
-      · rw [if_neg hj, diagonal_apply_ne _ hj]
-  · rw [if_neg hk]
+        rw [ite_eq_left rfl, diagonal_apply_eq, jacobianDiag,
+          ite_eq_right (not_exists_ne_and_apply_eq_self σ i)]
+      · rw [ite_eq_right hj, diagonal_apply_ne _ hj]
+  · rw [ite_eq_right hk]
     have hk' : σ i ≠ k := Ne.symm hk
     by_cases h : ∃ l, l ≠ i ∧ σ l = j
-    · rw [if_pos h, _root_.add_apply, _root_.smul_apply, _root_.smul_apply,
+    · rw [ite_eq_left h, _root_.add_apply, _root_.smul_apply, _root_.smul_apply,
         ContinuousLinearMap.proj_apply, ContinuousLinearMap.proj_apply, Pi.single_apply,
-        Pi.single_apply, if_neg hk', smul_eq_mul,
-        smul_eq_mul, mul_zero, add_zero, diagonal_apply, jacobianDiag, if_pos h]
+        Pi.single_apply, ite_eq_right hk', smul_eq_mul,
+        smul_eq_mul, mul_zero, add_zero, diagonal_apply, jacobianDiag, ite_eq_left h]
       split_ifs <;> simp
-    · rw [if_neg h, ContinuousLinearMap.proj_apply, Pi.single_apply, diagonal_apply, jacobianDiag,
-        if_neg h]
+    · rw [ite_eq_right h, ContinuousLinearMap.proj_apply, Pi.single_apply, diagonal_apply,
+        jacobianDiag, ite_eq_right h]
 
 /-- The diagonal product: `u_{σ i}^{c - 1}`. -/
 theorem prod_jacobianDiag : ∏ j, jacobianDiag σ i u j = u (σ i) ^ (c - 1) := by

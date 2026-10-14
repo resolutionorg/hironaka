@@ -84,7 +84,7 @@ theorem span_singleton_ne_of_ne
     exact hu.symm
   have := congrArg (fun v => b.repr v i) hcot
   simp only [map_smul, Finsupp.smul_apply, Module.Basis.repr_self, Finsupp.single_apply,
-    if_neg (Ne.symm hij), smul_zero] at this
+    ite_eq_right (Ne.symm hij), smul_zero] at this
   exact one_ne_zero this
 
 end RegularLocalRing

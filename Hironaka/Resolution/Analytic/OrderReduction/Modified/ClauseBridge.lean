@@ -112,11 +112,11 @@ theorem membersSubset_emptyMember (F : HypersurfaceFamily M) (j : F.ι) :
   by_cases hk : k = j
   · left
     simp only [HypersurfaceFamily.emptyMember]
-    exact if_pos hk
+    exact ite_eq_left hk
   · right
     refine ⟨k, ?_⟩
     simp only [HypersurfaceFamily.emptyMember]
-    exact if_neg hk
+    exact ite_eq_right hk
 
 /-- The sub-family relation is kept by inverse images. -/
 theorem MembersSubset.comap {N : Type u} {F' F : HypersurfaceFamily M} (h : F'.MembersSubset F)
@@ -224,11 +224,11 @@ theorem _root_.Hironaka.Manifold.exists_mem_source_coord_eq_zero_ne {M : Type u}
     exact ψ.apply_symm_apply _
   refine ⟨φ.symm (v ε), ⟨φ.map_target hεt, hW'W hε.2⟩, ?_, ?_⟩
   · rw [hcoord, Pi.add_apply, Pi.smul_apply, hd]
-    simp only [if_neg hk, smul_zero, add_zero]
+    simp only [ite_eq_right hk, smul_zero, add_zero]
     exact h0
   · intro c hcK
     rw [hcoord, Pi.add_apply, Pi.smul_apply, hd]
-    simp only [if_pos hcK, smul_eq_mul, mul_one, hK c hcK, zero_add]
+    simp only [ite_eq_left hcK, smul_eq_mul, mul_one, hK c hcK, zero_add]
     exact hε0'
 
 /-- Two members through `x` of a family with simple normal crossings that agree near `x` are the

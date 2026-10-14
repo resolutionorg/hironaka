@@ -114,10 +114,10 @@ theorem isPullback_sigmaMap_sigmaDesc {Y X : Scheme.{u}} (e : ∀ i, W i ⟶ Y) 
   · change e i ≫ 𝟙 Y =
       hi.isoPullback.hom ≫ pullback.fst (Limits.Sigma.map j) (Sigma.ι B i) ≫ Sigma.desc e
     rw [Category.comp_id, ← Category.assoc, hi.isoPullback_hom_fst]
-    exact (Sigma.ι_desc e i).symm
+    exact (Sigma.ι_comp_desc e i).symm
   · change f i ≫ 𝟙 X = 𝟙 (B i) ≫ Sigma.ι B i ≫ Sigma.desc f
     rw [Category.comp_id, Category.id_comp]
-    exact (Sigma.ι_desc f i).symm
+    exact (Sigma.ι_comp_desc f i).symm
   · simp
 
 /-- The summands cover the coproduct. -/
@@ -171,14 +171,14 @@ theorem ker_sigmaMap [∀ i, IsClosedImmersion (j i)] {A : Scheme.{u}} (q : ∀ 
   refine Scheme.IdealSheafData.eq_of_comap_eq_of_covers (Sigma.ι B) (fun x => ?_) fun i => ?_
   · obtain ⟨⟨i, b⟩, rfl⟩ := (sigmaMk B).surjective x
     exact ⟨i, b, (sigmaMk_mk B i b).symm⟩
-  · rw [ker_sigmaMap_comap_ι, hker, ← Scheme.IdealSheafData.comap_comp, Sigma.ι_desc]
+  · rw [ker_sigmaMap_comap_ι, hker, ← Scheme.IdealSheafData.comap_comp, Sigma.ι_comp_desc]
 
 /-- Commuting squares on the summands give a commuting square of the coproducts. -/
 theorem sigmaMap_comp_desc {A Y₀ : Scheme.{u}} (q : ∀ i, B i ⟶ A) (e : ∀ i, W i ⟶ Y₀)
     (emb₀ : Y₀ ⟶ A) (hsq : ∀ i, j i ≫ q i = e i ≫ emb₀) :
     Limits.Sigma.map j ≫ Sigma.desc q = Sigma.desc e ≫ emb₀ :=
   Sigma.hom_ext _ _ fun i => by
-    rw [Limits.Sigma.ι_map_assoc, Sigma.ι_desc, hsq, Sigma.ι_desc_assoc]
+    rw [Limits.Sigma.ι_map_assoc, Sigma.ι_comp_desc, hsq, Sigma.ι_comp_desc_assoc]
 
 end SigmaEmb
 

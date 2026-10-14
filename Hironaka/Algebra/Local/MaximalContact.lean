@@ -118,7 +118,7 @@ theorem exists_coords_x_zero_eq (hs : c.SpansDerivations ℚ) {h : R} (hh : ordE
   refine ⟨i.pos, c₁.reindex (Equiv.swap ⟨0, i.pos⟩ i), ?_, ?_⟩
   · rw [reindex_x, Equiv.swap_apply_left, hi]
   · have := (c₁.reindex (Equiv.swap ⟨0, i.pos⟩ i)).pderiv_x ⟨0, i.pos⟩ ⟨0, i.pos⟩
-    rwa [if_pos rfl, reindex_x, Equiv.swap_apply_left, hi] at this
+    rwa [ite_eq_left rfl, reindex_x, Equiv.swap_apply_left, hi] at this
 
 /-! ### The maximal contact ideal -/
 

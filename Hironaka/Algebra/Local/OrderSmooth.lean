@@ -54,7 +54,7 @@ theorem ordFaithful_localRingHom_of_etale {R S : Type*} [CommRing R] [CommRing S
   have : q.LiesOver p := ⟨hpq⟩
   let := Localization.AtPrime.algebraOfLiesOver p q
   have : IsLocalHom (algebraMap (Localization.AtPrime p) (Localization.AtPrime q)) := by
-    rw [Localization.AtPrime.IsLiesOverAlgebra.algebraMap_eq]
+    rw [Localization.AtPrime.algebraMap_eq]
     exact Localization.isLocalHom_localRingHom p q (algebraMap R S) _
   have : Algebra.EssFiniteType R (Localization.AtPrime q) := Algebra.EssFiniteType.comp R S _
   have : Algebra.EssFiniteType (Localization.AtPrime p) (Localization.AtPrime q) :=
@@ -63,7 +63,7 @@ theorem ordFaithful_localRingHom_of_etale {R S : Type*} [CommRing R] [CommRing S
     Algebra.FormallyUnramified.of_restrictScalars R _ _
   have h := ordFaithful_of_flat_of_map_maximalIdeal_eq (A := Localization.AtPrime p)
     (B := Localization.AtPrime q) Algebra.FormallyUnramified.map_maximalIdeal
-  rwa [Localization.AtPrime.IsLiesOverAlgebra.algebraMap_eq] at h
+  rwa [Localization.AtPrime.algebraMap_eq] at h
 
 /-- **The order under the local maps of a smooth algebra**: for `R → S` of finite presentation
 and smooth at the prime `q` of `S` over `p`, the local map `R_p → S_q` reflects the powers of the

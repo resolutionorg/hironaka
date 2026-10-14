@@ -96,14 +96,14 @@ theorem X_pow_mul_wQ_add_wR (d : ℕ) (F : MvPowerSeries (Fin (m + 1)) K) :
       by_cases hi : i = 0
       · subst hi; simpa using h
       · simp [Ne.symm hi]
-    rw [if_pos h1, if_neg (not_lt.mpr h), add_zero, one_mul, tsub_add_cancel_of_le h1]
+    rw [ite_eq_left h1, ite_eq_right (not_lt.mpr h), add_zero, one_mul, tsub_add_cancel_of_le h1]
   · have h1 : ¬ Finsupp.single (0 : Fin (m + 1)) d ≤ ν := fun hle => h (by simpa using hle 0)
-    rw [if_neg h1, if_pos (not_le.mp h), zero_add]
+    rw [ite_eq_right h1, ite_eq_left (not_le.mp h), zero_add]
 
 /-- `wR d F` has `x_0`-degree `< d`: its coefficients vanish where `ν 0 ≥ d`. -/
 theorem coeff_wR_of_le (d : ℕ) (F : MvPowerSeries (Fin (m + 1)) K) {ν : Fin (m + 1) →₀ ℕ}
     (h : d ≤ ν 0) : coeff ν (wR d F) = 0 := by
-  rw [coeff_wR, if_neg (not_lt.mpr h)]
+  rw [coeff_wR, ite_eq_right (not_lt.mpr h)]
 
 /-- The Weierstrass polynomial `x_0^d + ∑_{j < d} c_j x_0^{d - 1 - j}` with coefficients in the
 tail variables: the printed `x_m^d + ∑_{j=1}^d c_j(x̃) x_m^{d-j}` of [BM88, Theorem 4.4, proof,

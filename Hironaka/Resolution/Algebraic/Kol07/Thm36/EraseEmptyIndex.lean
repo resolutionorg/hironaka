@@ -73,14 +73,14 @@ theorem eraseIdx_cons_succ_of_eq_top {D : X.IdealSheafData} (rest : BlowUpSequen
     (hD : D = ⊤) (m : ℕ) : eraseIdx (cons X D rest) (m + 1) = eraseIdx rest m := by
   classical
   change (if D = ⊤ then 0 else 1) + eraseIdx rest m = eraseIdx rest m
-  rw [if_pos hD, zero_add]
+  rw [ite_eq_left hD, zero_add]
 
 /-- A kept (nonempty) blow-up advances the index by one. -/
 theorem eraseIdx_cons_succ_of_ne_top {D : X.IdealSheafData} (rest : BlowUpSequence D.blowUp)
     (hD : D ≠ ⊤) (m : ℕ) : eraseIdx (cons X D rest) (m + 1) = eraseIdx rest m + 1 := by
   classical
   change (if D = ⊤ then 0 else 1) + eraseIdx rest m = eraseIdx rest m + 1
-  rw [if_neg hD, add_comm]
+  rw [ite_eq_right hD, add_comm]
 
 /-- The index is monotone in the stage. -/
 theorem eraseIdx_mono : ∀ {X : Scheme.{u}} (S : BlowUpSequence X) {m m' : ℕ}, m ≤ m' →

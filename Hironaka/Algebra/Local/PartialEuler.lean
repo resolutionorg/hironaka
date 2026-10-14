@@ -116,8 +116,8 @@ include hx
 /-- `E_S x_j = x_j` for `j ∈ S` (the Euler identity on the coordinates). -/
 theorem eulerS_x {j : ι} (hj : j ∈ S) : eulerS x pd S (x j) = x j := by
   unfold eulerS
-  rw [Finset.sum_eq_single j (fun i hi hij => by rw [hx i hi j hj, if_neg hij, mul_zero])
-    (fun h => (h hj).elim), hx j hj j hj, if_pos rfl, mul_one]
+  rw [Finset.sum_eq_single j (fun i hi hij => by rw [hx i hi j hj, ite_eq_right hij, mul_zero])
+    (fun h => (h hj).elim), hx j hj j hj, ite_eq_left rfl, mul_one]
 
 /-- `E_S h − h ∈ J_S²` for `h ∈ J_S`. -/
 theorem eulerS_sub_self_mem_sq {h : R} (hh : h ∈ coordIdeal x S) :

@@ -284,7 +284,7 @@ theorem BRAffine_eq_eraseEmpty_BR_pullback_of_smooth (Y Z : Scheme.{u})
   have hZ' : (∐ coverPreimage q).IsReducedEquidimensional k :=
     .sigma _ (coverPreimageι q) (fun i => by
       change Sigma.ι _ i ≫ Sigma.desc (coverPreimageι q) ≫ (Z ↘ Spec (CommRingCat.of k)) = _
-      rw [← Category.assoc, Sigma.ι_desc]) hZ
+      rw [← Category.assoc, Sigma.ι_comp_desc]) hZ
   have hAff : IsAffine (∐ coverPreimage q) := inferInstance
   have hqc : QuasiCompact ((∐ coverPreimage q) ↘ Spec (CommRingCat.of k)) := by
     have := isAffineHom_of_isAffine ((∐ coverPreimage q) ↘ Spec (CommRingCat.of k))

@@ -194,14 +194,14 @@ open Classical in
 theorem resolutionOnFullPair_eq_of_glues (h : D.ResolutionGluesOn bed) :
     D.resolutionOnFullPair bed = ⟨h.some.glue.gluedOver, h.some.glue.descMap⟩ := by
   unfold resolutionOnFullPair
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 open Classical in
 /-- Without a gluing datum, the pair is `⟨X, 𝟙 X⟩` (a branch never taken under `hbed`). -/
 theorem resolutionOnFullPair_eq_of_not_glues (h : ¬ D.ResolutionGluesOn bed) :
     D.resolutionOnFullPair bed = ⟨X, 𝟙 X⟩ := by
   unfold resolutionOnFullPair
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 /-- With a gluing datum, `resolutionOnFull` is the chosen datum's glued space. -/
 theorem resolutionOnFull_eq_of_glues (h : D.ResolutionGluesOn bed) :

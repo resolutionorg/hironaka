@@ -74,11 +74,11 @@ theorem step2bPhase_succ_of_nonempty (k : ℕ) (hne : (activeMembers T).Nonempty
       BlowUpSequence.cons (stepCenter T (activeMembers_finite T hT) hne)
         (step2bPhase k (stepTriple T (activeMembers_finite T hT) hne)
           (bmoClass_stepTriple T (activeMembers_finite T hT) hne hT)) := by
-  rw [step2bPhase, dif_pos hne]
+  rw [step2bPhase, dite_eq_left hne]
 
 theorem step2bPhase_succ_of_not_nonempty (k : ℕ) (hne : ¬ (activeMembers T).Nonempty) :
     step2bPhase (k + 1) T hT = BlowUpSequence.nil M := by
-  rw [step2bPhase, dif_neg hne]
+  rw [step2bPhase, dite_eq_right hne]
 
 /-- With no active member the phase is empty at every fuel (the purely nonmonomial case
 `I′ = N(I′)` of [Wlo09, Theorem 7.4.1] has been reached). -/

@@ -72,7 +72,7 @@ variable {R : Type*} [CommRing R] [IsRegularLocalRing R] [Algebra ℚ R] {k : �
 theorem pderiv_mem_span_x_of_ne {j : Fin (k + 1)} (hj : j ≠ i₀) {f : R}
     (hf : f ∈ span {c.x i₀}) : c.pderiv j f ∈ span {c.x i₀} := by
   obtain ⟨g, rfl⟩ := mem_span_singleton.mp hf
-  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, if_neg hj, mul_zero, add_zero]
+  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, c.pderiv_x, ite_eq_right hj, mul_zero, add_zero]
   exact mem_span_singleton.mpr (dvd_mul_right _ _)
 
 /-- The induced derivation `∂̄ⱼ` of `R̄ = R/⟨x_{i₀}⟩`, from `∂_{σ j}` with
@@ -179,7 +179,7 @@ noncomputable def quotientCoords : RegularCoords (R ⧸ span {c.x i₀}) k where
     by_cases hjl : j = l
     · subst hjl
       simp
-    · rw [if_neg (fun h => hjl (Fin.succAbove_right_inj.mp h)), if_neg hjl, map_zero]
+    · rw [ite_eq_right (fun h => hjl (Fin.succAbove_right_inj.mp h)), ite_eq_right hjl, map_zero]
   pderiv_comm j l f := by
     obtain ⟨g, rfl⟩ := Ideal.Quotient.mk_surjective f
     simp only [quotientPderiv_mk, c.pderiv_comm]

@@ -8,9 +8,7 @@ module
 public import Hironaka.Resolution.Analytic.Wlo09.FamilyExt
 public import Hironaka.Manifold.Jacobian.Defs
 public import Hironaka.Manifold.Resolution.Defs
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
 public import Hironaka.Resolution.Analytic.Principalization.Assembly
-import SourceAttr
 import Hironaka.Resolution.Analytic.ModelTransport.Family
 import Hironaka.Resolution.Analytic.OrderReduction.Stage.Concrete
 import Hironaka.Resolution.Analytic.Wlo09.HironakaAssembly
@@ -304,8 +302,11 @@ Relation to the source.
   [BM97, after (1.2)], and [Wlo09, Theorem 2.0.3 (2)] at $i = r$.
 * **Strengthening.** The clause that $\sigma$ is an isomorphism over the complement of the support
   of $I$ (`F.map.IsIsoOver I.supportᶜ`) is not in [BM97, Theorem 1.10] or [Wlo09, Theorem 2.0.3]; it
-  is [Wlo09, Lemma 4.0.3], cf. [Kol07, Theorem 35 (3)]. -/
-@[source BM97 "Theorem 1.10", source Wlo09 "Theorem 2.0.3" (comment := "compatible-family form")]
+  is [Wlo09, Lemma 4.0.3], cf. [Kol07, Theorem 35 (3)].
+
+Source statement: [BM97, Theorem 1.10]
+
+Source statement: [Wlo09, Theorem 2.0.3] (compatible-family form) -/
 theorem exists_extensionCompatibleFamily_isNormalCrossingsDivisor_jacobianIdeal_mul_pullback
     {E : Type v} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     (M : AnalyticManifold.{u} ℝ E) (I : IdealSheaf M) (hI : I.IsNonzeroEverywhere) :

@@ -8,8 +8,6 @@ module
 public import Hironaka.Resolution.Analytic.Wlo09.EmbeddedDesingGlobal
 public import Hironaka.Resolution.Analytic.Wlo09.EmbeddedDesingPushforward
 public import Hironaka.Manifold.Resolution.Defs
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
-import SourceAttr
 import Hironaka.Manifold.IdealSheaf.Pullback
 import Hironaka.Resolution.Analytic.Functor.PullbackUpToEmpty
 import Hironaka.Resolution.Analytic.Kol07Thm45.LocalResolutionShear
@@ -323,8 +321,9 @@ Relation to the source.
   a centre of codimension at least two of $M$, so the deletion is incompatible with the
   commutation with closed embeddings in its push-forward form. Włodarczyk notes that such blow-ups
   "may occur for some marked ideals induced on subvarieties of ambient varieties" and "determine
-  blow-ups of ambient varieties which are not isomorphisms" [Wlo09, Remark after Lemma 5.3.7]. -/
-@[source Wlo09 "Theorem 2.0.2"]
+  blow-ups of ambient varieties which are not isomorphisms" [Wlo09, Remark after Lemma 5.3.7].
+
+Source statement: [Wlo09, Theorem 2.0.2] -/
 theorem exists_embeddedDesingularization (𝕜 : Type) [RCLike 𝕜] :
     ∃ R : CompatibleFamilyAssignment (EmbeddedPair.{u, v} 𝕜),
       -- (1)–(3), (6), with `res_{Y,M}` proper and bimeromorphic, `E` and `Ỹ` on `M̃`

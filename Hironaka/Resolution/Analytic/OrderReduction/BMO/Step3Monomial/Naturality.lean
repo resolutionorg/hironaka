@@ -85,16 +85,16 @@ theorem exists_labelMap_factor {ι : Type*} [LinearOrder ι] {a b : ℕ} (eU : F
   let σ : ℕ → ℕ := fun ℓ => if hℓ : ℓ < a then (σ' ⟨ℓ, hℓ⟩).1 else 0
   have hσ : ∀ ℓ, ℓ < a → σ ℓ < b := fun ℓ hℓ => by
     change (if hℓ : ℓ < a then (σ' ⟨ℓ, hℓ⟩).1 else 0) < b
-    rw [dif_pos hℓ]
+    rw [dite_eq_left hℓ]
     exact (σ' ⟨ℓ, hℓ⟩).2
   refine ⟨σ, hσ, ?_, fun ℓ hℓ => ?_⟩
   · intro ℓ₁ h₁ ℓ₂ h₂ hlt
     simp only [Set.mem_Iio] at h₁ h₂
     change (if hℓ : ℓ₁ < a then (σ' ⟨ℓ₁, hℓ⟩).1 else 0) <
       if hℓ : ℓ₂ < a then (σ' ⟨ℓ₂, hℓ⟩).1 else 0
-    rw [dif_pos h₁, dif_pos h₂]
+    rw [dite_eq_left h₁, dite_eq_left h₂]
     exact σ'.strictMono (Fin.mk_lt_mk.mpr hlt)
-  · have h1 : (⟨σ ℓ, hσ ℓ hℓ⟩ : Fin b) = σ' ⟨ℓ, hℓ⟩ := Fin.ext (dif_pos hℓ)
+  · have h1 : (⟨σ ℓ, hσ ℓ hℓ⟩ : Fin b) = σ' ⟨ℓ, hℓ⟩ := Fin.ext (dite_eq_left hℓ)
     rw [h1, hσ']
 
 /-! ### Components of a pulled-back family: the parent map -/
@@ -229,7 +229,7 @@ theorem refinesAlong_inputFamily_of_componentMap {M₁ M₂ : AnalyticManifold.{
     (meetingIndex T₂ U₂ hU₂ (hφmeet _ (meetingPiece_mem T₁ U₁ hU₁ ⟨c, hc⟩))).1 else 0
   have hp : ∀ c (hc : c < (meetingPieces T₁ U₁ hU₁).card),
       p c = (meetingIndex T₂ U₂ hU₂ (hφmeet _ (meetingPiece_mem T₁ U₁ hU₁ ⟨c, hc⟩))).1 :=
-    fun c hc => dif_pos hc
+    fun c hc => dite_eq_left hc
   have hplt : ∀ c, c < (meetingPieces T₁ U₁ hU₁).card → p c < (meetingPieces T₂ U₂ hU₂).card :=
     fun c hc => by
       rw [hp c hc]

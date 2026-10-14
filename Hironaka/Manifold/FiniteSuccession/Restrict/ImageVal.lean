@@ -58,12 +58,12 @@ def extendComplFun (σ : Fin s ↪ Fin n) (f : (Fin (n - s) → 𝕜) → (Fin (
 
 theorem extendComplFun_apply_range (σ : Fin s ↪ Fin n) (f : (Fin (n - s) → 𝕜) → (Fin (n - s) → 𝕜))
     (z : Fin n → 𝕜) (i : Fin s) : extendComplFun σ f z (σ i) = z (σ i) := by
-  simp only [extendComplFun, dif_pos (Set.mem_range_self i)]
+  simp only [extendComplFun, dite_eq_left (Set.mem_range_self i)]
 
 theorem extendComplFun_apply_compl (σ : Fin s ↪ Fin n) (f : (Fin (n - s) → 𝕜) → (Fin (n - s) → 𝕜))
     (z : Fin n → 𝕜) (k : Fin (n - s)) :
     extendComplFun σ f z ((complEquiv σ).symm k).1 = f (projCompl σ z) k := by
-  simp only [extendComplFun, dif_neg ((complEquiv σ).symm k).2]
+  simp only [extendComplFun, dite_eq_right ((complEquiv σ).symm k).2]
   change f (projCompl σ z) (complEquiv σ ((complEquiv σ).symm k)) = _
   rw [Equiv.apply_symm_apply]
 
@@ -92,9 +92,9 @@ theorem continuousOn_extendComplFun (σ : Fin s ↪ Fin n)
     (hf : ContinuousOn f U) : ContinuousOn (extendComplFun σ f) {z | projCompl σ z ∈ U} := by
   refine continuousOn_pi.mpr fun j => ?_
   by_cases h : j ∈ Set.range σ
-  · simp only [extendComplFun, dif_pos h]
+  · simp only [extendComplFun, dite_eq_left h]
     exact (continuous_apply j).continuousOn
-  · simp only [extendComplFun, dif_neg h]
+  · simp only [extendComplFun, dite_eq_right h]
     exact (continuous_apply _).comp_continuousOn
       (hf.comp (continuous_projCompl σ).continuousOn fun z hz => hz)
 
@@ -103,9 +103,9 @@ theorem contDiffOn_extendComplFun (σ : Fin s ↪ Fin n)
     (hf : ContDiffOn 𝕜 ω f U) : ContDiffOn 𝕜 ω (extendComplFun σ f) {z | projCompl σ z ∈ U} := by
   refine contDiffOn_pi.mpr fun j => ?_
   by_cases h : j ∈ Set.range σ
-  · simp only [extendComplFun, dif_pos h]
+  · simp only [extendComplFun, dite_eq_left h]
     exact (contDiff_apply 𝕜 𝕜 j).contDiffOn
-  · simp only [extendComplFun, dif_neg h]
+  · simp only [extendComplFun, dite_eq_right h]
     exact (contDiff_apply 𝕜 𝕜 _).comp_contDiffOn
       (hf.comp (contDiff_projCompl σ).contDiffOn fun z hz => hz)
 

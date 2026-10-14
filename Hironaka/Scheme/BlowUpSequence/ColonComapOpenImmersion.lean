@@ -7,6 +7,7 @@ module
 
 public import Mathlib.AlgebraicGeometry.Noetherian
 public import Hironaka.Scheme.IdealSheaf.Defs
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
 import Hironaka.Scheme.BlowUp.Transform
 import Hironaka.Scheme.BlowUpSequence.Remark33Exceptional
 import Hironaka.Scheme.BlowUpSequence.Remark33Iso

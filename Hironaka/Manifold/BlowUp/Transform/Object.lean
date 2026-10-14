@@ -60,11 +60,11 @@ noncomputable def IsClosedSubmanifold.centerStalk (hY : IsClosedSubmanifold ψ Y
 
 /-- The stalk of the centre's ideal at a point of `Y`. -/
 theorem IsClosedSubmanifold.centerStalk_of_mem (hY : IsClosedSubmanifold ψ Y c) {a : M}
-    (ha : a ∈ Y) : hY.centerStalk a = RingHom.ker (hY.restrictStalk ⟨a, ha⟩) := dif_pos ha
+    (ha : a ∈ Y) : hY.centerStalk a = RingHom.ker (hY.restrictStalk ⟨a, ha⟩) := dite_eq_left ha
 
 /-- The stalk of the centre's ideal off `Y` is the unit ideal. -/
 theorem IsClosedSubmanifold.centerStalk_of_notMem (hY : IsClosedSubmanifold ψ Y c) {a : M}
-    (ha : a ∉ Y) : hY.centerStalk a = ⊤ := dif_neg ha
+    (ha : a ∉ Y) : hY.centerStalk a = ⊤ := dite_eq_right ha
 
 /-- At a point of `Y` in an adapted chart, the kernel of the restriction of germs is spanned by
 the adapted coordinates (which vanish at that point). -/
@@ -145,7 +145,7 @@ theorem totalTransform_stalkIdeal_eq_span (h : IsBlowUp ψ Y c π)
 theorem IsClosedSubmanifold.isIdealSheafOf_idealSheaf (hY : IsClosedSubmanifold ψ Y c) :
     IsIdealSheafOf ψ Y c hY.idealSheaf := by
   unfold IsClosedSubmanifold.idealSheaf
-  rw [dif_pos hY.exists_isIdealSheafOf]
+  rw [dite_eq_left hY.exists_isIdealSheafOf]
   exact Classical.choose_spec hY.exists_isIdealSheafOf
 
 /-- The ideal sheaf of a closed submanifold is unique. -/

@@ -67,7 +67,7 @@ theorem exists_retraction_mapBaseChange [Algebra.FormallySmooth A B] :
     rw [Subsingleton.elim y 0, map_zero]
   have hsurj : Function.Surjective (map k A B B) := map_surjective k A B
   obtain ⟨s, hs⟩ := Module.projective_lifting_property (map k A B B) LinearMap.id hsurj
-  have h01 := ((exact_mapBaseChange_map k A B).split_tfae hinj hsurj).out 0 1
+  have h01 := ((exact_mapBaseChange_map k A B).split_tfae hinj hsurj).out 1 2
   exact h01.mp ⟨s, hs⟩
 
 /-- For `B` formally smooth over `A`, every `k`-derivation `δ` of `A` extends to a `k`-derivation

@@ -96,7 +96,7 @@ theorem derivative_example86_le :
 
 /-- `(x, yᵐ)² ⊆ (x², xyᵐ, y^{m+1})` for `1 ≤ m` (`y^{2m} = y^{m-1} · y^{m+1}`). -/
 theorem span_pair_sq_le_example86 (hm : 1 ≤ m) : Ideal.span {x, y ^ m} ^ 2 ≤ example86 m := by
-  rw [pow_two, Ideal.span_mul_span', Ideal.span_le]
+  rw [pow_two, Ideal.span_mul_span, Ideal.span_le]
   rintro g ⟨a, ha, b, hb, rfl⟩
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
   dsimp only
@@ -167,7 +167,7 @@ theorem transformIdeal_example86 (m : ℕ) (hm : 1 ≤ m) :
       exact Ideal.mul_mem_right _ _ (Ideal.mul_mem_mul hy hy)
   symm
   apply eq_transformIdeal_of_span_pow_mul_eq X 1 hI
-  rw [Ideal.span_singleton_pow, Ideal.span_mul_span', Set.singleton_mul, example86, Ideal.map_span,
+  rw [Ideal.span_singleton_pow, Ideal.span_mul_span, Set.singleton_mul, example86, Ideal.map_span,
     Set.image_insert_eq, Set.image_insert_eq, Set.image_singleton, Set.image_insert_eq,
     Set.image_insert_eq, Set.image_singleton, chartCoord_one]
   congr 1
@@ -221,7 +221,7 @@ theorem not_mem_example86Chart (hm : 2 ≤ m) : x * y ^ (m - 2) ∉ example86Cha
   rw [hJ, hx, mem_ideal_span_monomial_image]
   intro h
   obtain ⟨si, hsi, hle⟩ := h (Finsupp.single 0 1 + Finsupp.single 1 (m - 2))
-    (by rw [support_monomial, if_neg one_ne_zero]; exact Finset.mem_singleton_self _)
+    (by rw [support_monomial, ite_eq_right one_ne_zero]; exact Finset.mem_singleton_self _)
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hsi
   rcases hsi with rfl | rfl | rfl
   · have := hle 0

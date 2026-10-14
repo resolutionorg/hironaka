@@ -53,9 +53,9 @@ noncomputable def extendEmb {ι : Type u} [LinearOrder ι] {L : ℕ} (e : Fin L 
       dsimp only
       by_cases hi : i.1 < L
       · by_cases hj : j.1 < L
-        · rw [dif_pos hi, dif_pos hj]
+        · rw [dite_eq_left hi, dite_eq_left hj]
           exact Sum.Lex.inl_lt_inl_iff.mpr (e.strictMono (Fin.mk_lt_mk.mpr hij'))
-        · rw [dif_pos hi, dif_neg hj]
+        · rw [dite_eq_left hi, dite_eq_right hj]
           exact Sum.Lex.inl_lt_inr _ _
       · exfalso
         have := j.2
@@ -64,7 +64,7 @@ noncomputable def extendEmb {ι : Type u} [LinearOrder ι] {L : ℕ} (e : Fin L 
 theorem extendEmb_apply_of_lt {ι : Type u} [LinearOrder ι] {L : ℕ} (e : Fin L ↪o ι)
     {i : Fin (L + 1)} (h : i.1 < L) : extendEmb e i = toLex (Sum.inl (e ⟨i.1, h⟩)) := by
   change (if h' : i.1 < L then toLex (Sum.inl (e ⟨i.1, h'⟩)) else toLex (Sum.inr PUnit.unit)) = _
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem extendEmb_castSucc {ι : Type u} [LinearOrder ι] {L : ℕ} (e : Fin L ↪o ι) (i : Fin L) :
     extendEmb e i.castSucc = toLex (Sum.inl (e i)) := by
@@ -76,7 +76,7 @@ theorem extendEmb_last {ι : Type u} [LinearOrder ι] {L : ℕ} (e : Fin L ↪o 
   change (if h : (Fin.last L).1 < L then toLex (Sum.inl (e ⟨(Fin.last L).1, h⟩))
     else toLex (Sum.inr PUnit.unit)) = _
   have h : ¬ ((Fin.last L).1 < L) := lt_irrefl L
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 namespace PieceFamily
 
@@ -104,15 +104,15 @@ noncomputable def blowUpPieces (S : Finset (Finset ℕ)) (m : ℕ) {r : ℕ}
     else (S.filter fun P => Φ.newComp S P = c).sup fun P => Φ.total P - m
   label_lt c _ := by
     by_cases h : c < Φ.nextComp
-    · simp only [if_pos h]
+    · simp only [ite_eq_left h]
       exact (Φ.label_lt c h).trans (Nat.lt_succ_self _)
-    · simp only [if_neg h]
+    · simp only [ite_eq_right h]
       exact Nat.lt_succ_self _
   isClosed_piece c := by
     by_cases h : c < Φ.nextComp
-    · simp only [if_pos h]
+    · simp only [ite_eq_left h]
       exact isClosed_closure
-    · simp only [if_neg h]
+    · simp only [ite_eq_right h]
       exact isClosed_biUnion_finset fun P _ =>
         (Φ.isClosed_faceSet P).preimage (isBlowUp_blowUpπ ψ₀ hZ).contMDiff.continuous
 
@@ -127,19 +127,19 @@ variable (S : Finset (Finset ℕ)) (m : ℕ) {r : ℕ} (hZ : IsClosedSubmanifold
 theorem blowUpPieces_piece_of_lt {c : ℕ} (hc : c < Φ.nextComp) :
     (Φ.blowUpPieces S m hZ).piece c =
       strictTransformSet (Manifold.blowUpπ ψ₀ hZ) (Φ.centerOf S) (Φ.piece c) :=
-  if_pos hc
+  ite_eq_left hc
 
 theorem blowUpPieces_label_of_lt {c : ℕ} (hc : c < Φ.nextComp) :
     (Φ.blowUpPieces S m hZ).label c = Φ.label c :=
-  if_pos hc
+  ite_eq_left hc
 
 theorem blowUpPieces_a_of_lt {c : ℕ} (hc : c < Φ.nextComp) :
     (Φ.blowUpPieces S m hZ).a c = Φ.a c :=
-  if_pos hc
+  ite_eq_left hc
 
 theorem blowUpPieces_label_of_le {c : ℕ} (hc : Φ.nextComp ≤ c) :
     (Φ.blowUpPieces S m hZ).label c = Φ.nextLabel :=
-  if_neg (not_lt.mpr hc)
+  ite_eq_right (not_lt.mpr hc)
 
 /-- The faces of `S` allocated to the index `newComp S P` are exactly `P`. -/
 theorem filter_newComp_eq {P : Finset ℕ} (hP : P ∈ S) :
@@ -161,7 +161,7 @@ theorem blowUpPieces_piece_newComp {P : Finset ℕ} (hP : P ∈ S) :
     ⋃ Q ∈ S.filter (fun Q => Φ.newComp S Q = Φ.newComp S P), (Manifold.blowUpπ ψ₀ hZ) ⁻¹' Φ.faceSet
         Q) = _
   have hnl : ¬ Φ.newComp S P < Φ.nextComp := not_lt.mpr (Nat.le_add_right _ _)
-  rw [if_neg hnl, Φ.filter_newComp_eq S hP, Finset.set_biUnion_singleton]
+  rw [ite_eq_right hnl, Φ.filter_newComp_eq S hP, Finset.set_biUnion_singleton]
 
 /-- The new piece of the face `P ∈ S` carries the exponent `total P − m` [Kol07, Definition 60]. -/
 theorem blowUpPieces_a_newComp {P : Finset ℕ} (hP : P ∈ S) :
@@ -169,7 +169,7 @@ theorem blowUpPieces_a_newComp {P : Finset ℕ} (hP : P ∈ S) :
   change (if Φ.newComp S P < Φ.nextComp then _ else
     (S.filter fun Q => Φ.newComp S Q = Φ.newComp S P).sup fun Q => Φ.total Q - m) = _
   have hnl : ¬ Φ.newComp S P < Φ.nextComp := not_lt.mpr (Nat.le_add_right _ _)
-  rw [if_neg hnl, Φ.filter_newComp_eq S hP, Finset.sup_singleton]
+  rw [ite_eq_right hnl, Φ.filter_newComp_eq S hP, Finset.sup_singleton]
 
 /-! ### The seam with the imported engine -/
 

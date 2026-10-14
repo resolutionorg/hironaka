@@ -450,7 +450,7 @@ def blowUp (S : Finset (Finset ℕ)) : MonomialState where
     · intro x hx y hy hxy
       have hx' : x < st.nextComp := st.lt_nextComp_of_mem h hx
       have hy' : y < st.nextComp := st.lt_nextComp_of_mem h hy
-      simp only [hx', hy', if_true] at hxy
+      simp only [hx', hy', ite_true] at hxy
       exact st.nerve_labels T h hx hy hxy
     · intro x hx y hy hxy
       have hlt : ∀ z ∈ T₁, z < st.nextComp := fun z hz =>
@@ -458,11 +458,11 @@ def blowUp (S : Finset (Finset ℕ)) : MonomialState where
       have hnew : ¬ st.newComp S P < st.nextComp := not_lt.mpr (st.nextComp_le_newComp S P)
       rcases Finset.mem_insert.mp hx with rfl | hx <;> rcases Finset.mem_insert.mp hy with rfl | hy
       · rfl
-      · simp only [hnew, hlt y hy, if_true, if_false] at hxy
+      · simp only [hnew, hlt y hy, ite_true, ite_false] at hxy
         exact absurd hxy.symm (st.label_lt y (hlt y hy)).ne
-      · simp only [hnew, hlt x hx, if_true, if_false] at hxy
+      · simp only [hnew, hlt x hx, ite_true, ite_false] at hxy
         exact absurd hxy (st.label_lt x (hlt x hx)).ne
-      · simp only [hlt x hx, hlt y hy, if_true] at hxy
+      · simp only [hlt x hx, hlt y hy, ite_true] at hxy
         exact st.nerve_labels _ h1 (Finset.mem_union_left _ hx) (Finset.mem_union_left _ hy) hxy
 
 /-! ### The transition, read off -/
@@ -476,21 +476,21 @@ variable (S : Finset (Finset ℕ))
 theorem blowUp_nerve : (st.blowUp S).nerve = blowUpNerve st.nerve S (st.newComp S) := rfl
 
 theorem blowUp_label_of_lt {c : ℕ} (hc : c < st.nextComp) : (st.blowUp S).label c = st.label c :=
-  if_pos hc
+  ite_eq_left hc
 
 theorem blowUp_a_of_lt {c : ℕ} (hc : c < st.nextComp) : (st.blowUp S).a c = st.a c :=
-  if_pos hc
+  ite_eq_left hc
 
 /-- The new components carry the new label. -/
 theorem blowUp_label_newComp (P : Finset ℕ) : (st.blowUp S).label (st.newComp S P) = st.nextLabel :=
-  if_neg (not_lt.mpr (st.nextComp_le_newComp S P))
+  ite_eq_right (not_lt.mpr (st.nextComp_le_newComp S P))
 
 /-- The new component of the face `P` has exponent `a(P) - m`. -/
 theorem blowUp_a_newComp {P : Finset ℕ} (hP : P ∈ S) :
     (st.blowUp S).a (st.newComp S P) = st.total P - st.m := by
   change (if st.newComp S P < st.nextComp then st.a (st.newComp S P)
     else (S.filter fun Q => st.newComp S Q = st.newComp S P).sup fun Q => st.total Q - st.m) = _
-  rw [if_neg (not_lt.mpr (st.nextComp_le_newComp S P))]
+  rw [ite_eq_right (not_lt.mpr (st.nextComp_le_newComp S P))]
   have : (S.filter fun Q => st.newComp S Q = st.newComp S P) = {P} :=
     Finset.eq_singleton_iff_unique_mem.mpr ⟨Finset.mem_filter.mpr ⟨hP, rfl⟩,
       fun Q hQ => st.newComp_injOn S (Finset.mem_filter.mp hQ).1 hP (Finset.mem_filter.mp hQ).2⟩

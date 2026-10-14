@@ -90,7 +90,7 @@ theorem IsClosedSubmanifold.restrictInvFunOfPreimage_of_mem
         rw [(hΨ hm).trans (Ψ.right_inv hy)]
         exact (y : S).2⟩ := by
   unfold IsClosedSubmanifold.restrictInvFunOfPreimage
-  exact dif_pos hy
+  exact dite_eq_left hy
 
 /-- `BD.restrictPartialDiffeomorphOfPreimage` at any codimension: a local
 inverse of `h` restricted to the bundled submanifolds `h⁻¹(S)` and `S` is a partial diffeomorphism

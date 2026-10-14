@@ -84,16 +84,16 @@ theorem embedCompl_single (j : Fin (n - c)) :
     embedCompl σ (Pi.single j (1 : 𝕜)) = Pi.single ((complEquiv σ).symm j).1 1 := by
   funext i
   by_cases h : i ∈ Set.range σ
-  · rw [embedCompl, dif_pos h, Pi.single_apply, if_neg]
+  · rw [embedCompl, dite_eq_left h, Pi.single_apply, ite_eq_right]
     rintro rfl
     exact ((complEquiv σ).symm j).2 h
-  · rw [embedCompl, dif_neg h]
+  · rw [embedCompl, dite_eq_right h]
     by_cases hk : complEquiv σ ⟨i, h⟩ = j
     · have hi : i = ((complEquiv σ).symm j).1 := by rw [← hk, Equiv.symm_apply_apply]
-      rw [Pi.single_apply, if_pos hk, Pi.single_apply, if_pos hi]
+      rw [Pi.single_apply, ite_eq_left hk, Pi.single_apply, ite_eq_left hi]
     · have hi : i ≠ ((complEquiv σ).symm j).1 := fun hi =>
         hk ((Equiv.eq_symm_apply (complEquiv σ)).mp (Subtype.ext hi))
-      rw [Pi.single_apply, if_neg hk, Pi.single_apply, if_neg hi]
+      rw [Pi.single_apply, ite_eq_right hk, Pi.single_apply, ite_eq_right hi]
 
 end Compl
 

@@ -19,6 +19,7 @@ import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
 import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
 import Mathlib.RingTheory.Polynomial.UniqueFactorization
 import Mathlib.Tactic.Positivity.Finset
+import Mathlib.Algebra.Ring.Hom.InjSurj
 
 /-!
 # `Conv K m` is a unique factorization domain

@@ -290,7 +290,7 @@ theorem span_range_restrictionMap_eq_top [F.IsQuasicoherent] {U V : X.Opens}
   letI := Module.compHom Γ(F, U) (X.presheaf.map (homOfLE h).op).hom
   letI : IsScalarTower Γ(X, V) Γ(X, U) Γ(F, U) := IsScalarTower.of_compHom _ _ _
   have hb := F.isBaseChange_resₗ hU hV h
-  refine eq_top_iff.mpr fun n _ => hb.inductionOn n _ (zero_mem _) (fun x => ?_)
+  refine eq_top_iff.mpr fun n _ => hb.inductionOn n (fun x => ?_)
     (fun c n hn => Submodule.smul_mem _ c hn) (fun _ _ => add_mem)
   exact Submodule.subset_span ⟨x, rfl⟩
 

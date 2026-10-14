@@ -123,8 +123,8 @@ theorem isSmooth_seqOrigin : (seqOrigin k).IsSmooth (affineSpaceToSpec k 2) := b
 /-- `y² − x³ ≠ 0`. -/
 theorem cuspPoly_ne_zero : (X 1 ^ 2 - X 0 ^ 3 : MvPolynomial (Fin 2) k) ≠ 0 := by
   intro h
-  have := congrArg (coeff (Finsupp.single 1 2)) h
-  rw [coeff_sub, coeff_X_pow, coeff_X_pow, coeff_zero] at this
+  have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single 1 2)) h
+  rw [coeff_sub, coeff_X_pow, coeff_X_pow, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at this
   simp [Finsupp.single_eq_single_iff] at this
 
 /-- The cuspidal cubic is not smooth over `k`: the scheme at which the restricted sequence of

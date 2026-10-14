@@ -276,7 +276,7 @@ theorem linearIndependent_tilt (i₀ m₀ : Fin n) :
         Submodule.span 𝕜 (Set.range u) := fun m hm => by
       have : u m = Pi.single m 1 := by
         change Pi.single m 1 + (if m = m₀ ∧ m₀ ≠ i₀ then (Pi.single i₀ 1 : Fin n → 𝕜) else 0) = _
-        rw [if_neg hm, add_zero]
+        rw [ite_eq_right hm, add_zero]
       rw [← this]
       exact Submodule.subset_span ⟨m, rfl⟩
     intro m
@@ -284,7 +284,7 @@ theorem linearIndependent_tilt (i₀ m₀ : Fin n) :
     · obtain ⟨rfl, hmi⟩ := hm
       have h1 : u m = Pi.single m 1 + Pi.single i₀ 1 := by
         change Pi.single m 1 + (if m = m ∧ m ≠ i₀ then (Pi.single i₀ 1 : Fin n → 𝕜) else 0) = _
-        rw [if_pos ⟨rfl, hmi⟩]
+        rw [ite_eq_left ⟨rfl, hmi⟩]
       have h2 : (Pi.single m 1 : Fin n → 𝕜) = u m - Pi.single i₀ 1 := by rw [h1]; abel
       rw [h2]
       exact Submodule.sub_mem _ (Submodule.subset_span ⟨m, rfl⟩)
@@ -316,7 +316,7 @@ theorem linearIndependent_update_tilt (i₀ m₀ : Fin n) (v : Fin n → 𝕜) (
     have : u m = Pi.single m 1 := by
       rw [hu, Function.update_of_ne hmi]
       change Pi.single m 1 + (if m = m₀ ∧ m₀ ≠ i₀ then (Pi.single i₀ 1 : Fin n → 𝕜) else 0) = _
-      rw [if_neg (fun h : m = m₀ ∧ m₀ ≠ i₀ => hmm h.1), add_zero]
+      rw [ite_eq_right (fun h : m = m₀ ∧ m₀ ≠ i₀ => hmm h.1), add_zero]
     rw [← this]
     exact Submodule.subset_span ⟨m, rfl⟩
   have hsum : v = ∑ m, Pi.single m (v m) := (Finset.univ_sum_single v).symm
@@ -354,7 +354,7 @@ theorem linearIndependent_update_tilt (i₀ m₀ : Fin n) (v : Fin n → 𝕜) (
       have hum₀ : u m₀ = Pi.single m₀ 1 + Pi.single i₀ 1 := by
         rw [hu, Function.update_of_ne hmi]
         change Pi.single m₀ 1 + (if m₀ = m₀ ∧ m₀ ≠ i₀ then (Pi.single i₀ 1 : Fin n → 𝕜) else 0) = _
-        rw [if_pos ⟨rfl, hmi⟩]
+        rw [ite_eq_left ⟨rfl, hmi⟩]
       have hm₀mem : (Pi.single m₀ 1 + Pi.single i₀ 1 : Fin n → 𝕜) ∈ S := by
         rw [← hum₀]
         exact Submodule.subset_span ⟨m₀, rfl⟩
@@ -488,10 +488,10 @@ theorem exists_commonCharts (hF : F.IsSnc ψ) (hH : IsClosedSubmanifold ψ H 1)
     ((hcφ i).sub contMDiffOn_const).add (contMDiffOn_const.mul ((hcφ i₀).sub contMDiffOn_const))
   have hwf'c : ∀ i, ContMDiffOn 𝓘(𝕜, E) 𝓘(𝕜) ω (wf' i) U₀ := fun i => by
     by_cases hi : i = i₀
-    · have : wf' i = fun x => ψ (φ' x) i₀' - ψ (φ' p) i₀' := funext fun x => if_pos hi
+    · have : wf' i = fun x => ψ (φ' x) i₀' - ψ (φ' p) i₀' := funext fun x => ite_eq_left hi
       rw [this]
       exact hcφ'.sub contMDiffOn_const
-    · have : wf' i = wf i := funext fun x => if_neg hi
+    · have : wf' i = wf i := funext fun x => ite_eq_right hi
       rw [this]
       exact hwfc i
   set wS : Fin n → (structureSheaf 𝕜 E M).presheaf.obj (op U₀) :=
@@ -512,13 +512,13 @@ theorem exists_commonCharts (hF : F.IsSnc ψ) (hH : IsClosedSubmanifold ψ H 1)
       (structureSheaf 𝕜 E M).presheaf.germ U₀ p hpU₀ (wS i) := fun i hi => by
     apply stalkToGerm_injective 𝓘(𝕜, E) ω M p
     rw [stalkToGerm_germ_sectionOfContMDiffOn, stalkToGerm_germ_sectionOfContMDiffOn]
-    exact Filter.Germ.coe_eq.mpr (Eventually.of_forall fun x => if_neg hi)
+    exact Filter.Germ.coe_eq.mpr (Eventually.of_forall fun x => ite_eq_right hi)
   have hg'i₀ : (structureSheaf 𝕜 E M).presheaf.germ U₀ p hpU₀ (wS' i₀) =
       coord E ψ φ' hφ' hp' i₀' - const 𝕜 E M p (ψ (φ' p) i₀') := by
     apply stalkToGerm_injective 𝓘(𝕜, E) ω M p
     rw [stalkToGerm_germ_sectionOfContMDiffOn, map_sub, stalkToGerm_coord_eq, stalkToGerm_const,
       ← Filter.Germ.coe_sub]
-    exact Filter.Germ.coe_eq.mpr (Eventually.of_forall fun x => if_pos rfl)
+    exact Filter.Germ.coe_eq.mpr (Eventually.of_forall fun x => ite_eq_left rfl)
   -- their linear parts in `φ`
   have hmem_i₀ : coord E ψ φ hφ hp i₀ - const 𝕜 E M p (ψ (φ p) i₀) ∈
       maximalIdeal ((structureSheaf 𝕜 E M).presheaf.stalk p) :=
@@ -532,10 +532,10 @@ theorem exists_commonCharts (hF : F.IsSnc ψ) (hH : IsClosedSubmanifold ψ H 1)
       linearPart_mul_of_mem_maximalIdeal E ψ φ hφ hp _ hmem_i₀, eval_const, map_sub,
       linearPart_const, sub_zero, linearPart_coord_eq_single, linearPart_coord_eq_single]
     by_cases hi : i = m₀ ∧ m₀ ≠ i₀
-    · rw [if_pos hi]
-      simp only [ht, if_pos hi, one_smul]
-    · rw [if_neg hi]
-      simp only [ht, if_neg hi, zero_smul]
+    · rw [ite_eq_left hi]
+      simp only [ht, ite_eq_left hi, one_smul]
+    · rw [ite_eq_right hi]
+      simp only [ht, ite_eq_right hi, zero_smul]
   have hL' : ∀ i, Manifold.linearPart E ψ φ hφ hp ((structureSheaf 𝕜 E M).presheaf.germ U₀ p hpU₀
       (wS' i)) =
       Function.update (fun m => (Pi.single m 1 : Fin n → 𝕜) +
@@ -649,7 +649,7 @@ theorem exists_commonCharts (hF : F.IsSnc ψ) (hH : IsClosedSubmanifold ψ H 1)
     refine coord_eq_coord_of_eventuallyEq E he hpe he' hpe' ?_
     filter_upwards [e.open_source.mem_nhds hpe, e'.open_source.mem_nhds hpe'] with x hx hx'
     rw [hce x hx i, hce' x hx' i]
-    exact (if_neg hi).symm
+    exact (ite_eq_right hi).symm
   · have had : IsAdaptedChart ψ H φ ⟨fun _ : Fin 1 => i₀, fun _ _ _ => Subsingleton.elim _ _⟩ :=
       ⟨hφ, fun x hx => by rw [hHiff x hx]; exact ⟨fun h _ => h, fun h => h 0⟩⟩
     rw [← hH.ker_restrictStalk_eq_vanishingStalk hpH, ← hH.stalkIdeal_idealSheaf_of_mem hpH,
@@ -658,7 +658,7 @@ theorem exists_commonCharts (hF : F.IsSnc ψ) (hH : IsClosedSubmanifold ψ H 1)
     refine coord_eq_coord_of_eventuallyEq E hφ hp he hpe ?_
     filter_upwards [e.open_source.mem_nhds hpe] with x hx
     rw [hce x hx i₀]
-    simp only [hwf, hH0, sub_zero, ht, if_neg hti₀, zero_mul, add_zero]
+    simp only [hwf, hH0, sub_zero, ht, ite_eq_right hti₀, zero_mul, add_zero]
     rfl
   · have had' : IsAdaptedChart ψ H' φ' ⟨fun _ : Fin 1 => i₀', fun _ _ _ => Subsingleton.elim _ _⟩ :=
       ⟨hφ', fun x hx => by rw [hH'iff x hx]; exact ⟨fun h _ => h, fun h => h 0⟩⟩
@@ -668,7 +668,7 @@ theorem exists_commonCharts (hF : F.IsSnc ψ) (hH : IsClosedSubmanifold ψ H 1)
     refine coord_eq_coord_of_eventuallyEq E hφ' hp' he' hpe' ?_
     filter_upwards [e'.open_source.mem_nhds hpe'] with x hx
     rw [hce' x hx i₀]
-    simp only [hwf', if_pos rfl, hH'0, sub_zero]
+    simp only [hwf', ite_eq_left rfl, hH'0, sub_zero]
     rfl
   · intro j hj
     refine ⟨σ (k ⟨j, hj⟩), fun h => hki₀ _ (σ.injective h), ?_⟩
@@ -684,7 +684,7 @@ theorem exists_commonCharts (hF : F.IsSnc ψ) (hH : IsClosedSubmanifold ψ H 1)
     rw [hce x hx]
     have h0 : ψ (φ p) (k ⟨j, hj⟩) = 0 := (hEiff ⟨j, hj⟩ p hp).mp hj
     have hkm : ¬ (k ⟨j, hj⟩ = m₀ ∧ m₀ ≠ i₀) := fun h => hm₀k ⟨j, hj⟩ h.1
-    simp only [hwf, h0, sub_zero, ht, if_neg hkm, zero_mul, add_zero]
+    simp only [hwf, h0, sub_zero, ht, ite_eq_right hkm, zero_mul, add_zero]
     rfl
 
 end Main

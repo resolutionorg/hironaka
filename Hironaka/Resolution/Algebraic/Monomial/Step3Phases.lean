@@ -67,11 +67,11 @@ theorem phase_of_nonempty (st : MonomialState) (hs : ∀ s < r, st.Star s)
     (h : (st.choice r).Nonempty) :
     phase r st hs = ((phase r (st.blowUp (st.choice r)) fun _ hsr => st.star_blowUp hs hsr).1,
       st.choice r :: (phase r (st.blowUp (st.choice r)) fun _ hsr => st.star_blowUp hs hsr).2) := by
-  rw [phase, if_pos h]
+  rw [phase, ite_eq_left h]
 
 theorem phase_of_not_nonempty (st : MonomialState) (hs : ∀ s < r, st.Star s)
     (h : ¬ (st.choice r).Nonempty) : phase r st hs = (st, []) := by
-  rw [phase, if_neg h]
+  rw [phase, ite_eq_right h]
 
 /-- A run of Step 3: each centre is Kollár's nonempty choice at some phase `r`, `1 ≤ r ≤ n`, of
 the state reached before it. -/
@@ -265,10 +265,10 @@ theorem phase_eq_of_phaseFuel {fuel : ℕ} {st : MonomialState} (hs : ∀ s < r,
   | zero => exact absurd h (by simp [phaseFuel])
   | succ fuel ih =>
     by_cases hne : (st.choice r).Nonempty
-    · rw [phaseFuel, if_pos hne, Option.map_eq_some_iff] at h
+    · rw [phaseFuel, ite_eq_left hne, Option.map_eq_some_iff] at h
       obtain ⟨res', hres', rfl⟩ := h
       rw [phase_of_nonempty st hs hne, ih (fun _ hsr => st.star_blowUp hs hsr) hres']
-    · rw [phaseFuel, if_neg hne, Option.some.injEq] at h
+    · rw [phaseFuel, ite_eq_right hne, Option.some.injEq] at h
       rw [phase_of_not_nonempty st hs hne, h]
 
 /-- `phases` with fuel per phase. -/

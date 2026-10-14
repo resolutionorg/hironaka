@@ -194,9 +194,9 @@ theorem exists_prod_stalkIdeal_pow_eq_span_monomial [Fintype ι] [DecidableEq ι
   have hw : ∀ i, (E i).stalkIdeal a ^ m i = span {w i} := by
     intro i
     by_cases h : a ∈ (E i).support
-    · simp only [w, dif_pos h]
+    · simp only [w, dite_eq_left h]
       rw [hc ⟨i, h⟩, Ideal.span_singleton_pow]
-    · simp only [w, dif_neg h]
+    · simp only [w, dite_eq_right h]
       rw [Scheme.IdealSheafData.stalkIdeal_eq_top_of_notMem_support _ h, Ideal.top_pow,
           Ideal.span_singleton_one]
   -- the coordinate of a component (junk for a component missing `a`) and its multiplicity
@@ -210,7 +210,7 @@ theorem exists_prod_stalkIdeal_pow_eq_span_monomial [Fintype ι] [DecidableEq ι
     simp only [m']
     split_ifs with h
     · exfalso
-      simp only [g, dif_pos h] at hgi
+      simp only [g, dite_eq_left h] at hgi
       exact hiv (congrArg Subtype.val (hcinj (hgi.trans hp.symm)))
     · rfl
   · rw [Finset.prod_congr rfl fun i _ => hw i, Ideal.prod_span_singleton]
@@ -225,7 +225,7 @@ theorem exists_prod_stalkIdeal_pow_eq_span_monomial [Fintype ι] [DecidableEq ι
           obtain ⟨-, hgi⟩ := hi
           simp only [w, m']
           split_ifs with h
-          · simp only [g, dif_pos h] at hgi
+          · simp only [g, dite_eq_left h] at hgi
             rw [hgi]
           · exact pow_zero _
       _ = ∏ i ∈ F, w i := Finset.prod_fiberwise_of_maps_to (fun i _ => Finset.mem_univ (g i)) w

@@ -105,13 +105,13 @@ theorem modelAux_X_of_mem {i : σ} (hi : i ∈ S) (hij : i ≠ j) :
     modelAux A S j (X (R := A) i) =
       algebraMap (MvPolynomial σ A) (Localization.Away (X j : MvPolynomial σ A)) (X (R := A) i) *
         invSelf (X j : MvPolynomial σ A) := by
-  rw [modelAux, aeval_X, if_pos ⟨hi, hij⟩]
+  rw [modelAux, aeval_X, ite_eq_left ⟨hi, hij⟩]
 
 theorem modelAux_X_of_not {i : σ} (h : ¬(i ∈ S ∧ i ≠ j)) :
     modelAux A S j (X (R := A) i) =
       algebraMap (MvPolynomial σ A) (Localization.Away (X j : MvPolynomial σ A))
         (X (R := A) i) := by
-  rw [modelAux, aeval_X, if_neg h]
+  rw [modelAux, aeval_X, ite_eq_right h]
 
 theorem modelAux_X_self :
     modelAux A S j (X (R := A) j) =
@@ -120,11 +120,11 @@ theorem modelAux_X_self :
 
 theorem chartSubst_X_of_mem {i : σ} (hi : i ∈ S) (hij : i ≠ j) :
     chartSubst A S j (X (R := A) i) = X (R := A) i * X j := by
-  rw [chartSubst, aeval_X, if_pos ⟨hi, hij⟩]
+  rw [chartSubst, aeval_X, ite_eq_left ⟨hi, hij⟩]
 
 theorem chartSubst_X_of_not {i : σ} (h : ¬(i ∈ S ∧ i ≠ j)) :
     chartSubst A S j (X (R := A) i) = X i := by
-  rw [chartSubst, aeval_X, if_neg h]
+  rw [chartSubst, aeval_X, ite_eq_right h]
 
 theorem chartSubst_X_self : chartSubst A S j (X (R := A) j) = X j :=
   chartSubst_X_of_not A S j fun h => h.2 rfl

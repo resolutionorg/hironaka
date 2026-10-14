@@ -244,12 +244,12 @@ theorem step21Seq_indifferent (hind : BDFamily.IndifferentToEmptyMembers bdm)
           exact hi'
         rw [hc₁]
         simp only [step21Seq]
-        rw [dif_pos hj, dif_pos hj']
+        rw [dite_eq_left hj, dite_eq_left hj']
         exact step21Seq_succ_indifferent_aux T hn hmax bdm E' hsnc' e hn₂ hmax₂ hind hmem htop _ _
           ih hj hj' hpos
       · rw [erasureCount_succ_of_notMem T.E E' e hj hin]
         simp only [step21Seq]
-        rw [dif_pos hj]
+        rw [dite_eq_left hj]
         have hrd := hnil k j
           (T.induced (step21Seq T hn hmax bdm j).1 (step21Seq T hn hmax bdm j).2.1 (Fin.last _))
           (bdClass_induced_last T hn hmax (step21Seq T hn hmax bdm j).2.1
@@ -258,7 +258,7 @@ theorem step21Seq_indifferent (hind : BDFamily.IndifferentToEmptyMembers bdm)
         exact (concat_eq_of_eq_nil (step21Seq T hn hmax bdm j).1 hrd).trans ih
     · rw [erasureCount_succ_of_not_lt T.E E' e hj]
       simp only [step21Seq]
-      rw [dif_neg hj]
+      rw [dite_eq_right hj]
       exact ih
 
 end Step21

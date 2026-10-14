@@ -130,9 +130,9 @@ theorem monomial_exponentAt_ofDivisorFamily (hE : E.IsSnc) {L k' : ℕ} (a : X �
   -- that generic point
   have hck : c < k' := hc
   change (if h : c < k' then a ((σ ⟨c, h⟩).2 : X) else 0) = a η
-  rw [dif_pos hck]
+  rw [dite_eq_left hck]
   have hηc' : η ∈ (if h : c < k' then Closeds.closure {((σ ⟨c, h⟩).2 : X)} else ⊥) := hηc
-  rw [dif_pos hck] at hηc'
+  rw [dite_eq_left hck] at hηc'
   have hspec : ((σ ⟨c, hck⟩).2 : X) ⤳ η := specializes_iff_mem_closure.mpr hηc'
   -- both are generic points of the member `(σ ⟨c, hck⟩).1`, which is `i`
   have hmem : ((σ ⟨c, hck⟩).2 : X) ∈ (E.component i).support := by

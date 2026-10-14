@@ -58,7 +58,7 @@ open scoped Classical in
 theorem sigmaProj_mk (i : σ) (x y : N i) : sigmaProj N i x (sigmaMk N i y) = y := by
   change (if h : (⟨i, y⟩ : Σ j, (N j : Type u)).1 = i then h ▸ (⟨i, y⟩ : Σ j, (N j : Type u)).2
     else x) = y
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
 
 /-- The local inverse of the inclusion `sigmaMk N i`: the projection on the open range. -/
 def sigmaMkPartialDiffeomorph (i : σ) (x : N i) :

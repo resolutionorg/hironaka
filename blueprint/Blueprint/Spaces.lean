@@ -1,6 +1,7 @@
 import Verso
 import VersoManual
 import VersoBlueprint
+import Blueprint.References
 import Blueprint.Successions
 import Hironaka.AnalyticSpace.Resolution.Defs
 
@@ -12,6 +13,9 @@ open AnalyticManifold Manifold AnalyticSpace
 open scoped CategoryTheory
 
 set_option verso.blueprint.autoDeps true
+-- Infer from directly referenced declarations only, as before v4.34; walking through unassociated
+-- helpers would traverse Mathlib.
+set_option verso.blueprint.autoDeps.expandUntagged false
 
 #doc (Manual) "Analytic spaces" =>
 %%%
@@ -21,7 +25,7 @@ file := "analytic-spaces"
 
 The resolution of analytic spaces ({bpref "thm:spaces"}[], {bpref "thm:spaces_complex"}[]) is
 stated for $`K`-analytic spaces in
-Hironaka's sense \[Hir64, Ch. 0, §1\], $`K = \mathbb{R}` or $`\mathbb{C}` (`RCLike K`): locally ringed
+Hironaka's sense {cite Hir64}[Ch. 0, §1], $`K = \mathbb{R}` or $`\mathbb{C}` (`RCLike K`): locally ringed
 spaces locally isomorphic to the zero set of finitely many analytic functions with the quotient
 structure sheaf. The library builds them from Mathlib's locally ringed spaces in the namespace
 `AnalyticSpace`, where the theorems are also stated, so that their names are those of this
@@ -77,7 +81,7 @@ paperIdentity := some { label := "[Hir64, Ch. 0, §1]", href := "https://doi.org
 %%%
 The quotient of a locally ringed space $`X` by an ideal sheaf $`\mathcal{J}` of finite type is the
 locally ringed space $`(S(\mathcal{J}), (\mathcal{O}_X/\mathcal{J})|_{S(\mathcal{J})})`
-({decl}`QuotientSpace.quotientSpace`) \[Hir64, Ch. 0, §1\]; \[BM97, §3\]. Its points are the support
+({decl}`QuotientSpace.quotientSpace`) {cite Hir64}[Ch. 0, §1]; {cite BM97}[§3]. Its points are the support
 $`S(\mathcal{J}) = \{z : \mathcal{J}_z \ne \mathcal{O}_{X,z}\}` ({decl}`support`, with
 {decl}`preimage` of opens), and its sections over an open set are the families of classes in the
 fibres $`\mathcal{O}_{X,z}/\mathcal{J}_z` ({decl}`fiber`, {decl}`stalkIdeal`) that are locally the

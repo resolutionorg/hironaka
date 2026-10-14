@@ -367,13 +367,13 @@ theorem memberOfLabel_lab {H : ∀ i, κ i → ClosedSubspace (R i)} {lab : ∀ 
     (hlab : ∀ i, Function.Injective (lab i)) (i : ι) (k : κ i) :
     memberOfLabel H lab i (lab i k) = H i k := by
   have h : ∃ k', lab i k' = lab i k := ⟨k, rfl⟩
-  rw [memberOfLabel, dif_pos h, hlab i h.choose_spec]
+  rw [memberOfLabel, dite_eq_left h, hlab i h.choose_spec]
 
 omit [Countable ι] in
 /-- A label carried by no member of the piece gives the empty subspace `⊤`. -/
 theorem memberOfLabel_of_not_exists {H : ∀ i, κ i → ClosedSubspace (R i)} {lab : ∀ i, κ i → Λ}
     {i : ι} {l : Λ} (h : ¬ ∃ k, lab i k = l) : memberOfLabel H lab i l = ⊤ := by
-  rw [memberOfLabel, dif_neg h]
+  rw [memberOfLabel, dite_eq_right h]
 
 omit [Countable ι] in
 /-- The support of a label's member lies in the piece's total support. -/

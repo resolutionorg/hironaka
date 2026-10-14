@@ -107,9 +107,9 @@ theorem sub_homogeneousComponent_mem {k : ℕ} {p : MvPolynomial σ S}
   have hd' := mem_support_iff.mp hd
   rw [coeff_sub, coeff_homogeneousComponent] at hd'
   by_cases hdk : d.degree = k
-  · rw [if_pos hdk, sub_self] at hd'
+  · rw [ite_eq_left hdk, sub_self] at hd'
     exact absurd rfl hd'
-  · rw [if_neg hdk, sub_zero] at hd'
+  · rw [ite_eq_right hdk, sub_zero] at hd'
     have := forall_degree_of_mem_span_range_X_pow hp d (mem_support_iff.mpr hd')
     omega
 
@@ -177,21 +177,21 @@ def splitFin : Fin n ≃ Fin r ⊕ {i : Fin n // ¬ i.val < r} where
   left_inv i := by
     by_cases h : i.val < r
     · dsimp only
-      rw [dif_pos h]
+      rw [dite_eq_left h]
       rfl
     · dsimp only
-      rw [dif_neg h]
+      rw [dite_eq_right h]
       rfl
   right_inv := by
     rintro (j | i)
-    · exact dif_pos j.2
-    · exact dif_neg i.2
+    · exact dite_eq_left j.2
+    · exact dite_eq_right i.2
 
 theorem splitFin_apply_of_lt {i : Fin n} (h : i.val < r) :
-    splitFin n r hrn i = Sum.inl ⟨i.val, h⟩ := dif_pos h
+    splitFin n r hrn i = Sum.inl ⟨i.val, h⟩ := dite_eq_left h
 
 theorem splitFin_apply_of_not_lt {i : Fin n} (h : ¬ i.val < r) :
-    splitFin n r hrn i = Sum.inr ⟨i, h⟩ := dif_neg h
+    splitFin n r hrn i = Sum.inr ⟨i, h⟩ := dite_eq_right h
 
 /-- `A[x_0, …, x_{n-1}] ≃ₐ[A] (A[x]/I)[u_0, …, u_{r-1}]`, `x_i ↦ u_i` for `i < r` and `x_i ↦ x̄_i`
 for `i ≥ r`, through `A[x]/I ≃ A[x_i : r ≤ i]` (`quotientCenterAlgEquiv`). -/

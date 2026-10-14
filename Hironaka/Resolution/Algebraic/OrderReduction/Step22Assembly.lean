@@ -104,13 +104,13 @@ theorem maxContactCase_of_maxOrd_eq (h : T.I.maxOrd = m) :
     maxContactCase T hT hH hle bd =
       step2Seq (T.tuned m hT.1) (hasDimLE_tuned hT.2.1 m hT.1) (le_of_eq (maxOrd_tuned h hT.1)) bd
         (one_le_tuningParam m) hH (retune_keeps_maxContact h hT.1 hle) :=
-  dif_pos h
+  dite_eq_left h
 
 /-- Below the mark, `BO^H_{n,m}(X, I, E)` is the empty sequence (the remark after
 [Kol07, Theorem 68]). -/
 theorem maxContactCase_of_maxOrd_lt (h : T.I.maxOrd < m) :
     maxContactCase T hT hH hle bd = BlowUpSequence.nil T.X.left :=
-  dif_neg h.ne
+  dite_eq_right h.ne
 
 /-- `BO^H_{n,m}(X, I, E)` is a smooth blow-up sequence of order `m` starting with `(X, I, E)`:
 Step 2 on the tuned triple, read back through `Hironaka.BD.isOrderSeq_iff_tuned`

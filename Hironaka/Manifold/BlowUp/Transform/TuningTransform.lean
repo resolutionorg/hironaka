@@ -118,7 +118,7 @@ theorem le_ordAlong_tuning (hY : IsClosedSubmanifold ψ Y c) (I : IdealSheaf (st
       (le_ordAlongIdeal_iteratedDeriv hY I ha (Nat.lt_succ_iff.mp j.2) hm)
   calc ∏ j : Fin (m + 1), (I.iteratedDeriv (j : ℕ)).stalkIdeal a ^ e j
       ≤ ∏ j : Fin (m + 1), hY.idealSheaf.stalkIdeal a ^ ((m - (j : ℕ)) * e j) :=
-        Finset.prod_le_prod' fun j _ => hj j
+        Finset.prod_le_prod fun j _ => hj j
     _ = hY.idealSheaf.stalkIdeal a ^ wt m e := by rw [Finset.prod_pow_eq_pow_sum]; rfl
     _ ≤ hY.idealSheaf.stalkIdeal a ^ s := Ideal.pow_le_pow_right he
 
@@ -172,7 +172,7 @@ theorem birationalTransform_tuning_le (I : IdealSheaf (structureSheaf 𝕜 E M))
   refine (birationalTransform_le_of_le_mark hY h _ hse (hP e) p).trans ?_
   rw [hwt, birationalTransform_finset_prod hY h Finset.univ _ _ fun j _ => hpow e j,
     IdealSheaf.stalkIdeal_finset_prod]
-  refine Finset.prod_le_prod' fun j _ => ?_
+  refine Finset.prod_le_prod fun j _ => ?_
   rw [birationalTransform_pow hY h _ _ _ (hdef j), IdealSheaf.stalkIdeal_pow]
   exact Ideal.pow_right_mono
     (markedTransform_iteratedDeriv_le hY h I hm (Nat.lt_succ_iff.mp j.2) p) _

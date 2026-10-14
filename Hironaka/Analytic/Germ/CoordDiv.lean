@@ -137,7 +137,7 @@ theorem coeff_eq_zero_of_eventually_vanish {c : MvPowerSeries (Fin n) K} (hc : c
     exact hx (Function.update_self k 0 x)
   intro ν hν
   have h := congrArg (coeff ν) hfree
-  rwa [coeff_freePart, if_pos hν, map_zero] at h
+  rwa [coeff_freePart, ite_eq_left hν, map_zero] at h
 
 /-! ### Division by a coordinate -/
 
@@ -180,7 +180,7 @@ theorem exists_eq_mul_coord_of_vanish (k : Fin n) {ρ : Radius n} {F : (Fin n �
         by_cases hyk : y k = 0
         · -- the derivative in the `k`-direction
           have hpyk : (p + y) k = 0 := by rw [Pi.add_apply, hpk, hyk, add_zero]
-          simp only [hG, if_pos hpyk]
+          simp only [hG, ite_eq_left hpyk]
           -- the line `s ↦ p + y + s • e_k`
           have hline : HasDerivAt (fun s : K => p + y + s • (Pi.single k 1 : Fin n → K))
               (Pi.single k 1) 0 := by
@@ -227,7 +227,7 @@ theorem exists_eq_mul_coord_of_vanish (k : Fin n) {ρ : Radius n} {F : (Fin n �
               Pi.single_eq_same, smul_eq_mul, mul_one, zero_add]
           exact (h1.congr_of_eventuallyEq heq.symm).unique h2
         · have hpyk : (p + y) k ≠ 0 := by rwa [Pi.add_apply, hpk, zero_add]
-          simp only [hG, if_neg hpyk]
+          simp only [hG, ite_eq_right hpyk]
           rw [hFc y hy, hsplit y hy', Pi.add_apply, hpk, zero_add, mul_div_cancel_left₀ _ hyk]
       -- hence `G` is analytic at `p`
       have han : AnalyticAt K (fun x => evalSeries c' (x - p)) p := by
@@ -252,11 +252,11 @@ theorem exists_eq_mul_coord_of_vanish (k : Fin n) {ρ : Radius n} {F : (Fin n �
           hpk
       refine han.congr ?_
       filter_upwards [hne] with x hx
-      simp only [hG, if_neg hx]
+      simp only [hG, ite_eq_right hx]
   · by_cases hxk : x k = 0
     · rw [hxk, zero_mul]
       exact h0 x hx hxk
-    · simp only [hG, if_neg hxk]
+    · simp only [hG, ite_eq_right hxk]
       exact (mul_div_cancel₀ (F x) hxk).symm
 
 /-! ### Coordinate subspaces inside the zero set -/

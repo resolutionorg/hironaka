@@ -108,8 +108,8 @@ theorem ordElem_algebraMap_transformElem_le (𝔮 : Ideal (chartRing x r)) [𝔮
     exact h'
   have hP0 : MvPolynomial.map (residue R) Q ≠ 0 := by
     intro h0
-    have h1 := congrArg (coeff β) h0
-    rw [coeff_map, coeff_zero] at h1
+    have h1 := congrArg (AddMonoidAlgebra.coeff · β) h0
+    rw [coeff_map, AddMonoidAlgebra.coeff_zero, Finsupp.zero_apply] at h1
     exact hβ (Ideal.Quotient.eq_zero_iff_mem.mp h1)
   have hsub : (MvPolynomial.map (residue R) Q).support ⊆ Q.support :=
     support_map_subset (residue R) Q

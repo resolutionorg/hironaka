@@ -58,10 +58,10 @@ example : ⨆ (j : Fin 2) (hj : j.val < 2), (modelChart k 2 2 j hj).opensRange =
 /-- The chart map `π_0` of the chart of `x` is `x ↦ x`, `y ↦ y x` (Hauser's
 `(x, t₂) ↦ (x, x t₂)`). -/
 example : chartSubst k (center 2 2) 0 (X 1) = X 1 * X 0 := by
-  rw [chartSubst_X, if_pos ⟨one_lt_two, one_ne_zero⟩]
+  rw [chartSubst_X, ite_eq_left ⟨one_lt_two, one_ne_zero⟩]
 
 example : chartSubst k (center 2 2) 0 (X 0) = X 0 := by
-  rw [chartSubst_X, if_neg fun h => h.2 rfl]
+  rw [chartSubst_X, ite_eq_right fun h => h.2 rfl]
 
 /-- Inside the chart of `x`, the chart of `y` is `D(t₂)`. -/
 example :
@@ -74,13 +74,13 @@ example :
 example :
     modelTransition k 2 2 0 1 (X 0) =
       IsLocalization.Away.invSelf (X 1 : MvPolynomial (Fin 2) k) := by
-  rw [modelTransition_X, if_neg zero_ne_one, if_pos rfl]
+  rw [modelTransition_X, ite_eq_right zero_ne_one, ite_eq_left rfl]
 
 example :
     modelTransition k 2 2 0 1 (X 1) =
       algebraMap (MvPolynomial (Fin 2) k) (Localization.Away (X 1 : MvPolynomial (Fin 2) k))
         (X 0 * X 1) := by
-  rw [modelTransition_X, if_pos rfl]
+  rw [modelTransition_X, ite_eq_left rfl]
 
 /-- The two charts are glued along `τ_{01}`. -/
 example :
@@ -147,35 +147,36 @@ section AxisOfSpace
 
 /-- The chart map of the chart of `x` is `x ↦ x`, `y ↦ y x`, `z ↦ z`. -/
 example : chartSubst k (center 3 2) 0 (X 1) = X 1 * X 0 := by
-  rw [chartSubst_X, if_pos ⟨one_lt_two, one_ne_zero⟩]
+  rw [chartSubst_X, ite_eq_left ⟨one_lt_two, one_ne_zero⟩]
 
 example : chartSubst k (center 3 2) 0 (X 2) = X 2 := by
-  rw [chartSubst_X, if_neg fun h => lt_irrefl 2 h.1]
+  rw [chartSubst_X, ite_eq_right fun h => lt_irrefl 2 h.1]
 
 /-- Hauser's Example 4.47, "compute the two chart transition maps": `τ_{01}` is `x ↦ 1/y`,
 `y ↦ x y`, `z ↦ z`. -/
 example :
     modelTransition k 3 2 0 1 (X 0) =
       IsLocalization.Away.invSelf (X 1 : MvPolynomial (Fin 3) k) := by
-  rw [modelTransition_X, if_neg zero_ne_one, if_pos rfl]
+  rw [modelTransition_X, ite_eq_right zero_ne_one, ite_eq_left rfl]
 
 example :
     modelTransition k 3 2 0 1 (X 1) =
       algebraMap (MvPolynomial (Fin 3) k) (Localization.Away (X 1 : MvPolynomial (Fin 3) k))
         (X 0 * X 1) := by
-  rw [modelTransition_X, if_pos rfl]
+  rw [modelTransition_X, ite_eq_left rfl]
 
 example :
     modelTransition k 3 2 0 1 (X 2) =
       algebraMap (MvPolynomial (Fin 3) k) (Localization.Away (X 1 : MvPolynomial (Fin 3) k))
         (X 2) := by
-  rw [modelTransition_X, if_neg (by decide), if_neg (by decide), if_neg (by decide)]
+  rw [modelTransition_X, ite_eq_right (by decide), ite_eq_right (by decide),
+    ite_eq_right (by decide)]
 
 /-- `τ_{10}` is `x ↦ x y`, `y ↦ 1/x`, `z ↦ z`, and the two charts are glued along it. -/
 example :
     modelTransition k 3 2 1 0 (X 1) =
       IsLocalization.Away.invSelf (X 0 : MvPolynomial (Fin 3) k) := by
-  rw [modelTransition_X, if_neg one_ne_zero, if_pos rfl]
+  rw [modelTransition_X, ite_eq_right one_ne_zero, ite_eq_left rfl]
 
 example :
     Spec.map (CommRingCat.ofHom (algebraMap (MvPolynomial (Fin 3) k)

@@ -125,16 +125,16 @@ theorem totalTransformData_chart (hjq : chartCoord E hj j ∈ q) {ι : Type*}
       a i = σ ⟨c' ⟨i, h⟩, hq⟩ := fun i h hq => by
     change (if h : x₀ ∈ (D i).support then
       (if hq : chartCoord E hj (c' ⟨i, h⟩) ∈ q then σ ⟨c' ⟨i, h⟩, hq⟩ else j') else j') = _
-    rw [dif_pos h, dif_pos hq]
+    rw [dite_eq_left h, dite_eq_left hq]
   have ha_of_not : ∀ i (h : x₀ ∈ (D i).support), chartCoord E hj (c' ⟨i, h⟩) ∉ q → a i = j' :=
     fun i h hq => by
       change (if h : x₀ ∈ (D i).support then
         (if hq : chartCoord E hj (c' ⟨i, h⟩) ∈ q then σ ⟨c' ⟨i, h⟩, hq⟩ else j') else j') = _
-      rw [dif_pos h, dif_neg hq]
+      rw [dite_eq_left h, dite_eq_right hq]
   have ha_notMem : ∀ i, x₀ ∉ (D i).support → a i = j' := fun i h => by
     change (if h : x₀ ∈ (D i).support then
       (if hq : chartCoord E hj (c' ⟨i, h⟩) ∈ q then σ ⟨c' ⟨i, h⟩, hq⟩ else j') else j') = _
-    rw [dif_neg h]
+    rw [dite_eq_right h]
   have ha_not : ∀ i, a i ≠ j' → ∃ (h : x₀ ∈ (D i).support) (hq : chartCoord E hj (c' ⟨i, h⟩) ∈ q),
       c' ⟨i, h⟩ ≠ j ∧ a i = σ ⟨c' ⟨i, h⟩, hq⟩ := by
     intro i hi

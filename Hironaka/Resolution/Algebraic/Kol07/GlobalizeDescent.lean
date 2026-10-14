@@ -331,7 +331,7 @@ LT)
     [hne : Nonempty T.X.left] :
     globalizeSeq D hF B hB T hG = Classical.choose (exists_globalizeSeq (T := T) D hF B hB hG) := by
   unfold globalizeSeq
-  rw [dif_pos hne]
+  rw [dite_eq_left hne]
 
 theorem globalizeSeq_of_isEmpty [CharZero k] (D : Triple.GlobalizationData openImmersionCoprods GT
 LT)
@@ -339,7 +339,7 @@ LT)
     (hB : B.CommutesWithSurjectionsIn openImmersionCoprods) {T : Triple k} (hG : GT T)
     [IsEmpty T.X.left] : globalizeSeq D hF B hB T hG = BlowUpSequence.nil T.X.left := by
   unfold globalizeSeq
-  rw [dif_neg (not_nonempty_iff.mpr ‹_›)]
+  rw [dite_eq_right (not_nonempty_iff.mpr ‹_›)]
 
 theorem globalizeSeq_isOrderSeq [CharZero k] (D : Triple.GlobalizationData openImmersionCoprods GT
 LT)

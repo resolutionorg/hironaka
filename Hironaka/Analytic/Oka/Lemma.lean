@@ -146,9 +146,9 @@ theorem rowKer_le_span_degLt_of_weierstrass (hd' : d' < d) {c : Fin d' → MvPow
       intro i
       simp only [scaled, trivialRel, Fin.cons_succ]
       by_cases hij : i = j
-      · subst hij; simp only [Pi.single_eq_same, if_true]
-      · simp only [Pi.single_eq_of_ne (Ne.symm hij), mul_zero, if_neg hij]
-    simp only [hcomp, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+      · subst hij; simp only [Pi.single_eq_same, ite_true]
+      · simp only [Pi.single_eq_of_ne (Ne.symm hij), mul_zero, ite_eq_right hij]
+    simp only [hcomp, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
     rw [heq' j]; ring
   have hP'mem : P' ∈ rowKer (Fin.cons Q F) := by
     have hPmem : P ∈ rowKer (Fin.cons Q F) := by

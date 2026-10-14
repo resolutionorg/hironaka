@@ -110,7 +110,7 @@ theorem germMap_vanishingStalk_hyp (hY : IsClosedSubmanifold ψ Y c) (h : IsBlow
   rw [hcoord]
   by_cases hblock : ∃ k, σ k = cidx j
   · obtain ⟨k, hk⟩ := hblock
-    rw [if_pos ⟨k, hk⟩, pow_one, hexc]
+    rw [ite_eq_left ⟨k, hk⟩, pow_one, hexc]
     by_cases hki : k = i
     · -- the member with the coordinate `σ i`: its strict transform misses the chart
       subst hki
@@ -135,7 +135,7 @@ theorem germMap_vanishingStalk_hyp (hY : IsClosedSubmanifold ψ Y c) (h : IsBlow
           exact ⟨fun hx' => hx'.2, fun hx' => ⟨hx, hx'⟩⟩
       exact (vanishingStalk_eq_span_coord_of_forall_mem_iff ψ hΦ.mem_maximalAtlas hS hp).symm
   · -- a member off the block: `z_j ∘ π = u_j`
-    rw [if_neg hblock, pow_zero, one_mul]
+    rw [ite_eq_right hblock, pow_zero, one_mul]
     have hoff : ∀ k, σ k ≠ cidx j := fun k hk => hblock ⟨k, hk⟩
     rw [hΦ.germMap_coord_off h.contMDiff hφ.1 hp hoff]
     have hset := strictTransform_inter_source_off hφ hΦ hoff hH

@@ -64,13 +64,13 @@ def projCompl (σ : Fin c ↪ Fin n) (y : Fin n → 𝕜) : Fin (n - c) → 𝕜
 /-- The embedded vector vanishes on the range of `σ`. -/
 theorem embedCompl_apply_range (σ : Fin c ↪ Fin n) (w : Fin (n - c) → 𝕜) (i : Fin c) :
     embedCompl σ w (σ i) = 0 := by
-  simp only [embedCompl, dif_pos (Set.mem_range_self i)]
+  simp only [embedCompl, dite_eq_left (Set.mem_range_self i)]
 
 /-- Projecting the embedding of `w` gives back `w`. -/
 theorem projCompl_embedCompl (σ : Fin c ↪ Fin n) (w : Fin (n - c) → 𝕜) :
     projCompl σ (embedCompl σ w) = w := by
   funext k
-  simp only [projCompl, embedCompl, dif_neg ((complEquiv σ).symm k).2]
+  simp only [projCompl, embedCompl, dite_eq_right ((complEquiv σ).symm k).2]
   change w (complEquiv σ ((complEquiv σ).symm k)) = w k
   rw [Equiv.apply_symm_apply]
 
@@ -80,16 +80,16 @@ theorem embedCompl_projCompl (σ : Fin c ↪ Fin n) {y : Fin n → 𝕜} (hy : �
   funext j
   by_cases h : j ∈ Set.range σ
   · obtain ⟨i, rfl⟩ := h
-    simp only [embedCompl, dif_pos (Set.mem_range_self i), hy i]
-  · simp only [embedCompl, dif_neg h, projCompl]
+    simp only [embedCompl, dite_eq_left (Set.mem_range_self i), hy i]
+  · simp only [embedCompl, dite_eq_right h, projCompl]
     rw [Equiv.symm_apply_apply]
 
 /-- The embedding `embedCompl σ` is continuous. -/
 theorem continuous_embedCompl (σ : Fin c ↪ Fin n) : Continuous (embedCompl (𝕜 := 𝕜) σ) := by
   refine continuous_pi fun j => ?_
   by_cases h : j ∈ Set.range σ
-  · simp only [embedCompl, dif_pos h]; exact continuous_const
-  · simp only [embedCompl, dif_neg h]; exact continuous_apply _
+  · simp only [embedCompl, dite_eq_left h]; exact continuous_const
+  · simp only [embedCompl, dite_eq_right h]; exact continuous_apply _
 
 /-- The projection `projCompl σ` is continuous. -/
 theorem continuous_projCompl (σ : Fin c ↪ Fin n) : Continuous (projCompl (𝕜 := 𝕜) σ) :=
@@ -134,7 +134,7 @@ def IsAdaptedChart.symmAux (h : IsAdaptedChart ψ Y φ σ) {a : M} (ha : a ∈ Y
 theorem IsAdaptedChart.coe_symmAux (h : IsAdaptedChart ψ Y φ σ) {a : M} (ha : a ∈ Y)
     {w : Fin (n - c) → 𝕜} (hw : ψ.symm (embedCompl σ w) ∈ φ.target) :
     (h.symmAux ha w : M) = φ.symm (ψ.symm (embedCompl σ w)) := by
-  simp only [IsAdaptedChart.symmAux, dif_pos hw]
+  simp only [IsAdaptedChart.symmAux, dite_eq_left hw]
 
 /-- The induced chart maps its source into its target. -/
 theorem IsAdaptedChart.mem_target_of_mem_source (h : IsAdaptedChart ψ Y φ σ) {x : Y}

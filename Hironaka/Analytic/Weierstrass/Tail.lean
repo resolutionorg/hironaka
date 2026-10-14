@@ -55,7 +55,8 @@ theorem convNorm_coeff_splitFirst_le (ρ : Radius (m + 1)) (r : MvPowerSeries (F
         beta_reduce
         rw [MvPowerSeries.coeff_coeff_finSuccEquiv, key x, ENNReal.coe_mul]
         ring
-    _ ≤ _ := mul_le_mul' le_rfl (ENNReal.tsum_comp_le_tsum_of_injective (cons_injective k) _)
+    _ ≤ _ := mul_le_mul' le_rfl (ENNReal.tsum_comp_le_tsum_of_injective (cons_injective k)
+          (fun μ => ‖coeff μ r‖ₑ * (monomialEval ρ μ : ℝ≥0∞)))
 
 /-- The `x_0`-coefficients of a convergent series are convergent. -/
 theorem coeff_splitFirst_mem_conv {r : MvPowerSeries (Fin (m + 1)) K} (hr : r ∈ Conv K (m + 1))
@@ -79,9 +80,9 @@ theorem convNorm_liftTail (ρ : Fin (m + 1) → ℝ≥0) (a : MvPowerSeries (Fin
       beta_reduce
       rw [← h, Finsupp.cons_tail]⟩
     have : coeff μ (liftTail a : MvPowerSeries (Fin (m + 1)) K) = 0 := by
-      rw [← Finsupp.cons_tail μ, coeff_cons_liftTail, if_neg h0]
+      rw [← Finsupp.cons_tail μ, coeff_cons_liftTail, ite_eq_right h0]
     simp [this]
-  · rw [coeff_cons_liftTail, if_pos rfl, monomialEval_cons, pow_zero, one_mul]
+  · rw [coeff_cons_liftTail, ite_eq_left rfl, monomialEval_cons, pow_zero, one_mul]
     rfl
 
 theorem liftTail_mem_conv {a : MvPowerSeries (Fin m) K} (ha : a ∈ Conv K m) :

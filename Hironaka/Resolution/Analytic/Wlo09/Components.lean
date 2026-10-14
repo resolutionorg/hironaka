@@ -282,13 +282,13 @@ theorem mem_closure_cosupport_diff_support_of_isSmoothTransversalIdealAt (F : Hy
   have hvσ : ∀ i, v (σ i) = 0 := by
     intro i
     simp only [hv]
-    rw [if_neg]
+    rw [ite_eq_right]
     rintro ⟨j, hj⟩
     exact hne j i hj
   have hvc : ∀ j, v (cidx j) = 1 := by
     intro j
     simp only [hv]
-    rw [if_pos ⟨j, rfl⟩]
+    rw [ite_eq_left ⟨j, rfl⟩]
   set g : 𝕜 → E := fun t => ψ.symm (ψ (φ x) + t • v) with hg
   have hgc : Continuous g :=
     ψ.symm.continuous.comp (continuous_const.add (continuous_id.smul continuous_const))

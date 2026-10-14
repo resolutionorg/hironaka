@@ -98,7 +98,7 @@ theorem isIso_sigmaDesc_of_isColimit_cofan (h : Nonempty (IsColimit (Cofan.mk Y 
 theorem isOpenImmersion_of_isColimit_cofan (h : Nonempty (IsColimit (Cofan.mk Y ι))) (i : σ) :
     IsOpenImmersion (ι i) := by
   have := isIso_sigmaDesc_of_isColimit_cofan ι h
-  rw [← Sigma.ι_desc ι i]
+  rw [← Sigma.ι_comp_desc ι i]
   infer_instance
 
 /-- The injections of a colimit cofan of schemes are jointly surjective. -/
@@ -107,14 +107,15 @@ theorem exists_eq_of_isColimit_cofan (h : Nonempty (IsColimit (Cofan.mk Y ι))) 
   have := isIso_sigmaDesc_of_isColimit_cofan ι h
   obtain ⟨z, rfl⟩ := (Sigma.desc ι).surjective y
   obtain ⟨⟨i, x⟩, rfl⟩ := (sigmaMk U).surjective z
-  exact ⟨i, x, by rw [sigmaMk_mk, ← Scheme.Hom.comp_apply, Sigma.ι_desc]⟩
+  exact ⟨i, x, by rw [sigmaMk_mk, ← Scheme.Hom.comp_apply, Sigma.ι_comp_desc]⟩
 
 /-- The injections of a colimit cofan of schemes have pairwise disjoint images. -/
 theorem ne_of_isColimit_cofan (h : Nonempty (IsColimit (Cofan.mk Y ι))) {i j : σ} (hij : i ≠ j)
     (x : U i) (x' : U j) : ι i x ≠ ι j x' := by
   have := isIso_sigmaDesc_of_isColimit_cofan ι h
   intro hx
-  rw [← Sigma.ι_desc ι i, ← Sigma.ι_desc ι j, Scheme.Hom.comp_apply, Scheme.Hom.comp_apply] at hx
+  rw [← Sigma.ι_comp_desc ι i, ← Sigma.ι_comp_desc ι j, Scheme.Hom.comp_apply,
+    Scheme.Hom.comp_apply] at hx
   have hx' := (Sigma.desc ι).isOpenEmbedding.injective hx
   rw [sigmaι_eq_iff] at hx'
   exact hij (Sigma.mk.inj_iff.mp hx').1
@@ -171,7 +172,7 @@ theorem openImmersionCoprods_of_isOpenImmersion {X Y : Scheme.{u}} (f : X ⟶ Y)
 injections" of [Kol07, 104, Step 3]) is a coproduct of open immersions. -/
 theorem openImmersionCoprods_sigmaDesc {σ : Type u} {U : σ → Scheme.{u}} {X : Scheme.{u}}
     (g : ∀ i, U i ⟶ X) [∀ i, IsOpenImmersion (g i)] : openImmersionCoprods (Sigma.desc g) :=
-  ⟨σ, U, Sigma.ι U, ⟨coproductIsCoproduct U⟩, fun i => by rw [Sigma.ι_desc]; infer_instance⟩
+  ⟨σ, U, Sigma.ι U, ⟨coproductIsCoproduct U⟩, fun i => by rw [Sigma.ι_comp_desc]; infer_instance⟩
 
 /-- A coproduct of open immersions is étale. -/
 theorem openImmersionCoprods_etale {X Y : Scheme.{u}} (f : X ⟶ Y)
@@ -267,7 +268,7 @@ theorem sigmaDesc_openImmersionCoprods {σ : Type u} {U : σ → Scheme.{u}} {X 
       exact ne_of_isColimit_cofan (κ i) (hc i) (fun h => hne (Sigma.ext rfl (heq_of_eq h))) v v'
         (eq_of_heq hv)
   · have := hκ p.1 p.2
-    rw [Category.assoc, Sigma.ι_desc]
+    rw [Category.assoc, Sigma.ι_comp_desc]
     infer_instance
 
 /-- The third example of a class in [Kol07, Theorem 105 (1)], read as the proof uses it: the

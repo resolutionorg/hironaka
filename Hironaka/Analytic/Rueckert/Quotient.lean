@@ -118,9 +118,9 @@ theorem isRegularIn_weierstrassPoly {d : ℕ} {c : Fin d → MvPowerSeries (Fin 
     · rfl
   constructor
   · intro k hk
-    rw [← cons_zero_eq_single, coeff_cons_weierstrassPoly, if_neg (fun h => by omega), zero_add,
-      hsum]
-  · rw [← cons_zero_eq_single, coeff_cons_weierstrassPoly, if_pos ⟨rfl, rfl⟩, hsum, add_zero]
+    rw [← cons_zero_eq_single, coeff_cons_weierstrassPoly, ite_eq_right (fun h => by omega),
+      zero_add, hsum]
+  · rw [← cons_zero_eq_single, coeff_cons_weierstrassPoly, ite_eq_left ⟨rfl, rfl⟩, hsum, add_zero]
     exact one_ne_zero
 
 theorem isRegularIn_convPolyEval_weierstrassPolynomial {d : ℕ} {c : Fin d → Conv K m}

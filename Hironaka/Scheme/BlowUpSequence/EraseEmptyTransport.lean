@@ -74,7 +74,7 @@ theorem eraseEmpty_cons_of_eq_top {D : X.IdealSheafData}
     (rest : BlowUpSequence D.blowUp)
     (hD : D = ⊤) [IsIso D.blowUpπ] :
     (cons X D rest).eraseEmpty = rest.eraseEmpty.pullback (inv D.blowUpπ) := by
-  rw [eraseEmpty, dif_pos hD]
+  rw [eraseEmpty, dite_eq_left hD]
 
 /-- The inverses of two trivial blow-ups intertwine `h` with `blowUpMap` (both composites are the
 same map to `X`, by `blowUpMap_π`). -/

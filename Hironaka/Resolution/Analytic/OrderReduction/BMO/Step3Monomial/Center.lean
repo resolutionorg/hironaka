@@ -313,10 +313,10 @@ theorem Realizes.le_ordAlongIdeal_monomialIdeal_centerOf (hF : F.IsSnc ψ₀) (h
         (fun c : Fin Φ.nextComp => if c.1 ∈ P then Φ.a c.1 else 0)
       intro c _
       by_cases hc : c.1 ∈ P
-      · rw [if_pos hc]
+      · rw [ite_eq_left hc]
         have := le_ordAlongIdeal_pow hZ.idealSheaf (hone c hc) (Φ.a c.1)
         rwa [one_mul] at this
-      · rw [if_neg hc, Nat.cast_zero]
+      · rw [ite_eq_right hc, Nat.cast_zero]
         exact zero_le
 
 end Hironaka.Manifold.BMO.PieceFamily

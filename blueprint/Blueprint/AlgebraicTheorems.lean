@@ -1,6 +1,7 @@
 import Verso
 import VersoManual
 import VersoBlueprint
+import Blueprint.References
 import Blueprint.BlowUpSequences
 import Blueprint.ProjectiveMorphisms
 import Hironaka.Resolution.Algebraic.Hir64.ComponentwiseMainTheorems
@@ -16,6 +17,9 @@ open Informal
 open CategoryTheory AlgebraicGeometry Scheme Scheme.IdealSheafData
 
 set_option verso.blueprint.autoDeps true
+-- Infer from directly referenced declarations only, as before v4.34; walking through unassociated
+-- helpers would traverse Mathlib.
+set_option verso.blueprint.autoDeps.expandUntagged false
 
 #doc (Manual) "Algebraic schemes" =>
 %%%
@@ -52,9 +56,9 @@ The theorems come in four groups.
 - Włodarczyk's embedded desingularization with smooth centres, in functorial form.
 
 Main Theorems II and II(N) and Corollary 1 are derived from Kollár's order reduction
-\[Kol07, Theorem 68\]; Corollary 3 from functorial principalization; Kollár's Theorem 27 and Main
+{cite Kol07}[Theorem 68]; Corollary 3 from functorial principalization; Kollár's Theorem 27 and Main
 Theorem I from functorial resolution, together with Hironaka's remark that a finite succession of
-monoidal transformations is a single monoidal transformation \[Hir64, pp. 132–133\]; and the weak
+monoidal transformations is a single monoidal transformation {cite Hir64}[pp. 132–133]; and the weak
 form of Main Theorem I from Main Theorem I.
 
 The section of each theorem states, before the theorem, the properties it asserts of its
@@ -80,13 +84,13 @@ Two conditions of Hironaka's Main Theorems II and II(N) and of his Corollary 1, 
 `S` of a scheme $`X`:
 
 - `S.HasRegularIrreducibleCenters`: every centre $`D_i` is non-singular (every local ring regular,
-  {bpref "def:is_regular"}[]) and irreducible \[Hir64, Main Theorem II (i), Main Theorem II(N)
-  (1); Corollary 1, "non-singular irreducible centers D(i)", p. 143\];
+  {bpref "def:is_regular"}[]) and irreducible {cite Hir64}[Main Theorem II (i), Main Theorem II(N)
+  (1); Corollary 1, "non-singular irreducible centers D(i)", p. 143];
 - `S.HasSncBoundaries E`: with the boundaries $`E_0 = E`,
   $`E_{i+1} = \mathrm{red}(f_i^{-1}(E_i) \cup f_i^{-1}(D_i))` ({bpref "def:sequence_transforms"}[]),
   every $`E_i` has only normal crossings with $`D_i`, and $`E_r` has only normal crossings
-  ({bpref "def:normal_crossings"}[]) \[Hir64, Main Theorem II (iii) and the first half of (iv);
-  Main Theorem II(N) (3) and the first half of (4)\].
+  ({bpref "def:normal_crossings"}[]) {cite Hir64}[Main Theorem II (iii) and the first half of (iv);
+  Main Theorem II(N) (3) and the first half of (4)].
 ::::
 
 ::::theorem "thm:mt2" (lean := "AlgebraicGeometry.exists_blowUpSequence_ord_weakTransformSeq_lt")
@@ -122,9 +126,9 @@ boundaries along a succession ({bpref "def:sequence_transforms"}[], {bpref "def:
 
 :::proof "thm:mt2"
 For $`0 < d`: on each irreducible component of $`X` on which the order $`d` is attained, one round
-of Kollár's order reduction of order $`d` \[Kol07, Theorem 68\] on the triple (component, $`J`,
+of Kollár's order reduction of order $`d` {cite Kol07}[Theorem 68] on the triple (component, $`J`,
 $`E_0`), with $`E_0` read as the simple normal crossings family of its irreducible components. Its
-value is a smooth blow-up sequence of order $`d` \[Kol07, Definition 66\] whose last weak transform
+value is a smooth blow-up sequence of order $`d` {cite Kol07}[Definition 66] whose last weak transform
 has maximal order less than $`d`. Its centres are smooth but possibly reducible; blowing up their
 (disjoint) irreducible components one after another gives irreducible centres with the same
 composite, last weak transform and last boundary. Hironaka's conditions are read off Kollár's
@@ -174,7 +178,7 @@ maximal order of the weak transform, and the induction hypothesis applies at its
 Condition (2) at the stages of a round is the order-$`d` condition on its centres, which is why
 Kollár's Theorem 68 rather than his Theorem 35 is iterated. Hironaka instead deduces Main Theorem
 II(N) from his fundamental theorem II₂^N, applied on each irreducible component to the resolution
-datum $`(E_1, \dots, E_\alpha \mid 0, \dots, 0 \mid J, 1)` \[Hir64, pp. 176–177\]; that route is
+datum $`(E_1, \dots, E_\alpha \mid 0, \dots, 0 \mid J, 1)` {cite Hir64}[pp. 176–177]; that route is
 not followed.
 :::
 
@@ -196,7 +200,7 @@ paperIdentity := some { label := "[Hir64, Corollary 1, pp. 143–144]", href := 
 For a succession `S` of a scheme $`X` and an ideal sheaf $`J` on $`X`,
 `S.HasConstantPositiveOrderAlongCenters J` says that for every $`i` there is a positive integer
 $`c` that is the order of the weak transform $`J_i` ({bpref "def:sequence_transforms"}[],
-{bpref "def:order"}[]) at every point of the centre $`D_i` \[Hir64, Corollary 1 (1)\].
+{bpref "def:order"}[]) at every point of the centre $`D_i` {cite Hir64}[Corollary 1 (1)].
 ::::
 
 ::::theorem "thm:cor1" (lean := "AlgebraicGeometry.exists_blowUpSequence_forall_exists_stalkIdeal_weakTransformSeq_eq_top")
@@ -255,7 +259,7 @@ A `Triple k` is Kollár's triple $`(X, I, E)`, the input of functorial principal
 a single relative dimension over $`k`), an ideal sheaf `I` with nonzero stalks, and a simple normal
 crossings divisor family `E` with ordered index set ({bpref "def:snc"}[]). A morphism
 $`(Y, J, F) \to (X, I, E)` is a $`k`-morphism $`h \colon Y \to X` with $`J = h^* I` and
-$`F = h^{-1} E`, so that the source is the pull-back of the target \[Kol07, 34.1\]. A base change
+$`F = h^{-1} E`, so that the source is the pull-back of the target {cite Kol07}[34.1]. A base change
 along $`\sigma \colon k \to L` is a cartesian square over $`\operatorname{Spec} \sigma` along
 which the ideal sheaf and the boundary pull back.
 ::::
@@ -268,14 +272,14 @@ paperIdentity := some { label := "[Kol07, Theorem 35 (1)–(3)]", href := "https
 %%%
 `S.HasSmoothSncCenters E`: every centre of `S` is smooth over $`k` and has simple normal crossings
 with the total transform of the divisor family $`E` at its stage ({bpref "def:total_transform"}[])
-\[Kol07, Theorem 35 (1)\]. A triple $`T = (X, I, E)` is *principalized* by a succession with
+{cite Kol07}[Theorem 35 (1)]. A triple $`T = (X, I, E)` is *principalized* by a succession with
 composite $`\Pi` (`T.IsPrincipalizedBy S`) when (1) `S.HasSmoothSncCenters E`; (2) $`\Pi^* I` is
 the ideal sheaf of a simple normal crossings divisor ({decl}`IsIdealOfSncDivisor`,
 {bpref "def:snc_divisor"}[]); (3) $`\Pi` is an
 isomorphism over $`X \setminus (\operatorname{cosupp} I \cup \operatorname{Sing} E)`.
 ::::
 
-*Commuting with smooth morphisms.* Kollár's condition \[Kol07, 34.1\] on a blow-up sequence
+*Commuting with smooth morphisms.* Kollár's condition {cite Kol07}[34.1] on a blow-up sequence
 functor $`B` ({bpref "def:functors"}[]) is an equality of successions: for every smooth morphism of
 inputs $`h \colon Y \to X`,
 
@@ -285,7 +289,7 @@ $$`B(Y) = \bigl(h^* B(X)\bigr)_{\text{empty blow-ups deleted}}`
 restriction can contain empty blow-ups; taking $`h` to be the identity shows that $`B(X)` has none.
 Since the centres are closed subschemes and their pull-back is a function, the equality is literal,
 not up to isomorphism. For open immersions it makes $`B` local: $`B(X)` can be computed on an open
-cover and glued \[Kol07, Proposition 37\]. Commuting with change of fields (34.2) is the same
+cover and glued {cite Kol07}[Proposition 37]. Commuting with change of fields (34.2) is the same
 equality along the base change $`X_L \to X` for a field extension $`k \to L`, which is why $`B` is
 one family of functors for all fields of characteristic zero.
 
@@ -294,7 +298,7 @@ one family of functors for all fields of characteristic zero.
 paperIdentity := some { label := "[Kol07, 34.1]", href := "https://arxiv.org/abs/math/0508332" }
 %%%
 A blow-up sequence functor $`B` *commutes with smooth morphisms* (`CommutesWithSmoothMorphisms B`,
-\[Kol07, 34.1\]) if, for every morphism of inputs $`h \colon Y \to X` with smooth underlying
+{cite Kol07}[34.1]) if, for every morphism of inputs $`h \colon Y \to X` with smooth underlying
 morphism, $`B(Y)` is the pull-back $`h^* B(X)` when $`h` is surjective, and $`h^* B(X)` with the
 blow-ups with empty centre deleted in general ({bpref "def:sequence_ops"}[]). These are Kollár's
 two bullets. The first follows from the second when $`B(X)` has no empty blow-ups, since a
@@ -316,7 +320,7 @@ $`X \times_{\operatorname{Spec} k} \operatorname{Spec} L` with its extra structu
 ({bpref "def:triple"}[], {bpref "def:inputs_36"}[]).
 
 A family $`B` of blow-up sequence functors, one for each field of characteristic zero, *commutes
-with change of fields* (`CommutesWithChangeOfFields B`, \[Kol07, 34.2\]) if, for a field extension
+with change of fields* (`CommutesWithChangeOfFields B`, {cite Kol07}[34.2]) if, for a field extension
 $`\sigma \colon k \to L` and an input over $`L` exhibited as the base change of an input $`X` over
 $`k` by $`p`, the value over $`L` is $`p^* B_k(X)`. The ring map $`\sigma` may be an automorphism
 of $`k`, so the condition includes invariance under the automorphisms of $`k`, as Kollár's does.
@@ -329,7 +333,7 @@ of $`k`, so the condition includes invariance under the automorphisms of $`k`, a
 paperIdentity := some { label := "[Kol07, 34.3]", href := "https://arxiv.org/abs/math/0508332" }
 %%%
 A blow-up sequence functor $`B` on triples *commutes with closed embeddings of empty boundary*
-(`CommutesWithClosedEmbeddingsOfEmptyBoundary B`, \[Kol07, 34.3\] for $`E = \emptyset`) if, for
+(`CommutesWithClosedEmbeddingsOfEmptyBoundary B`, {cite Kol07}[34.3] for $`E = \emptyset`) if, for
 a closed embedding $`j \colon Y \hookrightarrow X` and triples $`(Y, I_Y, \emptyset)` and
 $`(X, j_* I_Y, \emptyset)`, $`B(X, j_* I_Y, \emptyset) = j_* B(Y, I_Y, \emptyset)`, the
 push-forward of a succession along $`j` ({bpref "def:sequence_ops"}[]). Kollár states 34.3 for a
@@ -371,9 +375,9 @@ their functors ({bpref "def:blowup_sequence"}[], {bpref "def:sequence_ops"}[],
 ::::
 
 :::proof "thm:principalization"
-The functor is Kollár's construction \[Kol07, 72\]: blow up the intersections of the components
+The functor is Kollár's construction {cite Kol07}[72]: blow up the intersections of the components
 of $`E`, which makes them disjoint, then run the order reduction $`BMO_1` of
-\[Kol07, Theorem 69\] on the resulting triple, deleting the empty blow-ups \[Kol07, 32\]. Each
+{cite Kol07}[Theorem 69] on the resulting triple, deleting the empty blow-ups {cite Kol07}[32]. Each
 of the five conditions is a separate theorem of the library about this functor.
 :::
 
@@ -436,7 +440,7 @@ are reduced and equidimensional ({decl}`Scheme.IsReducedEquidimensional`: $`X` i
 smooth locus over $`k` is smooth of a single relative dimension). The irreducible components of such an $`X` may
 meet: the two axes $`xy = 0` in the plane are an input, and so is every reduced simple normal
 crossings scheme. These are the inputs of Kollár's functorial resolution
-({bpref "thm:resolution"}[]); the equidimensionality is that of \[Kol07, Notation 64 (1)\],
+({bpref "thm:resolution"}[]); the equidimensionality is that of {cite Kol07}[Notation 64 (1)],
 transported from smooth to reduced schemes through the smooth locus. For a reduced $`X` of finite
 type over a field of characteristic zero the smooth locus is dense and contains every generic
 point, so the condition says that all irreducible components of $`X` have the same dimension; it is
@@ -458,11 +462,11 @@ paperIdentity := some { label := "[Kol07, (2) and (3)]", href := "https://arxiv.
 %%%
 For a succession `S` of an algebraic $`k`-scheme $`X` with composite $`\Pi \colon X_r \to X`:
 
-- `S.IsResolution` \[Kol07, (2)\]: $`X_r` is smooth over $`k`, $`\Pi` is projective
+- `S.IsResolution` {cite Kol07}[(2)]: $`X_r` is smooth over $`k`, $`\Pi` is projective
   ({decl}`IsProjective`, {bpref "def:projective"}[]; hence proper), and $`\Pi` is birational, an
   isomorphism over a dense open subset of $`X`. Reading birationality as an isomorphism over a dense
   open subset is right for a reduced $`X`, the case of the theorems.
-- `S.IsStrongResolution` \[Kol07, (3)\], conditions (1)–(3) of Theorem 36: a resolution that is an
+- `S.IsStrongResolution` {cite Kol07}[(3)], conditions (1)–(3) of Theorem 36: a resolution that is an
   isomorphism over the smooth locus $`X^{ns}` (Mathlib's {decl Scheme.Hom.smoothLocus}`smoothLocus`
   of the structure morphism) and such that $`\Pi^{-1}(\operatorname{Sing} X)`,
   $`\operatorname{Sing} X` the complement of the smooth locus, is a simple normal crossings divisor
@@ -473,7 +477,7 @@ For a succession `S` of an algebraic $`k`-scheme $`X` with composite $`\Pi \colo
   already gives the birationality asked of a resolution.
 ::::
 
-*Kollár's resolution functor.* Kollár's resolution functor \[Kol07, (4)\] is a resolution
+*Kollár's resolution functor.* Kollár's resolution functor {cite Kol07}[(4)] is a resolution
 $`\Pi_X \colon R(X) \to X` of every $`X` together with, for every smooth $`h \colon Y \to X`, a
 morphism $`R(h) \colon R(Y) \to R(X)` over $`h`, functorial in $`h`, such that every square is
 cartesian: $`R(Y) \cong R(X) \times_X Y` over $`Y`. A blow-up sequence functor $`B` that commutes
@@ -485,10 +489,10 @@ determined by the values: two morphisms $`R(Y) \to R(X)` over $`h` agree over th
 $`Y`, which $`h` maps into that of $`X`, where $`\Pi_X` is an isomorphism; its preimage is dense in
 the smooth $`R(Y)`, and $`R(X)` is separated, so they agree everywhere. Hence $`R(h)` is unique, its
 functoriality is automatic, and a functor commuting with smooth morphisms amounts to its values
-together with the property $`\Pi_Y \cong h^* \Pi_X` \[Kol07, 34\]; this is why Kollár specifies $`R`
+together with the property $`\Pi_Y \cong h^* \Pi_X` {cite Kol07}[34]; this is why Kollár specifies $`R`
 by its values alone, and why the library states it as an assignment of successions with a property.
 Smooth morphisms are the most one can ask for: the quotient map $`\mathbb{A}^2 \to (uv = w^2)` does
-not lift to resolutions \[Kol07, Example 3.4\].
+not lift to resolutions {cite Kol07}[Example 3.4].
 
 ::::theorem "thm:resolution" (lean := "AlgebraicGeometry.exists_functorial_resolution")
 %%%
@@ -520,8 +524,7 @@ Conditions (1)–(3) are {decl}`BlowUpSequence.IsStrongResolution`
 :::proof "thm:resolution"
 On an affine input the functor embeds $`X` in a smooth affine scheme $`A` and runs the
 principalization $`BP(A, I_X, \emptyset)` ({bpref "thm:principalization"}[]), restricted to $`X` and
-truncated at the first centre containing the strict transform of $`X`, as in the proof of \[Kol07,
-Corollary 22\]. That centre contains the strict transform of every irreducible component of $`X` at
+truncated at the first centre containing the strict transform of $`X`, as in the proof of {cite Kol07}[Corollary 22]. That centre contains the strict transform of every irreducible component of $`X` at
 once. The centre absorbing a component $`C` has a point over every point of $`C`, in particular over
 a smooth closed point of $`C`; a centre that comes before the absorption of another component $`C'`
 has no point over the generic point of $`C'`, hence none over a general smooth closed point of
@@ -530,10 +533,9 @@ equivalent as embedded points of $`A`, through a pair of étale neighbourhoods, 
 pulls back ({bpref "thm:principalization"}[], (4)); so a centre has a point over one exactly when it
 has one over the other, and no component is absorbed before another. How the components meet plays
 no role. On any input the functor is obtained by descent along the smooth surjection from a finite
-affine cover \[Kol07, Proposition 37 and Warning 38\]; independence of the embedding is \[Kol07,
-Lemma 39\], and condition (4) uses Kollár's reduction of (34.1) to Theorem 35 through \[Kol07, Lemma
-41\]. $`\Pi` is projective as a composite of blow-ups of a Noetherian scheme: the composite is a
-single blow-up (Hironaka's remark after Main Theorem I; \[Sta, Tag 080B\]), and a blow-up is a
+affine cover {cite Kol07}[Proposition 37 and Warning 38]; independence of the embedding is {cite Kol07}[Lemma 39], and condition (4) uses Kollár's reduction of (34.1) to Theorem 35 through {cite Kol07}[Lemma
+41]. $`\Pi` is projective as a composite of blow-ups of a Noetherian scheme: the composite is a
+single blow-up (Hironaka's remark after Main Theorem I; {cite Sta}[Tag 080B]), and a blow-up is a
 closed subscheme of the projective bundle of its ideal sheaf ({bpref "def:projective"}[]).
 :::
 
@@ -554,9 +556,8 @@ succession of blow-ups of $`X`, such that
 2. $`\Pi` is an isomorphism over the smooth locus $`X^{ns}`;
 3. $`\Pi^{-1}(\operatorname{Sing} X)` is the support of a simple normal crossings divisor.
 
-This is resolution of singularities in its usual, strong form \[Kol07, (3)\]: a smooth $`X'` with a
-projective birational morphism to $`X`, here a succession of blow-ups. Kollár's weaker form \[Kol07,
-Corollary 22\], a smooth $`X'` with a birational projective morphism to $`X` and no conditions (2)
+This is resolution of singularities in its usual, strong form {cite Kol07}[(3)]: a smooth $`X'` with a
+projective birational morphism to $`X`, here a succession of blow-ups. Kollár's weaker form {cite Kol07}[Corollary 22], a smooth $`X'` with a birational projective morphism to $`X` and no conditions (2)
 and (3), is the part {decl}`IsResolution` of the conclusion. The conclusion is
 {decl}`BlowUpSequence.IsStrongResolution` ({bpref "def:strong_resolution"}[]), the same as in
 functorial resolution ({bpref "thm:resolution"}[]); birationality is the isomorphism over a dense
@@ -601,7 +602,7 @@ input of the resolution functor, whose value is a finite succession of blow-ups 
 stage; its centres lie over the singular locus, since the principalization functor from which it
 is built never blows up over a smooth point. It is followed by a principalization of the pull-back
 of the reduced ideal $`\mathcal{J}` of the singular locus. By Hironaka's remark
-\[Hir64, pp. 132–133\] the composite is one blow-up `K.blowUp`, with $`K` supported in the
+{cite Hir64}[pp. 132–133] the composite is one blow-up `K.blowUp`, with $`K` supported in the
 singular locus. Then $`D = K \cdot \mathcal{J}` has support the whole singular locus, and its
 blow-up is that of $`K` followed by the blow-up of an invertible ideal, an isomorphism; so it is
 smooth over $`k`, hence non-singular.
@@ -628,7 +629,7 @@ irreducible" is {decl AlgebraicGeometry.IsIntegral}`IsIntegral`.
 
 :::proof "thm:mt1_weak"
 Hironaka's derivation from Main Theorem I ({bpref "thm:mt1"}[]) by weakening its first condition
-\[Hir64, p. 132\]: for the centre $`D` of Main Theorem I, with $`|D| = \operatorname{Sing} X`, the
+{cite Hir64}[p. 132]: for the centre $`D` of Main Theorem I, with $`|D| = \operatorname{Sing} X`, the
 blow-up is an isomorphism over the complement of its centre, and that complement is open and
 contains the generic point of the irreducible $`X`, whose local ring is a field, so it is dense.
 :::
@@ -686,7 +687,7 @@ components* (`CommutesWithSmoothMorphismsMeetingComponents B`) if, for every mor
 pairs $`h \colon (X', Y') \to (X, Y)` with smooth underlying morphism, $`B(X', Y')` is the
 pull-back $`h^* B(X, Y)` when $`h` is surjective, and $`h^* B(X, Y)` with the blow-ups with empty
 centre deleted when the image of $`h` meets every irreducible component of $`Y`
-({bpref "def:sequence_ops"}[]). This is Włodarczyk's \[Wlo05, Theorem 1.0.2 (d)\] in the form
+({bpref "def:sequence_ops"}[]). This is Włodarczyk's {cite Wlo05}[Theorem 1.0.2 (d)] in the form
 proved here; Kollár's commuting with smooth morphisms ({bpref "def:commutes_smooth"}[]) asks the
 second equality for every smooth $`h`.
 ::::
@@ -727,8 +728,8 @@ and simple normal crossings ({bpref "def:snc"}[]).
 
 :::proof "thm:embedded"
 The functor is the stop rule of Włodarczyk's modification of the canonical resolution of the
-marked ideal $`(X, I_Y, \emptyset, 1)` \[Wlo05, §4.6–4.7\]: run Kollár's order reduction $`BMO_1`
-\[Kol07, Theorem 69\] until a centre would contain the strict transform of a component of $`Y`,
+marked ideal $`(X, I_Y, \emptyset, 1)` {cite Wlo05}[§4.6–4.7]: run Kollár's order reduction $`BMO_1`
+{cite Kol07}[Theorem 69] until a centre would contain the strict transform of a component of $`Y`,
 stop before it, divide the ideal by the reduced ideal of the absorbed strict transforms, and
 restart with the remaining components, until none remain; his reordering of the monomial part is
 not transcribed.

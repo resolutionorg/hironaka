@@ -22,9 +22,7 @@ import Hironaka.Scheme.IdealSheaf.Invertible
 import Hironaka.Scheme.IdealSheaf.Order.Basic
 import Hironaka.Scheme.IdealSheaf.Order.Invariance
 import Hironaka.Scheme.IdealSheaf.StalkIdeal
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
 public import Hironaka.Scheme.Resolution.Defs
-import SourceAttr
 import Hironaka.Scheme.Resolution.Basic
 
 /-!
@@ -654,8 +652,9 @@ Relation to the source.
 * **Interpretation.** Hironaka's "coherent sheaves of non-zero ideals" are read as ideal sheaves
   with nonzero stalks (`hJ`), as in Main Theorem II.
 * **Restatement.** The regularity of the local rings of `X` is not a separate hypothesis: it follows
-  from smoothness over the perfect field `k`. -/
-@[source Hir64 "Corollary 1" "pp. 143–144"]
+  from smoothness over the perfect field `k`.
+
+Source statement: [Hir64, Corollary 1, pp. 143–144] -/
 theorem exists_blowUpSequence_forall_exists_stalkIdeal_weakTransformSeq_eq_top
     {k : Type u} [Field k] [CharZero k] (X : AlgScheme k) [Smooth (X.left ↘ Spec (.of k))]
     {e : ℕ} (he : 0 < e) (J : Fin e → X.left.IdealSheafData)
@@ -711,8 +710,9 @@ Relation to the source.
   scheme of finite type over the perfect field `k` the two agree (smoothness gives the regularity of
   every local ring, and a non-singular such scheme is smooth).
 * **Restatement.** The regularity of the local rings of `X` is not a separate hypothesis: it follows
-  from smoothness over the perfect field `k`. -/
-@[source Hir64 "Corollary 3" "p. 146"]
+  from smoothness over the perfect field `k`.
+
+Source statement: [Hir64, Corollary 3, p. 146] -/
 theorem exists_blowUpSequence_isInvertible_isSncBoundary_radical_comap
     {k : Type u} [Field k] [CharZero k] (X : AlgScheme k) [Smooth (X.left ↘ Spec (.of k))]
     (W : X.left.IdealSheafData) (hW : IsNowhereDense (W.support : Set X.left)) :

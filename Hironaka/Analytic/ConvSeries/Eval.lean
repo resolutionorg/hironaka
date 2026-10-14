@@ -43,7 +43,7 @@ variable {K : Type*} [RCLike K] {m : ℕ}
 theorem norm_monomialEval_le {x : Fin m → K} {ρ : Fin m → ℝ≥0} (hx : ∀ k, ‖x k‖ ≤ ρ k)
     (ν : Fin m →₀ ℕ) : ‖monomialEval x ν‖ ≤ monomialEval ρ ν := by
   rw [coe_monomialEval, monomialEval, Finsupp.prod, Finsupp.prod, norm_prod]
-  refine Finset.prod_le_prod (fun k _ => norm_nonneg _) fun k _ => ?_
+  refine Finset.prod_le_prod₀ (fun k _ => norm_nonneg _) fun k _ => ?_
   rw [norm_pow]
   exact pow_le_pow_left₀ (norm_nonneg _) (hx k) _
 
@@ -102,7 +102,7 @@ theorem norm_monoMap_le (n : ℕ) (k : Fin n → Fin m) : ‖monoMap K n k‖ �
   calc ‖ContinuousMultilinearMap.mkPiAlgebraFin K n K‖
         * ∏ i, ‖(ContinuousLinearMap.proj (k i) : (Fin m → K) →L[K] K)‖
       ≤ 1 * ∏ i : Fin n, (1 : ℝ) :=
-        mul_le_mul h1 (Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => h2 i)
+        mul_le_mul h1 (Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => h2 i)
           (Finset.prod_nonneg fun i _ => norm_nonneg _) zero_le_one
     _ = 1 := by simp
 
@@ -117,7 +117,7 @@ noncomputable def monoMapExp (n : ℕ) (ν : Fin m →₀ ℕ) :
 theorem monoMapExp_apply_diag {n : ℕ} {ν : Fin m →₀ ℕ} (h : ν.degree = n) (x : Fin m → K) :
     monoMapExp K n ν (fun _ => x) = monomialEval x ν := by
   have hl : (expList ν).length = n := (length_expList ν).trans h
-  rw [monoMapExp, dif_pos hl, monoMap_apply, ← prod_map_expList, ← List.prod_ofFn]
+  rw [monoMapExp, dite_eq_left hl, monoMap_apply, ← prod_map_expList, ← List.prod_ofFn]
   congr 1
   subst hl
   change List.ofFn (x ∘ (expList ν).get) = _
@@ -210,9 +210,9 @@ theorem evalSeries_monomial (ν : Fin m →₀ ℕ) (a : K) (x : Fin m → K) :
   classical
   unfold evalSeries
   rw [tsum_eq_single ν]
-  · rw [coeff_monomial, if_pos rfl]
+  · rw [coeff_monomial, ite_eq_left rfl]
   · intro μ hμ
-    rw [coeff_monomial, if_neg hμ, zero_mul]
+    rw [coeff_monomial, ite_eq_right hμ, zero_mul]
 
 /-- The sum of `x_k^n` is `x_k^n`. -/
 theorem evalSeries_X_pow (k : Fin m) (n : ℕ) (x : Fin m → K) :

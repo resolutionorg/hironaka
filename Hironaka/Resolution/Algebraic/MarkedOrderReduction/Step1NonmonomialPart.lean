@@ -365,7 +365,7 @@ decreasing_by exact roundOrder_roundTriple_lt bo T hT hd
 otherwise nothing is done). -/
 theorem step1_of_lt (T : MarkedTriple k) (hT : MarkedTriple.BMOClass n m T)
     (h : roundOrder T < m) : (step1 bo T hT).1 = BlowUpSequence.nil T.X.left := by
-  rw [step1, dif_neg (not_le.mpr h)]
+  rw [step1, dite_eq_right (not_le.mpr h)]
 
 /-- At or above the mark, Step 1 is one round followed by Step 1 of the induced marked triple (the
 loop unrolled once). -/
@@ -374,7 +374,7 @@ theorem step1_of_le (T : MarkedTriple k) (hT : MarkedTriple.BMOClass n m T)
     (step1 bo T hT).1 =
       (step1Round bo T hT hd).concat
         (step1 bo (roundTriple bo T hT hd) (bmoClass_roundTriple bo T hT hd)).1 := by
-  rw [step1, dif_pos hd]
+  rw [step1, dite_eq_left hd]
 
 /-- Step 1 is a smooth blow-up sequence of order `≥ m` starting with `(X, I, m, E)`
 ([Kol07, Definition 66] for `Π_1`). -/

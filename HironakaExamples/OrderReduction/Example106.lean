@@ -184,7 +184,7 @@ theorem I106_ne_bot : I106 ≠ ⊥ := by
   intro h
   have hmem : x ^ 3 - y ^ 2 ∈ I106 := Ideal.subset_span (by simp)
   rw [h, Ideal.mem_bot] at hmem
-  have := congrArg (coeff (Finsupp.single (0 : Fin 4) 3)) hmem
+  have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single (0 : Fin 4) 3)) hmem
   simp [coeff_X_pow, Finsupp.single_eq_single_iff] at this
 
 /-- `I` is nonzero on every irreducible component of `𝔸⁴_ℚ` ([Kol07, Notation 64 (2)]): its stalk

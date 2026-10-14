@@ -67,11 +67,11 @@ theorem coeff_polyOfCoeff {N : ℕ} (c : Fin N → R) (k : ℕ) :
   rw [Polynomial.finsetSum_coeff]
   simp only [Polynomial.coeff_C_mul_X_pow]
   split_ifs with h
-  · rw [Finset.sum_eq_single ⟨k, h⟩ (fun j _ hj => by rw [if_neg (fun h' => hj (Fin.ext h'.symm))])
-      (by simp)]
+  · rw [Finset.sum_eq_single ⟨k, h⟩
+      (fun j _ hj => by rw [ite_eq_right (fun h' => hj (Fin.ext h'.symm))]) (by simp)]
     simp
   · exact Finset.sum_eq_zero fun j _ => by
-      rw [if_neg]
+      rw [ite_eq_right]
       intro h'
       exact h (by rw [h']; exact j.isLt)
 

@@ -13,15 +13,34 @@ experimental.module = true
 name = "hironaka"
 path = ".."
 
-# VersoBlueprint is the Timaeus fork of leanprover/verso-blueprint (toolchain v4.33.1, the
+# VersoBlueprint is the Timaeus fork of leanprover/verso-blueprint (toolchain v4.34.0, the
 # annotation directives, the annotation boxes taken from docstrings with the review ledger
 # `reviews.json`, and the external-declaration rendering). Its verso patches are not needed by
 # this blueprint and are not applied.
-# Branch `claude/docstring-annotations`, pinned by commit.
+# Branch `timaeus/v4.34.0`, the fork's branch for this toolchain, pinned by commit.
 [[require]]
 name = "VersoBlueprint"
 git = "https://github.com/timaeus-research/verso-blueprint.git"
-rev = "e00296debd2a25ed4c614566d9347f7c99f44c38"
+rev = "aabc09fd28e763cb6f53f573da4ff12643bb3e33"
+
+# Mathlib LAST so its transitive dependency pins win over VersoBlueprint's (Verso pins a different
+# plausible), keeping the shared package directory valid. Keep this rev in sync with the parent
+# lakefile.toml's Mathlib pin.
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.34.0"
+
+# The bibliography of the library, read by `Blueprint.References` when it is compiled.
+[[input_file]]
+name = "references"
+path = "../references.bib"
+text = true
+
+[[lean_lib]]
+name = "BlueprintReferences"
+roots = ["Blueprint.References"]
+needs = ["references"]
 
 [[lean_lib]]
 name = "Blueprint"

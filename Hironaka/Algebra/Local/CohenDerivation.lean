@@ -158,7 +158,7 @@ completed coordinate derivation `∂̂ᵢ` of `R̂`: `Φ(∂F/∂Xᵢ) = ∂̂�
 computations of (94) apply" in [Kol07, 95]). -/
 theorem cohenAlgEquivCoords_pderiv [Algebra.IsAlgebraic k (ResidueField R)] (i : Fin d)
     (F : MvPowerSeries (Fin d) (ResidueField R)) :
-    cohenAlgEquivCoords c σ hσ (pderiv (ResidueField R) i F) =
+    cohenAlgEquivCoords c σ hσ (pderiv (R := ResidueField R) i F) =
       c.adicCompletion.pderiv i (cohenAlgEquivCoords c σ hσ F) := by
   set Φ := cohenAlgEquivCoords c σ hσ with hΦ
   have hC : ∀ a, Φ (C a) = σ a := cohenAlgEquivOver_C σ hσ c.x c.span_x c.card
@@ -190,11 +190,11 @@ theorem cohenAlgEquivCoords_pderiv [Algebra.IsAlgebraic k (ResidueField R)] (i :
     rw [hX, h1]
     split_ifs <;> simp
   have hspans := mvPowerSeries_spansDerivations (ResidueField R) d δ F
-  have hδF : δ F = pderiv (ResidueField R) i F := by
+  have hδF : δ F = pderiv (R := ResidueField R) i F := by
     rw [hspans]
     simp only [RegularCoords.mvPowerSeries, Derivation.restrictScalars_apply, hδX, ite_mul, one_mul,
-      zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
-  have : Φ.symm (c.adicCompletion.pderiv i (Φ F)) = pderiv (ResidueField R) i F := hδF
+      zero_mul, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  have : Φ.symm (c.adicCompletion.pderiv i (Φ F)) = pderiv (R := ResidueField R) i F := hδF
   rw [AlgEquiv.symm_apply_eq] at this
   exact this.symm
 

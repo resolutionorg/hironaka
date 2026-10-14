@@ -114,18 +114,19 @@ noncomputable def chartDer (i : Fin n) :
 
 omit hD in
 theorem chartDer_of_lt {i : Fin n} (hi : i < r) :
-    chartDer x r D i = algebraMap R (Localization.Away (x r)) (x r) • awayDer x r D i := if_pos hi
+    chartDer x r D i = algebraMap R (Localization.Away (x r)) (x r) • awayDer x r D i :=
+  ite_eq_left hi
 
 omit hD in
 theorem chartDer_self :
     chartDer x r D r = awayDer x r D r +
       ∑ l ∈ Finset.univ.filter (· < r), chartY x r l • awayDer x r D l := by
-  rw [chartDer, if_neg (lt_irrefl r), if_pos rfl]
+  rw [chartDer, ite_eq_right (lt_irrefl r), ite_eq_left rfl]
 
 omit hD in
 theorem chartDer_of_gt {i : Fin n} (hi : ¬ i < r) (hir : i ≠ r) :
     chartDer x r D i = awayDer x r D i := by
-  rw [chartDer, if_neg hi, if_neg hir]
+  rw [chartDer, ite_eq_right hi, ite_eq_right hir]
 
 /-- The chart derivations are dual to the chart functions: `chartDer i (y_j) = δ_{ij}`. -/
 theorem chartDer_chartY (i j : Fin n) :
@@ -137,15 +138,16 @@ theorem chartDer_chartY (i j : Fin n) :
     have hL := awayDer_chartY_mul x r D i hj
     by_cases hi : i < r
     · rw [chartDer_of_lt x r D hi, Derivation.smul_apply, smul_eq_mul, mul_comm, hL, hD, hD,
-        if_neg (ne_of_lt hi)]
+        ite_eq_right (ne_of_lt hi)]
       simp only [map_zero, mul_zero, sub_zero]
       split_ifs <;> simp
     · by_cases hir : i = r
       · subst hir
-        rw [chartDer_self, Derivation.add_apply, Derivation.finset_sum_apply, if_neg (ne_of_gt hj)]
+        rw [chartDer_self, Derivation.add_apply, Derivation.finset_sum_apply,
+          ite_eq_right (ne_of_gt hj)]
         refine hu.mul_left_cancel ?_
-        rw [mul_zero, mul_add, Finset.mul_sum, mul_comm, hL, hD, hD, if_neg (ne_of_gt hj),
-          if_pos rfl]
+        rw [mul_zero, mul_add, Finset.mul_sum, mul_comm, hL, hD, hD, ite_eq_right (ne_of_gt hj),
+          ite_eq_left rfl]
         have hsum : ∀ l ∈ Finset.univ.filter (· < i),
             algebraMap R (Localization.Away (x i)) (x i) *
               (chartY x i l • awayDer x i D l) (chartY x i j) =
@@ -155,23 +157,24 @@ theorem chartDer_chartY (i j : Fin n) :
           rw [Derivation.smul_apply, smul_eq_mul, mul_left_comm,
             mul_comm (algebraMap R (Localization.Away (x i)) (x i))
               (awayDer x i D l (chartY x i j)),
-            awayDer_chartY_mul x i D l hj, hD, hD, if_neg (ne_of_lt hl.2)]
+            awayDer_chartY_mul x i D l hj, hD, hD, ite_eq_right (ne_of_lt hl.2)]
           simp only [map_zero, mul_zero, sub_zero]
           split_ifs with h
           · subst h; simp
           · simp
-        rw [Finset.sum_congr rfl hsum, Finset.sum_ite_eq' _ j, if_pos (by simpa using hj)]
+        rw [Finset.sum_congr rfl hsum, Finset.sum_ite_eq' _ j, ite_eq_left (by simpa using hj)]
         simp
-      · rw [chartDer_of_gt x r D hi hir, if_neg (fun h : i = j => hi (h ▸ hj))]
+      · rw [chartDer_of_gt x r D hi hir, ite_eq_right (fun h : i = j => hi (h ▸ hj))]
         refine hu.mul_left_cancel ?_
-        rw [mul_zero, mul_comm, hL, hD, hD, if_neg hir, if_neg (fun h : i = j => hi (h ▸ hj))]
+        rw [mul_zero, mul_comm, hL, hD, hD, ite_eq_right hir,
+          ite_eq_right (fun h : i = j => hi (h ▸ hj))]
         simp
   · -- `y_j = x_j`, `j ≥ r`
     have hy : chartY x r j = algebraMap R (Localization.Away (x r)) (x j) :=
       chartYOf_of_not_lt x r (x r) hj
     by_cases hi : i < r
     · rw [chartDer_of_lt x r D hi, Derivation.smul_apply, hy, awayDer_algebraMap, hD,
-        if_neg (fun h : i = j => hj (h ▸ hi)), if_neg (fun h : i = j => hj (h ▸ hi))]
+        ite_eq_right (fun h : i = j => hj (h ▸ hi)), ite_eq_right (fun h : i = j => hj (h ▸ hi))]
       simp
     · by_cases hir : i = r
       · subst hir
@@ -183,7 +186,7 @@ theorem chartDer_chartY (i j : Fin n) :
           intro l hl
           rw [Finset.mem_filter] at hl
           rw [Derivation.smul_apply, awayDer_algebraMap, hD,
-            if_neg (fun h : l = j => hj (h ▸ hl.2))]
+            ite_eq_right (fun h : l = j => hj (h ▸ hl.2))]
           simp
         rw [Finset.sum_congr rfl hsum, Finset.sum_const_zero, add_zero]
         split_ifs <;> simp
@@ -262,7 +265,7 @@ theorem exists_span_eq_maximalIdeal_extend_chartYR (𝔮 : Ideal (chartRing x r)
       rw [Derivation.localization_algebraMap, chartRingDer_chartYR]
       by_cases h : i = j
       · subst h; simp
-      · rw [if_neg h, if_neg (fun h' => h (Subtype.ext h'))]
+      · rw [ite_eq_right h, ite_eq_right (fun h' => h (Subtype.ext h'))]
         simp)
   exact exists_span_eq_maximalIdeal_of_linearIndependent w (fun i => i.2) hli
 

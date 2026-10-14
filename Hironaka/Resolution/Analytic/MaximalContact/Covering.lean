@@ -115,7 +115,7 @@ theorem maximalContact_locallyIsoEquivalent (I : AnalyticManifold.IdealSheaf M) 
   have hf : ∀ x ∈ {x : M | (m : ℕ∞) ≤ I.ord x}, f x ∈ 𝓝[{x : M | (m : ℕ∞) ≤ I.ord x}] x := by
     intro x hx
     have hx' : (m : ℕ∞) ≤ I.ord x := hx
-    have hfx : f x = U ⟨x, hx'⟩ := dif_pos hx'
+    have hfx : f x = U ⟨x, hx'⟩ := dite_eq_left hx'
     rw [hfx]
     exact nhdsWithin_le_nhds ((U ⟨x, hx'⟩).2.mem_nhds (hpU ⟨x, hx'⟩))
   obtain ⟨T, hTS, hTc, hcov⟩ := TopologicalSpace.countable_cover_nhdsWithin hf
@@ -140,7 +140,7 @@ theorem maximalContact_locallyIsoEquivalent (I : AnalyticManifold.IdealSheaf M) 
     intro y hy
     obtain ⟨t, ht, hyt⟩ := Set.mem_iUnion₂.mp (hcov hy)
     refine ⟨⟨t, ht⟩, ?_⟩
-    have hfy : f t = U ⟨t, hTS ht⟩ := dif_pos (hTS ht)
+    have hfy : f t = U ⟨t, hTS ht⟩ := dite_eq_left (hTS ht)
     rw [hfy] at hyt
     exact hyt
   have hfix : ∀ (t : T) (y : M.restrict (U (idx t))), (m : ℕ∞) ≤ I.ord y.1 →

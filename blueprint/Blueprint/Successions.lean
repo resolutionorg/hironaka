@@ -1,6 +1,7 @@
 import Verso
 import VersoManual
 import VersoBlueprint
+import Blueprint.References
 import Blueprint.Manifolds
 import Blueprint.Conventions
 import Hironaka.Manifold.Resolution.Defs
@@ -13,6 +14,9 @@ open Set Filter Topology TopologicalSpace
 open AnalyticManifold Manifold
 
 set_option verso.blueprint.autoDeps true
+-- Infer from directly referenced declarations only, as before v4.34; walking through unassociated
+-- helpers would traverse Mathlib.
+set_option verso.blueprint.autoDeps.expandUntagged false
 
 #doc (Manual) "Finite successions, compatible families and pull-backs" =>
 %%%
@@ -34,8 +38,7 @@ declarations are in the namespace `AnalyticManifold`.
 %%%
 paperIdentity := some { label := "[Hir64, p. 155]", href := "https://doi.org/10.2307/1970486" }
 %%%
-A `FiniteSuccession M` is Włodarczyk's finite sequence of blow-ups with smooth centres \[Wlo09,
-Theorem 2.0.3 (1)\], Hironaka's succession of monoidal transformations for the finite well-ordered
+A `FiniteSuccession M` is Włodarczyk's finite sequence of blow-ups with smooth centres {cite Wlo09}[Theorem 2.0.3 (1)], Hironaka's succession of monoidal transformations for the finite well-ordered
 index set $`\{0 < 1 < \cdots < r\}`. It is given as a structure: a length $`r` ({decl}`length`),
 later stages $`U_1, \dots, U_r` ({decl}`later`; the stages `stage i` are $`U_0 = M` followed by
 these, {decl}`finStages`), centres $`C_i` on $`U_i` given by ideal sheaves ({decl}`center`), and
@@ -45,7 +48,7 @@ composites $`\sigma^i \colon U_i \to M` are `stageMap i` (by recursion, {decl}`s
 end result is {decl}`last` and the whole composite {decl}`composite`.
 
 Empty centres are admitted: a monoidal transformation with empty centre is an isomorphism,
-Włodarczyk's "isomorphisms" in \[Wlo09, Definitions 3.2.5, 3.2.6\]. Unlike the scheme-theoretic
+Włodarczyk's "isomorphisms" in {cite Wlo09}[Definitions 3.2.5, 3.2.6]. Unlike the scheme-theoretic
 {decl}`BlowUpSequence`, which constructs each blow-up, a {decl}`FiniteSuccession` takes the blown-up
 manifolds as data together with the property that each map is the blow-up.
 ::::
@@ -71,7 +74,7 @@ Along a finite succession, by recursion on the stage:
 - `S.strictTransformSubspaceSeq J i` is the strict transform $`Y_i` of the closed subspace $`Y`
   with ideal sheaf $`J`: $`Y_0 = Y` and $`Y_{i+1}` the strict transform of $`Y_i` under
   $`\sigma_{i+1}`, the saturation of its total transform by the exceptional divisor
-  ({bpref "def:manifold_transforms"}[]); Kollár's restricted sequence \[Kol07, Definition 30.2\].
+  ({bpref "def:manifold_transforms"}[]); Kollár's restricted sequence {cite Kol07}[Definition 30.2].
 
 Each is defined through an auxiliary recursion on a natural number with a proof that it is a stage
 ({decl}`weakTransformSeqAux`, {decl}`boundarySeqAux`, {decl}`strictTransformSubspaceSeqAux`).
@@ -92,7 +95,7 @@ stages ({decl}`restrictStageOpens`, {decl}`restrictOpensLater`), the restricted 
 ({decl}`restrictOpensMapAux`, the first composed with the inclusion {decl}`restrictOpensIncl` of
 $`U_1` into $`U_2`) and the restricted centres ({decl}`restrictOpensCenterAux`).
 
-`T.IsExtensionOf S` is Włodarczyk's extension of a sequence of blow-ups \[Wlo09, Definition 3.2.6\]:
+`T.IsExtensionOf S` is Włodarczyk's extension of a sequence of blow-ups {cite Wlo09}[Definition 3.2.6]:
 $`T` consists of the blow-ups of $`S`, at increasing indices $`j_1 < \cdots < j_m`, with
 isomorphisms (blow-ups with empty centre) in between, the stages identified over $`M` compatibly
 with the maps and the centres; it is stated with the composites between two stages
@@ -171,8 +174,8 @@ over $`\tau(U')`, such that at a step that raises the index the centre of $`R` i
 under $`f_k` of the centre of $`S`, at a step that does not, $`f_k` misses the centre, and every
 point of a centre of $`S` over $`\tau(U')` lies in the image of $`f_k`.
 
-Kollár's push-forward $`j_* B` of a blow-up sequence of a closed submanifold \[Kol07, Definition
-30.3\] has centres $`Z_i^X = (j_i)_*(Z_i^S)`, with $`j_i \colon S_i \to X_i` the inclusions of
+Kollár's push-forward $`j_* B` of a blow-up sequence of a closed submanifold {cite Kol07}[Definition
+30.3] has centres $`Z_i^X = (j_i)_*(Z_i^S)`, with $`j_i \colon S_i \to X_i` the inclusions of
 the strict transforms. Here the strict transforms are not formed: the images of the $`f_k` are the
 strict transforms of $`\tau(U')`, and $`S` is the push-forward of $`R` with blow-ups whose centres
 lie away from $`\tau(U')` interspersed, the blow-ups of the sequence over the trace of $`U` on

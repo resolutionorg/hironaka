@@ -62,7 +62,7 @@ theorem reducedTransform_eq_of_hasLocalGenerators
     (h : IdealSheaf.HasLocalGenerators (𝒪 := structureSheaf 𝕜 E N') fun x : N' =>
       vanishingStalk (𝕜 := 𝕜) (E := E) (⇑f ⁻¹' B.support ∪ ⇑f ⁻¹' D.support) x) :
     AnalyticManifold.IdealSheaf.reducedTransform f B D = IdealSheaf.ofStalks _ _ h :=
-  dif_pos h
+  dite_eq_left h
 
 /-- The reduced transform on the other branch is the product `f^*E · f^*D`. -/
 theorem reducedTransform_eq_mul_of_not
@@ -70,7 +70,7 @@ theorem reducedTransform_eq_mul_of_not
       vanishingStalk (𝕜 := 𝕜) (E := E) (⇑f ⁻¹' B.support ∪ ⇑f ⁻¹' D.support) x) :
     AnalyticManifold.IdealSheaf.reducedTransform f B D =
       (B.pullback f f.contMDiff * D.pullback f f.contMDiff) :=
-  dif_neg h
+  dite_eq_right h
 
 /-- On the first branch the stalks of the reduced transform are the vanishing ideals of
 `f⁻¹(E) ∪ f⁻¹(D)`. -/

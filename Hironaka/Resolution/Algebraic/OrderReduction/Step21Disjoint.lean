@@ -61,12 +61,12 @@ theorem step21Seq_succ_of_lt (j : ℕ) (hj : j < Fintype.card T.E.ι) :
           (T.induced (step21Seq T hn hmax bd j).1 (step21Seq T hn hmax bd j).2.1 (Fin.last _))
           (bdClass_induced_last T hn hmax (step21Seq T hn hmax bd j).2.1
             (step21Seq T hn hmax bd j).2.2 hj)) := by
-  rw [step21Seq, dif_pos hj]
+  rw [step21Seq, dite_eq_left hj]
 
 /-- Beyond the last position the sequence is unchanged. -/
 theorem step21Seq_succ_of_not_lt (j : ℕ) (hj : ¬ j < Fintype.card T.E.ι) :
     (step21Seq T hn hmax bd (j + 1)).1 = (step21Seq T hn hmax bd j).1 := by
-  rw [step21Seq, dif_neg hj]
+  rw [step21Seq, dite_eq_right hj]
 
 /-- Every Step 2.1 sequence is a smooth blow-up sequence of order `m` starting with `(X, I, E)`:
 the first carried fact. -/

@@ -100,7 +100,7 @@ theorem coord_ne_zero {Φ : OpenPartialHomeomorph M E} (hΦ : Φ ∈ maximalAtla
     (hb : b ∈ Φ.source) (i : Fin n) : coord E ψ Φ hΦ hb i ≠ 0 := by
   intro h0
   have h1 := coordDerivStalk_coord E ψ Φ hΦ hb i i
-  rw [h0, map_zero, if_pos rfl, map_one] at h1
+  rw [h0, map_zero, ite_eq_left rfl, map_one] at h1
   exact zero_ne_one h1
 
 /-- The stalk of the structure sheaf is a domain: it is isomorphic to the ring of convergent power
@@ -331,7 +331,7 @@ theorem isDivExceptional_birationalTransform (hY : IsClosedSubmanifold ψ Y c)
   have hex := exists_isDivExceptional hY h J.I hm
   unfold MarkedIdealSheaf.birationalTransform
   dsimp only
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   exact Classical.choose_spec hex
 
 /-- The birational transform keeps the marking. -/

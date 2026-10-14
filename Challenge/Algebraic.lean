@@ -5,10 +5,8 @@ Authors: Chris Elliott (Resolution): formalization performed by Claude Fable 5.1
 -/
 module
 
-public import HironakaReferences
 public import Hironaka.Scheme.BlowUpSequence.Defs
 public import Hironaka.Scheme.Resolution.Defs
-import SourceAttr
 
 /-!
 # Resolution of singularities: the algebraic main theorems
@@ -161,8 +159,9 @@ Relation to the source.
 * **Out of scope.** Hironaka's remark that the theorem remains true over any local ring of his class
   ℬ [Hir64, p. 151; ℬ defined on p. 161], which he uses for local rings of analytic spaces (Main
   Theorem II′, p. 152). The base here is a field of characteristic zero, as in the print ("a field
-  **B** of characteristc [sic] zero"). -/
-@[source Hir64 "Main Theorem II" "pp. 142–143"]
+  **B** of characteristc [sic] zero").
+
+Source statement: [Hir64, Main Theorem II, pp. 142–143] -/
 theorem exists_blowUpSequence_ord_weakTransformSeq_lt {k : Type u} [Field k] [CharZero k]
     (X : AlgScheme k) [Smooth (X.left ↘ Spec (.of k))]
     (J : X.left.IdealSheafData) (hJ : IsNonzeroEverywhere J)
@@ -217,8 +216,9 @@ Relation to the source.
 * **Restatement.** Hironaka states the theorem for $X$ of dimension $N$, the index of the
   fundamental theorem II₂^N from which he deduces it [Hir64, p. 176]; $N$ does not appear in the
   conclusion. The statement here is II(N) for all $N$ at once. As in the print, `X` may have several
-  irreducible components (Hironaka reduces the proof to irreducible $X$). -/
-@[source Hir64 "Main Theorem II(N)" "p. 176"]
+  irreducible components (Hironaka reduces the proof to irreducible $X$).
+
+Source statement: [Hir64, Main Theorem II(N), p. 176] -/
 theorem exists_blowUpSequence_weakTransformSeq_eq_top {k : Type u} [Field k] [CharZero k]
     (X : AlgScheme k) [Smooth (X.left ↘ Spec (.of k))]
     (J : X.left.IdealSheafData) (hJ : IsNonzeroEverywhere J)
@@ -272,8 +272,9 @@ Relation to the source.
 * **Interpretation.** Hironaka's "coherent sheaves of non-zero ideals" are read as ideal sheaves
   with nonzero stalks (`hJ`), as in Main Theorem II.
 * **Restatement.** The regularity of the local rings of `X` is not a separate hypothesis: it follows
-  from smoothness over the perfect field `k`. -/
-@[source Hir64 "Corollary 1" "pp. 143–144"]
+  from smoothness over the perfect field `k`.
+
+Source statement: [Hir64, Corollary 1, pp. 143–144] -/
 theorem exists_blowUpSequence_forall_exists_stalkIdeal_weakTransformSeq_eq_top
     {k : Type u} [Field k] [CharZero k] (X : AlgScheme k) [Smooth (X.left ↘ Spec (.of k))]
     {e : ℕ} (he : 0 < e) (J : Fin e → X.left.IdealSheafData)
@@ -424,8 +425,9 @@ Relation to the source.
   extension is again a triple.
 * **Gap.** Kollár's $E$ is an unordered simple normal crossing divisor. Here it is an ordered family
   (`DivisorFamily`), and clause (4) compares values on families with the induced orders; nothing
-  relates the values at two orderings of one divisor. -/
-@[source Kol07 "Theorem 35"]
+  relates the values at two orderings of one divisor.
+
+Source statement: [Kol07, Theorem 35] -/
 theorem exists_functorial_principalization :
     ∃ BP : ∀ (k : Type u) [Field k] [CharZero k], BlowUpSequenceFunctor (Triple k),
       -- (1)–(3)
@@ -469,8 +471,9 @@ Relation to the source.
   scheme of finite type over the perfect field `k` the two agree (smoothness gives the regularity of
   every local ring, and a non-singular such scheme is smooth).
 * **Restatement.** The regularity of the local rings of `X` is not a separate hypothesis: it follows
-  from smoothness over the perfect field `k`. -/
-@[source Hir64 "Corollary 3" "p. 146"]
+  from smoothness over the perfect field `k`.
+
+Source statement: [Hir64, Corollary 3, p. 146] -/
 theorem exists_blowUpSequence_isInvertible_isSncBoundary_radical_comap
     {k : Type u} [Field k] [CharZero k] (X : AlgScheme k) [Smooth (X.left ↘ Spec (.of k))]
     (W : X.left.IdealSheafData) (hW : IsNowhereDense (W.support : Set X.left)) :
@@ -620,8 +623,9 @@ Relation to the source.
   [Sta, Tag 01VB] and fpqc local on the base [Sta, Tag 02VL], an étale morphism has reduced source
   when its target is reduced [Sta, Tag 033B], and smoothness descends along smooth surjections
   [Sta, Tag 02K5]. These stability facts are not formalized: applying (4) to a given base change
-  requires showing that it is an input. -/
-@[source Kol07 "Theorem 36"]
+  requires showing that it is an input.
+
+Source statement: [Kol07, Theorem 36] -/
 theorem exists_functorial_resolution :
     ∃ BR : ∀ (k : Type u) [Field k] [CharZero k],
         BlowUpSequenceFunctor (ReducedEquidimensionalScheme k),
@@ -663,8 +667,9 @@ Relation to the source.
   this. It matches Kollár's construction: his $R(X)$ is the birational transform of $X$ that is a
   centre $Z_j$ of a succession of smooth blow-ups of an ambient smooth $P$, and by restriction
   [Kol07, 30.2] his $\Pi$ is the composite of the blow-ups of the birational transforms of $X$ along
-  their intersections with the earlier centres, which may be singular [Kol07, Warning 23]. -/
-@[source Kol07 "Theorem 27"]
+  their intersections with the earlier centres, which may be singular [Kol07, Warning 23].
+
+Source statement: [Kol07, Theorem 27] -/
 theorem exists_strong_resolution {k : Type u} [Field k] [CharZero k] (X : AlgScheme k)
     [IsIntegral X.left] :
     ∃ S : Scheme.BlowUpSequence X.left, S.IsStrongResolution :=
@@ -690,8 +695,9 @@ Relation to the source.
   contain no simple point of $X_i$ (b), and along which $X_i$ is normally flat (c), and Main Theorem
   I*: both rest on the Hilbert–Samuel function and normal flatness, whereas the library follows the
   route through the order of an ideal and hypersurfaces of maximal contact, as in Włodarczyk's and
-  Kollár's proofs. The statement here is Main Theorem I as printed. -/
-@[source Hir64 "Main Theorem I" "p. 132"]
+  Kollár's proofs. The statement here is Main Theorem I as printed.
+
+Source statement: [Hir64, Main Theorem I, p. 132] -/
 theorem exists_support_eq_singularLocus_isRegular_blowUp {k : Type u} [Field k]
     [CharZero k] (X : AlgScheme k) [IsIntegral X.left] :
     ∃ D : X.left.IdealSheafData,
@@ -712,8 +718,9 @@ Relation to the source.
   `D.blowUpπ` over $U$ is an isomorphism.
 * **Interpretation.** As in Main Theorem I, Hironaka's "say reduced and irreducible" is read as a
   hypothesis (`IsIntegral`), although his Introduction [Hir64, p. 112] describes Main Theorem I for
-  every reduced $X$. -/
-@[source Hir64 "the paragraph after Main Theorem I" "p. 132"]
+  every reduced $X$.
+
+Source statement: [Hir64, the paragraph after Main Theorem I, p. 132] -/
 theorem exists_dense_isIso_restrict_isRegular_blowUp {k : Type u} [Field k] [CharZero k]
     (X : AlgScheme k) [IsIntegral X.left] :
     ∃ D : X.left.IdealSheafData,
@@ -845,8 +852,9 @@ Relation to the source.
   [Kol07, 34.2] (`CommutesWithChangeOfFields`) does. The functor built here is not Włodarczyk's
   single invariant-driven run, and functoriality for closed embeddings is, in Kollár's words, "quite
   delicate" [Kol07, 34 and Claim 71.2]: he proves it only for an empty boundary, whereas the later
-  rounds here run with the exceptional divisors of the earlier ones as boundary. -/
-@[source Wlo05 "Theorem 1.0.2"]
+  rounds here run with the exceptional divisors of the earlier ones as boundary.
+
+Source statement: [Wlo05, Theorem 1.0.2] -/
 theorem exists_functorial_embeddedDesingularization :
     ∃ ED : ∀ (k : Type u) [Field k] [CharZero k], BlowUpSequenceFunctor (EmbeddedPair k),
       (∀ (k : Type u) [Field k] [CharZero k] (P : EmbeddedPair k),

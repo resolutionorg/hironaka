@@ -7,6 +7,7 @@ module
 
 public import Hironaka.Algebra.RegularSmooth.Defs
 public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
 import Hironaka.Algebra.RegularSmooth.Regular
 import Hironaka.Algebra.RegularSmooth.RegularSmoothEquiv
 

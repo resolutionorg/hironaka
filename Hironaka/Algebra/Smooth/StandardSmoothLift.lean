@@ -254,8 +254,7 @@ theorem liftedToS_surjective : Function.Surjective (liftedToS hφ P) := by
   suffices h : ∃ t, (1 : R) ⊗ₜ[R'] t = x by
     obtain ⟨t, rfl⟩ := h
     exact ⟨t, rfl⟩
-  induction x using TensorProduct.induction_on with
-  | zero => exact ⟨0, by simp⟩
+  induction x using TensorProduct.inductionOn with
   | tmul r t =>
     obtain ⟨r', rfl⟩ := hφ r
     refine ⟨r' • t, ?_⟩

@@ -1,6 +1,7 @@
 import Verso
 import VersoManual
 import VersoBlueprint
+import Blueprint.References
 import Blueprint.ConjunctionChains
 import Hironaka.Scheme.Resolution.Defs
 import Hironaka.Manifold.FiniteSuccession.CompatibleFamily.Defs
@@ -11,6 +12,9 @@ open Informal
 open CategoryTheory AlgebraicGeometry Scheme Scheme.IdealSheafData
 
 set_option verso.blueprint.autoDeps true
+-- Infer from directly referenced declarations only, as before v4.34; walking through unassociated
+-- helpers would traverse Mathlib.
+set_option verso.blueprint.autoDeps.expandUntagged false
 
 #doc (Manual) "Conventions and sources" =>
 %%%
@@ -28,7 +32,7 @@ the introduction ({ref "intro-reading"}[How to read a node]).
 tag := "conv-dictionary"
 %%%
 
-The statements use the standard notions of scheme theory \[Sta\] under their names in Mathlib or
+The statements use the standard notions of scheme theory {cite Sta}[] under their names in Mathlib or
 in the library. Each line gives a classical notion, its Lean name, and the node of the library's
 definition where there is one.
 
@@ -116,43 +120,7 @@ are in `AnalyticSpace`.
 tag := "conv-sources"
 %%%
 
-The sources cited in this document. The bibliography of the library, the file `references.bib` of
-the repository, lists these and the other sources that the library cites, under the same keys.
-
-- *\[Hir64\]* H. Hironaka, Resolution of singularities of an algebraic variety over a field of
-  characteristic zero. I, II, Annals of Mathematics (2) 79 (1964), 109–203 and 205–326.
-  [doi:10.2307/1970486](https://doi.org/10.2307/1970486). Part II:
-  [doi:10.2307/1970547](https://doi.org/10.2307/1970547).
-- *\[Kol07\]* J. Kollár, Lectures on Resolution of Singularities, Annals of Mathematics Studies 166,
-  Princeton University Press, 2007. [arXiv:math/0508332](https://arxiv.org/abs/math/0508332). The
-  arXiv text (v3) is the resolution chapter, circulated as a Seattle lecture; item numbers follow
-  it.
-- *\[Wlo05\]* J. Włodarczyk, Simple Hironaka resolution in characteristic zero, Journal of the
-  American Mathematical Society 18 (2005), 779–822.
-  [doi:10.1090/S0894-0347-05-00493-5](https://doi.org/10.1090/S0894-0347-05-00493-5),
-  [arXiv:math/0401401](https://arxiv.org/abs/math/0401401).
-- *\[Wlo09\]* J. Włodarczyk, Resolution of singularities of analytic spaces, in: Proceedings of the
-  15th Gökova Geometry–Topology Conference (2008), International Press, 2009, 31–63.
-  [gokovagt.org](https://gokovagt.org/proceedings/2008/ggt08-wlodarczyk.pdf).
-- *\[BM88\]* E. Bierstone and P. D. Milman, Semianalytic and subanalytic sets, Publications
-  Mathématiques de l'IHÉS 67 (1988), 5–42.
-  [doi:10.1007/BF02699126](https://doi.org/10.1007/BF02699126).
-- *\[BM97\]* E. Bierstone and P. D. Milman, Canonical desingularization in characteristic zero by
-  blowing up the maximum strata of a local invariant, Inventiones Mathematicae 128 (1997), 207–302.
-  [doi:10.1007/s002220050141](https://doi.org/10.1007/s002220050141),
-  [arXiv:alg-geom/9508005](https://arxiv.org/abs/alg-geom/9508005). Item numbers follow the arXiv
-  version.
-- *\[Hau14\]* H. Hauser, Blowups and resolution, in: The Resolution of Singular Algebraic Varieties,
-  Clay Mathematics Proceedings 20, American Mathematical Society, 2014, 1–80.
-  [arXiv:1404.1041](https://arxiv.org/abs/1404.1041).
-- *\[Sta\]* The Stacks Project Authors, The Stacks Project.
-  [stacks.math.columbia.edu](https://stacks.math.columbia.edu). Cited by tag.
-- *\[Ati70\]* M. F. Atiyah, Resolution of singularities and division of distributions,
-  Communications on Pure and Applied Mathematics 23 (1970), 145–150.
-  [doi:10.1002/cpa.3160230202](https://doi.org/10.1002/cpa.3160230202).
-- *\[BG69\]* I. N. Bernshtein and S. I. Gel'fand, Meromorphic property of the functions P^λ,
-  Functional Analysis and Its Applications 3 (1969), 68–69.
-  [doi:10.1007/BF01078276](https://doi.org/10.1007/BF01078276).
-- *\[Wat09\]* S. Watanabe, Algebraic Geometry and Statistical Learning Theory, Cambridge Monographs
-  on Applied and Computational Mathematics 25, Cambridge University Press, 2009.
-  [doi:10.1017/CBO9780511800474](https://doi.org/10.1017/CBO9780511800474).
+The sources are cited by the keys of `references.bib`, the bibliography of the library, as
+`[Kol07, Definition 29]`: a citation links to the entry in the Blueprint Bibliography, the last part
+of this document, which lists the sources that the chapters and the annotations cite, with the
+places they are cited from. Item numbers in citations are the source's own.

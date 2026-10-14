@@ -1,6 +1,7 @@
 import Verso
 import VersoManual
 import VersoBlueprint
+import Blueprint.References
 import Blueprint.SchemeBlowUp
 import Blueprint.Conventions
 import Hironaka.Scheme.Resolution.Defs
@@ -11,6 +12,9 @@ open Informal
 open CategoryTheory AlgebraicGeometry Scheme Scheme.IdealSheafData
 
 set_option verso.blueprint.autoDeps true
+-- Infer from directly referenced declarations only, as before v4.34; walking through unassociated
+-- helpers would traverse Mathlib.
+set_option verso.blueprint.autoDeps.expandUntagged false
 
 #doc (Manual) "Successions of blow-ups and functors" =>
 %%%
@@ -33,7 +37,7 @@ The declarations are in `AlgebraicGeometry.Scheme` (successions, divisor familie
 tag := "sec-successions"
 %%%
 
-A finite *succession of blow-ups* \[Kol07, Definition 29\] is a chain
+A finite *succession of blow-ups* {cite Kol07}[Definition 29] is a chain
 
 $$`X_r \xrightarrow{\ \pi_{r-1}\ } X_{r-1} \to \cdots \to X_1 \xrightarrow{\ \pi_0\ } X_0 = X, \qquad \pi_i \colon X_{i+1} = \mathrm{Bl}_{Z_i} X_i \to X_i,`
 
@@ -56,7 +60,7 @@ centre $`D` followed by a succession `S'` starting at `D.blowUp`. From it one re
   ({decl}`composite`).
 
 The centres are arbitrary closed subschemes: empty and trivial centres are allowed
-\[Kol07, Warning 20\], and the main theorems state the conditions they ask of the centres.
+{cite Kol07}[Warning 20], and the main theorems state the conditions they ask of the centres.
 Because the stages are defined by recursion, a centre lives on a stage whose type depends on the
 succession; the statements index the stages by `Fin (S.length + 1)` and the centres by
 `Fin S.length`, with `i.castSucc` the stage on which the `i`-th centre lies and `Fin.last S.length`
@@ -74,7 +78,7 @@ Along a succession $`S`, by recursion on the stages:
 - `S.boundarySeq E i` is Hironaka's sequence of boundaries: $`E_0 = E` and
   $`E_{i+1} = \mathrm{red}(f_i^{-1}(E_i) \cup f_i^{-1}(D_i))`;
 - `S.strictTransformSeq Y i` is the strict transform $`Y_i` of a closed subscheme $`Y`
-  \[Kol07, Definition 30.2\]; Włodarczyk's $`Y_i` \[Wlo05, Theorem 1.0.2 (b)\].
+  {cite Kol07}[Definition 30.2]; Włodarczyk's $`Y_i` {cite Wlo05}[Theorem 1.0.2 (b)].
 ::::
 
 # Divisor families and simple normal crossings
@@ -89,7 +93,7 @@ ordered index type `ι` (with its {decl}`fintype` and {decl}`linearOrder`) and a
 which new exceptional divisors come after old ones. `DivisorFamily.empty X` is the empty divisor;
 {decl}`support` is the set of points on at least one component and {decl}`singularLocus`
 ($`\operatorname{Sing} E`) the set of points on at least two; `E.comap h` is the inverse image
-family $`h^{-1}(E)` \[Kol07, 34.1\].
+family $`h^{-1}(E)` {cite Kol07}[34.1].
 ::::
 
 ::::definition "def:snc" (lean := "AlgebraicGeometry.Scheme.DivisorFamily.IsSncAt, AlgebraicGeometry.Scheme.DivisorFamily.IsSnc, AlgebraicGeometry.Scheme.DivisorFamily.HasSncWith")
@@ -101,10 +105,10 @@ Kollár's simple normal crossings, illustrated with Hironaka's notion in
 $`z_1, \dots, z_n` is a regular system of parameters of $`\mathcal{O}_{X,x}` and each component of
 $`E` through $`x` is cut out near $`x` by its own coordinate $`z_{c(i)}`, distinct components by
 distinct coordinates. `E.IsSnc` asks every component to be smooth and such coordinates to exist at
-every point \[Kol07, Definition 24 (1)–(3)\]; since the coordinates are asked for also at the
+every point {cite Kol07}[Definition 24 (1)–(3)]; since the coordinates are asked for also at the
 points on no component, `E.IsSnc` makes $`X` itself regular. `E.HasSncWith Z` says that at every
 point of $`Z` the coordinates can be chosen so that in addition $`Z` is cut out by some of them
-\[Kol07, Definition 24 (4)\]; some components may contain $`Z`.
+{cite Kol07}[Definition 24 (4)]; some components may contain $`Z`.
 ::::
 
 ::::definition "def:snc_divisor" (lean := "AlgebraicGeometry.Scheme.IdealSheafData.IsIdealOfSncDivisor, AlgebraicGeometry.Scheme.IsSncDivisor")
@@ -114,9 +118,9 @@ paperIdentity := some { label := "[Kol07, Definition 24]", href := "https://arxi
 Divisors with simple normal crossings, as ideal sheaves and as sets. `IsIdealOfSncDivisor I` says
 that $`I` is the ideal sheaf of an effective divisor $`\sum a_j F_j` supported on a simple normal
 crossings family $`F` ({bpref "def:snc"}[]); Kollár's principalization makes the pull-back of an
-ideal sheaf of this form \[Kol07, Theorem 35 (2)\]. `IsSncDivisor Z` says that the set $`Z` is
-the support of a simple normal crossings divisor family \[Kol07, Definition 24\], with its reduced
-structure; a strong resolution asks this of the preimage of the singular locus \[Kol07, (3)\].
+ideal sheaf of this form {cite Kol07}[Theorem 35 (2)]. `IsSncDivisor Z` says that the set $`Z` is
+the support of a simple normal crossings divisor family {cite Kol07}[Definition 24], with its reduced
+structure; a strong resolution asks this of the preimage of the singular locus {cite Kol07}[(3)].
 ::::
 
 ::::definition "def:total_transform" (lean := "AlgebraicGeometry.Scheme.DivisorFamily.totalTransform, AlgebraicGeometry.Scheme.BlowUpSequence.totalTransformSeq")
@@ -125,7 +129,7 @@ paperIdentity := some { label := "[Kol07, Definition 25]", href := "https://arxi
 %%%
 Kollár's total transform of a divisor family under one blow-up with centre $`D` is the family of the
 birational transforms of the components of $`E`, followed by the exceptional divisor $`f^{-1}(D)`
-with the largest index ({decl}`DivisorFamily.totalTransform`, \[Kol07, Definitions 25 and 65\]).
+with the largest index ({decl}`DivisorFamily.totalTransform`, {cite Kol07}[Definitions 25 and 65]).
 Along a succession it gives
 $`E_i = (\pi_0 \cdots \pi_{i-1})^{-1}_*(E) + \mathrm{Ex}_{tot}(\pi_0 \cdots \pi_{i-1})`
 ({decl}`BlowUpSequence.totalTransformSeq`); starting from the empty family it is the family of
@@ -148,14 +152,14 @@ paperIdentity := some { label := "[Kol07, Definition 30]", href := "https://arxi
 %%%
 These operations compare successions on different schemes:
 
-- `S.pullback h` is the pull-back $`h^* S` along $`h \colon Y \to X` \[Kol07, Definition 30.1\]: blow
+- `S.pullback h` is the pull-back $`h^* S` along $`h \colon Y \to X` {cite Kol07}[Definition 30.1]: blow
   up the inverse images of the centres, using the induced morphisms of blow-ups
   ({bpref "def:blowup_lift"}[]); for smooth (more generally flat) $`h` the stages are
   $`X_i \times_X Y`;
 - `S.eraseEmpty` deletes every blow-up whose centre is empty and reindexes the rest
-  \[Kol07, 32 and 34.1\], carrying the tail back along the isomorphism of the empty blow-up;
+  {cite Kol07}[32 and 34.1], carrying the tail back along the isomorphism of the empty blow-up;
 - `S.pushforward j` is the push-forward $`j_* S` of a succession on a closed subscheme along the
-  closed immersion $`j` \[Kol07, Definition 30.3\]: the centres viewed in the ambient stages
+  closed immersion $`j` {cite Kol07}[Definition 30.3]: the centres viewed in the ambient stages
   ({decl}`Scheme.Hom.pushforwardBlowUp`, {bpref "def:exceptional_divisor"}[]).
 
 A pulled-back succession may have empty centres where the image of $`h` misses a centre, which is
@@ -169,7 +173,7 @@ tag := "sec-functors"
 
 Hironaka's theorems assert that, for each input, a succession of blow-ups with the required
 properties exists. Kollár's and Włodarczyk's assert more: one rule, a *blow-up sequence functor*
-$`B`, assigns a succession $`B(X)` to every input $`X` at once \[Kol07, 31 and 34\]. The inputs
+$`B`, assigns a succession $`B(X)` to every input $`X` at once {cite Kol07}[31 and 34]. The inputs
 form a category, which differs from theorem to theorem (triples, disjoint unions of varieties,
 embedded pairs), and each input has an underlying algebraic $`k`-scheme. As defined, $`B` is data
 on objects only; its compatibility with smooth morphisms and with change of the base field is a
@@ -184,7 +188,7 @@ paperIdentity := some { label := "[Kol07, Definition 31]", href := "https://arxi
 `AlgScheme k`; `scheme X` is the underlying scheme of an input and `hom h` the underlying morphism
 of schemes of a morphism of inputs. A *blow-up sequence functor* `BlowUpSequenceFunctor C` assigns
 to every input `X` a succession of blow-ups `B X : BlowUpSequence (scheme X)` of its underlying
-scheme \[Kol07, Definition 31\]. It carries no conditions: the conditions on the values, and the
+scheme {cite Kol07}[Definition 31]. It carries no conditions: the conditions on the values, and the
 compatibility with smooth morphisms ({bpref "def:commutes_smooth"}[]), are asserted by the main
 theorems, which quantify over the input so that a single functor works for all inputs, and over the
 field so that a single family of functors works for all fields.

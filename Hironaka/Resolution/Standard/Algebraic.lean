@@ -9,8 +9,6 @@ public import Mathlib.AlgebraicGeometry.Morphisms.Proper
 public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 public import Mathlib.AlgebraicGeometry.Restrict
 public import Hironaka.Scheme.BlowUp.BlowUpAlong.Defs
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
-import SourceAttr
 import Hironaka.Algebra.RegularSmooth.RegularSmoothEquiv
 import Hironaka.Algebra.RegularSmooth.SingularLocus
 import Hironaka.Resolution.Algebraic.Hir64.MainTheoremI
@@ -65,8 +63,9 @@ Relation to the source.
   for schemes locally of finite type over a field of characteristic zero the two notions agree
   [Sta, Tag 00TV].
 * **Interpretation.** Hironaka's "say reduced and irreducible" is read as the hypothesis
-  `IsIntegral X`. -/
-@[source Hir64 "Main Theorem I" "p. 132"]
+  `IsIntegral X`.
+
+Source statement: [Hir64, Main Theorem I, p. 132] -/
 theorem exists_isBlowUpAlong_smooth {k : Type u} [Field k] [CharZero k]
     (X : Scheme.{u}) (f : X ⟶ Spec (.of k)) [LocallyOfFiniteType f] [QuasiCompact f]
     [IsSeparated f] [IsIntegral X] :

@@ -440,15 +440,15 @@ theorem exists_graph_of_isPrime (P : Ideal (Conv ℂ n)) [P.IsPrime] {d : ℕ} (
     with hφ
   have hφ_base : ∀ u k, φ u (e k) = u k := fun u k => by
     have h : ∃ k', e k' = e k := ⟨k, rfl⟩
-    simp only [hφ, dif_pos h]
+    simp only [hφ, dite_eq_left h]
     congr 1
     exact e.injective (Classical.choose_spec h)
   have hφ_i₀ : ∀ u, φ u i₀ = τ u := fun u => by
     have h : ¬ ∃ k, e k = i₀ := fun ⟨k, hk⟩ => hi₀ ⟨k, hk⟩
-    simp only [hφ, dif_neg h, if_true]
+    simp only [hφ, dite_eq_right h, ite_true]
   have hφ_fib : ∀ u i, i ∉ Set.range e → i ≠ i₀ → φ u i = Bf i u / Af u := fun u i hi hii => by
     have h : ¬ ∃ k, e k = i := fun ⟨k, hk⟩ => hi ⟨k, hk⟩
-    simp only [hφ, dif_neg h, if_neg hii]
+    simp only [hφ, dite_eq_right h, ite_eq_right hii]
   have hBf_an : ∀ i, AnalyticAt ℂ (Bf i) (x ∘ e) := fun i => by
     have hfun : Bf i = fun u => ∑ k ∈ Finset.range ((B i).natDegree + 1),
         evalSeries ((B i).coeff k : MvPowerSeries (Fin d) ℂ) u * τ u ^ k := by

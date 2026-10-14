@@ -145,7 +145,7 @@ theorem completionMap_mem_maximalIdeal_pow {x : AdicCompletion (maximalIdeal A) 
 
 /-- The induced map is a local homomorphism. -/
 instance isLocalHom_completionMap : IsLocalHom (completionMap φ) := by
-  refine ((local_hom_TFAE (completionMap φ)).out 0 2).mpr ?_
+  refine ((local_hom_TFAE (completionMap φ)).out 1 3).mpr ?_
   simpa using map_maximalIdeal_pow_completionMap_le φ 1
 
 /-- Orders do not decrease along the induced map. -/

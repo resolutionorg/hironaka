@@ -174,10 +174,7 @@ theorem range_adicCompletion_map_subtype (I : Ideal R) :
     have : Module.Finite R I := Module.Finite.iff_fg.mpr I.fg_of_isNoetherianRing
     obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite (maximalIdeal R) I z
     rw [← LinearMap.comp_apply, AdicCompletion.ofTensorProduct_naturality, LinearMap.comp_apply]
-    induction t using TensorProduct.induction_on with
-    | zero =>
-      rw [map_zero, map_zero]
-      exact zero_mem _
+    induction t using TensorProduct.inductionOn with
     | tmul r i =>
       rw [TensorProduct.AlgebraTensorModule.map_tmul, AdicCompletion.ofTensorProduct_tmul]
       exact Ideal.mul_mem_left _ r (Ideal.mem_map_of_mem _ i.2)

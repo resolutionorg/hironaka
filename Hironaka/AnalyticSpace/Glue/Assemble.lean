@@ -87,16 +87,16 @@ theorem mem_W {i j : D.J} (x : S.piece i) : x ∈ S.W i j ↔ x.1 ∈ S.WOpen i 
 
 theorem WOpen_self (i : D.J) : S.WOpen i i = ⊤ := by
   unfold WOpen
-  rw [if_pos rfl]
+  rw [ite_eq_left rfl]
 
 theorem WOpen_of_ne_of_mem {i j : D.J} (h : i ≠ j) (hj : j ∈ D.rel i) :
     S.WOpen i j = S.A i ⊓ (D.P i j).Ωi ⊓ (D.P i j).pullOpens (S.A j) := by
   unfold WOpen
-  rw [if_neg h, if_pos hj]
+  rw [ite_eq_right h, ite_eq_left hj]
 
 theorem WOpen_of_notMem {i j : D.J} (h : i ≠ j) (hj : j ∉ D.rel i) : S.WOpen i j = ⊥ := by
   unfold WOpen
-  rw [if_neg h, if_neg hj]
+  rw [ite_eq_right h, ite_eq_right hj]
 
 theorem W_self (i : D.J) : S.W i i = ⊤ := by
   apply Opens.ext
@@ -287,13 +287,13 @@ noncomputable def t (i j : D.J) :
 
 theorem t_self (i : D.J) : S.t i i = 𝟙 _ := by
   unfold t
-  rw [dif_pos rfl]
+  rw [dite_eq_left rfl]
   exact S.diagTrans_rfl i
 
 theorem t_comp_incl₂ {i j : D.J} (h : i ≠ j) :
     S.t i j ≫ incl₂ (D.C j).Y.toKLocallyRingedSpace (S.A j) (S.W j i) = S.tW i j := by
   unfold t
-  rw [dif_neg h]
+  rw [dite_eq_right h]
   exact liftAlong_comp _ _ _
 
 theorem toFun_t_val {i j : D.J} (h : i ≠ j) (x : (S.piece i).restrictOpen (S.W i j)) :

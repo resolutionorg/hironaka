@@ -128,13 +128,13 @@ theorem degLt_liftTail (c : MvPowerSeries (Fin m) K) :
     DegLt 1 (liftTail c : MvPowerSeries (Fin (m + 1)) K) := by
   intro ν hν
   rw [← Finsupp.cons_tail ν, coeff_cons_liftTail]
-  rw [if_neg]
+  rw [ite_eq_right]
   omega
 
 theorem degLt_X_zero_pow (k : ℕ) : DegLt (k + 1) ((X 0 : MvPowerSeries (Fin (m + 1)) K) ^ k) := by
   intro ν hν
   rw [← Finsupp.cons_tail ν, coeff_cons_X_pow]
-  rw [if_neg]
+  rw [ite_eq_right]
   intro h
   have := h.1
   omega

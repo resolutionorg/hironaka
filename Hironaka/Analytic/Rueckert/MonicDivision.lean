@@ -54,16 +54,16 @@ theorem coeff_single_zero_convPolyEval (p : Polynomial (Conv K m)) (j : ℕ) :
   simp_rw [coeff_cons_liftTail_mul_X_pow]
   by_cases hj : j ∈ Finset.range (p.natDegree + 1)
   · rw [Finset.sum_eq_single j]
-    · rw [if_pos rfl, coeff_zero_eq_constantCoeff_apply]
+    · rw [ite_eq_left rfl, coeff_zero_eq_constantCoeff_apply]
     · intro k _ hk
-      rw [if_neg (Ne.symm hk)]
+      rw [ite_eq_right (Ne.symm hk)]
     · intro h
       exact absurd hj h
   · rw [Finset.sum_eq_zero fun k hk => ?_]
     · have : p.coeff j = 0 :=
         Polynomial.coeff_eq_zero_of_natDegree_lt (by simpa using hj)
       rw [this, Subalgebra.coe_zero, map_zero]
-    · rw [if_neg]
+    · rw [ite_eq_right]
       rintro rfl
       exact hj hk
 

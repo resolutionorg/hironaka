@@ -352,8 +352,8 @@ theorem stalkIdeal_totalTransform_monomialIdeal_of_mem_faceSet (hF : F.IsSnc ψ�
       exact ⟨fun ⟨k, hk⟩ => ⟨k, hk⟩, fun ⟨k, hk⟩ => ⟨k, hk⟩⟩
     rw [hκc c] at hiff
     by_cases hc : c.1.1 ∈ P
-    · rw [if_pos (hiff.mpr hc), if_pos hc, one_mul]
-    · rw [if_neg (fun h => hc (hiff.mp h)), if_neg hc, zero_mul]
+    · rw [ite_eq_left (hiff.mpr hc), ite_eq_left hc, one_mul]
+    · rw [ite_eq_right (fun h => hc (hiff.mp h)), ite_eq_right hc, zero_mul]
   rw [Finset.prod_congr rfl fun c _ => hterm c, Finset.prod_mul_distrib,
     Finset.prod_pow_eq_pow_sum, Φ.sum_ite_mem_eq_total hPn hxP, mul_comm]
 

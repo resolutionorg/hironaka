@@ -71,7 +71,7 @@ theorem polyOfCoeff_zero (N : ℕ) : polyOfCoeff (0 : Fin N → R) = 0 := by
 theorem weierstrassList_rev {e d : ℕ} (he : e < d) (c : Fin e → R) (s : Fin e) :
     weierstrassList e c d ⟨e - 1 - s, by omega⟩ = c s := by
   unfold weierstrassList
-  rw [dif_pos (by simp; omega)]
+  rw [dite_eq_left (by simp; omega)]
   congr 1
   ext
   simp
@@ -230,7 +230,7 @@ theorem isCoherent_sheafKn_succ (m : ℕ) (ih : IsCoherent (sheafKn.{u} K m)) :
             (sec j ⟨e' j hj - 1 - s, by have := hed j hj; omega⟩)) d := by
       intro j hj b hb
       funext t
-      simp only [hpc, dif_pos hj]
+      simp only [hpc, dite_eq_left hj]
       exact map_weierstrassList _ _ _ _ t
     have hmonic : ∀ b (hb : b ∈ V),
         (polyOfCoeff fun t => (sheafKn K m).presheaf.germ V b hb (pc 0 t)).Monic ∧
@@ -255,7 +255,7 @@ theorem isCoherent_sheafKn_succ (m : ℕ) (ih : IsCoherent (sheafKn.{u} K m)) :
         congr 1
         funext s
         rw [hTsec j ⟨e' j hj - 1 - s, by have := hed j hj; omega⟩, hwl]
-        simp only [dif_pos hj]
+        simp only [dite_eq_left hj]
         exact weierstrassList_rev (hed j hj) (c' j hj) s
       rw [hlist, polyOfCoeff_weierstrassList (hed j hj),
         ofPoly_weierstrassPolynomial]
@@ -266,7 +266,7 @@ theorem isCoherent_sheafKn_succ (m : ℕ) (ih : IsCoherent (sheafKn.{u} K m)) :
       have : (∑ k : Fin d,
           Polynomial.C ((sheafKn K m).presheaf.germ V (projKn ψ x) hxbase (pc j k)) *
             Polynomial.X ^ (k : ℕ)) = 0 := by
-        simp only [hpc, dif_neg hj, Pi.zero_apply, map_zero, zero_mul, Finset.sum_const_zero]
+        simp only [hpc, dite_eq_right hj, Pi.zero_apply, map_zero, zero_mul, Finset.sum_const_zero]
       rw [this, map_zero]
     -- the units, as sections near `x`
     set uval : Fin (q + 1) → MvPowerSeries (Fin (m + 1)) K :=
@@ -306,7 +306,7 @@ theorem isCoherent_sheafKn_succ (m : ℕ) (ih : IsCoherent (sheafKn.{u} K m)) :
       rw [TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply,
         TopCat.Presheaf.germ_res_apply, map_mul, hsu, hgu]
       by_cases hj : j ∈ S
-      · rw [heq' j hj, hTP j hj, huval]; simp only [dif_pos hj]
+      · rw [heq' j hj, hTP j hj, huval]; simp only [dite_eq_left hj]
       · rw [hSzero j hj, hTP0 j hj, map_zero, mul_zero]
     choose W₁ hW₁ hxW₁ hW₁eq using fun j =>
       exists_res_eq_of_germ_eq (sheafKn K (m + 1)) hxW₀ (g₀ j) (u₀ j * P₀ j) (hgerm j)

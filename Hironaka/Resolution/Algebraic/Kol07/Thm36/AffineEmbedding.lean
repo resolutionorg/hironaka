@@ -48,18 +48,18 @@ noncomputable def dropLast (n : ℕ) :
 
 theorem padProj_X_of_lt (n : ℕ) (i : Fin (n + 2)) (h : i.val < n) :
     padProj (k := k) n (X i) = X ⟨i.val, h⟩ := by
-  rw [padProj, aeval_X, dif_pos h]
+  rw [padProj, aeval_X, dite_eq_left h]
 
 theorem padProj_X_of_le (n : ℕ) (i : Fin (n + 2)) (h : n ≤ i.val) :
     padProj (k := k) n (X i) = 0 := by
-  rw [padProj, aeval_X, dif_neg (not_lt.mpr h)]
+  rw [padProj, aeval_X, dite_eq_right (not_lt.mpr h)]
 
 theorem dropLast_X_of_lt (n : ℕ) (i : Fin (n + 2)) (h : i.val < n + 1) :
     dropLast (k := k) n (X i) = X ⟨i.val, h⟩ := by
-  rw [dropLast, aeval_X, dif_pos h]
+  rw [dropLast, aeval_X, dite_eq_left h]
 
 theorem dropLast_X_last (n : ℕ) : dropLast (k := k) n (X (Fin.last (n + 1))) = 0 := by
-  rw [dropLast, aeval_X, dif_neg (by simp)]
+  rw [dropLast, aeval_X, dite_eq_right (by simp)]
 
 theorem padProj_surjective (n : ℕ) : Function.Surjective (padProj (k := k) n) := by
   intro P
@@ -84,8 +84,8 @@ theorem padProj_eq_comp_dropLast (n : ℕ) :
   by_cases h : i.val < n + 1
   · rw [dropLast_X_of_lt n i h, aeval_X]
     by_cases h' : i.val < n
-    · rw [padProj_X_of_lt n i h', dif_pos h']
-    · rw [padProj_X_of_le n i (not_lt.mp h'), dif_neg h']
+    · rw [padProj_X_of_lt n i h', dite_eq_left h']
+    · rw [padProj_X_of_le n i (not_lt.mp h'), dite_eq_right h']
   · have hi : i = Fin.last (n + 1) := Fin.ext (by rw [Fin.val_last]; omega)
     rw [hi, dropLast_X_last, map_zero, padProj_X_of_le n _ (by rw [Fin.val_last]; omega)]
 

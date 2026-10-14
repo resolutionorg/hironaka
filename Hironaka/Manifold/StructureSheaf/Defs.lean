@@ -155,7 +155,7 @@ def extendBy0 {U : Opens M} (f : (contMDiffSheafCommRing IM 𝓘(𝕜) n M 𝕜)
 theorem extendBy0_of_mem {U : Opens M}
     (f : (contMDiffSheafCommRing IM 𝓘(𝕜) n M 𝕜).presheaf.obj (op U)) {x : M} (hx : x ∈ U) :
     extendBy0 IM n M f x = f ⟨x, hx⟩ := by
-  simp only [extendBy0, dif_pos hx]
+  simp only [extendBy0, dite_eq_left hx]
 
 theorem extendBy0_comp_val {U : Opens M}
     (f : (contMDiffSheafCommRing IM 𝓘(𝕜) n M 𝕜).presheaf.obj (op U)) :

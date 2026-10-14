@@ -302,7 +302,7 @@ theorem Fsec_of_mem (Ω : Opens ((localModel K n G f).restrictOpen D.V))
     {v : Kn.{u} K (n - c)} (h : v ∈ D.pullOpens Ω) :
     D.Fsec Ω s v = evalFiber G f (D.ptOf h).1 (s.1 (D.ptOf h)) := by
   unfold Fsec
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 
 /-- The open of `K^{n−c}` under an open `T ⊆ S` of the local model: the points `v ∈ G'` with

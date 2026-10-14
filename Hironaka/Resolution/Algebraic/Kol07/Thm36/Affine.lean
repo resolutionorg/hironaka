@@ -77,7 +77,7 @@ open Classical in
 theorem firstCenterIndex_of_exists {S : BlowUpSequence A} {I : A.IdealSheafData}
     (h : ∃ n, CenterContains S I n) : CenterContains S I (firstCenterIndex S I) := by
   unfold firstCenterIndex
-  rw [dif_pos h]
+  rw [dite_eq_left h]
   exact Nat.find_spec h
 
 open Classical in
@@ -85,7 +85,7 @@ theorem not_centerContains_of_lt_firstCenterIndex {S : BlowUpSequence A} {I : A.
     (h : ∃ n, CenterContains S I n) {n : ℕ} (hn : n < firstCenterIndex S I) :
     ¬ CenterContains S I n := by
   unfold firstCenterIndex at hn
-  rw [dif_pos h] at hn
+  rw [dite_eq_left h] at hn
   exact Nat.find_min h hn
 
 theorem firstCenterIndex_lt_length {S : BlowUpSequence A} {I : A.IdealSheafData}

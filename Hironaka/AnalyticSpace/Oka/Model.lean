@@ -156,8 +156,8 @@ theorem extendSection_comapSection {U : Opens (Kn.{u} K m)}
   · rw [extendSection_of_mem _ _ g hx,
       extendSection_of_mem _ _ _ ((mem_preimageOpens _ _).mpr hx : x ∈ preimageOpens _ _ U),
       comapSection_apply]
-  · simp only [extendSection, extendBy0, dif_neg hx]
-    rw [dif_neg]
+  · simp only [extendSection, extendBy0, dite_eq_right hx]
+    rw [dite_eq_right]
     exact fun h => hx ((mem_preimageOpens _ _).mp h)
 
 /-- The Taylor series at `a` (coordinates `ψ`) of a section pulled back from the base along the

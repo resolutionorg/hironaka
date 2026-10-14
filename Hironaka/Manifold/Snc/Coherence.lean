@@ -145,11 +145,11 @@ theorem linearPart_coord (k i : Fin n) :
     linearPart E ψ φ hφ hb (coord E ψ φ hφ hb k) i = if i = k then 1 else 0 := by
   classical
   rw [linearPart_apply, taylorHom_coord, map_add, MvPowerSeries.coeff_X, MvPowerSeries.coeff_C,
-    if_neg (Finsupp.single_ne_zero.mpr one_ne_zero), add_zero]
+    ite_eq_right (Finsupp.single_ne_zero.mpr one_ne_zero), add_zero]
   by_cases hik : i = k
   · subst hik
-    rw [if_pos rfl, if_pos rfl]
-  · rw [if_neg hik, if_neg]
+    rw [ite_eq_left rfl, ite_eq_left rfl]
+  · rw [ite_eq_right hik, ite_eq_right]
     exact fun h => hik ((Finsupp.single_left_inj one_ne_zero).mp h)
 
 /-- A coordinate vanishing at `b` is not in `𝔪_b²`. -/
@@ -157,7 +157,7 @@ theorem coord_notMem_maximalIdeal_sq {k : Fin n} :
     coord E ψ φ hφ hb k ∉ maximalIdeal ((structureSheaf 𝕜 E M).presheaf.stalk b) ^ 2 := by
   intro h
   have h1 := congrFun (linearPart_eq_zero_of_mem_sq E ψ φ hφ hb h) k
-  rw [linearPart_coord, if_pos rfl, Pi.zero_apply] at h1
+  rw [linearPart_coord, ite_eq_left rfl, Pi.zero_apply] at h1
   exact one_ne_zero h1
 
 /-- A coordinate vanishing at `b` is a prime element of the regular local ring `𝒪_{M,b}`: the
@@ -195,7 +195,7 @@ theorem not_coord_dvd_coord_of_ne {k l : Fin n} (hk0 : ψ (φ b) k = 0) (hkl : k
       rw [mem_maximalIdeal_iff_eval, map_sub, eval_const, sub_self]
     have h1 := congrFun (linearPart_eq_zero_of_mem_sq E ψ φ hφ hb hmem) l
     rw [map_sub, map_smul, Pi.sub_apply, Pi.smul_apply, linearPart_coord, linearPart_coord,
-      if_pos rfl, if_neg (Ne.symm hkl), smul_zero, sub_zero, Pi.zero_apply] at h1
+      ite_eq_left rfl, ite_eq_right (Ne.symm hkl), smul_zero, sub_zero, Pi.zero_apply] at h1
     exact one_ne_zero h1
 
 end Coordinates
@@ -324,7 +324,7 @@ support. -/
 theorem IsSnc.stalkIdeal_idealSheaf (hF : F.IsSnc ψ) (x : M) :
     F.idealSheaf.stalkIdeal x = vanishingStalk (𝕜 := 𝕜) (E := E) F.support x := by
   unfold HypersurfaceFamily.idealSheaf
-  rw [dif_pos hF.hasLocalGenerators_vanishingStalk_support, IdealSheaf.stalkIdeal_ofStalks]
+  rw [dite_eq_left hF.hasLocalGenerators_vanishingStalk_support, IdealSheaf.stalkIdeal_ofStalks]
 
 /-- The cosupport of the reduced ideal sheaf of an snc divisor is its support. -/
 theorem IsSnc.cosupport_idealSheaf (hF : F.IsSnc ψ) :

@@ -219,14 +219,14 @@ theorem bedAux_of_exists (T : MarkedTriple k) (hm : T.m = 1) (C : Finset T.X.lef
       ((bmoOneRun T hm).take (Nat.find h)).concat
         (bedAux (isolatedTriple T hm C (Nat.find h)) hm
           (remainingComponents T hm C (Nat.find h))) := by
-  rw [bedAux, dif_pos h]
+  rw [bedAux, dite_eq_left h]
 
 open Classical in
 /-- The loop at a round without an absorption: the whole run, and the loop stops. -/
 theorem bedAux_of_not_exists (T : MarkedTriple k) (hm : T.m = 1)
     (C : Finset T.X.left.IdealSheafData)
     (h : ¬ ∃ n, HasAbsorptionAt T hm C n) : bedAux T hm C = bmoOneRun T hm := by
-  rw [bedAux, dif_neg h]
+  rw [bedAux, dite_eq_right h]
 
 /-! ### The components of `Y` and the sequence `BED` -/
 

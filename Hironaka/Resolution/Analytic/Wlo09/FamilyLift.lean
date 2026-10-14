@@ -290,7 +290,7 @@ def pieceFun (K' : Compacts N) (q : F'.space) : F.space :=
 
 theorem pieceFun_of_mem {K' : Compacts N} {q : F'.space} (hq : F'.map q ∈ F'.nhd K') :
     pieceFun hcl hrel K' q = pieceMap hcl hrel K' (F'.exists_toSpace_eq K' hq).choose :=
-  dif_pos hq
+  dite_eq_left hq
 
 /-- On its piece the piece function is over `g`. -/
 theorem map_pieceFun {K' : Compacts N} {q : F'.space} (hq : F'.map q ∈ F'.nhd K') :

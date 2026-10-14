@@ -197,12 +197,12 @@ noncomputable def liftPoint (p : M₁') : M₂' :=
 /-- Over the centre the lift is read through the chosen blow-up charts. -/
 theorem liftPoint_of_mem {p : M₁'} (hp : π₁ p ∈ Y) :
     liftPoint hY h₁ h₂ p = (bChart₂ hY h₁ h₂ p hp).symm (bChart₁ hY h₁ p hp p) := by
-  rw [liftPoint, dif_pos hp]
+  rw [liftPoint, dite_eq_left hp]
 
 /-- Off the centre the lift is the unique preimage under `π₂` of `π₁ p`. -/
 theorem liftPoint_of_notMem {p : M₁'} (hp : π₁ p ∉ Y) :
     liftPoint hY h₁ h₂ p = (h₂.bijOn_compl.surjOn (show π₁ p ∈ Yᶜ from hp)).choose := by
-  rw [liftPoint, dif_neg hp]
+  rw [liftPoint, dite_eq_right hp]
 
 /-- The lift commutes with the blow-downs: `π₂ ∘ liftPoint = π₁`. -/
 theorem blowDown_liftPoint (p : M₁') : π₂ (liftPoint hY h₁ h₂ p) = π₁ p := by

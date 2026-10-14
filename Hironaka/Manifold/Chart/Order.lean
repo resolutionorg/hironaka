@@ -46,7 +46,7 @@ variable {𝕜 : Type} [RCLike 𝕜] (E : Type*) [NormedAddCommGroup E] [NormedS
 
 /-- The constant coefficient of `∂_{X_i} F` is the coefficient of `X_i` in `F`. -/
 theorem constantCoeff_pderiv (i : Fin n) (F : MvPowerSeries (Fin n) 𝕜) :
-    MvPowerSeries.constantCoeff (MvPowerSeries.pderiv 𝕜 i F) =
+    MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := 𝕜) i F) =
       MvPowerSeries.coeff (Finsupp.single i 1) F := by
   rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_pderiv]
   simp

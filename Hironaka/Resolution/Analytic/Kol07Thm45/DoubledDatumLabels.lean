@@ -195,14 +195,14 @@ theorem sumLabelTrace_lab {ι' Λ : Type u} [LinearOrder ι'] [LinearOrder Λ]
     D.sumLabelTrace bed W hW hbed o lab i (lab k) =
       QuotientSpace.comap (D.resIn bed W hW hbed i).1 (D.sigmaMembers bed W hW hbed (o k)) := by
   have h : lab k ∈ Set.range lab := ⟨k, rfl⟩
-  rw [sumLabelTrace, dif_pos h, lab.injective h.choose_spec]
+  rw [sumLabelTrace, dite_eq_left h, lab.injective h.choose_spec]
 
 /-- The extended trace at a label off the range is the unit ideal. -/
 theorem sumLabelTrace_of_not_mem_range {ι' Λ : Type u} [LinearOrder ι'] [LinearOrder Λ]
     (o : ι' ≃o D.sigmaIndex bed W hW)
     (lab : ι' ↪o Λ) (i : D.ι) {σ : Λ} (h : σ ∉ Set.range lab) :
     D.sumLabelTrace bed W hW hbed o lab i σ = ⊤ := by
-  rw [sumLabelTrace, dif_neg h]
+  rw [sumLabelTrace, dite_eq_right h]
 
 end Cover
 
@@ -459,7 +459,7 @@ theorem label_route_eq_of_ne_top
     exact hk₁
   have hrange : Set.range φ₁ = Set.range φ₂ :=
     Set.Subset.antisymm (Set.range_subset_iff.mpr key₁) (Set.range_subset_iff.mpr key₂)
-  have heq : φ₁ = φ₂ := OrderEmbedding.range_inj.mp hrange
+  have heq : φ₁ = φ₂ := OrderEmbedding.range_inj_of_wellFoundedLT.mp hrange
   exact DFunLike.congr_fun heq ⟨l, hl⟩
 
 end Labels

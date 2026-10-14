@@ -1,6 +1,7 @@
 import Verso
 import VersoManual
 import VersoBlueprint
+import Blueprint.References
 import VersoBlueprint.Commands.Graph
 import VersoBlueprint.Commands.Summary
 import Blueprint.Introduction
@@ -34,13 +35,13 @@ principalization are, lists the theorems, and explains how to read a node. Two p
 the objects and operations in terms of which the theorems are stated, one for schemes and one for
 analytic geometry. The main theorems follow. They open with two statements whose files import
 Mathlib only: resolution of a variety by a single blow-up, which is Hironaka's Main Theorem I, and
-the local monomialization of a real-analytic function \[Ati70\]. Then come two strands: algebraic
-schemes, with Hironaka's Main Theorems I, II and II(N) and Corollaries 1 and 3 \[Hir64\], Kollár's
-functorial principalization and resolution and his strong resolution of a variety \[Kol07\], and
-Włodarczyk's embedded desingularization \[Wlo05\]; and analytic manifolds and spaces, with
-Hironaka's Main Theorem II″(N), Bierstone–Milman's principalization \[BM97\], Włodarczyk's
-functorial principalization and embedded desingularization \[Wlo09\], and the resolution of real-
-and complex-analytic spaces \[Kol07, Theorem 45\]. In the section of each theorem, the properties
+{citeAs Ati70}[the local monomialization of a real-analytic function]. Then come two strands: algebraic
+schemes, with {citeAs Hir64}[Hironaka's Main Theorems I, II and II(N) and Corollaries 1 and 3],
+{citeAs Kol07}[Kollár's functorial principalization and resolution and his strong resolution of a variety],
+and {citeAs Wlo05}[Włodarczyk's embedded desingularization]; and analytic manifolds and spaces, with
+Hironaka's Main Theorem II″(N), {citeAs BM97}[Bierstone–Milman's principalization],
+{citeAs Wlo09}[Włodarczyk's functorial principalization and embedded desingularization], and the resolution of real-
+and complex-analytic spaces {cite Kol07}[Theorem 45]. In the section of each theorem, the properties
 it asserts and the inputs particular to it are stated before the theorem; a property asserted by
 several theorems is stated at the first of them. The appendix holds a dictionary from the
 classical notions to their names in Mathlib and the library, the conventions and the sources.
@@ -113,3 +114,4 @@ conventions shared by the statements, and the sources.
 
 {blueprint_graph}
 {blueprint_summary}
+{blueprint_bibliography}

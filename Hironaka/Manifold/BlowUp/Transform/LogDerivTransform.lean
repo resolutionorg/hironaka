@@ -283,7 +283,7 @@ theorem exists_kollarChartData_of_mem_strictTransform {a' : M'}
     rfl
   · intro j hj
     rw [Derivation.preservesIdeal_span_singleton_iff, hχy h₀ hh₀, coordDerivStalk_coord,
-      if_neg fun e => hj (τ.injective e), map_zero]
+      ite_eq_right fun e => hj (τ.injective e), map_zero]
     exact zero_mem _
   · intro D f
     refine ⟨fun j => D (centredCoord E ψ Φ hΦ.mem_maximalAtlas ha' (τ j)), ?_⟩

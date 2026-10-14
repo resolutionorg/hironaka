@@ -8,13 +8,11 @@ module
 
 public import Hironaka.Resolution.Analytic.Functor.EmbeddedDesingFam
 public import Hironaka.AnalyticSpace.Resolution.Defs
-public import HironakaReferences  -- shake: keep (registry read by `@[source]`)
 public import Mathlib.Analysis.Complex.Basic
 import Hironaka.AnalyticSpace.RegPoints
 import Hironaka.AnalyticSpace.SncBoundaryChart
 import Hironaka.AnalyticSpace.SncDivisorSetLocal
 import Hironaka.Manifold.FiniteSuccession.Restrict.LiftRegDense
-import SourceAttr
 import Hironaka.Resolution.Analytic.Wlo09.Concrete
 import Hironaka.Resolution.Analytic.Kol07Thm45.AmbientFactorization
 import Hironaka.Resolution.Analytic.Kol07Thm45.GluingProperties
@@ -219,8 +217,11 @@ Relation to the source.
   subspaces, and the naturality follows from the uniqueness. The lift is glued from those lifts
   over the opens on which $\varphi$ is injective, and the uniqueness rests on the rigidity of
   morphisms out of a non-singular space: two morphisms that agree on a dense open subspace
-  agree. -/
-@[source Kol07 "Theorem 45", source Wlo09 "Theorem 2.0.1"]
+  agree.
+
+Source statement: [Kol07, Theorem 45]
+
+Source statement: [Wlo09, Theorem 2.0.1] -/
 theorem exists_functorial_resolution (K : Type) [RCLike K] :
     ∃ R : ResolutionAssignment (ReducedSpace.{u} K),
       (∀ X : ReducedSpace.{u} K,
@@ -265,10 +266,12 @@ Relation to the source.
   opens.
 * **Strengthening.** Surjectivity is not a printed clause. It is what Włodarczyk's "proper
   bimeromorphic" gives for a reduced complex space, whose simple locus is dense [Hir64,
-  Introduction]. -/
-@[source Kol07 "Theorem 45 (1)–(4)",
-  source Wlo09 "Theorem 2.0.1"
-    (comment := "surjectivity from the density of the simple locus over ℂ")]
+  Introduction].
+
+Source statement: [Kol07, Theorem 45 (1)–(4)]
+
+Source statement: [Wlo09, Theorem 2.0.1] (surjectivity from the density of the simple locus over
+ℂ) -/
 theorem exists_surjective_resolution_of_isReduced (X : AnalyticSpace.{u} ℂ) (hX : X.IsReduced) :
     ∃ (R : AnalyticSpace.{u} ℂ) (π : R ⟶ X),
       -- (1)–(3)

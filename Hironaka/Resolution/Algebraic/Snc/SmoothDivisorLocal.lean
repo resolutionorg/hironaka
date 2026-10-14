@@ -6,6 +6,8 @@ Authors: Chris Elliott (Resolution): formalization performed by Claude Fable 5.1
 module
 
 public import Hironaka.Scheme.Snc.SmoothDivisor
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Hironaka.Scheme.BlowUp.Descent
 import Hironaka.Scheme.IdealSheaf.StalkIdeal
 import Hironaka.Scheme.Smooth.SubschemeStalk

@@ -67,7 +67,7 @@ theorem convX_ne_zero (k : Fin n) : convX K k ≠ 0 := by
   have h1 := congrArg Subtype.val h
   rw [coe_convX] at h1
   have h2 := congrArg (coeff (Finsupp.single k 1)) h1
-  rw [coeff_X, if_pos rfl] at h2
+  rw [coeff_X, ite_eq_left rfl] at h2
   exact one_ne_zero (h2.trans (map_zero _))
 
 /-! ### Division by a coordinate -/
@@ -86,22 +86,23 @@ theorem X_mul_divX (k : Fin n) {c : MvPowerSeries (Fin n) K}
   ext ν
   rw [X_def, coeff_monomial_mul]
   by_cases hν : ν k = 0
-  · rw [if_neg, h0 ν hν]
+  · rw [ite_eq_right, h0 ν hν]
     rw [Finsupp.single_le_iff, hν]
     exact Nat.not_succ_le_zero 0
-  · rw [if_pos (Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hν)), one_mul, coeff_divX,
-      tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hν))]
+  · rw [ite_eq_left (Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hν)), one_mul,
+      coeff_divX, tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hν))]
 
 /-- Every series is `x_k · divX k c` plus its `x_k`-free part. -/
 theorem coeff_X_mul_divX (k : Fin n) (c : MvPowerSeries (Fin n) K) (ν : Fin n →₀ ℕ) :
     coeff ν (X k * divX k c) = if ν k = 0 then 0 else coeff ν c := by
   rw [X_def, coeff_monomial_mul]
   by_cases hν : ν k = 0
-  · rw [if_neg, if_pos hν]
+  · rw [ite_eq_right, ite_eq_left hν]
     rw [Finsupp.single_le_iff, hν]
     exact Nat.not_succ_le_zero 0
-  · rw [if_pos (Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hν)), one_mul, coeff_divX,
-      tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hν)), if_neg hν]
+  · rw [ite_eq_left (Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hν)), one_mul,
+      coeff_divX, tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hν)),
+      ite_eq_right hν]
 
 /-- The majorant bound `‖divX k c‖_ρ ≤ ρ_k⁻¹ ‖c‖_ρ`. -/
 theorem convNorm_divX_le (ρ : Radius n) (k : Fin n) (c : MvPowerSeries (Fin n) K) :
@@ -118,7 +119,8 @@ theorem convNorm_divX_le (ρ : Radius n) (k : Fin n) (c : MvPowerSeries (Fin n) 
         rw [coeff_divX, key ν, ENNReal.coe_mul]
         ring
     _ ≤ _ :=
-        mul_le_mul' le_rfl (ENNReal.tsum_comp_le_tsum_of_injective (add_left_injective _) _)
+        mul_le_mul' le_rfl (ENNReal.tsum_comp_le_tsum_of_injective (add_left_injective _)
+          (fun μ => ‖coeff μ c‖ₑ * (monomialEval ρ μ : ℝ≥0∞)))
 
 theorem divX_mem_conv (k : Fin n) {c : MvPowerSeries (Fin n) K} (hc : c ∈ Conv K n) :
     divX k c ∈ Conv K n := by

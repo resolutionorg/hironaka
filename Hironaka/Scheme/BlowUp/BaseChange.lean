@@ -209,8 +209,7 @@ theorem tensorHom_surjective : Function.Surjective (tensorHom S a I) := by
 /-- Common denominators: `bⁿ • w = p ⊗ 1` for some `n` and `p ∈ S`. -/
 theorem exists_pow_smul_eq_tmul_one (w : S ⊗[R] affineBlowUpAlgebra I a) :
     ∃ (n : ℕ) (p : S), algebraMap R S a ^ n • w = p ⊗ₜ 1 := by
-  induction w using TensorProduct.induction_on with
-  | zero => exact ⟨0, 0, by simp⟩
+  induction w using TensorProduct.inductionOn with
   | tmul s z =>
     obtain ⟨n, r, hr⟩ := IsLocalization.Away.surj (S := Localization.Away a) a
       (z : Localization.Away a)
@@ -269,8 +268,7 @@ theorem tensorHom_apply_eq_zero_iff (w : S ⊗[R] affineBlowUpAlgebra I a) :
 theorem smul_eq_lTensor_mulLeft (w : S ⊗[R] affineBlowUpAlgebra I a) :
     algebraMap R S a • w =
       LinearMap.lTensor S (LinearMap.mulLeft R (algebraMap R (affineBlowUpAlgebra I a) a)) w := by
-  induction w using TensorProduct.induction_on with
-  | zero => simp
+  induction w using TensorProduct.inductionOn with
   | tmul s z =>
     rw [LinearMap.lTensor_tmul, LinearMap.mulLeft_apply, TensorProduct.smul_tmul', smul_eq_mul,
       ← Algebra.smul_def, TensorProduct.smul_tmul, Algebra.smul_def]

@@ -259,7 +259,7 @@ theorem BR_baseChange_of_class (X : Scheme.{u}) [X.Over (Spec (CommRingCat.of k)
   have hZ' : (∐ coverPreimage p).IsReducedEquidimensional L :=
     .sigma _ (coverPreimageι p) (fun i => by
       change Sigma.ι _ i ≫ Sigma.desc (coverPreimageι p) ≫ (XL ↘ Spec (CommRingCat.of L)) = _
-      rw [← Category.assoc, Sigma.ι_desc]) hXL
+      rw [← Category.assoc, Sigma.ι_comp_desc]) hXL
   have hAff : IsAffine (∐ coverPreimage p) := inferInstance
   have hAffHom := isAffineHom_of_isAffine ((∐ coverPreimage p) ↘ Spec (CommRingCat.of L))
   have hqc : QuasiCompact ((∐ coverPreimage p) ↘ Spec (CommRingCat.of L)) := inferInstance

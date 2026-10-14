@@ -171,19 +171,19 @@ with its globally empty steps deleted. -/
 theorem BR_eq_of_descends (hX : X.IsReducedEquidimensional k)
     (hT : BRDescends k X) : BR k X = hT.choose.eraseEmpty := by
   unfold BR
-  rw [if_pos hX, dif_pos hT]
+  rw [ite_eq_left hX, dite_eq_left hT]
 
 /-- On a member of the class without the cover descent, `BR` is the empty sequence (a branch never
 taken, since the descent holds on every member of the class). -/
 theorem BR_eq_nil_of_not_descends (hX : X.IsReducedEquidimensional k)
     (hT : ¬ BRDescends k X) : BR k X = nil X := by
   unfold BR
-  rw [if_pos hX, dif_neg hT]
+  rw [ite_eq_left hX, dite_eq_right hT]
 
 /-- Off the class `BR` is the empty sequence. -/
 theorem BR_eq_nil_of_not_class (hX : ¬ X.IsReducedEquidimensional k) : BR k X = nil X := by
   unfold BR
-  rw [if_neg hX]
+  rw [ite_eq_right hX]
 
 /-- `BR` has no empty blow-up (both branches of the definition). -/
 theorem eraseEmpty_BR : (BR k X).eraseEmpty = BR k X := by

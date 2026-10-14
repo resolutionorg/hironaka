@@ -70,12 +70,12 @@ theorem BR_affine'_of_pos (X : Scheme.{u}) [X.Over (Spec (CommRingCat.of k))]
     (h : ∃ (TA : Triple k) (emb : X ⟶ TA.X.left), AdmissibleEmbedding k X TA emb) :
     BR_affine' k X = BR_affine h.choose h.choose_spec.choose := by
   unfold BR_affine'
-  rw [dif_pos h]
+  rw [dite_eq_left h]
 
 theorem BR_affine'_of_neg (X : Scheme.{u}) [X.Over (Spec (CommRingCat.of k))]
     (h : ¬ ∃ (TA : Triple k) (emb : X ⟶ TA.X.left), AdmissibleEmbedding k X TA emb) :
     BR_affine' k X = nil X := by
   unfold BR_affine'
-  rw [dif_neg h]
+  rw [dite_eq_right h]
 
 end Hironaka.Resolution

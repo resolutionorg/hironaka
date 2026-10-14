@@ -123,7 +123,7 @@ descended map. -/
 theorem resolutionPair_eq_of_glues (hX : X.IsReduced) (h : bed.ResolutionGlues X) :
     bed.resolutionPair X = ⟨h.some.glue.gluedOver, h.some.glue.descMap⟩ := by
   unfold resolutionPair
-  rw [dif_pos hX, dif_pos h]
+  rw [dite_eq_left hX, dite_eq_left h]
 
 open Classical in
 /-- On a reduced `X` without a gluing datum, the pair is `⟨X, 𝟙 X⟩` (a branch never taken under
@@ -131,7 +131,7 @@ open Classical in
 theorem resolutionPair_eq_of_not_glues (hX : X.IsReduced) (h : ¬ bed.ResolutionGlues X) :
     bed.resolutionPair X = ⟨X, 𝟙 X⟩ := by
   unfold resolutionPair
-  rw [dif_pos hX, dif_neg h]
+  rw [dite_eq_left hX, dite_eq_right h]
 
 open Classical in
 /-- Off the class of reduced spaces the pair is `⟨X, 𝟙 X⟩` (the analytic counterpart of
@@ -139,7 +139,7 @@ open Classical in
 theorem resolutionPair_eq_of_not_isReduced (hX : ¬ X.IsReduced) :
     bed.resolutionPair X = ⟨X, 𝟙 X⟩ := by
   unfold resolutionPair
-  rw [dif_neg hX]
+  rw [dite_eq_right hX]
 
 /-- On a reduced `X` with a gluing datum, `R(X)` is the chosen glued space. -/
 theorem resolution_eq_of_glues (hX : X.IsReduced) (h : bed.ResolutionGlues X) :

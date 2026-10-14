@@ -90,7 +90,7 @@ instance instIsAffineAffineCoverScheme : IsAffine (affineCoverScheme X) :=
 theorem ι_comp_affineCoverDesc (i : (finiteAffineCover X).I₀) :
     Sigma.ι (fun i => (finiteAffineCover X).X i) i ≫ affineCoverDesc X =
       (finiteAffineCover X).f i :=
-  Sigma.ι_desc _ _
+  Sigma.ι_comp_desc _ _
 
 /-- `g` is smooth: locality on the source, each piece being an open immersion. -/
 theorem smooth_affineCoverDesc : Smooth (affineCoverDesc X) := by

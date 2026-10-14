@@ -163,16 +163,17 @@ theorem germ_coeffMatSec {q d : ℕ} {V : Opens (Kn.{u} K m)}
         L N l i := by
   by_cases h1 : ((finProdFinEquiv.symm i).2 : ℕ) ≤ l
   · by_cases h2 : (l : ℕ) - (finProdFinEquiv.symm i).2 < d
-    · simp only [coeffMatSec, coeffMat', coeffMat, coeff_polyOfCoeff, dif_pos (And.intro h1 h2),
-        if_pos h1, dif_pos h2]
+    · simp only [coeffMatSec, coeffMat', coeffMat, coeff_polyOfCoeff,
+        dite_eq_left (And.intro h1 h2), ite_eq_left h1, dite_eq_left h2]
     · have hn : ¬ (((finProdFinEquiv.symm i).2 : ℕ) ≤ l ∧
           (l : ℕ) - (finProdFinEquiv.symm i).2 < d) := fun h => h2 h.2
-      simp only [coeffMatSec, coeffMat', coeffMat, coeff_polyOfCoeff, if_pos h1, dif_neg h2]
-      rw [dif_neg hn, map_zero]
+      simp only [coeffMatSec, coeffMat', coeffMat, coeff_polyOfCoeff, ite_eq_left h1,
+        dite_eq_right h2]
+      rw [dite_eq_right hn, map_zero]
   · have hn : ¬ (((finProdFinEquiv.symm i).2 : ℕ) ≤ l ∧
         (l : ℕ) - (finProdFinEquiv.symm i).2 < d) := fun h => h1 h.1
-    simp only [coeffMatSec, coeffMat', coeffMat, coeff_polyOfCoeff, if_neg h1]
-    rw [dif_neg hn, map_zero]
+    simp only [coeffMatSec, coeffMat', coeffMat, coeff_polyOfCoeff, ite_eq_right h1]
+    rw [dite_eq_right hn, map_zero]
 
 end Sections
 

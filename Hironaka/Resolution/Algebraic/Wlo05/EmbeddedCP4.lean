@@ -159,7 +159,7 @@ theorem one_le_epsOrderC_K (h₁ : l = 0 → ∃ k ∈ s, b k ≠ 0) :
         have := congrArg Fin.val h
         simp only [Fin.val_zero, Fin.val_last] at this
         omega
-      rw [Function.update_of_ne hne, δAdm, if_pos (by simp only [Fin.val_zero]; omega)]
+      rw [Function.update_of_ne hne, δAdm, ite_eq_left (by simp only [Fin.val_zero]; omega)]
       omega
 
 include hb in
@@ -170,7 +170,7 @@ theorem one_le_epsOrderC_I (h₁ : l = 0 → ∃ k ∈ s, b k ≠ 0) :
   by_cases hl0 : l = 0
   · have := one_le_sum_of_exists s (h₁ hl0)
     omega
-  · rw [δAdm, if_pos (by simp only [Fin.val_zero]; omega)]
+  · rw [δAdm, ite_eq_left (by simp only [Fin.val_zero]; omega)]
     omega
 
 include ha hl in
@@ -181,9 +181,9 @@ theorem epsOrderC_I_mono (h₂ : 0 < l → ∃ k ∈ s, a ⟨l - 1, by omega⟩ 
   refine epsOrder_mono_of _ _ _ (fun i => ?_) i
   simp only [sum_stratumCoords_eq σ s l (a _) (ha _), δAdm, Fin.val_castSucc, Fin.val_succ]
   by_cases hi : i.val < l
-  · rw [if_pos hi]
+  · rw [ite_eq_left hi]
     by_cases hi1 : i.val + 1 < l
-    · rw [if_pos hi1]
+    · rw [ite_eq_left hi1]
       omega
     · have hl' : l = i.val + 1 := by omega
       have := one_le_sum_of_exists s (h₂ (by omega))
@@ -191,7 +191,7 @@ theorem epsOrderC_I_mono (h₂ : 0 < l → ∃ k ∈ s, a ⟨l - 1, by omega⟩ 
         simp only [Fin.val_castSucc]; omega)
       rw [hidx] at this
       omega
-  · rw [if_neg hi]
+  · rw [ite_eq_right hi]
     omega
 
 include ha hl in
@@ -206,7 +206,7 @@ theorem epsOrderC_K_mono (h₂ : 0 < l → ∃ k ∈ s, a ⟨l - 1, by omega⟩ 
   rw [hcs, sum_stratumCoords_eq σ s l (a _) (ha _)]
   simp only [δAdm, Fin.val_castSucc]
   by_cases hi : i.val < l
-  · rw [if_pos hi]
+  · rw [ite_eq_left hi]
     by_cases hsucc : i.succ = Fin.last r
     · have hval : i.val + 1 = r := by
         have := congrArg Fin.val hsucc
@@ -219,20 +219,20 @@ theorem epsOrderC_K_mono (h₂ : 0 < l → ∃ k ∈ s, a ⟨l - 1, by omega⟩ 
     · rw [Function.update_of_ne hsucc]
       simp only [δAdm, Fin.val_succ]
       by_cases hi1 : i.val + 1 < l
-      · rw [if_pos hi1]
+      · rw [ite_eq_left hi1]
         omega
       · have := one_le_sum_of_exists s (h₂ (by omega))
         have hidx : (⟨l - 1, by omega⟩ : Fin (r + 1)) = i.castSucc := Fin.ext (by
           simp only [Fin.val_castSucc]; omega)
         rw [hidx] at this
         omega
-  · rw [if_neg hi]
+  · rw [ite_eq_right hi]
     omega
 
 /-- Along a terminal-normal stratum every chain equation is an equation of the centre. -/
 theorem δ_terminal_eq (hσ : Function.Injective σ) (hs : ∀ i, σ i ∉ s) (i : Fin (r + 1)) :
     (if σ i ∈ stratumCoords σ s (r + 1) then 1 else 0) = 1 := by
-  rw [if_pos ((mem_stratumCoords_iff σ s hσ hs (r + 1) i).mpr i.2)]
+  rw [ite_eq_left ((mem_stratumCoords_iff σ s hσ hs (r + 1) i).mpr i.2)]
 
 /-- The un-isolated form's ε-orders along a terminal-normal stratum are positive and
 non-decreasing without any exponent condition. -/
@@ -259,7 +259,7 @@ def Dexp (Efun : Fin (r + 1) → ℕ) (i : Fin (r + 1)) : ℕ :=
 theorem Dexp_castSucc (Efun : Fin (r + 1) → ℕ) (i : Fin r) :
     Dexp Efun i.castSucc = Efun i.succ - Efun i.castSucc := by
   unfold Dexp
-  rw [dif_pos (by simp)]
+  rw [dite_eq_left (by simp)]
   rfl
 
 end Increments

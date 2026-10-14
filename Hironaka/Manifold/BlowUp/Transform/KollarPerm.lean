@@ -80,13 +80,13 @@ theorem exists_kollarPerm (σ : Fin c ↪ Fin n) (i : Fin c) :
       else if h₂ : j.val = c - 1 then σ i else eC ⟨j.val - c, by omega⟩, ?_, ?_, ?_⟩
     · intro j h₁
       dsimp only
-      rw [dif_pos h₁]
+      rw [dite_eq_left h₁]
     · have h₁ : ¬ r.val < c - 1 := by omega
       dsimp only
-      rw [dif_neg h₁, dif_pos hrval]
+      rw [dite_eq_right h₁, dite_eq_left hrval]
     · intro j h₁ h₂
       dsimp only
-      rw [dif_neg h₁, dif_neg h₂]
+      rw [dite_eq_right h₁, dite_eq_right h₂]
   have hAmem : ∀ (j : Fin n) (h₁ : j.val < c - 1), f j ∈ kollarFirst σ i := fun j h₁ => by
     rw [hfA j h₁]; exact hAmem' _
   have hCmem : ∀ (j : Fin n) (h₁ : ¬ j.val < c - 1) (h₂ : j.val ≠ c - 1), f j ∈ kollarLast σ :=

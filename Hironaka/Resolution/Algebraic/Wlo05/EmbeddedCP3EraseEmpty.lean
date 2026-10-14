@@ -157,7 +157,7 @@ theorem cp3For_eraseEmpty (f : X ⟶ Spec (CommRingCat.of k)) (n : ℕ) [SmoothO
     by_cases hD' : D = ⊤
     · subst hD'
       have hiso : IsIso (⊤ : X.IdealSheafData).blowUpπ := blowUp.isIso_π_top
-      rw [BlowUpSequence.eraseEmpty, dif_pos rfl]
+      rw [BlowUpSequence.eraseEmpty, dite_eq_left rfl]
       have hrest := ih ((⊤ : X.IdealSheafData).blowUpπ ≫ f) _ _ ht hr
       have key := cp3For_pullback_of_isIso ((⊤ : X.IdealSheafData).blowUpπ ≫ f) n rest.eraseEmpty
         (inv (⊤ : X.IdealSheafData).blowUpπ) _ _ (IsOrderGeSeq.eraseEmpty
@@ -165,7 +165,7 @@ theorem cp3For_eraseEmpty (f : X ⟶ Spec (CommRingCat.of k)) (n : ℕ) [SmoothO
       rw [markedTransform_top_left, ← Scheme.IdealSheafData.comap_comp, IsIso.inv_hom_id,
         Scheme.IdealSheafData.comap_id] at key
       exact (cp3For_iff_of_extendsByEmpty _ _ (extendsByEmpty_totalTransform_top_comap_inv E)).2 key
-    · rw [BlowUpSequence.eraseEmpty, dif_neg hD', cp3For_cons_iff]
+    · rw [BlowUpSequence.eraseEmpty, dite_eq_right hD', cp3For_cons_iff]
       exact ⟨h0, ih (D.blowUpπ ≫ f) _ _ ht hr⟩
 
 /-- **CP3 descends along a coproduct of open immersions** covering the triple ([Kol07, Theorem 105];

@@ -129,7 +129,7 @@ theorem X_sq_notMem_span_X_mul_X {σ K : Type*} [Field K] {i j : σ} (hij : i �
     (dvd_mul_left _ _).trans (Ideal.mem_span_singleton.mp h)
   rw [MvPowerSeries.X_dvd_iff] at hdvd
   have := hdvd (Finsupp.single i 2) (by simp [hij])
-  rw [MvPowerSeries.coeff_X_pow, if_pos rfl] at this
+  rw [MvPowerSeries.coeff_X_pow, ite_eq_left rfl] at this
   exact one_ne_zero this
 
 end IsLocalRing

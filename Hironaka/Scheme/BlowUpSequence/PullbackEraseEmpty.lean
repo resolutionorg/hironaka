@@ -245,14 +245,14 @@ theorem IsOrderSeq.eraseEmpty [CharZero k] (f : X ⟶ Spec (.of k)) (n : ℕ)
     by_cases hD' : D = ⊤
     · subst hD'
       have hiso : IsIso (⊤ : X.IdealSheafData).blowUpπ := blowUp.isIso_π_top
-      rw [BlowUpSequence.eraseEmpty, dif_pos rfl]
+      rw [BlowUpSequence.eraseEmpty, dite_eq_left rfl]
       have key := IsOrderSeq.pullback ((⊤ : X.IdealSheafData).blowUpπ ≫ f) n (inv
           (⊤ : X.IdealSheafData).blowUpπ) (d := 0)
         (ih ((⊤ : X.IdealSheafData).blowUpπ ≫ f) ht)
       rw [IsIso.inv_hom_id_assoc, weakTransform_top_left, ← Scheme.IdealSheafData.comap_comp,
         IsIso.inv_hom_id, Scheme.IdealSheafData.comap_id] at key
       exact (extendsByEmpty_totalTransform_top_comap_inv E).isOrderSeq key
-    · rw [BlowUpSequence.eraseEmpty, dif_neg hD', isOrderSeq_cons_iff]
+    · rw [BlowUpSequence.eraseEmpty, dite_eq_right hD', isOrderSeq_cons_iff]
       exact ⟨⟨hD, hsnc, hm⟩, ih (D.blowUpπ ≫ f) ht⟩
 
 /-- The marked form of `IsOrderSeq.eraseEmpty` [Kol07, 32 and 34.1]. -/
@@ -269,14 +269,14 @@ theorem IsOrderGeSeq.eraseEmpty [CharZero k] (f : X ⟶ Spec (.of k)) (n : ℕ)
     by_cases hD' : D = ⊤
     · subst hD'
       have hiso : IsIso (⊤ : X.IdealSheafData).blowUpπ := blowUp.isIso_π_top
-      rw [BlowUpSequence.eraseEmpty, dif_pos rfl]
+      rw [BlowUpSequence.eraseEmpty, dite_eq_left rfl]
       have key := IsOrderGeSeq.pullback ((⊤ : X.IdealSheafData).blowUpπ ≫ f) n (inv
           (⊤ : X.IdealSheafData).blowUpπ) (d := 0)
         (ih ((⊤ : X.IdealSheafData).blowUpπ ≫ f) ht)
       rw [IsIso.inv_hom_id_assoc, markedTransform_top_left, ← Scheme.IdealSheafData.comap_comp,
         IsIso.inv_hom_id, Scheme.IdealSheafData.comap_id] at key
       exact (extendsByEmpty_totalTransform_top_comap_inv E).isOrderGeSeq key
-    · rw [BlowUpSequence.eraseEmpty, dif_neg hD', isOrderGeSeq_cons_iff]
+    · rw [BlowUpSequence.eraseEmpty, dite_eq_right hD', isOrderGeSeq_cons_iff]
       exact ⟨⟨hD, hsnc, hm⟩, ih (D.blowUpπ ≫ f) ht⟩
 
 /-- The surjective case of [Kol07, 34.1], where no deletion is needed. The surjectivity hypothesis

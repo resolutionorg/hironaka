@@ -189,7 +189,7 @@ theorem smoothWindow_round_one (T : MarkedTriple k) (hm : T.m = 1)
     by_contra hno
     have h1 : firstCenterIndex (bmoOneRun T hm) c = (bmoOneRun T hm).length := by
       unfold firstCenterIndex
-      rw [dif_neg hno]
+      rw [dite_eq_right hno]
     omega
   refine ⟨hex, ?_⟩
   refine centersMissBefore_of_forall_center_pullback_eq_top (bmoOneRun T hm) j _
@@ -273,7 +273,7 @@ theorem isIntegral_strictTransformSeq_take_of_le_firstCenterIndex (c : T.X.left.
     fun ⟨i, hi⟩ => not_centerContains_take_of_le_firstCenterIndex T hm n₀ c hle i hi
   have h : firstCenterIndex ((bmoOneRun T hm).take n₀) c = ((bmoOneRun T hm).take n₀).length := by
     unfold firstCenterIndex
-    rw [dif_neg hno]
+    rw [dite_eq_right hno]
   rw [h]
   exact le_of_eq (Fin.val_last _)
 

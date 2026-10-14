@@ -118,7 +118,7 @@ variable {R : Type*} [CommRing R] {r : ℕ}
 /-- `span {x} · span (range g) = span (range (x · g))`. -/
 theorem span_singleton_mul_span_range {ι : Type*} (x : R) (g : ι → R) :
     span {x} * span (Set.range g) = span (Set.range fun i => x * g i) := by
-  rw [span_mul_span', Set.singleton_mul, ← Set.range_comp]
+  rw [span_mul_span, Set.singleton_mul, ← Set.range_comp]
   rfl
 
 /-- Units multiplying the level monomials do not change the chain ideal. -/

@@ -280,14 +280,15 @@ theorem mul_pderiv_mem_sup_pow {I B : Ideal (MvPowerSeries (Fin n) K)}
     (hB : B ≤ maximalIdeal (MvPowerSeries (Fin n) K)) (h1 : IsInvariantOnePlus I B)
     {b : MvPowerSeries (Fin n) K} (hb : b ∈ B) {f : MvPowerSeries (Fin n) K} (hf : f ∈ I)
     (i : Fin n) {N : ℕ} (hN : 1 ≤ N) :
-    b * MvPowerSeries.pderiv K i f ∈ I ⊔ maximalIdeal (MvPowerSeries (Fin n) K) ^ (N + 1) := by
+    b * MvPowerSeries.pderiv (R := K) i f ∈
+      I ⊔ maximalIdeal (MvPowerSeries (Fin n) K) ^ (N + 1) := by
   classical
   obtain ⟨q₀, hq₀⟩ := exists_onePlus_shift B hB i hb
   -- `u j = (b^j / j!) ∂ᵢ^j f`
   set u : ℕ → MvPowerSeries (Fin n) K := fun j =>
     ((j.factorial : ℚ)⁻¹ • (pderivEnd' i ^ j) f) * b ^ j with hu
   have hu0 : u 0 = f := by simp [hu]
-  have hu1 : u 1 = b * MvPowerSeries.pderiv K i f := by simp [hu, mul_comm]
+  have hu1 : u 1 = b * MvPowerSeries.pderiv (R := K) i f := by simp [hu, mul_comm]
   set J := I ⊔ maximalIdeal (MvPowerSeries (Fin n) K) ^ (N + 1) with hJ
   obtain ⟨lam, hinj, hlam⟩ := exists_admissible_scalars q₀ N
   -- the Taylor sums `w k := ∑_{j=1}^{N} lam k ^ j • u j` lie in `J`
@@ -337,7 +338,7 @@ theorem, `b ∂ᵢ f ∈ I` for `b ∈ B`, `f ∈ I` and every coordinate `i`. -
 theorem mul_pderiv_mem_of_isInvariantOnePlus {I B : Ideal (MvPowerSeries (Fin n) K)}
     (hB : B ≤ maximalIdeal (MvPowerSeries (Fin n) K)) (h1 : IsInvariantOnePlus I B)
     {b : MvPowerSeries (Fin n) K} (hb : b ∈ B) {f : MvPowerSeries (Fin n) K} (hf : f ∈ I)
-    (i : Fin n) : b * MvPowerSeries.pderiv K i f ∈ I := by
+    (i : Fin n) : b * MvPowerSeries.pderiv (R := K) i f ∈ I := by
   refine mem_of_forall_mem_sup_pow fun s => ?_
   rcases s with _ | s
   · simp

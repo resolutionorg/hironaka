@@ -8,10 +8,11 @@ module
 public import Mathlib.AlgebraicGeometry.Morphisms.Etale
 public import Hironaka.Algebra.Local.OrderFlat
 public import Hironaka.Scheme.IdealSheaf.Defs
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
 import Hironaka.Algebra.Local.OrderSmooth
 import Hironaka.Scheme.IdealSheaf.Order.Basic
 import Hironaka.Scheme.IdealSheaf.StalkIdeal
-import Mathlib.Data.NNReal.Defs
+import Mathlib.Basic.NNReal.Defs
 import Mathlib.Data.Nat.Choose.Multinomial
 
 /-!

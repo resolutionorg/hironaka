@@ -126,7 +126,7 @@ theorem logCoordDerivStalk_preservesIdeal (h i : Fin n) :
   · subst hi
     rw [logCoordDerivStalk_self, Derivation.smul_apply, smul_eq_mul]
     exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _)
-  · rw [logCoordDerivStalk_of_ne E ψ φ hφ ha hi, coordDerivStalk_coord, if_neg hi, map_zero]
+  · rw [logCoordDerivStalk_of_ne E ψ φ hφ ha hi, coordDerivStalk_coord, ite_eq_right hi, map_zero]
     exact Ideal.zero_mem _
 
 /-- A derivation preserving `(x_h)` is an `𝒪_{M,a}`-combination of `x_h ∂_h` and the `∂_j`,

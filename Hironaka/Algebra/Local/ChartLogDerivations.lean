@@ -152,8 +152,8 @@ theorem preservesIdeal_chartSat_smul_chartDerivRingOver (hh : h < r) :
     rw [Derivation.smul_apply, chartDerivRingOver_apply, algebraMap_x_eq_mul_chartYR c.x r hh,
       Derivation.leibniz]
     simp only [smul_eq_mul]
-    rw [c.chartDerivRing_chartYR r, if_pos rfl, mul_one,
-      ← chartYR_self_eq_algebraMap c.x r, c.chartDerivRing_chartYR r, if_neg hh.ne, mul_zero,
+    rw [c.chartDerivRing_chartYR r, ite_eq_left rfl, mul_one,
+      ← chartYR_self_eq_algebraMap c.x r, c.chartDerivRing_chartYR r, ite_eq_right hh.ne, mul_zero,
       add_zero]
     exact mul_comm _ _
   rw [hval]
@@ -169,7 +169,7 @@ theorem preservesIdeal_chartSat_chartDerivRingOver (hh : h < r) {i : Fin n} (hi 
       if i = r then chartYR c.x r h else 0 := by
     rw [chartDerivRingOver_apply, algebraMap_x_eq_mul_chartYR c.x r hh, Derivation.leibniz]
     simp only [smul_eq_mul]
-    rw [c.chartDerivRing_chartYR r, if_neg hi, mul_zero, zero_add,
+    rw [c.chartDerivRing_chartYR r, ite_eq_right hi, mul_zero, zero_add,
       ← chartYR_self_eq_algebraMap c.x r, c.chartDerivRing_chartYR r]
     split_ifs <;> simp
   rw [hval]

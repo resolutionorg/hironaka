@@ -111,8 +111,7 @@ theorem linearIndependent_tmul_of_bijective_residueField_map
   have hΦ : ∀ (r : ResidueField L) (m : ResidueField P ⊗[P] Ω[P⁄k]),
       Φ (e.symm r • m) = r • Φ m := by
     intro r m
-    induction m using TensorProduct.induction_on with
-    | zero => simp only [smul_zero, map_zero]
+    induction m using TensorProduct.inductionOn with
     | tmul a w =>
       rw [TensorProduct.smul_tmul']
       change E (e.symm r • a) ⊗ₜ[P] w = r • (E a ⊗ₜ[P] w)

@@ -58,7 +58,7 @@ theorem eraseIdx_lt_of_ne_top_of_lt : ∀ {X : Scheme.{u}} (S : BlowUpSequence X
     classical
     have hD' : D ≠ ⊤ := hD
     change eraseIdx (cons X D rest) 0 < (if D = ⊤ then 0 else 1) + eraseIdx rest m
-    rw [eraseIdx_cons_zero, if_neg hD']
+    rw [eraseIdx_cons_zero, ite_eq_right hD']
     omega
   | _, cons X D rest, l + 1, m + 1, hl, hD, hlm => by
     classical

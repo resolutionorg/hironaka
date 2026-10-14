@@ -40,8 +40,8 @@ env:
   GO_VERSION: 1.27.1
   # leanprover/comparator, tag v4.35.0-rc3
   COMPARATOR_COMMIT: fd5d5bcf14177b187f66d4502071268d877887c3
-  # leanprover/lean4export, tag v4.33.0 (there is no v4.33.1 tag; it builds unchanged with v4.33.1)
-  LEAN4EXPORT_COMMIT: 15f6055e299ad5b89345e533cc2192f4cc00f659
+  # leanprover/lean4export, tag v4.34.0
+  LEAN4EXPORT_COMMIT: 076e8e57707e813375e8f9da8bf989799ace9680
   # Zouuup/landrun, main of 2026-07-23 (version 0.1.18); comparator asks for landrun built from main
   LANDRUN_COMMIT: 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4
 

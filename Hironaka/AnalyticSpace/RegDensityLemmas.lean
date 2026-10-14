@@ -233,7 +233,7 @@ theorem isRegularLocalRing_quotient_graphIdeal (e : Fin d ↪ Fin n) (T : Fin n 
       · have hne : Finsupp.single (i : Fin n) 1 ≠ Finsupp.single ((ε a : ι) : Fin n) 1 := by
           intro h'
           exact hia (Subtype.ext (Finsupp.single_left_injective one_ne_zero h'))
-        rw [if_neg hne, Pi.single_eq_of_ne hia]
+        rw [ite_eq_right hne, Pi.single_eq_of_ne hia]
     rw [hcomp]
     exact (Pi.basisFun ℂ ι).linearIndependent.comp ε ε.injective
   obtain ⟨hreg, -⟩ := isRegularLocalRing_quotient_span_range_and_ringKrullDim ℂ n q h hm hli

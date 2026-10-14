@@ -167,14 +167,14 @@ theorem HypersurfaceFamily.idealSheaf_comap_diffeomorph (G : HypersurfaceFamily 
   · have h₁ : IdealSheaf.HasLocalGenerators (𝒪 := structureSheaf 𝕜 E' N) fun x : N =>
         vanishingStalk (𝕜 := 𝕜) (E := E') (⇑g ⁻¹' G.support) x :=
       hasLocalGenerators_vanishingStalk_preimage_diffeomorph g _ h₂
-    rw [dif_pos h₂, dif_pos h₁]
+    rw [dite_eq_left h₂, dite_eq_left h₁]
     refine IdealSheaf.ext fun x => ?_
     rw [IdealSheaf.stalkIdeal_pullbackDiffeomorph, IdealSheaf.stalkIdeal_ofStalks,
       IdealSheaf.stalkIdeal_ofStalks, vanishingStalk_preimage_pullbackDiffeomorph]
   · have h₁ : ¬ IdealSheaf.HasLocalGenerators (𝒪 := structureSheaf 𝕜 E' N) fun x : N =>
         vanishingStalk (𝕜 := 𝕜) (E := E') (⇑g ⁻¹' G.support) x :=
       fun hg => h₂ ((hasLocalGenerators_vanishingStalk_preimage_diffeomorph_iff g _).mp hg)
-    rw [dif_neg h₂, dif_neg h₁]
+    rw [dite_eq_right h₂, dite_eq_right h₁]
     exact (IdealSheaf.pullbackDiffeomorph_top g).symm
 
 /-- **`IsSnc` does not depend on the chart isomorphism**: the corollary of

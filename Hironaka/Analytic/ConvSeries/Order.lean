@@ -85,7 +85,7 @@ theorem le_order_iff_iteratedFDeriv_eq_zero {f : MvPowerSeries (Fin m) K} (hf : 
       rw [nsmul_eq_mul] at e
       rw [e, hj, mul_zero]
       rfl
-    have := congrArg (MvPolynomial.coeff ν) hpoly
-    rwa [coeff_homogeneousPoly f rfl, MvPolynomial.coeff_zero] at this
+    have := congrArg (AddMonoidAlgebra.coeff · ν) hpoly
+    rwa [coeff_homogeneousPoly f rfl, AddMonoidAlgebra.coeff_zero] at this
 
 end Analytic

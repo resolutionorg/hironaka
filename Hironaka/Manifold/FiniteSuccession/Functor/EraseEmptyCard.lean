@@ -66,10 +66,10 @@ theorem length_eraseEmpty_add_emptyCount : ∀ {M : AnalyticManifold.{u} 𝕜 E}
   | _, @cons _ _ _ _ _ _ _ _ Y _ hY rest => by
     rw [emptyCount_cons, length_cons]
     by_cases hY₀ : Y = ∅
-    · rw [eraseEmpty_cons_of_eq_empty hY rest hY₀, length_map, if_pos hY₀]
+    · rw [eraseEmpty_cons_of_eq_empty hY rest hY₀, length_map, ite_eq_left hY₀]
       have := length_eraseEmpty_add_emptyCount rest
       omega
-    · rw [eraseEmpty_cons_of_ne_empty hY rest hY₀, length_cons, if_neg hY₀]
+    · rw [eraseEmpty_cons_of_ne_empty hY rest hY₀, length_cons, ite_eq_right hY₀]
       have := length_eraseEmpty_add_emptyCount rest
       omega
 

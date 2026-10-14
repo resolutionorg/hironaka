@@ -84,17 +84,17 @@ theorem sum_X_mul_divPart {c : MvPowerSeries (Fin n) K} (hc : constantCoeff c = 
     rw [← coeff_zero_eq_constantCoeff_apply] at hc
     rw [hc]
     refine Finset.sum_eq_zero fun i _ => ?_
-    rw [if_neg]
+    rw [ite_eq_right]
     intro h
     have := h i
     simp at this
   · obtain ⟨i₀, hi₀⟩ := exists_isLeadIndex hd
     rw [Finset.sum_eq_single i₀]
     · have hle : single i₀ 1 ≤ d := single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hi₀.1)
-      rw [if_pos hle, coeff_divPart, tsub_add_cancel_of_le hle, if_pos hi₀]
+      rw [ite_eq_left hle, coeff_divPart, tsub_add_cancel_of_le hle, ite_eq_left hi₀]
     · intro i _ hi
       split_ifs with hle
-      · rw [coeff_divPart, tsub_add_cancel_of_le hle, if_neg]
+      · rw [coeff_divPart, tsub_add_cancel_of_le hle, ite_eq_right]
         exact fun h => hi (h.unique hi₀)
       · rfl
     · intro h
@@ -129,7 +129,8 @@ theorem convNorm_divPart_mul_le (ρ : Fin n → ℝ≥0) (i : Fin n) (c : MvPowe
         · exact le_rfl
         · simp
     _ ≤ ∑' d : Fin n →₀ ℕ, ‖coeff d c‖ₑ * (monomialEval ρ d : ℝ≥0∞) :=
-        ENNReal.tsum_comp_le_tsum_of_injective (add_left_injective (single i 1)) _
+        ENNReal.tsum_comp_le_tsum_of_injective (add_left_injective (single i 1))
+          (fun d => ‖coeff d c‖ₑ * (monomialEval ρ d : ℝ≥0∞))
 
 /-- The parts of a convergent series are convergent. -/
 theorem divPart_mem_conv {c : MvPowerSeries (Fin n) K} (hc : c ∈ Conv K n) (i : Fin n) :
@@ -175,6 +176,6 @@ theorem sub_truncDeg_mem_maximalIdeal_pow (k : ℕ) (c : MvPowerSeries (Fin n) K
     c - truncDeg k c ∈ 𝔪 ^ k := by
   rw [mem_maximalIdeal_pow_iff]
   intro d hd
-  rw [map_sub, coeff_truncDeg, if_pos hd, sub_self]
+  rw [map_sub, coeff_truncDeg, ite_eq_left hd, sub_self]
 
 end Analytic

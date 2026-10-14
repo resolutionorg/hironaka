@@ -195,20 +195,20 @@ def stratumChart (x : dimOpens X hX d) : OpenPartialHomeomorph (dimOpens X hX d)
   map_source' w hw := by
     have hw' : w.1 ∈ chartV X hX d x := hw
     change (if hw : w.1 ∈ chartV X hX d x then stratumCoord x w hw else 0) ∈ {z | _}
-    rw [dif_pos hw']
+    rw [dite_eq_left hw']
     exact ((chartHomeo X hX d x).symm ⟨w.1, hw'⟩).2
   map_target' z hz := by
     have hz' : (ULift.up z : Kn.{u} K d) ∈ chartG X hX d x := hz
     change (if hz : (ULift.up z : Kn.{u} K d) ∈ chartG X hX d x then chartPt x ⟨ULift.up z, hz⟩
       else x) ∈ {w | _}
-    rw [dif_pos hz']
+    rw [dite_eq_left hz']
     exact ((chartE X hX d x).hom.1.base ⟨ULift.up z, hz'⟩).2
   left_inv' w hw := by
     have hw' : w.1 ∈ chartV X hX d x := hw
-    rw [dif_pos hw']
+    rw [dite_eq_left hw']
     have hz : (ULift.up (stratumCoord x w hw') : Kn.{u} K d) ∈ chartG X hX d x :=
       ((chartHomeo X hX d x).symm ⟨w.1, hw'⟩).2
-    rw [dif_pos hz]
+    rw [dite_eq_left hz]
     apply Subtype.ext
     change ((chartE X hX d x).hom.1.base ⟨_, hz⟩).1 = w.1
     have h : (⟨ULift.up (stratumCoord x w hw'), hz⟩ : analyticSpaceOfOpen K d (chartG X hX d x)) =
@@ -219,10 +219,10 @@ def stratumChart (x : dimOpens X hX d) : OpenPartialHomeomorph (dimOpens X hX d)
     exact congrArg Subtype.val ((chartHomeo X hX d x).apply_symm_apply ⟨w.1, hw'⟩)
   right_inv' z hz := by
     have hz' : (ULift.up z : Kn.{u} K d) ∈ chartG X hX d x := hz
-    rw [dif_pos hz']
+    rw [dite_eq_left hz']
     have hw : (chartPt x ⟨ULift.up z, hz'⟩).1 ∈ chartV X hX d x :=
       ((chartE X hX d x).hom.1.base ⟨ULift.up z, hz'⟩).2
-    rw [dif_pos hw]
+    rw [dite_eq_left hw]
     exact stratumCoord_chartPt x ⟨ULift.up z, hz'⟩
   open_source := (chartV X hX d x).2.preimage continuous_subtype_val
   open_target := (chartG X hX d x).2.preimage Homeomorph.ulift.symm.continuous
@@ -232,7 +232,7 @@ def stratumChart (x : dimOpens X hX d) : OpenPartialHomeomorph (dimOpens X hX d)
     have hw : w.1.1 ∈ chartV X hX d x := w.2
     change stratumCoord x w.1 hw =
       (if hw : w.1.1 ∈ chartV X hX d x then stratumCoord x w.1 hw else 0)
-    rw [dif_pos hw]
+    rw [dite_eq_left hw]
   continuousOn_invFun := by
     rw [continuousOn_iff_continuous_domRestrict]
     refine (continuous_chartPt x).congr fun z => ?_
@@ -240,7 +240,7 @@ def stratumChart (x : dimOpens X hX d) : OpenPartialHomeomorph (dimOpens X hX d)
     change chartPt x ⟨ULift.up z.1, hz⟩ =
       (if hz : (ULift.up z.1 : Kn.{u} K d) ∈ chartG X hX d x then chartPt x ⟨ULift.up z.1, hz⟩
         else x)
-    rw [dif_pos hz]
+    rw [dite_eq_left hz]
 
 theorem stratumChart_source (x : dimOpens X hX d) :
     (stratumChart x).source = {w | w.1 ∈ chartV X hX d x} :=
@@ -255,7 +255,7 @@ theorem stratumChart_apply (x : dimOpens X hX d) {w : dimOpens X hX d}
     (hw : w.1 ∈ chartV X hX d x) :
     stratumChart x w = stratumCoord x w hw := by
   change (if hw : w.1 ∈ chartV X hX d x then stratumCoord x w hw else 0) = _
-  rw [dif_pos hw]
+  rw [dite_eq_left hw]
 
 open Classical in
 theorem stratumChart_symm_apply (x : dimOpens X hX d) {z : Fin d → K}
@@ -263,7 +263,7 @@ theorem stratumChart_symm_apply (x : dimOpens X hX d) {z : Fin d → K}
     (stratumChart x).symm z = chartPt x ⟨ULift.up z, hz⟩ := by
   change (if hz : (ULift.up z : Kn.{u} K d) ∈ chartG X hX d x then chartPt x ⟨ULift.up z, hz⟩
     else x) = _
-  rw [dif_pos hz]
+  rw [dite_eq_left hz]
 
 theorem mem_stratumChart_source (x : dimOpens X hX d) : x ∈ (stratumChart x).source :=
   mem_chartV X hX d x
@@ -449,7 +449,7 @@ open Classical in
 theorem transitionExt_of_mem {w : Kn.{u} K d} (hw : w ∈ overlapTrace x y) :
     transitionExt x y w = (transitionFun x y ⟨w, hw⟩).1 := by
   change (if hw : w ∈ overlapTrace x y then (transitionFun x y ⟨w, hw⟩).1 else 0) = _
-  rw [dif_pos hw]
+  rw [dite_eq_left hw]
 
 theorem contMDiffOn_transitionExt :
     ContMDiffOn 𝓘(K, Kn.{u} K d) 𝓘(K, Kn.{u} K d) ω (transitionExt x y) (overlapTrace x y) := by

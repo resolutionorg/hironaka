@@ -526,13 +526,13 @@ theorem eraseEmpty_nil : (nil X).eraseEmpty = nil X := rfl
 /-- A nonempty first center is kept. -/
 theorem eraseEmpty_cons_of_ne_top {D : X.IdealSheafData} (rest : BlowUpSequence D.blowUp)
     (h : D ≠ ⊤) : (cons X D rest).eraseEmpty = cons X D rest.eraseEmpty := by
-  rw [eraseEmpty, dif_neg h]
+  rw [eraseEmpty, dite_eq_right h]
 
 /-- An empty first blow-up is deleted, its tail carried back to `X` along the inverse of the
 isomorphism `blowUpπ X ⊤`. -/
 theorem eraseEmpty_cons_top (rest : BlowUpSequence (⊤ : X.IdealSheafData).blowUp) :
     (cons X ⊤ rest).eraseEmpty = rest.eraseEmpty.pullback (inv (⊤ : X.IdealSheafData).blowUpπ) := by
-  rw [eraseEmpty, dif_pos rfl]
+  rw [eraseEmpty, dite_eq_left rfl]
 
 /-- The result of `eraseEmpty` has no empty centers: the empty blow-up convention of [Kol07, 32]. -/
 theorem noEmptyCenters_eraseEmpty (S : BlowUpSequence X) : S.eraseEmpty.NoEmptyCenters := by
@@ -587,11 +587,11 @@ theorem length_eraseEmpty_add_card (S : BlowUpSequence X) :
     rw [hc]
     by_cases hD : D = ⊤
     · subst hD
-      rw [eraseEmpty_cons_top, length_pullback, if_pos rfl]
+      rw [eraseEmpty_cons_top, length_pullback, ite_eq_left rfl]
       change rest.eraseEmpty.length + (1 + Nat.card {i : Fin rest.length // rest.IsEmptyAt i}) =
         rest.length + 1
       omega
-    · rw [eraseEmpty_cons_of_ne_top rest hD, if_neg hD]
+    · rw [eraseEmpty_cons_of_ne_top rest hD, ite_eq_right hD]
       change rest.eraseEmpty.length + 1 +
         (0 + Nat.card {i : Fin rest.length // rest.IsEmptyAt i}) = rest.length + 1
       omega

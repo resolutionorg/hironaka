@@ -146,10 +146,10 @@ theorem mem_maximalIdeal_sq_of_pderiv_mem {y : R} (hy : y ∈ maximalIdeal R)
     intro i
     have hi := h i
     simp only [map_sum, smul_eq_mul, Derivation.leibniz, c.pderiv_x, mul_ite, mul_one,
-      mul_zero, Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.mem_univ, if_true] at hi
+      mul_zero, Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.mem_univ, ite_true] at hi
     have : a i = c.pderiv i (∑ l, a l * c.x l) - ∑ l, c.x l * c.pderiv i (a l) := by
       simp only [map_sum, smul_eq_mul, Derivation.leibniz, c.pderiv_x, mul_ite, mul_one,
-        mul_zero, Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+        mul_zero, Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
       ring
     rw [this]
     exact Submodule.sub_mem _ (h i)

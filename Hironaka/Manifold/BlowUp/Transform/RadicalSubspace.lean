@@ -51,11 +51,11 @@ noncomputable def IdealSheaf.radicalSubspace (J : IdealSheaf 𝒪) : IdealSheaf 
 theorem IdealSheaf.stalkIdeal_radicalSubspace_of_hasLocalGenerators (J : IdealSheaf 𝒪)
     (hex : IdealSheaf.HasLocalGenerators (𝒪 := 𝒪) fun x => (J.stalkIdeal x).radical) (x : X) :
     (IdealSheaf.radicalSubspace J).stalkIdeal x = (J.stalkIdeal x).radical := by
-  rw [IdealSheaf.radicalSubspace, dif_pos hex, IdealSheaf.stalkIdeal_ofStalks]
+  rw [IdealSheaf.radicalSubspace, dite_eq_left hex, IdealSheaf.stalkIdeal_ofStalks]
 
 theorem IdealSheaf.radicalSubspace_of_not_hasLocalGenerators (J : IdealSheaf 𝒪)
     (hex : ¬ IdealSheaf.HasLocalGenerators (𝒪 := 𝒪) fun x => (J.stalkIdeal x).radical) :
     IdealSheaf.radicalSubspace J = ⊤ := by
-  rw [IdealSheaf.radicalSubspace, dif_neg hex]
+  rw [IdealSheaf.radicalSubspace, dite_eq_right hex]
 
 end Manifold

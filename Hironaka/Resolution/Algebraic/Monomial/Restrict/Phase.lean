@@ -275,7 +275,7 @@ theorem exists_orderEmbedding_extend (f : ℕ → ℕ) (K : ℕ) (hf : StrictMon
       · omega
       · omega
     exact ⟨OrderEmbedding.ofStrictMono _ hg, fun c hc => by
-      rw [OrderEmbedding.coe_ofStrictMono]; exact if_pos hc⟩
+      rw [OrderEmbedding.coe_ofStrictMono]; exact ite_eq_left hc⟩
 
 theorem step3_restrict_aux {L N : MonomialState} (h : Sub L N) :
     ∃ ρ' σ' : ℕ → ℕ, (∀ c, c < L.nextComp → ρ' c = c) ∧ (∀ ℓ, ℓ < L.nextLabel → σ' ℓ = ℓ) ∧

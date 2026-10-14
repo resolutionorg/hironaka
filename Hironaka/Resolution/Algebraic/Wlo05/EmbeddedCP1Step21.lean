@@ -153,7 +153,7 @@ theorem not_centerContains_step21Seq {η : T.X.left} (hη : η ∈ T.I.support.g
   | succ j ih =>
     simp only [step21Seq]
     by_cases hj : j < Fintype.card T.E.ι
-    · rw [dif_pos hj]
+    · rw [dite_eq_left hj]
       intro hcont
       rcases lt_or_ge l
         (step21Seq T hn hmax (fun j => bdData N 1 j Dom B (hDom 1) hB hsm hbc) j).1.length with
@@ -176,7 +176,7 @@ theorem not_centerContains_step21Seq {η : T.X.left} (hη : η ∈ T.I.support.g
             (fun j => bdData N 1 j Dom B (hDom 1) hB hsm hbc) j).1.markedTransformSeq
             T.I 1 (Fin.last _))
           hη'.mem_genericPoints hη'.notMem hη'.stalk_eq l' h2
-    · rw [dif_neg hj]
+    · rw [dite_eq_right hj]
       exact ih l
 
 /-- CP1 holds vacuously along Step 2.1. -/

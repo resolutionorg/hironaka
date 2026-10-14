@@ -144,7 +144,7 @@ theorem z_ten_mem_T11 : z ^ 10 ∈ T11 := by
 
 /-- `(x, y², z⁵)² ⊆ W(I)`. -/
 theorem D11_sq_le_T11 : D11 ^ 2 ≤ T11 := by
-  rw [pow_two, Ideal.span_mul_span', Ideal.span_le]
+  rw [pow_two, Ideal.span_mul_span, Ideal.span_le]
   rintro g ⟨a, ha, b, hb, rfl⟩
   simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
   dsimp only

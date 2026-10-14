@@ -101,7 +101,7 @@ theorem sum_X_mul_leastVarShift {f : MvPowerSeries (Fin m) K} (hf : constantCoef
     rw [← coeff_zero_eq_constantCoeff_apply] at hf
     rw [hf]
     refine Finset.sum_eq_zero fun i _ => ?_
-    rw [if_neg]
+    rw [ite_eq_right]
     rw [Finsupp.single_le_iff]
     simp
   · have hne : μ.support.Nonempty := Finsupp.support_nonempty_iff.mpr hμ
@@ -113,16 +113,16 @@ theorem sum_X_mul_leastVarShift {f : MvPowerSeries (Fin m) K} (hf : constantCoef
     have hμi₀ : Finsupp.single i₀ 1 ≤ μ :=
       Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr (Finsupp.mem_support_iff.mp hi₀mem))
     rw [Finset.sum_eq_single i₀]
-    · rw [if_pos hμi₀, coeff_leastVarShift, if_pos, tsub_add_cancel_of_le hμi₀]
+    · rw [ite_eq_left hμi₀, coeff_leastVarShift, ite_eq_left, tsub_add_cancel_of_le hμi₀]
       intro j hj
       rw [Finsupp.tsub_apply, Finsupp.single_eq_of_ne hj.ne, hlt j hj, tsub_zero]
     · intro i _ hi
       rcases lt_or_gt_of_ne hi with h | h
-      · rw [if_neg]
+      · rw [ite_eq_right]
         rw [Finsupp.single_le_iff, hlt i h]
         exact Nat.not_succ_le_zero 0
       · split_ifs with hle
-        · rw [coeff_leastVarShift, if_neg]
+        · rw [coeff_leastVarShift, ite_eq_right]
           intro hall
           have := hall i₀ h
           rw [Finsupp.tsub_apply, Finsupp.single_eq_of_ne h.ne, tsub_zero] at this

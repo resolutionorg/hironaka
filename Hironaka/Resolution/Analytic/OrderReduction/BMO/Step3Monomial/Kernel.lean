@@ -69,7 +69,7 @@ theorem mem_blowUpPieces_piece_of_le {r : ℕ} (hZ : IsClosedSubmanifold ψ₀ (
   have hnl : ¬ c < Φ.nextComp := not_lt.mpr hc
   change p ∈ (if c < Φ.nextComp then _ else
     ⋃ P ∈ S.filter (fun P => Φ.newComp S P = c), (Manifold.blowUpπ ψ₀ hZ) ⁻¹' Φ.faceSet P) ↔ _
-  rw [if_neg hnl]
+  rw [ite_eq_right hnl]
   simp only [Set.mem_iUnion, Finset.mem_filter, Set.mem_preimage, exists_prop]
   constructor
   · rintro ⟨P, ⟨hP, hPc⟩, hx⟩

@@ -77,13 +77,13 @@ noncomputable def completionDesc {W : Scheme.{u}} {TA : Triple k} (ψ : W ⟶ TA
 @[reassoc]
 theorem ι_none_comp_completionDesc {W : Scheme.{u}} {TA : Triple k} (ψ : W ⟶ TA.X.left) :
     Sigma.ι (completionFamily W TA) none ≫ completionDesc ψ = ψ :=
-  Sigma.ι_desc _ _
+  Sigma.ι_comp_desc _ _
 
 @[reassoc]
 theorem ι_some_comp_completionDesc {W : Scheme.{u}} {TA : Triple k} (ψ : W ⟶ TA.X.left)
     (i : TA.affineCover.I₀) :
     Sigma.ι (completionFamily W TA) (some i) ≫ completionDesc ψ = TA.affineCover.f i :=
-  Sigma.ι_desc _ _
+  Sigma.ι_comp_desc _ _
 
 instance isAffine_completionFamily (W : Scheme.{u}) [IsAffine W] (TA : Triple k)
     (o : Option TA.affineCover.I₀) : IsAffine (completionFamily W TA o) := by

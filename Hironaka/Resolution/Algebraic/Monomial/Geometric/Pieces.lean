@@ -206,17 +206,18 @@ variable (S : Finset (Finset ℕ))
 @[simp] theorem blowUpPieces_nextLabel : (Φ.blowUpPieces S m).nextLabel = Φ.nextLabel + 1 := rfl
 
 theorem blowUpPieces_piece_of_lt {c : ℕ} (hc : c < Φ.nextComp) :
-    (Φ.blowUpPieces S m).piece c = strictTransformCloseds (Φ.centerOf S) (Φ.piece c) := if_pos hc
+    (Φ.blowUpPieces S m).piece c = strictTransformCloseds (Φ.centerOf S) (Φ.piece c) :=
+  ite_eq_left hc
 
 theorem blowUpPieces_label_of_lt {c : ℕ} (hc : c < Φ.nextComp) :
-    (Φ.blowUpPieces S m).label c = Φ.label c := if_pos hc
+    (Φ.blowUpPieces S m).label c = Φ.label c := ite_eq_left hc
 
 theorem blowUpPieces_a_of_lt {c : ℕ} (hc : c < Φ.nextComp) :
-    (Φ.blowUpPieces S m).a c = Φ.a c := if_pos hc
+    (Φ.blowUpPieces S m).a c = Φ.a c := ite_eq_left hc
 
 theorem blowUpPieces_label_newComp (P : Finset ℕ) :
     (Φ.blowUpPieces S m).label (Φ.newComp S P) = Φ.nextLabel :=
-  if_neg (not_lt.mpr (Nat.le_add_right _ _))
+  ite_eq_right (not_lt.mpr (Nat.le_add_right _ _))
 
 /-- The new piece of a face `P ∈ S`: the preimage `π⁻¹(Z_P)`. -/
 theorem blowUpPieces_piece_newComp {P : Finset ℕ} (hP : P ∈ S) :
@@ -226,7 +227,7 @@ theorem blowUpPieces_piece_newComp {P : Finset ℕ} (hP : P ∈ S) :
   change (if Φ.newComp S P < Φ.nextComp then _ else
     (S.filter fun Q => Φ.newComp S Q = Φ.newComp S P).sup fun Q =>
       (Φ.faceSet Q).preimage (Φ.centerOf S).blowUpπ.continuous) = _
-  rw [if_neg hlt]
+  rw [ite_eq_right hlt]
   have : (S.filter fun Q => Φ.newComp S Q = Φ.newComp S P) = {P} :=
     Finset.eq_singleton_iff_unique_mem.mpr ⟨Finset.mem_filter.mpr ⟨hP, rfl⟩, fun Q hQ =>
       MonomialState.rank_injOn S (Finset.mem_filter.mp hQ).1 hP
@@ -239,7 +240,7 @@ theorem blowUpPieces_a_newComp {P : Finset ℕ} (hP : P ∈ S) :
   have hlt : ¬ Φ.newComp S P < Φ.nextComp := not_lt.mpr (Nat.le_add_right _ _)
   change (if Φ.newComp S P < Φ.nextComp then Φ.a (Φ.newComp S P) else
     (S.filter fun Q => Φ.newComp S Q = Φ.newComp S P).sup fun Q => Φ.total Q - m) = _
-  rw [if_neg hlt]
+  rw [ite_eq_right hlt]
   have : (S.filter fun Q => Φ.newComp S Q = Φ.newComp S P) = {P} :=
     Finset.eq_singleton_iff_unique_mem.mpr ⟨Finset.mem_filter.mpr ⟨hP, rfl⟩, fun Q hQ =>
       MonomialState.rank_injOn S (Finset.mem_filter.mp hQ).1 hP
@@ -385,7 +386,7 @@ noncomputable def ofDivisorFamily {k L : ℕ} (a : X → ℕ) (e : E.ι ≃o Fin
   label c := if h : c < k then (e (σ ⟨c, h⟩).1 : ℕ) else 0
   a c := if h : c < k then a ((σ ⟨c, h⟩).2 : X) else 0
   label_lt c hc := by
-    simp only [dif_pos hc]
+    simp only [dite_eq_left hc]
     exact (e _).isLt
 
 end PieceFamily

@@ -77,12 +77,12 @@ theorem stalkIdeal_strictTransformSubspace_of_hasLocalGenerators
     (hex : IdealSheaf.HasLocalGenerators (𝒪 := structureSheaf 𝕜 E M') (saturationStalk hY h I))
     (a' : M') :
     (strictTransformSubspace hY h I).stalkIdeal a' = saturationStalk hY h I a' := by
-  rw [strictTransformSubspace, dif_pos hex, IdealSheaf.stalkIdeal_ofStalks]
+  rw [strictTransformSubspace, dite_eq_left hex, IdealSheaf.stalkIdeal_ofStalks]
 
 theorem strictTransformSubspace_of_not_hasLocalGenerators
     (hex : ¬ IdealSheaf.HasLocalGenerators (𝒪 := structureSheaf 𝕜 E M') (saturationStalk hY h I)) :
     strictTransformSubspace hY h I = ⊤ := by
-  rw [strictTransformSubspace, dif_neg hex]
+  rw [strictTransformSubspace, dite_eq_right hex]
 
 /-- The total transform lies in its saturation (the term `k = 0`). -/
 theorem totalTransform_stalkIdeal_le_saturationStalk (a' : M') :
@@ -147,7 +147,7 @@ def geometricStrictTransform : IdealSheaf (structureSheaf 𝕜 E M') :=
 theorem isGreatest_geometricStrictTransform_of_exists
     (hex : ∃ J, IsGreatest (geometricCandidates hY h I) J) :
     IsGreatest (geometricCandidates hY h I) (geometricStrictTransform hY h I) := by
-  rw [geometricStrictTransform, dif_pos hex]
+  rw [geometricStrictTransform, dite_eq_left hex]
   exact Classical.choose_spec hex
 
 /-- The total transform is a candidate (`Z = σ⁻¹(X)`). -/

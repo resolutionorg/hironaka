@@ -66,7 +66,7 @@ theorem eraseEmptyLastHom_cons_of_eq_top (D : X.IdealSheafData) (rest : BlowUpSe
     (cons X D rest).eraseEmptyLastHom =
       eqToHom (congrArg BlowUpSequence.last (eraseEmpty_cons_of_eq_top rest h)) ≫
         rest.eraseEmpty.pullbackLastHom (inv D.blowUpπ) ≫ rest.eraseEmptyLastHom := by
-  rw [BlowUpSequence.eraseEmptyLastHom, dif_pos h]
+  rw [BlowUpSequence.eraseEmptyLastHom, dite_eq_left h]
   rfl
 
 theorem eraseEmptyLastHom_cons_of_ne_top (D : X.IdealSheafData)
@@ -74,7 +74,7 @@ theorem eraseEmptyLastHom_cons_of_ne_top (D : X.IdealSheafData)
     (cons X D rest).eraseEmptyLastHom =
       eqToHom (congrArg BlowUpSequence.last (eraseEmpty_cons_of_ne_top rest h)) ≫
         rest.eraseEmptyLastHom := by
-  rw [BlowUpSequence.eraseEmptyLastHom, dif_neg h]
+  rw [BlowUpSequence.eraseEmptyLastHom, dite_eq_right h]
   rfl
 
 /-- Transport of the second argument of a concatenation along an equality of first arguments: the

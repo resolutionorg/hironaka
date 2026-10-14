@@ -168,7 +168,7 @@ theorem localization_pderiv_algebraMap_x (i j : Fin r) :
   by_cases h : i = j
   · subst h
     simp
-  · rw [if_neg (fun h' => h (Fin.castLE_inj.mp h')), if_neg h, map_zero]
+  · rw [ite_eq_right (fun h' => h (Fin.castLE_inj.mp h')), ite_eq_right h, map_zero]
 
 /-- The coordinate structure on `R_{P_r}`: parameters `x̃₀, …, x̃_{r-1}`, derivations
 `∂̃₀, …, ∂̃_{r-1}` (the local ring at the generic point of `Z = (x₁ = ⋯ = x_r = 0)`,

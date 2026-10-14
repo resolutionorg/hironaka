@@ -297,10 +297,10 @@ theorem step21Seq_eraseEmpty_pullback {T' : Triple k} (hn' : T'.HasDimLE n)
     simp only [step21Seq]
     by_cases hj : j < Fintype.card T.E.ι
     · have hj' : j < Fintype.card T'.E.ι := hcard ▸ hj
-      rw [dif_pos hj', dif_pos hj]
+      rw [dite_eq_left hj', dite_eq_left hj]
       exact step21Seq_eraseEmpty_pullback_succ_aux T hn hmax bd hn' hmax' h hpb hind _ _ ih hj' hj
     · have hj' : ¬ j < Fintype.card T'.E.ι := hcard ▸ hj
-      rw [dif_neg hj', dif_neg hj]
+      rw [dite_eq_right hj', dite_eq_right hj]
       exact ih
 
 end Step21

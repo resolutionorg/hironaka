@@ -79,7 +79,7 @@ theorem HypersurfaceFamily.idealSheaf_comap_of_isSnc {M N : AnalyticManifold.{u}
   have h₂ := hF.hasLocalGenerators_vanishingStalk_support
   have h₁ := (HypersurfaceFamily.isSnc_comap hF h hh).hasLocalGenerators_vanishingStalk_support
   unfold HypersurfaceFamily.idealSheaf
-  rw [dif_pos h₂, dif_pos h₁]
+  rw [dite_eq_left h₂, dite_eq_left h₁]
   refine IdealSheaf.ext fun x => ?_
   rw
       [IdealSheaf.stalkIdeal_pullback,

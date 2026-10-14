@@ -61,8 +61,9 @@ introduction has no nodes of its own; it links to the nodes of the other chapter
 
 The VersoBlueprint dependency is the Timaeus fork of verso-blueprint
 ([timaeus-research/verso-blueprint](https://github.com/timaeus-research/verso-blueprint)), which
-renders the annotation boxes from docstrings, reads the review ledger and links declaration names. `lakefile.toml` requires
-it by git URL, pinned to commit `e00296de` of the fork's branch `claude/docstring-annotations`, and
+renders the annotation boxes from docstrings, reads the review ledger, links declaration names and
+cites the BibTeX bibliography. `lakefile.toml` requires
+it by git URL, pinned to a commit of the fork's branch `timaeus/v4.34.0` (the commit in `lakefile.toml`), and
 `lake-manifest.json` locks that commit, so `lake update` fetches it like any other dependency.
 Its patches to Verso are not needed by this document and are not applied.
 
@@ -138,7 +139,17 @@ LIST_REVIEW_ITEMS=1 lake lean scripts/sync_formalization.lean
 prints an entry for every item, ready to paste into `reviews.json` once `reviewer` and `date` are
 filled in. Editing the ledger needs no rebuild of the chapters, only a new `lake exe vbp build`.
 
-Source citations use the keys of the bibliography `../references.bib`. The Sources list at the end
-of `Blueprint/Conventions.lean` is made from it: `python3 ../scripts/check_references.py --write`
-writes the entries that the chapters cite, and the check without `--write` fails while the list is
-not current.
+Source citations use the keys of the bibliography `../references.bib`, which `Blueprint/References.lean`
+registers with the fork's `blueprint_bibliography_file` (the library `BlueprintReferences` of
+`lakefile.toml` needs the file, so that a change to it rebuilds the chapters): `{cite Kol07}[Definition 29]`
+renders as `[Kol07, Definition 29]`, linked to the entry in the Blueprint Bibliography, the part
+that `{blueprint_bibliography}` adds at the end of `Blueprint.lean`, listing the entries that the
+chapters and the annotation boxes cite with the places they are cited from. The citations
+`[Kol07, Definition 29]` of the docstring annotation items link the same way. A citation whose
+link is a name rather than the bracketed tag, `{citeAs Ati70}[Atiyah's Resolution Theorem]` in a
+chapter and `[Atiyah's Resolution Theorem][Ati70]` in a docstring (the form doc-gen4 reads too),
+is for the few places where a named result or author stands right before its source; the
+bracketed form is the default. The text shown is the
+entry's tag, generated from its authors and year as doc-gen4 does, which is the key for every entry
+but `Sta`, shown as `[TSPA]`. `python3 ../scripts/check_references.py` checks that every key the
+chapters cite is in the file and every entry is cited somewhere.

@@ -2,7 +2,6 @@
 # the library `Hironaka`
 # (schemes, analytic manifolds and analytic spaces) and the worked examples `HironakaExamples`.
 name = "hironaka"
-version = "0.1.0"
 keywords = ["math", "algebraic-geometry", "resolution-of-singularities", "analytic-geometry"]
 description = "Hironaka's resolution of singularities in characteristic zero, formalized in Lean 4 over Mathlib."
 license = "Apache-2.0"
@@ -23,7 +22,7 @@ maxSynthPendingDepth = 3
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "v4.33.1"
+rev = "v4.34.0"
 
 [[lean_lib]]
 name = "Hironaka"
@@ -33,34 +32,9 @@ leanOptions = { warningAsError = true }
 name = "HironakaExamples"
 leanOptions = { warningAsError = true }
 
-# The `@[source KEY "locator" "page"]` attribute and its bibliography registry: tooling with no
-# mathematics and nothing specific to this library.
-[[lean_lib]]
-name = "SourceAttr"
-leanOptions = { warningAsError = true }
-
-# Tests of the attribute, against this package's bibliography. Not a default target.
-[[lean_lib]]
-name = "SourceAttrTest"
-leanOptions = { warningAsError = true }
-
-# The bibliography of the package, read by the module `HironakaReferences` when it is compiled.
-# A library's `needs` are dependencies of each of its modules: this library holds that module
-# alone, so a change to `references.bib` rebuilds it and the modules that import it, and no others.
-[[input_file]]
-name = "references"
-path = "references.bib"
-text = true
-
-[[lean_lib]]
-name = "HironakaReferences"
-roots = ["HironakaReferences"]
-needs = ["references"]
-leanOptions = { warningAsError = true }
-
 # The audit surface: the main theorems stated with `sorry` in the files under `Challenge/`, which
-# import only the vocabulary modules (the `Defs.lean` files), `SourceAttr`, `HironakaReferences` and the Mathlib
-# modules the statements need, not all of Mathlib (see `Challenge.lean` and `comparator.json`).
+# import only the vocabulary modules (the `Defs.lean` files) and the Mathlib modules the statements
+# need, not all of Mathlib (see `Challenge.lean` and `comparator.json`).
 # Not a default target.
 [[lean_lib]]
 name = "Challenge"

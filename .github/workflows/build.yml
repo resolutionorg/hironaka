@@ -90,10 +90,9 @@ jobs:
         run: |
           lake exe mk_all --lib Hironaka --check
           lake exe mk_all --lib HironakaExamples --check
-          lake exe mk_all --lib SourceAttrTest --check
 
       - name: Build
-        run: lake build Hironaka HironakaExamples SourceAttrTest Challenge
+        run: lake build Hironaka HironakaExamples Challenge
 
       # Saved as soon as the build succeeds, so that a failing check below does not discard it.
       - name: Save the build directory
@@ -115,8 +114,8 @@ jobs:
       - name: The blueprint covers the statement vocabulary
         run: lake lean scripts/check_blueprint.lean
 
-      - name: formalization.yaml agrees with the source tags
-        run: lake lean scripts/export_source_refs.lean | python3 scripts/check_formalization_yaml.py formalization.yaml
+      - name: The sources of formalization.yaml are entries of references.bib
+        run: python3 scripts/check_formalization_yaml.py formalization.yaml
 
       - name: The generated regions of formalization.yaml are current
         run: FORMALIZATION_CHECK=1 lake lean scripts/sync_formalization.lean

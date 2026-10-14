@@ -123,14 +123,14 @@ theorem ConvNorm_mul_le (ρ : Fin m → ℝ≥0) (f g : MvPowerSeries (Fin m) K)
       intro ν
       rw [tsum_eq_sum (s := Finset.HasAntidiagonal.antidiagonal ν)]
       · exact Finset.sum_congr rfl fun p hp => by
-          rw [if_pos (Finset.HasAntidiagonal.mem_antidiagonal.mp hp)]
+          rw [ite_eq_left (Finset.HasAntidiagonal.mem_antidiagonal.mp hp)]
       · intro p hp
-        rw [if_neg fun h => hp (Finset.HasAntidiagonal.mem_antidiagonal.mpr h)]
+        rw [ite_eq_right fun h => hp (Finset.HasAntidiagonal.mem_antidiagonal.mpr h)]
     simp_rw [h1]
     rw [ENNReal.tsum_comm]
     exact tsum_congr fun p => by
-      rw [tsum_eq_single (p.1 + p.2) fun ν hν => if_neg (Ne.symm hν)]
-      exact if_pos rfl
+      rw [tsum_eq_single (p.1 + p.2) fun ν hν => ite_eq_right (Ne.symm hν)]
+      exact ite_eq_left rfl
   calc ∑' ν : Fin m →₀ ℕ, ‖coeff ν (f * g)‖ₑ * (monomialEval ρ ν : ℝ≥0∞)
       ≤ ∑' ν : Fin m →₀ ℕ, ∑ p ∈ Finset.HasAntidiagonal.antidiagonal ν, F p.1 * G p.2 :=
         ENNReal.tsum_le_tsum hterm
@@ -198,9 +198,9 @@ theorem convNorm_monomial (ρ : Fin m → ℝ≥0) (ν : Fin m →₀ ℕ) (a : 
   classical
   unfold ConvNorm
   rw [tsum_eq_single ν]
-  · rw [coeff_monomial, if_pos rfl]
+  · rw [coeff_monomial, ite_eq_left rfl]
   · intro μ hμ
-    rw [coeff_monomial, if_neg hμ, enorm_zero, zero_mul]
+    rw [coeff_monomial, ite_eq_right hμ, enorm_zero, zero_mul]
 
 /-- Monomials are convergent. -/
 theorem monomial_mem_conv (ν : Fin m →₀ ℕ) (a : K) : monomial ν a ∈ Conv K m :=

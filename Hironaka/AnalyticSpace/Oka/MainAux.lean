@@ -92,11 +92,11 @@ theorem polyOfCoeff_weierstrassList [Nontrivial R] {e d : ℕ} (he : e < d) (c :
   ext k
   rw [coeff_polyOfCoeff]
   by_cases hke : k < e
-  · rw [dif_pos (by omega : k < d), weierstrassList, dif_pos hke,
+  · rw [dite_eq_left (by omega : k < d), weierstrassList, dite_eq_left hke,
       coeff_weierstrassPolynomial_of_lt _ _ hke]
   · by_cases hk : k = e
     · subst hk
-      rw [dif_pos he, weierstrassList, dif_neg (lt_irrefl _), if_pos rfl]
+      rw [dite_eq_left he, weierstrassList, dite_eq_right (lt_irrefl _), ite_eq_left rfl]
       have := (monic_weierstrassPolynomial (R := R) k c).coeff_natDegree
       rw [natDegree_weierstrassPolynomial] at this
       exact this.symm
@@ -104,9 +104,9 @@ theorem polyOfCoeff_weierstrassList [Nontrivial R] {e d : ℕ} (he : e < d) (c :
       rw [Polynomial.coeff_eq_zero_of_natDegree_lt
         (by rw [natDegree_weierstrassPolynomial]; exact hgt)]
       by_cases hkd : k < d
-      · rw [dif_pos hkd]
-        simp only [weierstrassList, dif_neg hke, if_neg hk]
-      · rw [dif_neg hkd]
+      · rw [dite_eq_left hkd]
+        simp only [weierstrassList, dite_eq_right hke, ite_eq_right hk]
+      · rw [dite_eq_right hkd]
 
 /-- The list is natural in ring homomorphisms. -/
 theorem map_weierstrassList {S : Type*} [CommRing S] (f : R →+* S) (e : ℕ) (c : Fin e → R) (d : ℕ)

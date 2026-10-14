@@ -16,7 +16,7 @@ theorem is proved: neither library contains a `sorry`.
 
 The main theorems are those named in [`comparator.json`](comparator.json). Each is stated at the end
 of the module that proves it, and again with `sorry` in a challenge file. A theorem from a source
-carries its citation in a `@[source]` attribute.
+names it in its docstring, in a paragraph `Source statement: [Hir64, Main Theorem I, p. 132]`.
 
 | Source | Lean name |
 |---|---|
@@ -72,7 +72,7 @@ The Lean toolchain is pinned in [`lean-toolchain`](lean-toolchain) and Mathlib i
 ```
 lake exe cache get                      # fetch the prebuilt Mathlib
 lake build                              # the library Hironaka
-lake build HironakaExamples SourceAttrTest Challenge   # examples, attribute tests, challenge files
+lake build HironakaExamples Challenge   # examples, challenge files
 ```
 
 [`scripts/`](scripts) holds the checks run in CI: no axioms beyond the standard three, the
@@ -87,7 +87,6 @@ described at the head of its file.
 | [`Hironaka/`](Hironaka) | the library, by role: the objects in `Algebra/`, `Analytic/`, `Scheme/`, `Manifold/` and `AnalyticSpace/`, whose `Defs.lean` files hold what the statements use; the proof machinery in `Resolution/`, with the main theorems in folders named after the sources |
 | [`HironakaExamples/`](HironakaExamples) | the worked examples and counterexamples of the sources; no module of `Hironaka` imports it |
 | [`Challenge.lean`](Challenge.lean), [`Challenge/`](Challenge) | the main theorems stated against the definitions only |
-| [`SourceAttr.lean`](SourceAttr.lean), [`HironakaReferences.lean`](HironakaReferences.lean), [`SourceAttrTest/`](SourceAttrTest) | the `@[source]` attribute (tooling, not specific to this library), the module that registers [`references.bib`](references.bib) for it, and its tests |
 | [`comparator.json`](comparator.json) | the names of the main theorems, read by the comparator and the checks |
 | [`blueprint/`](blueprint) | the blueprint, a Verso document in a nested Lake package |
 | [`formalization.yaml`](formalization.yaml) | a machine-readable description of the project and of how each statement aligns with its source |
@@ -109,8 +108,8 @@ the definitions the statements use.
 and reviewed. Where the format leaves the shape open or has no field, this file adds:
 
 - `alignment.statements`: the format's suggested table, one entry per theorem matched with the
-  item of the source it formalizes and its module, checked against the `@[source]` attributes in
-  the library; its `note` lists the labelled notes of the theorem's docstring (Gap, Correction,
+  item of the source it formalizes and its module, read from the `Source statement:` paragraphs
+  of the docstrings; its `note` lists the labelled notes of the theorem's docstring (Gap, Correction,
   Interpretation, …), the same notes the blueprint shows.
 - `status.main_results[].statement_vocabulary`: for each main result, the definition modules a
   reader needs to understand its statement.
@@ -122,8 +121,7 @@ with it.
 
 ## Sources
 
-The sources, and the keys by which the docstrings, the `@[source]` attributes and the blueprint cite
-them, are listed in the BibTeX file [`references.bib`](references.bib).
+The sources, and the keys by which the docstrings and the blueprint cite them, are listed in the BibTeX file [`references.bib`](references.bib).
 
 ## Provenance
 

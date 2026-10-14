@@ -8,6 +8,7 @@ module
 public import Hironaka.Scheme.IdealSheaf.Defs
 public import Mathlib.AlgebraicGeometry.Morphisms.Flat
 public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
 import Hironaka.Scheme.BlowUp.Descent
 import Hironaka.Scheme.BlowUp.InvertibleSheaf
 import Hironaka.Scheme.BlowUpSequence.PullbackInduced

@@ -249,7 +249,7 @@ theorem stalkIdeal_le_monomialPart (hF : F.IsSnc ψ) (I : IdealSheaf (structureS
       g i = coord E ψ φ hc.1 hc.2.1 (c ⟨i.1, hmemx i hi⟩) := by
     intro i hi
     simp only [hgdef]
-    exact dif_pos (hmemx i hi)
+    exact dite_eq_left (hmemx i hi)
   have hCF : ∀ i ∈ T, (componentFactor F hF I i).stalkIdeal x =
       Ideal.span {g i ^ componentExponent F hF I i} := by
     intro i hi

@@ -57,9 +57,11 @@ The script checks the format, and fails (a nonzero exit status) if
 * a section has a bullet that does not begin with one of the labels, has no bullets, has an
   item with no text, or appears twice in one docstring;
 * a main theorem has no section;
-* a declaration of `Hironaka` with a section is neither a main theorem, nor another theorem with
-  `@[source]` tags, nor a declaration that the statement of a main theorem uses, so that its
-  items would be compiled nowhere;
+* a declaration of `Hironaka` with a section is neither a main theorem, nor another theorem citing
+  a source, nor a declaration that the statement of a main theorem uses, so that its items would
+  be compiled nowhere;
+* a `Source statement:` paragraph (see *The citations of a theorem* below) has no bracketed
+  citation, or cites a key that is not in the bibliography;
 * a docstring still has the heading `Deviations from the source.` of the earlier format.
 
 ## The generated regions
@@ -90,13 +92,13 @@ instead: material kept apart from what `formalization.yaml` describes.
   a time); `scripts/check_defs.lean` checks that their files are `Defs.lean` files. Reading those
   files, with Mathlib and Lean core, is enough to know what the statement means.
 * `alignment.statements` has one entry per theorem: the theorems of `comparator.json`, in its
-  order, then the other theorems of the library with `@[source]` tags, by file and name. An entry
-  has the fields of the formalization.yaml template: `source`, the citation of the theorem's tags
-  (`KEY, locator, page`, several joined by "; ") with each key written as the authors' last names
-  and the year of its entry in `references.bib` (the form `scripts/check_formalization_yaml.py`
-  compares with the tags: `Hironaka 1964, Main Theorem I, p. 132`); `lean`; `module`, the source
-  file of its module; `status`, `proved` (for a main theorem without tags, `source` is `none (not in
-  the sources)` and `status` is `proved (not in the sources)`); and `note`, the items of its
+  order, then the other theorems of the library that cite a source, by file and name. An entry
+  has the fields of the formalization.yaml template: `source`, the citations of the theorem's
+  `Source statement:` paragraphs (`KEY, locator, page`, several joined by "; ") with each key
+  written as the authors' last names and the year of its entry in `references.bib`
+  (`Hironaka 1964, Main Theorem I, p. 132`); `lean`; `module`, the source file of its module;
+  `status`, `proved` (for a main theorem that cites no source, `source` is `none (not in the
+  sources)` and `status` is `proved (not in the sources)`); and `note`, the items of its
   section, each after its label, when it has any. The sections of the definitions the statements
   use are not compiled here: they are read in the docstrings and the blueprint, and listed for the
   review ledger.
@@ -320,6 +322,56 @@ def parseSection (doc : String) : Except String (Option (Array Item)) := do
     if text.isEmpty then throw s!"an item labelled {k} has no text"
     pure ({ kind := k, text } : Item))
 
+/-! ### The citations of a theorem
+
+A theorem that formalizes an item of the literature names it in a paragraph of its docstring that
+begins with `Source statement:` and continues with a bracketed citation of the item,
+`[KEY, locator]` or `[KEY, locator, page]`, then optionally a comment in parentheses, one paragraph
+per item:
+```
+Source statement: [Hir64, Main Theorem I, p. 132]
+
+Source statement: [Wlo09, Theorem 2.0.3] (compatible-family form)
+```
+`KEY` is the key of an entry of the bibliography, and doc-gen4 links the citation to that entry. -/
+
+/-- The words that begin a paragraph naming the item of the literature a theorem formalizes. -/
+def sourceMarker : String := "Source statement:"
+
+/-- The paragraphs of a docstring: its runs of non-blank lines, each joined and normalized. -/
+def paragraphs (doc : String) : Array String := Id.run do
+  let mut out : Array String := #[]
+  let mut cur : Array String := #[]
+  for line in doc.splitOn "\n" do
+    if isBlank line then
+      unless cur.isEmpty do out := out.push (normalize (" ".intercalate cur.toList))
+      cur := #[]
+    else
+      cur := cur.push line
+  unless cur.isEmpty do out := out.push (normalize (" ".intercalate cur.toList))
+  return out
+
+/-- The citations of the `Source statement:` paragraphs of a docstring, in order: the text between
+the brackets, whitespace normalized (`Hir64, Main Theorem I, p. 132`); an error message when such a
+paragraph does not continue with a bracketed citation. -/
+def sourceCitations (doc : String) : Except String (Array String) := do
+  let noCitation (p : String) :=
+    s!"the paragraph `{p}` has no citation `[KEY, locator, page]` after `{sourceMarker}`"
+  let mut out : Array String := #[]
+  for p in paragraphs doc do
+    unless p.startsWith sourceMarker do continue
+    match (p.toList.drop sourceMarker.length).dropWhile (· == ' ') with
+    | '[' :: inner =>
+      let cite := inner.takeWhile (· != ']')
+      if cite.isEmpty || cite.length == inner.length then throw (noCitation p)
+      out := out.push (String.ofList cite)
+    | _ => throw (noCitation p)
+  return out
+
+/-- The key of a citation: its text up to the first comma. -/
+def citationKey (cite : String) : String :=
+  String.ofList (cite.toList.takeWhile (· != ','))
+
 /-! ### The statement vocabulary -/
 
 /-- The classes whose instances elaboration unfolds. -/
@@ -434,11 +486,136 @@ def fileOf (m : Name) : String :=
 def q (s : String) : String :=
   (Json.str s).compress
 
+/-! ### Reading `references.bib`
+
+The strict part of BibTeX that `scripts/check_references.py` accepts (its `read_bib`), read
+with the same rules: the keys of the entries, and the fields the labels below need. -/
+
+/-- A character of a reference key: an ASCII letter or digit, or a Latin letter with a diacritic of
+Unicode's Latin-1 Supplement and Latin Extended-A and Extended-B blocks, such as the `ł` of
+`Wło05` (the signs `×` and `÷` of the Latin-1 Supplement excepted). -/
+def isRefKeyChar (c : Char) : Bool :=
+  c.isAlphanum || (0xC0 ≤ c.val && c.val ≤ 0x24F && c.val != 0xD7 && c.val != 0xF7)
+
+/-- An entry of a BibTeX file. -/
+structure BibEntry where
+  /-- The entry type, in lower case: `article`, `book`. -/
+  type : String
+  /-- The key: `Hir64`. -/
+  key : String
+  /-- The fields in order, each a name in lower case and a value: the text between the braces as
+  written, or the number. -/
+  fields : Array (String × String)
+  /-- The line of the file at which the entry starts. -/
+  line : Nat
+  deriving Inhabited, Repr
+
+/-- The value of the field `name` of an entry, if it has one. -/
+def BibEntry.field? (e : BibEntry) (name : String) : Option String :=
+  (e.fields.find? (·.1 == name)).map (·.2)
+
+namespace BibParser
+
+/-- The parser state: the rest of the input and the current line. -/
+abbrev M := StateT (List Char × Nat) (Except String)
+
+/-- Fails with `msg`, prefixed by the current line. -/
+def fail {α : Type} (msg : String) : M α := do
+  throw s!"line {(← get).2}: {msg}"
+
+/-- The next character, if any, without consuming it. -/
+def peek? : M (Option Char) :=
+  return (← get).1.head?
+
+/-- Consumes the next character. -/
+def next : M Char := do
+  match ← get with
+  | (c :: cs, n) =>
+    set (cs, if c == '\n' then n + 1 else n)
+    return c
+  | ([], _) => fail "unexpected end of file"
+
+/-- Consumes the characters satisfying `p` and returns them. -/
+partial def takeWhile (p : Char → Bool) (acc : String := "") : M String := do
+  match ← peek? with
+  | some c => if p c then do discard next; takeWhile p (acc.push c) else return acc
+  | none => return acc
+
+/-- Consumes white space. -/
+def skipWs : M Unit :=
+  discard <| takeWhile Char.isWhitespace
+
+/-- Consumes the character `c`, described as `what` in the error message if it is not next. -/
+def expect (c : Char) (what : String) : M Unit := do
+  if (← peek?) == some c then discard next else fail s!"expected {what}"
+
+/-- The text up to the brace closing an opened one, braces inside balanced; consumes the closing
+brace. -/
+partial def braced (depth : Nat := 0) (acc : String := "") : M String := do
+  match ← next with
+  | '}' => if depth == 0 then return acc else braced (depth - 1) (acc.push '}')
+  | '{' => braced (depth + 1) (acc.push '{')
+  | c => braced depth (acc.push c)
+
+/-- A field value: text in braces, or a number. -/
+def value : M String := do
+  match ← peek? with
+  | some '{' => discard next; braced
+  | some c =>
+    if c.isDigit then takeWhile Char.isDigit
+    else fail "expected a value in braces or a number"
+  | none => fail "unexpected end of file"
+
+/-- The fields of an entry up to its closing brace, which is consumed. -/
+partial def fields (acc : Array (String × String)) : M (Array (String × String)) := do
+  skipWs
+  if (← peek?) == some '}' then discard next; return acc
+  let name := (← takeWhile fun c => c.isAlphanum || c == '_' || c == '-').toLower
+  if name.isEmpty then fail "expected a field name or `}`"
+  skipWs; expect '=' "`=` after the field name"; skipWs
+  let v ← value
+  if acc.any (·.1 == name) then fail s!"the field `{name}` occurs twice"
+  skipWs
+  match ← peek? with
+  | some ',' => discard next; fields (acc.push (name, v))
+  | some '}' => discard next; return acc.push (name, v)
+  | _ => fail "expected `,` or `}` after a field"
+
+/-- An entry, `@type{key, field = {value}, …}`. -/
+def entry : M BibEntry := do
+  let line := (← get).2
+  expect '@' "`@`"
+  let type ← takeWhile Char.isAlpha
+  if type.isEmpty then fail "expected an entry type after `@`"
+  skipWs; expect '{' "`{` after the entry type"; skipWs
+  let key ← takeWhile isRefKeyChar
+  match key.toList with
+  | c :: _ => if c.isDigit then fail s!"the key `{key}` starts with a digit"
+  | [] => fail "expected a key: a letter followed by letters and digits"
+  skipWs; expect ',' s!"`,` after the key `{key}`"
+  return { type := type.toLower, key, fields := ← fields #[], line }
+
+/-- The entries of the rest of the file. Text outside the entries (comments) is skipped: it is
+everything up to the next `@`. -/
+partial def entries (acc : Array BibEntry) : M (Array BibEntry) := do
+  discard <| takeWhile (· != '@')
+  if (← peek?).isNone then return acc
+  entries (acc.push (← entry))
+
+end BibParser
+
+/-- The entries of a BibTeX file, or an error naming the line where it is malformed. The file is
+read in a strict part of BibTeX: an entry is `@type{key, name = {value}, …}`, where the key is a
+reference key (`isRefKeyChar`), a field name is made of ASCII letters, digits, `_` and `-`, and a
+value is text in braces (braces inside balanced) or a number; text between entries is a comment,
+so it must not contain `@`. Strings (`@string`), quoted values and concatenation (`#`) are errors. -/
+def parseBib (s : String) : Except String (Array BibEntry) :=
+  (BibParser.entries #[]).run' (s.toList, 1)
+
 /-! ### The author-year label of a bibliography entry
 
-The rules of `label` in `scripts/check_formalization_yaml.py` (with `split_top`, `plain` and
-`authors` of `scripts/check_references.py`), repeated so that the generated `source` of a statement
-is the form that check accepts: `Hironaka 1964` for `Hir64`, `Bierstone–Milman 1997` for `BM97`. -/
+How `formalization.yaml` writes the key of an entry in a generated `source`: the last names of its
+authors and its year, `Hironaka 1964` for `Hir64`, `Bierstone–Milman 1997` for `BM97`. -/
 
 /-- `value` split at the occurrences of `sep` outside braces. -/
 def splitTop (value sep : String) : Array String := Id.run do
@@ -470,7 +647,7 @@ def plainText (value : String) : String :=
   normalize ((((value.replace "{" "").replace "}" "").replace "---" "—").replace "--" "–")
 
 /-- The label of an entry: the last names of its authors joined by an en dash, then its year. -/
-def bibLabel (e : SourceAttr.BibEntry) : String :=
+def bibLabel (e : BibEntry) : String :=
   let last := (splitTop ((e.field? "author").getD "") " and ").toList.map fun name =>
     let name := normalize name
     let parts := splitTop name ","
@@ -491,7 +668,7 @@ structure MainTheorem where
   vocabulary : Array String
   /-- The declarations its statement uses. -/
   closure : NameSet
-  /-- The citation of its `@[source]` tags, `KEY, locator, page; …`, if it has any. -/
+  /-- The citations of its `Source statement:` paragraphs, `KEY, locator, page; …`, if any. -/
   cite? : Option String
   deriving Inhabited
 
@@ -576,12 +753,12 @@ def compiled (env : Environment) (thms : Array MainTheorem)
     out := out.push (n, sections.getD n #[])
   return out
 
-/-- One statement of `alignment.statements`: the theorem, the citation of its tags with the keys
-written as labels (`none` for a main theorem without tags), its file and its items. -/
+/-- One statement of `alignment.statements`: the theorem, its citations with the keys written as
+labels (`none` for a main theorem that cites no source), its file and its items. -/
 structure Statement where
   /-- The theorem. -/
   name : Name
-  /-- `Label, locator, page; …`, if the theorem has `@[source]` tags. -/
+  /-- `Label, locator, page; …`, if the theorem cites a source. -/
   source? : Option String
   /-- The source file of its module. -/
   file : String
@@ -632,6 +809,7 @@ def generate (env : Environment) (root : System.FilePath) :
   let mut errors : Array String := #[]
   let mut sections : Std.HashMap Name (Array Item) := {}
   let mut malformed : NameSet := {}
+  let mut citations : Std.HashMap Name (Array String) := {}
   for idx in [0:env.header.modules.size] do
     unless env.header.modules[idx]!.module.getRoot == `Hironaka do continue
     for c in env.header.moduleData[idx]!.constNames do
@@ -644,25 +822,28 @@ def generate (env : Environment) (root : System.FilePath) :
         malformed := malformed.insert c
       | .ok none => pure ()
       | .ok (some items) => sections := sections.insert c items
+      match sourceCitations doc with
+      | .error e => errors := errors.push s!"`{c}`: {e}"
+      | .ok cs => unless cs.isEmpty do citations := citations.insert c cs
   -- the coercion instances of the library
   let coeInstances := env.constants.map₁.toList.filterMap fun (n, ci) =>
     if (libModule? n).isSome && Meta.isInstanceCore env n &&
         ci.type.getForallBody.getAppFn.constName?.any coeClasses.contains then some n else none
-  let cites : Std.HashMap Name String := Id.run do
-    let mut m : Std.HashMap Name (Array String) := {}
-    for t in SourceAttr.getSourceTags env do
-      m := m.insert t.declName ((m.getD t.declName #[]).push t.cite)
-    return m.fold (fun acc k v => acc.insert k ("; ".intercalate v.toList)) {}
+  let cites : Std.HashMap Name String :=
+    citations.fold (fun acc k v => acc.insert k ("; ".intercalate v.toList)) {}
   -- the same citations with each key written as its author-year label
-  let bib ← IO.ofExcept <| SourceAttr.parseBib (← IO.FS.readFile (root / "references.bib"))
+  let bib ← IO.ofExcept <| parseBib (← IO.FS.readFile (root / "references.bib"))
   let bibLabels : Std.HashMap String String :=
     bib.foldl (fun m e => m.insert e.key (bibLabel e)) {}
-  let labelledCites : Std.HashMap Name String := Id.run do
-    let mut m : Std.HashMap Name (Array String) := {}
-    for t in SourceAttr.getSourceTags env do
-      let cite := ", ".intercalate ([bibLabels.getD t.key t.key, t.locator] ++ t.page?.toList)
-      m := m.insert t.declName ((m.getD t.declName #[]).push cite)
-    return m.fold (fun acc k v => acc.insert k ("; ".intercalate v.toList)) {}
+  for (c, cs) in citations.toList do
+    for cite in cs do
+      unless bibLabels.contains (citationKey cite) do
+        errors := errors.push s!"`{c}`: the citation `[{cite}]` of a `{sourceMarker}` paragraph \
+          is not of a key of the bibliography"
+  let labelledCites : Std.HashMap Name String := citations.fold (init := {}) fun acc k v =>
+    acc.insert k <| "; ".intercalate <| v.toList.map fun cite =>
+      let key := citationKey cite
+      bibLabels.getD key key ++ String.ofList (cite.toList.drop key.length)
   let mut axiomCache : Std.HashMap Name (Array Name) := {}
   let mut thms : Array MainTheorem := #[]
   for t in names do
@@ -701,15 +882,14 @@ def generate (env : Environment) (root : System.FilePath) :
       sorryCount := sorryCount env axiomCache t.toName
       vocabulary := files.toArray.qsort (· < ·), closure := seen, cite? := cites[t.toName]? }
   -- the statements of `alignment.statements`: the main theorems, then the other theorems of the
-  -- library with `@[source]` tags, by file and name
+  -- library that cite a source, by file and name
   let tagged : Array (Name × String) := Id.run do
-    let mut seen : NameSet := {}
     let mut out := #[]
-    for t in SourceAttr.getSourceTags env do
-      if nameSet.contains t.declName || seen.contains t.declName then continue
-      unless env.find? t.declName matches some (.thmInfo _) do continue
-      seen := seen.insert t.declName
-      out := out.push (t.declName, SourceAttr.SourceTag.moduleFile t.module)
+    for (n, _) in citations.toList do
+      if nameSet.contains n then continue
+      unless env.find? n matches some (.thmInfo _) do continue
+      let some m := libModule? n | continue
+      out := out.push (n, fileOf m)
     return out.qsort fun a b => a.2 < b.2 || (a.2 == b.2 && a.1.toString < b.1.toString)
   let stmts : Array Statement :=
     thms.map (fun t => { name := t.name, source? := labelledCites[t.name]?, file := t.file
@@ -723,7 +903,7 @@ def generate (env : Environment) (root : System.FilePath) :
   for (n, _) in sections.toList do
     unless used.contains n do
       errors := errors.push s!"`{n}`: a section on a declaration that is neither a main theorem, \
-        nor another theorem with `@[source]` tags, nor used by the statement of a main theorem, \
+        nor another theorem citing a source, nor used by the statement of a main theorem, \
         so compiled nowhere"
   unless errors.isEmpty do
     for e in errors.qsort (· < ·) do IO.eprintln s!"sync_formalization: {e}"

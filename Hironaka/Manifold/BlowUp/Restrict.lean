@@ -356,18 +356,18 @@ theorem isLocalDiffeomorphOn_restrict (h : IsBlowUp ψ Y c π) :
     exact Φ.map_source hq
   · have ha' : (a : M) ∈ Φ.target := ha
     change (if ha : (a : M) ∈ Φ.target then _ else _) ∈ Subtype.val ⁻¹' Φ.source
-    rw [dif_pos ha']
+    rw [dite_eq_left ha']
     exact Φ.map_target ha'
   · have hq' : (π' q : M) ∈ Φ.target := by rw [hπ' q, hΦ hq]; exact Φ.map_source hq
     change (if ha : (π' q : M) ∈ Φ.target then _ else _) = q
-    rw [dif_pos hq']
+    rw [dite_eq_left hq']
     apply Subtype.ext
     change Φ.invFun (π' q) = q
     rw [hπ' q, hΦ hq]
     exact Φ.left_inv hq
   · have ha' : (a : M) ∈ Φ.target := ha
     change π' (if ha : (a : M) ∈ Φ.target then _ else _) = a
-    rw [dif_pos ha']
+    rw [dite_eq_left ha']
     apply Subtype.ext
     rw [hπ']
     change π (Φ.invFun a) = a
@@ -383,9 +383,9 @@ theorem isLocalDiffeomorphOn_restrict (h : IsBlowUp ψ Y c π) :
     · intro b hb
       have hb' : (b : M) ∈ Φ.target := hb
       change Subtype.val (if hb' : (b : M) ∈ Φ.target then _ else _) = Φ.invFun b
-      rw [dif_pos hb']
+      rw [dite_eq_left hb']
     · change Subtype.val (if ha' : (a : M) ∈ Φ.target then _ else _) = Φ.invFun a
-      rw [dif_pos ha']
+      rw [dite_eq_left ha']
 
 /-- The blowing-up restricted over an open subset `U` is a blowing-up of `U` with centre `Y ∩ U`
 (the pull-back along the open immersion `U → M`, [Kol07, Definition 30, 30.1]). -/

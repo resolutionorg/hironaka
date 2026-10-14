@@ -7,6 +7,8 @@ module
 
 public import Hironaka.Resolution.Algebraic.Balanced.Basic
 public import Hironaka.Scheme.IdealSheaf.Order.Constructible
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
 import Hironaka.Scheme.BlowUp.Descent
 import Hironaka.Scheme.IdealSheaf.Derivative.Cosupport
 import Hironaka.Scheme.IdealSheaf.Order.Basic

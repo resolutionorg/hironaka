@@ -61,8 +61,8 @@ def opensValDiffeo (U : Opens M) (x₀ : U) : PartialDiffeomorph 𝓘(𝕜, E) �
   target := (U : Set M)
   map_source' x _ := x.2
   map_target' _ _ := Set.mem_univ _
-  left_inv' x _ := by rw [dif_pos x.2]
-  right_inv' a ha := by rw [dif_pos (SetLike.mem_coe.mp ha)]
+  left_inv' x _ := by rw [dite_eq_left x.2]
+  right_inv' a ha := by rw [dite_eq_left (SetLike.mem_coe.mp ha)]
   open_source := isOpen_univ
   open_target := U.isOpen
   contMDiffOn_toFun := contMDiff_subtype_val.contMDiffOn
@@ -72,9 +72,9 @@ def opensValDiffeo (U : Opens M) (x₀ : U) : PartialDiffeomorph 𝓘(𝕜, E) �
         (Subtype.val ∘ fun a : M => if h : a ∈ U then (⟨a, h⟩ : U) else x₀) (U : Set M) a := by
       refine contMDiffWithinAt_id.congr (fun y hy => ?_) ?_
       · simp only [Function.comp_apply, id_eq]
-        rw [dif_pos (SetLike.mem_coe.mp hy)]
+        rw [dite_eq_left (SetLike.mem_coe.mp hy)]
       · simp only [Function.comp_apply, id_eq]
-        rw [dif_pos (SetLike.mem_coe.mp ha)]
+        rw [dite_eq_left (SetLike.mem_coe.mp ha)]
     exact (ChartedSpace.liftPropWithinAt_subtypeVal_comp_iff _ _ _).mp h
 
 variable [IsManifold 𝓘(𝕜, E) ω M] [T2Space M] [SecondCountableTopology M] {Y : Set M} {c : ℕ}

@@ -136,17 +136,17 @@ theorem firstCenterIndex_pullback_of_flat_of_le [Flat h] [IsLocallyNoetherian X]
     have hfirst : ∀ m, m < Nat.find hex → m < firstCenterIndex S I := by
       intro m hm
       unfold firstCenterIndex
-      rw [dif_pos hex]
+      rw [dite_eq_left hex]
       exact hm
     unfold firstCenterIndex
-    rw [dif_pos hex', dif_pos hex, Nat.find_eq_iff]
+    rw [dite_eq_left hex', dite_eq_left hex, Nat.find_eq_iff]
     exact ⟨centerContains_pullback_of_le S h hle (Nat.find_spec hex),
       fun m hm => hdown m (hfirst m hm)⟩
   · -- no downstairs absorption: `firstCenterIndex S I = S.length`, and no upstairs absorption at
     -- any stage below it, so the upstairs index is the length too
     have hlen : firstCenterIndex S I = S.length := by
       unfold firstCenterIndex
-      rw [dif_neg hex]
+      rw [dite_eq_right hex]
     have hex' : ¬ ∃ n, CenterContains (S.pullback h) I' n := by
       rintro ⟨n, hc'⟩
       have hnlt : n < firstCenterIndex S I := by
@@ -154,7 +154,7 @@ theorem firstCenterIndex_pullback_of_flat_of_le [Flat h] [IsLocallyNoetherian X]
         exact hc'.1
       exact hdown n hnlt hc'
     unfold firstCenterIndex
-    rw [dif_neg hex', dif_neg hex, length_pullback]
+    rw [dite_eq_right hex', dite_eq_right hex, length_pullback]
 
 /-- Along a flat `h` whose image contains the generic point of the integral `V(I)`, the first-centre
 index of the pulled-back sequence for `h⁻¹(V(I))` is the first-centre index of `V(I)` [Kol07,
@@ -175,10 +175,10 @@ theorem firstCenterIndex_pullback_of_flat_of_mem_range [Flat h] [IsLocallyNoethe
     have hfirst : ∀ m, m < Nat.find hex → m < firstCenterIndex S I := by
       intro m hm
       unfold firstCenterIndex
-      rw [dif_pos hex]
+      rw [dite_eq_left hex]
       exact hm
     unfold firstCenterIndex
-    rw [dif_pos hex', dif_pos hex, Nat.find_eq_iff]
+    rw [dite_eq_left hex', dite_eq_left hex, Nat.find_eq_iff]
     exact ⟨centerContains_pullback_of_le S h le_rfl (Nat.find_spec hex),
       fun m hm => hdown m (hfirst m hm)⟩
   · have hex' : ¬ ∃ n, CenterContains (S.pullback h) (I.comap h) n := by
@@ -186,6 +186,6 @@ theorem firstCenterIndex_pullback_of_flat_of_mem_range [Flat h] [IsLocallyNoethe
       exact hex ⟨n, centerContains_of_centerContains_pullback_of_mem_range S h I hη hmem
         (fun m _ hc => hex ⟨m, hc⟩) hc'⟩
     unfold firstCenterIndex
-    rw [dif_neg hex', dif_neg hex, length_pullback]
+    rw [dite_eq_right hex', dite_eq_right hex, length_pullback]
 
 end Hironaka.Resolution

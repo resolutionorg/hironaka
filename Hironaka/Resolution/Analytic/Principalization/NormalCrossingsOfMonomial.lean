@@ -85,7 +85,7 @@ theorem prod_pow_sum_ite_eq {R : Type*} [CommMonoid R] {ι : Type*} (s : Finset 
   refine Finset.prod_congr rfl fun j _ => ?_
   simp_rw [pow_ite, pow_zero]
   rw [Finset.prod_ite_eq]
-  simp only [Finset.mem_univ, if_true]
+  simp only [Finset.mem_univ, ite_true]
 
 /-- An ideal sheaf which is at every point a boundary monomial of the snc family `G` is a
 normal-crossings divisor [BM97, Theorem 1.10]: in an snc chart at the point the centred

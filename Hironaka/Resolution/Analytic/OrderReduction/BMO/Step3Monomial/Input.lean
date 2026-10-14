@@ -114,7 +114,7 @@ noncomputable def inputFamily : PieceFamily (M.restrict U) where
   a c := if h : c < (meetingPieces T U hU).card then
     componentExponent T.F T.isSnc T.I (meetingPiece T U hU ⟨c, h⟩) else 0
   label_lt c hc := by
-    rw [dif_pos hc]
+    rw [dite_eq_left hc]
     exact Fin.is_lt _
   isClosed_piece c := by
     split_ifs with h
@@ -131,12 +131,12 @@ theorem inputFamily_piece_of_lt {c : ℕ} (hc : c < (meetingPieces T U hU).card)
     (inputFamily T U hU).piece c =
       ⇑(M.inclusion U) ⁻¹' componentSet T.F (meetingPiece T U hU ⟨c, hc⟩) := by
   change (if h : c < _ then _ else _) = _
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
 
 theorem inputFamily_piece_of_le {c : ℕ} (hc : (meetingPieces T U hU).card ≤ c) :
     (inputFamily T U hU).piece c = ∅ := by
   change (if h : c < _ then _ else _) = _
-  rw [dif_neg (not_lt.mpr hc)]
+  rw [dite_eq_right (not_lt.mpr hc)]
 
 theorem inputFamily_piece (c : Fin (meetingPieces T U hU).card) :
     (inputFamily T U hU).piece c =
@@ -148,12 +148,12 @@ theorem inputFamily_label_of_lt {c : ℕ} (hc : c < (meetingPieces T U hU).card)
       ((((meetingMembers T U hU).orderIsoOfFin rfl).symm
         ⟨(meetingPiece T U hU ⟨c, hc⟩).1, fst_meetingPiece_mem T U hU _⟩ : Fin _) : ℕ) := by
   change (if h : c < _ then _ else _) = _
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
 
 theorem inputFamily_a_of_lt {c : ℕ} (hc : c < (meetingPieces T U hU).card) :
     (inputFamily T U hU).a c = componentExponent T.F T.isSnc T.I (meetingPiece T U hU ⟨c, hc⟩) := by
   change (if h : c < _ then _ else _) = _
-  rw [dif_pos hc]
+  rw [dite_eq_left hc]
 
 theorem inputFamily_a (c : Fin (meetingPieces T U hU).card) :
     (inputFamily T U hU).a c = componentExponent T.F T.isSnc T.I (meetingPiece T U hU c) :=

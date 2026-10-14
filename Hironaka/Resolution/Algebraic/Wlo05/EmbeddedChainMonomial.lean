@@ -89,12 +89,12 @@ theorem exists_stalkIdeal_monomial_eq_prod [NoetherianSpace X] (E : DivisorFamil
   refine Finset.prod_congr rfl fun i _ => ?_
   by_cases hx : x ∈ (E.component i).support
   · dsimp only
-    rw [dif_pos hx]
+    rw [dite_eq_left hx]
     exact Hironaka.BMO.Snc.finprod_stalk_eq_of_specializes E hE
       (Classical.choose_spec (Hironaka.BMO.exists_genericPoint_specializes _ hx)).1
       (Classical.choose_spec (Hironaka.BMO.exists_genericPoint_specializes _ hx)).2 a
   · dsimp only
-    rw [dif_neg hx, pow_zero]
+    rw [dite_eq_right hx, pow_zero]
     exact Hironaka.BMO.Snc.finprod_stalk_eq_one_of_notMem E hx a
 
 /-- The support of a monomial of `E` lies in the support of `E` — off `E` every factor is the unit

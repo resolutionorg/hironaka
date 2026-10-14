@@ -143,14 +143,14 @@ theorem exists_localData
     by_cases h : i = j
     · subst h
       change (if h : i = i then diagDatum U C i i h else (hpair i i).choose).Tame
-      rw [dif_pos rfl, diagDatum_rfl]
+      rw [dite_eq_left rfl, diagDatum_rfl]
       exact PairIso.tame_refl_ofEq _ _
     · change (if h : i = j then diagDatum U C i j h else (hpair i j).choose).Tame
-      rw [dif_neg h]
+      rw [dite_eq_right h]
       exact (hpair i j).choose_spec
   · intro i
     change (if h : i = i then diagDatum U C i i h else (hpair i i).choose) = _
-    rw [dif_pos rfl]
+    rw [dite_eq_left rfl]
     exact diagDatum_rfl U C i
 
 end AnalyticSpace.Glue

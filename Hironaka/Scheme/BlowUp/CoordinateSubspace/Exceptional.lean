@@ -66,12 +66,12 @@ noncomputable abbrev killPred : MvPolynomial (Fin n) A →ₐ[A] MvPolynomial {i
     (Subtype.val_injective : Function.Injective (Subtype.val : {i : Fin n // p i} → Fin n))
 
 theorem killPred_X_of {i : Fin n} (h : p i) : killPred A p (X i) = X ⟨i, h⟩ := by
-  rw [killPred, killCompl, aeval_X, dif_pos ⟨⟨i, h⟩, rfl⟩]
+  rw [killPred, killCompl, aeval_X, dite_eq_left ⟨⟨i, h⟩, rfl⟩]
   congr 1
   exact Equiv.ofInjective_symm_apply Subtype.val_injective ⟨i, h⟩
 
 theorem killPred_X_of_not {i : Fin n} (h : ¬ p i) : killPred A p (X i) = 0 := by
-  rw [killPred, killCompl, aeval_X, dif_neg]
+  rw [killPred, killCompl, aeval_X, dite_eq_right]
   rintro ⟨⟨i', hi'⟩, h'⟩
   exact h (h' ▸ hi')
 
@@ -220,18 +220,18 @@ def splitVars :
   invFun i := if h : i.1.val < r then Sum.inl ⟨i.1, h, i.2⟩ else Sum.inr ⟨i.1, h⟩
   left_inv := by
     rintro (i | i)
-    · exact dif_pos i.2.1
-    · exact dif_neg i.2
+    · exact dite_eq_left i.2.1
+    · exact dite_eq_right i.2
   right_inv i := by
     by_cases h : i.1.val < r
-    · exact congrArg _ (dif_pos h)
-    · exact congrArg _ (dif_neg h)
+    · exact congrArg _ (dite_eq_left h)
+    · exact congrArg _ (dite_eq_right h)
 
 theorem splitVars_symm_of_lt {i : Fin n} (hij : i ≠ j) (h : i.val < r) :
-    (splitVars n r j hj).symm ⟨i, hij⟩ = Sum.inl ⟨i, h, hij⟩ := dif_pos h
+    (splitVars n r j hj).symm ⟨i, hij⟩ = Sum.inl ⟨i, h, hij⟩ := dite_eq_left h
 
 theorem splitVars_symm_of_not_lt {i : Fin n} (hij : i ≠ j) (h : ¬ i.val < r) :
-    (splitVars n r j hj).symm ⟨i, hij⟩ = Sum.inr ⟨i, h⟩ := dif_neg h
+    (splitVars n r j hj).symm ⟨i, hij⟩ = Sum.inr ⟨i, h⟩ := dite_eq_right h
 
 /-- `A[x]/(x_j) ≃ (A[x]/I)[x_i : i < r, i ≠ j]` as `A`-algebras. -/
 noncomputable def fibreAlgEquiv :
@@ -278,7 +278,7 @@ theorem fibreAlgEquiv_comp_mk_comp_chartSubst :
         by_contra hne
         exact h ⟨hi, hne⟩
       rw [hij, Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_span_singleton_self _), map_zero]
-  · rw [if_neg fun h => hi h.1, fibreAlgEquiv_mk_X_of_not_lt A n r j hj hi, algebraMap_eq]
+  · rw [ite_eq_right fun h => hi h.1, fibreAlgEquiv_mk_X_of_not_lt A n r j hj hi, algebraMap_eq]
 
 /-- `A[x]/(x_j) ≃ (A[x]/I)[x_i : i < r, i ≠ j]` as algebras over `𝒪(L) = A[x]/I`, the structure of
 `A[x]/(x_j)` over `A[x]/I` being through the chart map `π_j` [Hau14, Example 5.9]. -/

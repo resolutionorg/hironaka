@@ -82,13 +82,13 @@ variable [CharZero k] {n m j : ℕ} (hm : 1 ≤ m) {Dom' : Triple k → Prop}
 theorem tunedFunctor_seq_of_maxOrd_eq (T : Triple k) (hT : Triple.BDClass n m j T)
     (h : T.I.maxOrd = m) :
     (tunedFunctor hm F hDom').seq T hT = F.seq (T.tuned m hm) (hDom' T hT h) :=
-  dif_pos h
+  dite_eq_left h
 
 /-- Below the mark the tuned functor returns the empty sequence (the convention of
 [Kol07, Theorem 68]). -/
 theorem tunedFunctor_seq_of_maxOrd_lt (T : Triple k) (hT : Triple.BDClass n m j T)
     (h : T.I.maxOrd < m) : (tunedFunctor hm F hDom').seq T hT = BlowUpSequence.nil T.X.left :=
-  dif_neg h.ne
+  dite_eq_right h.ne
 
 /-- The tuned functor commutes with smooth morphisms when `F` does ([Kol07, 34.1]): the argument of
 `Hironaka/Resolution/Algebraic/OrderReduction/Functorial.lean` on `BDClass n m j`. -/
@@ -120,12 +120,12 @@ theorem dataFunctor_seq_of_maxOrd_eq (T : Triple k) (hT : Triple.BDClass n m j T
     (h : T.I.maxOrd = m) :
     (dataFunctor n m j hm B hDom).seq T hT =
       (functor n (tuningParam m) j B hDom).seq (T.tuned m hm) (domain_tuned hm hT h) :=
-  dif_pos h
+  dite_eq_left h
 
 /-- Below the mark `BD_{n,m,j}` is the empty sequence (the convention of [Kol07, Theorem 68]). -/
 theorem dataFunctor_seq_of_maxOrd_lt (T : Triple k) (hT : Triple.BDClass n m j T)
     (h : T.I.maxOrd < m) : (dataFunctor n m j hm B hDom).seq T hT = BlowUpSequence.nil T.X.left :=
-  dif_neg h.ne
+  dite_eq_right h.ne
 
 /-- Clause (1) of [Kol07, Lemma 102] for `BD_{n,m,j}` from clause (1) of [Kol07, Theorem 69] for
 `B`: clause (1) of `Output.lean` for `(W_{s(m)}(I), s(m))` transported to `(I, m)` at the last stage

@@ -279,7 +279,7 @@ theorem maximalIdeal_pow_eq_span_monomials' (k : ℕ) :
           rw [Finset.prod_eq_single i]
           · rw [Finsupp.single_eq_same, pow_one]
           · intro j _ hj
-            rw [Finsupp.single_apply, if_neg (fun h => hj h.symm), pow_zero]
+            rw [Finsupp.single_apply, ite_eq_right (fun h => hj h.symm), pow_zero]
           · intro h
             exact absurd (Finset.mem_univ i) h
       · rw [mul_zero]
