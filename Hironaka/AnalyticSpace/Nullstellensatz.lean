@@ -98,7 +98,7 @@ theorem vanishingStalkIdeal_eq_radical_span_affine (q : Kn.{u} ℂ n) {U : Opens
   have hpt : Continuous pt :=
     (ContinuousLinearEquiv.ulift : Kn.{u} ℂ n ≃L[ℂ] (Fin n → ℂ)).symm.continuous.comp
       (continuous_const.add continuous_id)
-  have hpt0 : Tendsto pt (𝓝 0) (𝓝 q) := hpt.tendsto' 0 q (ULift.ext _ _ (add_zero _))
+  have hpt0 : Tendsto pt (𝓝 0) (𝓝 q) := hpt.tendsto' 0 q (ULift.ext (add_zero _))
   -- near `0`: `q + x ∈ U`, the zero set of `S` is `D - q`, and the series of the `h_i` evaluate to
   -- the functions
   have hev : ∀ᶠ x in 𝓝 (0 : Fin n → ℂ), ∃ hx : pt x ∈ U, (x ∈ zeroSet S ↔ pt x ∈ D) := by
@@ -171,7 +171,7 @@ theorem vanishingStalkIdeal_eq_radical_span_affine (q : Kn.{u} ℂ n) {U : Opens
         (affine ℂ n).toLocallyRingedSpace.presheaf.germ_res_apply (homOfLE inf_le_left) q hqV₀ g,
         fun b hb hbD => ?_⟩
       obtain ⟨x, hxN, rfl⟩ : ∃ x ∈ N, pt x = b :=
-        ⟨b.down - q.down, hb.2, ULift.ext _ _ (add_sub_cancel _ _)⟩
+        ⟨b.down - q.down, hb.2, ULift.ext (add_sub_cancel _ _)⟩
       obtain ⟨hz0, ⟨hxU, hzD⟩, ⟨hxV, hval⟩⟩ := hN x hxN
       rw [(affine ℂ n).toLocallyRingedSpace.presheaf.germ_res_apply (homOfLE inf_le_left) (pt x)
         hb g, germ_mem_maximalIdeal_affine_iff V ⟨pt x, hb.1⟩ g]

@@ -46,11 +46,11 @@ theorem contDiff_embedCompl (σ : Fin c ↪ Fin n) : ContDiff 𝕜 ω (embedComp
   · simp only [embedCompl, dite_eq_left h]
     exact contDiff_const
   · simp only [embedCompl, dite_eq_right h]
-    exact contDiff_apply 𝕜 𝕜 _
+    exact contDiff_apply 𝕜 (fun _ => 𝕜) _
 
 /-- The projection `𝕜^n → 𝕜^{n-c}` onto the coordinates outside `σ` is analytic (it is linear). -/
 theorem contDiff_projCompl (σ : Fin c ↪ Fin n) : ContDiff 𝕜 ω (projCompl (𝕜 := 𝕜) σ) :=
-  (contDiff_pi (𝕜 := 𝕜)).mpr fun _ => contDiff_apply 𝕜 𝕜 _
+  (contDiff_pi (𝕜 := 𝕜)).mpr fun _ => contDiff_apply 𝕜 (fun _ => 𝕜) _
 
 /-- An open partial homeomorphism of a normed space that is analytic with analytic inverse lies in
 the analytic groupoid of the model space. -/

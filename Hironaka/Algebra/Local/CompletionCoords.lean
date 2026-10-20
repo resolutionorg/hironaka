@@ -8,9 +8,11 @@ module
 public import Hironaka.Algebra.Local.Completion
 public import Hironaka.Algebra.Local.Order
 public import Mathlib.RingTheory.AdicCompletion.LocalRing
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
 public import Hironaka.Algebra.Local.Coords
 import Hironaka.Algebra.Local.RegularSystem
 import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
+import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
 
 /-!
 # The completion `R̂` and its relation to `R`

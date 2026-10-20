@@ -147,7 +147,7 @@ theorem support_exceptionalAt_le_support_totalTransformSeq (S : BlowUpSequence X
     (E : DivisorFamily X) (j : Fin S.length) :
     (S.exceptionalAt j).support ≤ (S.totalTransformSeq E j.succ).support := by
   rw [totalTransformSeq_succ E S j]
-  exact SetLike.le_def.mpr fun b hb =>
+  exact IsConcreteLE.le_iff.mpr fun b hb =>
     (DivisorFamily.mem_support_iff_exists _ b).mpr ⟨toLex (Sum.inr PUnit.unit), hb⟩
 
 /-! ### The theorem -/
@@ -176,7 +176,7 @@ theorem isIdealOfSncDivisor_prod_comap_exceptionalAt (T : MarkedTriple k)
     exact isInvertible_comap_stageMapBetween S _ (isInvertible_exceptionalAt S j)
   have hsupp : K.support ≤ T'.E.support := by
     rw [hK, support_finset_prod]
-    refine iSup₂_le fun j _ => SetLike.le_def.mpr fun b hb => ?_
+    refine iSup₂_le fun j _ => IsConcreteLE.le_iff.mpr fun b hb => ?_
     rw [mem_support_comap_iff_apply] at hb
     exact preimage_stageMapBetween_support_subset S T.E (Fin.le_last _)
       (support_exceptionalAt_le_support_totalTransformSeq S T.E j hb)

@@ -345,7 +345,7 @@ theorem isUnit_jacobianFun_of_isLocalDiffeomorphAt (hf : ContMDiff 𝓘(𝕜, E)
     let T : Set E := χ.target ∩ χ.symm ⁻¹' (g.source ∩ g ⁻¹' φ'.source)
     have hTopen : IsOpen T :=
       isOpen_target_inter_preimage_symm χ
-        (hloc.localInverse_contMDiffOn.continuousOn.isOpen_inter_preimage g.open_source
+        (hloc.contMDiffOn_localInverse.continuousOn.isOpen_inter_preimage g.open_source
           φ'.open_source)
     have hTmem : (χ ∘ f ∘ φ'.symm) (φ' a') ∈ T := by
       simp only [Function.comp_apply, φ'.left_inv ha']
@@ -356,7 +356,7 @@ theorem isUnit_jacobianFun_of_isLocalDiffeomorphAt (hf : ContMDiff 𝓘(𝕜, E)
       exact ha'
     have hT : ContMDiffOn 𝓘(𝕜, E) 𝓘(𝕜, E) ω g' T :=
       (contMDiffOn_of_mem_maximalAtlas hφ').comp
-        (hloc.localInverse_contMDiffOn.comp
+        (hloc.contMDiffOn_localInverse.comp
           ((contMDiffOn_symm_of_mem_maximalAtlas hχ).mono inter_subset_left) fun v hv => hv.2.1)
         fun v hv => hv.2.2
     exact ((contMDiffOn_iff_contDiffOn.mp hT).differentiableOn (by simp)).differentiableAt

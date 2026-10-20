@@ -7,6 +7,7 @@ module
 
 public import Hironaka.Algebra.DerivationLocalization
 public import Hironaka.Algebra.Derivative.Basic
+public import Mathlib.Algebra.Module.FinitePresentation
 import Mathlib.Data.Nat.Choose.Multinomial
 
 /-!

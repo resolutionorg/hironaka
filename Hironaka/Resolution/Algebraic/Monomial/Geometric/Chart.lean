@@ -182,8 +182,9 @@ theorem exists_chartOrigin_point (Z : X.IdealSheafData) (x : X) {n r : ℕ}
     (hZ : Z.stalkIdeal x = span (y '' {i | i.val < r})) (ρ : Fin n) (hρ : ρ.val + 1 = r) :
     ∃ (x' : Scheme.IdealSheafData.blowUp Z) (hx' : Scheme.IdealSheafData.blowUpπ Z x' = x),
       (Z.comap (Scheme.IdealSheafData.blowUpπ Z)).stalkIdeal x' =
-        span {(Scheme.IdealSheafData.blowUpπ Z).stalkMap x' (hx' ▸ y ρ : X.presheaf.stalk
-            (Scheme.IdealSheafData.blowUpπ Z x'))} ∧
+        span
+          {(Scheme.IdealSheafData.blowUpπ Z).stalkMap x' (hx' ▸ y ρ : X.presheaf.stalk
+              (Scheme.IdealSheafData.blowUpπ Z x'))} ∧
       ∀ i : Fin n, i.val < r → i ≠ ρ →
         (Scheme.IdealSheafData.blowUpπ Z).stalkMap x' (hx' ▸ y i : X.presheaf.stalk
             (Scheme.IdealSheafData.blowUpπ Z x')) ∈
@@ -279,8 +280,9 @@ theorem exists_chartOrigin_point_of_mem (Z : X.IdealSheafData) (x : X) {n : ℕ}
     (hs : Z.stalkIdeal x = span (z '' ↑s)) {kk : Fin n} (hk : kk ∈ s) :
     ∃ (x' : Scheme.IdealSheafData.blowUp Z) (hx' : Scheme.IdealSheafData.blowUpπ Z x' = x),
       (Z.comap (Scheme.IdealSheafData.blowUpπ Z)).stalkIdeal x' =
-        span {(Scheme.IdealSheafData.blowUpπ Z).stalkMap x' (hx' ▸ z kk : X.presheaf.stalk
-            (Scheme.IdealSheafData.blowUpπ Z x'))} ∧
+        span
+          {(Scheme.IdealSheafData.blowUpπ Z).stalkMap x' (hx' ▸ z kk : X.presheaf.stalk
+              (Scheme.IdealSheafData.blowUpπ Z x'))} ∧
       ∀ c ∈ s, c ≠ kk →
         (Scheme.IdealSheafData.blowUpπ Z).stalkMap x' (hx' ▸ z c : X.presheaf.stalk
             (Scheme.IdealSheafData.blowUpπ Z x')) ∈

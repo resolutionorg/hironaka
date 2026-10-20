@@ -298,7 +298,7 @@ theorem colon_chainIdeal_eq_chainKIdeal :
           span (f '' {j' | j'.val ≤ (0 : Fin (r + 1)).val}) ⊔
             span {M (0 : Fin (r + 1)).castSucc} := by
         rw [hS0, Fin.castSucc_zero]
-        exact SetLike.le_def.mp
+        exact IsConcreteLE.le_iff.mp
           (sup_le_sup_left (Ideal.mul_le.mpr fun a ha b _ => Ideal.mul_mem_right b _ ha) _)
           (hh (Fin.succ 0))
       have := hB 0 (Fin.succ 0) (by simp) h h0

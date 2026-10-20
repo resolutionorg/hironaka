@@ -244,8 +244,9 @@ theorem stalkIdeal_comap_comp_eq_span {D : IdealSheaf (structureSheaf K E M)}
     (hspan : D.stalkIdeal ((g ≫ ofManifoldHom π hπ).1.base z) =
       Ideal.span (Set.range fun k => coord E ψ φ hφ (hΦ.source_subset hp) (σ k))) :
     (QuotientSpace.comap (g ≫ ofManifoldHom π hπ).1 D).stalkIdeal z =
-      Ideal.span {((g ≫ ofManifoldHom π hπ).1.stalkMap z).hom
-        (coord E ψ φ hφ (hΦ.source_subset hp) (σ i))} := by
+      Ideal.span
+        {((g ≫ ofManifoldHom π hπ).1.stalkMap z).hom
+          (coord E ψ φ hφ (hΦ.source_subset hp) (σ i))} := by
   refine (QuotientSpace.stalkIdeal_comap (X := (ofManifold K E M).toLocallyRingedSpace)
     (g ≫ ofManifoldHom π hπ).1 D z).trans ?_
   refine le_antisymm (Ideal.map_le_iff_le_comap.mpr (hspan.le.trans (Ideal.span_le.mpr ?_)))
@@ -253,8 +254,8 @@ theorem stalkIdeal_comap_comp_eq_span {D : IdealSheaf (structureSheaf K E M)}
   · rintro _ ⟨k, rfl⟩
     change ((g ≫ ofManifoldHom π hπ).1.stalkMap z).hom
         (coord E ψ φ hφ (hΦ.source_subset hp) (σ k)) ∈
-      Ideal.span {((g ≫ ofManifoldHom π hπ).1.stalkMap z).hom
-        (coord E ψ φ hφ (hΦ.source_subset hp) (σ i))}
+      Ideal.span
+        {((g ≫ ofManifoldHom π hπ).1.stalkMap z).hom (coord E ψ φ hφ (hΦ.source_subset hp) (σ i))}
     by_cases hk : k = i
     · subst hk
       exact Ideal.mem_span_singleton_self _

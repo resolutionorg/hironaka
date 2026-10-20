@@ -63,7 +63,7 @@ The VersoBlueprint dependency is the Timaeus fork of verso-blueprint
 ([timaeus-research/verso-blueprint](https://github.com/timaeus-research/verso-blueprint)), which
 renders the annotation boxes from docstrings, reads the review ledger, links declaration names and
 cites the BibTeX bibliography. `lakefile.toml` requires
-it by git URL, pinned to a commit of the fork's branch `timaeus/v4.34.0` (the commit in `lakefile.toml`), and
+it by git URL, pinned to a commit of the fork's branch `timaeus/v4.35.0` (the commit in `lakefile.toml`), and
 `lake-manifest.json` locks that commit, so `lake update` fetches it like any other dependency.
 Its patches to Verso are not needed by this document and are not applied.
 

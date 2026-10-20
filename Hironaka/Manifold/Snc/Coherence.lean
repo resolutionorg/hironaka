@@ -342,8 +342,9 @@ theorem IsSnc.cosupport_idealSheaf (hF : F.IsSnc ψ) :
 product of the coordinates of the components through `a` ([Hir64, Definition 2, p. 141];
 [BM97, Theorem 1.10]). -/
 theorem IsSnc.stalkIdeal_idealSheaf_eq_span_prod (hF : F.IsSnc ψ) (hc : F.IsSncChartAt ψ φ a c) :
-    F.idealSheaf.stalkIdeal a = Ideal.span {∏ j ∈ (hF.2.1.point_finite a).toFinset.attach,
-      coord E ψ φ hc.1 hc.2.1 (c ⟨j.1, (hF.2.1.point_finite a).mem_toFinset.mp j.2⟩)} := by
+    F.idealSheaf.stalkIdeal a = Ideal.span
+      {∏ j ∈ (hF.2.1.point_finite a).toFinset.attach,
+        coord E ψ φ hc.1 hc.2.1 (c ⟨j.1, (hF.2.1.point_finite a).mem_toFinset.mp j.2⟩)} := by
   rw [hF.stalkIdeal_idealSheaf]
   obtain ⟨V, hV, haV, hVs⟩ := hF.exists_nhds_support_eq a
   exact hc.vanishingStalk_support_eq hF hV hVs hc.2.1 haV _

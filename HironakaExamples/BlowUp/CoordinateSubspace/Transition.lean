@@ -68,14 +68,15 @@ theorem chartAwayEquiv_isLocalizationElem {i : Fin n} (hi : i.val < r) (hij : i 
         (Away.isLocalizationElem (degreeOne_mem (genX A n r j hj))
           (degreeOne_mem (genX A n r i hi))) = X i := by
   rw [chartAwayEquiv, RingEquiv.trans_apply, chartRingEquiv_isLocalizationElem,
-    AlgEquiv.coe_ringEquiv, ratio_eq_frac A n r j i hj hi]
+    AlgEquiv.coe_toRingEquiv, ratio_eq_frac A n r j i hj hi]
   exact coordinateSubspaceEquiv_frac A (center n r) j hi hij _
 
 /-- `chartAwayEquiv` on a constant `p ∈ R`: the chart map `π_j` applied to `p`. -/
 theorem chartAwayEquiv_fromZeroRingHom (p : MvPolynomial (Fin n) A) :
     chartAwayEquiv A n r j hj (fromZeroRingHom (grading (centerIdeal A n r)) _
       ((gradingZeroEquiv (centerIdeal A n r)).symm p)) = chartSubst A (center n r) j p := by
-  rw [chartAwayEquiv, RingEquiv.trans_apply, chartRingEquiv_fromZeroRingHom, AlgEquiv.coe_ringEquiv]
+  rw [chartAwayEquiv, RingEquiv.trans_apply, chartRingEquiv_fromZeroRingHom,
+    AlgEquiv.coe_toRingEquiv]
   have := congrArg (fun φ : MvPolynomial (Fin n) A →+* MvPolynomial (Fin n) A => φ p)
     (chartRingIso_hom_comp_algebraMap A n r j)
   simpa [chartRingIso] using this

@@ -56,7 +56,7 @@ theorem circleSpace_eq_zero (z : circleSpace.{u}) : z.1.1 = (ULift.up 0 : Kn.{u}
   have hz : z.1.1.down 0 * z.1.1.down 0 + z.1.1.down 1 * z.1.1.down 1 = 0 :=
     (mem_cosupport_modelIdeal_iff ℝ 2 ⊤ circleEq z.1).mp z.2 0
   obtain ⟨hx0, hy0⟩ := mul_self_add_mul_self_eq_zero.mp hz
-  refine ULift.ext _ _ (funext fun i => ?_)
+  refine ULift.ext (funext fun i => ?_)
   fin_cases i
   · simpa using hx0
   · simpa using hy0

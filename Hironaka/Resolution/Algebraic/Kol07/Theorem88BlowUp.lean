@@ -309,25 +309,24 @@ theorem stalkIdeal_markedTransform_eq_map_transformIdeal
       _ = ((K.stalkIdeal (Z.blowUpπ q)).map
             (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ))).map ψ' :=
           (Ideal.map_map _ _).symm
-      _ = (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-          (y ρ)} ^ c *
+      _ = (Ideal.span
+        {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ)} ^ c *
             transformIdeal y ρ (K.stalkIdeal (Z.blowUpπ q)) c).map ψ' :=
           congrArg (Ideal.map _) (span_pow_mul_transformIdeal y ρ hK).symm
-      _ = (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-          (y ρ) ^ c} *
+      _ = (Ideal.span
+        {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ c} *
             transformIdeal y ρ (K.stalkIdeal (Z.blowUpπ q)) c).map ψ' := by
           rw [Ideal.span_singleton_pow]
       _ = (Ideal.span
-            {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-                (y ρ) ^ c}).map ψ' *
+            {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ c}).map ψ' *
             (transformIdeal y ρ (K.stalkIdeal (Z.blowUpπ q)) c).map ψ' :=
                 Ideal.map_mul _ _ _
       _ = Ideal.span (ψ' ''
             {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ c}) *
             (transformIdeal y ρ (K.stalkIdeal (Z.blowUpπ q)) c).map ψ' :=
           congrArg (· * _) (Ideal.map_span _ _)
-      _ = Ideal.span {ψ' (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-          (y ρ) ^ c)}
+      _ = Ideal.span
+        {ψ' (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ c)}
             * (transformIdeal y ρ (K.stalkIdeal (Z.blowUpπ q)) c).map ψ' :=
           congrArg (fun S : Set (Z.blowUp.presheaf.stalk q) => Ideal.span S * _)
             (Set.image_singleton (f := ψ'))
@@ -342,10 +341,10 @@ under `ψ'` of the `y_ρ`-saturation `⋃ᵢ ((φ g) : y_ρⁱ)` of the total tr
 theorem stalkIdeal_strictTransform_eq_map_span_colon (S : X.IdealSheafData) {g}
     (hSz : S.stalkIdeal (Z.blowUpπ q) = Ideal.span {g}) :
     (S.strictTransform Z).stalkIdeal q =
-      (⨆ i : ℕ, (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q))
-          (chartRing y ρ) g}).colon
-        ((Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-            (y ρ)} ^ i :
+      (⨆ i : ℕ, (Ideal.span
+        {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) g}).colon
+        ((Ideal.span
+          {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ)} ^ i :
           Ideal (chartRing y ρ)) : Set (chartRing y ρ))).map
         (e.symm.toRingHom.comp (algebraMap (chartRing y ρ) (Localization.AtPrime 𝔮))) := by
   classical
@@ -373,14 +372,14 @@ theorem stalkIdeal_strictTransform_eq_map_span_colon (S : X.IdealSheafData) {g}
       Set.image_singleton]
   change _ = (⨆ i : ℕ,
       (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) g}).colon
-        ((Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-            (y ρ)} ^ i :
+        ((Ideal.span
+          {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ)} ^ i :
           Ideal (chartRing y ρ)) : Set (chartRing y ρ))).map
       (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q))
   rw [step1, Ideal.map_iSup]
   refine iSup_congr fun i => ?_
-  have hfg : (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-      (y ρ)} ^ i
+  have hfg : (Ideal.span
+    {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ)} ^ i
       : Ideal (chartRing y ρ)).FG := by
     rw [Ideal.span_singleton_pow]
     exact Submodule.fg_span_singleton _

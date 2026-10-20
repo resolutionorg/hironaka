@@ -58,8 +58,8 @@ theorem Scheme.smooth_iff_isRegular [PerfectField k] (f : X ⟶ Spec (.of k))
   constructor
   · intro h x
     exact (Scheme.mem_smoothLocus_iff_isRegularAt f x).mp
-      (SetLike.le_def.mp h (TopologicalSpace.Opens.mem_top x))
+      (IsConcreteLE.le_iff.mp h (TopologicalSpace.Opens.mem_top x))
   · intro h
-    exact SetLike.le_def.mpr fun x _ => (Scheme.mem_smoothLocus_iff_isRegularAt f x).mpr (h x)
+    exact IsConcreteLE.le_iff.mpr fun x _ => (Scheme.mem_smoothLocus_iff_isRegularAt f x).mpr (h x)
 
 end AlgebraicGeometry

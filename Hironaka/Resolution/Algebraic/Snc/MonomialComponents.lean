@@ -6,7 +6,7 @@ Authors: Chris Elliott (Resolution): formalization performed by Claude Fable 5.1
 module
 
 public import Hironaka.Resolution.Algebraic.MarkedOrderReduction.MonomialPart
-public import Mathlib.Data.Sigma.Order
+public import Mathlib.Order.Sigma
 public import Hironaka.Scheme.Snc.Dictionary
 public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 import Hironaka.Resolution.Algebraic.Kol07.ComponentwiseBlowUp
@@ -73,7 +73,7 @@ theorem components_component (E : DivisorFamily X) (p : E.components.ι) :
 /-- A component lies in its member. -/
 theorem support_components_component_le (E : DivisorFamily X) (p : E.components.ι) :
     (E.components.component p).support ≤ (E.component (ofLex p).1).support :=
-  SetLike.le_def.mpr fun x hx =>
+  IsConcreteLE.le_iff.mpr fun x hx =>
     ((Hironaka.Sequence.mem_support_componentFamily_iff _ _ x).mp hx).mem_closed
       (E.component (ofLex p).1).support.isClosed (ofLex p).2.2.1
 

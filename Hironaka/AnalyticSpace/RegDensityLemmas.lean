@@ -16,6 +16,7 @@ import Hironaka.AnalyticSpace.RegularParameters
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
 import Mathlib.Combinatorics.Matroid.Init
+import Mathlib.RingTheory.Ideal.MinimalPrime.Noetherian
 
 /-!
 # Local models near a point: zero sets, simple points, graph ideals
@@ -345,7 +346,7 @@ theorem eventually_exists_localModel_pt (z : localModel K n G f) :
       (continuous_const.add continuous_id)
   have hG : ∀ᶠ y' in 𝓝 (0 : Fin n → K), (ULift.up (z.1.1.down + y') : Kn.{u} K n) ∈ G := by
     have : Tendsto (fun y' : Fin n → K => (ULift.up (z.1.1.down + y') : Kn.{u} K n)) (𝓝 0)
-        (𝓝 z.1.1) := hc.tendsto' 0 z.1.1 (ULift.ext _ _ (add_zero _))
+        (𝓝 z.1.1) := hc.tendsto' 0 z.1.1 (ULift.ext (add_zero _))
     exact this.eventually (G.isOpen.mem_nhds z.1.2)
   filter_upwards [hG, eventually_forall_evalSeries_modelGens_eq_zero_iff G f z] with y' hyG hiff
   intro h0

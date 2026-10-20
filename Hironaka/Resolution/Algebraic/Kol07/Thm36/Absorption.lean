@@ -20,6 +20,7 @@ import Mathlib.Data.EReal.Operations
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Topology.MetricSpace.Bounded
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 
 /-!
 # A generic point of codimension at least two is absorbed by some centre

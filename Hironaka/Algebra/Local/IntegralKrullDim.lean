@@ -10,6 +10,7 @@ public import Mathlib.RingTheory.Spectrum.Prime.RingHom
 public import Mathlib.Algebra.Module.SpanRank
 public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
 import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+import Mathlib.RingTheory.Ideal.Quotient.Noetherian
 
 /-!
 # Krull dimension under integral extensions

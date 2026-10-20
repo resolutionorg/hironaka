@@ -34,7 +34,7 @@ instance isSeparated : IsSeparated (X.left ↘ Spec (.of k)) := X.prop.2
 
 /-- A morphism of algebraic `k`-schemes is a `k`-morphism. -/
 instance isOver_left {X Y : AlgScheme k} (h : Y ⟶ X) : h.left.IsOver (Spec (.of k)) where
-  comp_over := (by simpa using h.w : h.left ≫ X.hom = Y.hom)
+  comp_over := (by simp : h.left ≫ X.hom = Y.hom)
 
 /-- The algebraic `k`-scheme with underlying scheme `X` and structure morphism `f`, of finite type
 and separated. It is written as a structure, so that `(ofHom f).left` unfolds to `X` and

@@ -8,7 +8,7 @@ module
 public import Hironaka.Manifold.DirectLimit.Manifold
 public import Hironaka.Manifold.FiniteSuccession.Functor.Triple
 public import Hironaka.Manifold.Snc.Basic
-public import Mathlib.Data.Sigma.Order
+public import Mathlib.Order.Sigma
 import Hironaka.Manifold.Chart.Transport
 
 /-!

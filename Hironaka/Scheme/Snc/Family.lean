@@ -10,6 +10,7 @@ import Hironaka.Algebra.Local.Regular
 import Hironaka.Algebra.Local.RegularSystem
 import Hironaka.Scheme.BlowUp.Descent
 import Hironaka.Scheme.Snc.Coordinates
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 
 /-!
 # Families of divisors with simple normal crossings at a point

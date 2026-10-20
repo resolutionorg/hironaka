@@ -14,6 +14,7 @@ import Hironaka.Algebra.Local.PowerSeriesRegular
 import Hironaka.Algebra.Local.RegularSystem
 import Mathlib.Combinatorics.Matroid.Init
 import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
 
 /-!

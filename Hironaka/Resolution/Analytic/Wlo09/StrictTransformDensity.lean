@@ -145,7 +145,7 @@ theorem mem_closure_cosupport_diff_exceptional_of_isRegular (a' : M')
   -- the exceptional stalk is not contained in `J_{a'}` (which is proper)
   have hnle : ¬ (hY.idealSheaf.pullback π h.contMDiff).stalkIdeal a' ≤ J.stalkIdeal a' := fun hle =>
     ha' (stalkIdeal_strictTransformSubspace_eq_top_of_exceptional_le hY h I a' hle)
-  obtain ⟨u, huE, huJ⟩ := SetLike.not_le_iff_exists.mp hnle
+  obtain ⟨u, huE, huJ⟩ := IsConcreteLE.not_le_iff_exists.mp hnle
   obtain ⟨V, haV, g, hgV, rfl⟩ := huE
   rw [mem_closure_iff_nhds]
   intro N hN

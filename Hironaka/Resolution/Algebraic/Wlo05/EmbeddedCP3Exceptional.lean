@@ -286,8 +286,8 @@ theorem exists_chart_of_mem_genericPoints_exceptionalDivisor {ε : Z.blowUp}
     rw [← hZy, ← stalkIdeal_comap Z Z.blowUpπ ε]
     exact hFε
   have hqeq :
-      𝔮 = Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ ε)) (chartRing y ρ)
-          (y ρ)} :=
+      𝔮 = Ideal.span
+        {algebraMap (X.presheaf.stalk (Z.blowUpπ ε)) (chartRing y ρ) (y ρ)} :=
     prime_eq_span_of_map_chartCenter_eq_maximalIdeal y hy hn' ρ 𝔮 hle _ e (fun c => he c) hF
   -- `𝔪_z ≤ 𝔮 ∩ 𝒪_{X,z} = (y_0, …, y_ρ) = Z_z`
   have hZz : Z.stalkIdeal (Z.blowUpπ ε) = maximalIdeal (X.presheaf.stalk

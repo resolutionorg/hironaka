@@ -134,7 +134,8 @@ theorem colon_span_singleton_mul_eq {R : Type*} [CommRing R] [IsDomain R] {ι : 
     rw [mem_colon_span_range_iff] at hh
     obtain ⟨j₀⟩ := ‹Nonempty ι›
     have hdiv : m ∣ h := hm j₀ h (mem_span_singleton.mp
-      (SetLike.le_def.mp (Ideal.mul_le.mpr fun a ha b _ => Ideal.mul_mem_right b _ ha) (hh j₀)))
+      (IsConcreteLE.le_iff.mp (Ideal.mul_le.mpr fun a ha b _ => Ideal.mul_mem_right b _ ha)
+        (hh j₀)))
     obtain ⟨h', rfl⟩ := hdiv
     refine Ideal.mul_mem_mul (mem_span_singleton_self m) ?_
     rw [mem_colon_span_range_iff]

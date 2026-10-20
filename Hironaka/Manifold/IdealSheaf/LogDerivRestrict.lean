@@ -262,9 +262,10 @@ omit [IsManifold 𝓘(𝕜, E) ω M] in
 /-- The stalk of the ideal sheaf of `S` at `p`, in the adapted chart at `p`: `(x_h)`. -/
 theorem stalkIdeal_idealSheaf_inclusionMap :
     hS.idealSheaf.stalkIdeal (hS.inclusionMap p) =
-      Ideal.span {coord E ψ (hS.adaptedChartAt (hS.subOf p)) (hS.isAdaptedChart_adaptedChartAt
-        (hS.subOf p)).1
-        (inclusionMap_mem_source_adaptedChartAt hS p) (hS.adaptedIdx (hS.subOf p) 0)} := by
+      Ideal.span
+        {coord E ψ (hS.adaptedChartAt (hS.subOf p)) (hS.isAdaptedChart_adaptedChartAt
+          (hS.subOf p)).1
+          (inclusionMap_mem_source_adaptedChartAt hS p) (hS.adaptedIdx (hS.subOf p) 0)} := by
   rw [hS.isIdealSheafOf_idealSheaf.2 _ _ (hS.isAdaptedChart_adaptedChartAt (hS.subOf p))
     (hS.inclusionMap p)
     (inclusionMap_mem_source_adaptedChartAt hS p) (inclusionMap_mem hS p), Set.range_unique]

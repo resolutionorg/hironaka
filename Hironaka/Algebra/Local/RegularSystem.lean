@@ -8,6 +8,8 @@ module
 public import Mathlib.RingTheory.Regular.RegularSequence
 public import Mathlib.RingTheory.RegularLocalRing.Defs
 import Hironaka.Algebra.Local.Regular
+import Mathlib.Algebra.Module.SpanRankOperations
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 import Mathlib.LinearAlgebra.Dimension.OrzechProperty
 
 /-!

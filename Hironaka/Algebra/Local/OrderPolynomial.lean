@@ -9,6 +9,7 @@ public import Hironaka.Algebra.Local.OrderFlat
 import Hironaka.Algebra.Local.CompletionMap
 import Mathlib.Combinatorics.Matroid.Init
 import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
+import Mathlib.RingTheory.Localization.LocalizationLocalization
 
 /-!
 # The order under localizations of polynomial rings

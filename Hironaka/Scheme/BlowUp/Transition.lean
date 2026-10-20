@@ -335,7 +335,7 @@ theorem transitionEquiv_unique
   have h2 : (e : Localization.Away (frac (a := a) hb) →ₐ[R] Localization.Away (frac (a := b) ha)) =
       (transitionEquiv I ha hb :
         Localization.Away (frac (a := a) hb) →ₐ[R] Localization.Away (frac (a := b) ha)) := by
-    apply AlgHom.coe_ringHom_injective
+    apply AlgHom.toRingHom_injective
     apply IsLocalization.ringHom_ext (Submonoid.powers (frac (a := a) hb))
     ext w
     exact AlgHom.congr_fun key w

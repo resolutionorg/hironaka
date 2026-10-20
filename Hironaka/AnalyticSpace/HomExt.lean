@@ -14,6 +14,7 @@ import Hironaka.Manifold.Germ.TaylorIdeal
 import Hironaka.Manifold.Sheaf.LocalRing
 import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
 import Mathlib.Combinatorics.Matroid.Init
+import Mathlib.RingTheory.Ideal.Quotient.Noetherian
 import Mathlib.Data.Nat.Choose.Multinomial
 
 /-!

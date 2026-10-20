@@ -336,10 +336,10 @@ theorem ord_example11_zz_H_root {K : Type*} [Field K] [CharZero K] (ω : K) (hω
         Ideal.span {(X 0 : MvPolynomial (Fin 2) K) - C ω, X 1} ^ 4 := by
   have hC : (C ω : MvPolynomial (Fin 2) K) ^ 3 = 1 := by rw [← map_pow, hω, map_one]
   refine ⟨(Ideal.span_singleton_le_iff_mem _).mpr ?_, fun h => ?_⟩
-  · have hy : (X 0 : MvPolynomial (Fin 2) K) - C ω ∈ Ideal.span {(X 0 : MvPolynomial (Fin 2) K) -
-        C ω, X 1} := Ideal.subset_span (by simp)
-    have hz : (X 1 : MvPolynomial (Fin 2) K) ∈ Ideal.span {(X 0 : MvPolynomial (Fin 2) K) - C ω,
-        X 1} := Ideal.subset_span (by simp)
+  · have hy : (X 0 : MvPolynomial (Fin 2) K) - C ω ∈ Ideal.span
+        {(X 0 : MvPolynomial (Fin 2) K) - C ω, X 1} := Ideal.subset_span (by simp)
+    have hz : (X 1 : MvPolynomial (Fin 2) K) ∈ Ideal.span
+        {(X 0 : MvPolynomial (Fin 2) K) - C ω, X 1} := Ideal.subset_span (by simp)
     have : ((X 0 : MvPolynomial (Fin 2) K) ^ 3 - 1) * X 1 ^ 2 =
         (X 0 ^ 2 + C ω * X 0 + C ω ^ 2) * ((X 0 - C ω) * X 1 ^ 2) := by
       linear_combination (X 1 : MvPolynomial (Fin 2) K) ^ 2 * hC

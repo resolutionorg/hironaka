@@ -10,6 +10,7 @@ public import Mathlib.RingTheory.Smooth.Locus
 import Hironaka.Algebra.Local.OrderPolynomial
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.RingTheory.Unramified.LocalStructure
+import Mathlib.RingTheory.Unramified.LocalRing
 
 /-!
 # The order under the local maps of étale and smooth algebras

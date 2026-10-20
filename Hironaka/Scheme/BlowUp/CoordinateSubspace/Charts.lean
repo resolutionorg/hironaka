@@ -146,11 +146,11 @@ theorem chartRingIso_hom_comp_algebraMap (j : Fin n) :
       (chartSubst A (center n r) j).toRingHom := by
   refine MvPolynomial.ringHom_ext (fun a => ?_) (fun i => ?_)
   · simp only [chartRingIso, RingEquiv.toCommRingCatIso_hom, CommRingCat.hom_ofHom,
-      RingHom.comp_apply, AlgEquiv.coe_ringEquiv, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
+      RingHom.comp_apply, AlgEquiv.coe_toRingEquiv, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
     rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply, AlgEquiv.commutes,
       AlgHom.commutes]
   · simp only [chartRingIso, RingEquiv.toCommRingCatIso_hom, CommRingCat.hom_ofHom,
-      RingHom.comp_apply, AlgEquiv.coe_ringEquiv, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
+      RingHom.comp_apply, AlgEquiv.coe_toRingEquiv, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
     by_cases h : i.val < r ∧ i ≠ j
     · rw [coordinateSubspaceEquiv_algebraMap_X_of_mem A (center n r) j h.1 h.2,
         chartSubst_X_of_mem A (center n r) j h.1 h.2]

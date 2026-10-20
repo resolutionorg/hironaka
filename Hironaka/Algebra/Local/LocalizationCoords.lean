@@ -7,6 +7,7 @@ module
 
 public import Hironaka.Algebra.DerivationLocalization
 public import Hironaka.Algebra.Local.Coords
+public import Mathlib.RingTheory.Ideal.Height
 import Hironaka.Algebra.Local.RegularSystem
 
 /-!

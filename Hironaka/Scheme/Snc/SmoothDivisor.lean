@@ -12,6 +12,7 @@ public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
 import Hironaka.Algebra.Local.Regular
 import Hironaka.Algebra.Local.RegularSystem
 import Hironaka.Scheme.Smooth.AdaptedCoordinates
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 
 /-!
 # Smooth divisors

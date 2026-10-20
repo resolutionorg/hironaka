@@ -14,6 +14,7 @@ import Hironaka.Algebra.Local.Regular
 import Hironaka.Algebra.Local.RegularSystem
 import Hironaka.Algebra.RegularSmooth.SchemeForms
 import Hironaka.Scheme.Smooth.SubschemeStalk
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 
 /-!
 # Local parameters adapted to a smooth center

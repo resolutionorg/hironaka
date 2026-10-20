@@ -114,8 +114,9 @@ def bm316Ideal : AnalyticManifold.IdealSheaf realPlane :=
 
 theorem stalkIdeal_bm316Ideal (x : realPlane) :
     bm316Ideal.stalkIdeal x =
-      Ideal.span {(structureSheaf ℝ (Fin 2 → ℝ) realPlane).presheaf.germ planeChart x
-        (mem_planeChart x) bm316Section} :=
+      Ideal.span
+        {(structureSheaf ℝ (Fin 2 → ℝ) realPlane).presheaf.germ planeChart x
+          (mem_planeChart x) bm316Section} :=
   IdealSheaf.stalkIdeal_ofSectionOn (structureSheaf ℝ (Fin 2 → ℝ) realPlane) planeChart
     mem_planeChart bm316Section x
 
@@ -133,8 +134,9 @@ def circleIdeal : AnalyticManifold.IdealSheaf realPlane :=
 
 theorem stalkIdeal_circleIdeal (x : realPlane) :
     circleIdeal.stalkIdeal x =
-      Ideal.span {(structureSheaf ℝ (Fin 2 → ℝ) realPlane).presheaf.germ planeChart x
-        (mem_planeChart x) circleSection} :=
+      Ideal.span
+        {(structureSheaf ℝ (Fin 2 → ℝ) realPlane).presheaf.germ planeChart x
+          (mem_planeChart x) circleSection} :=
   IdealSheaf.stalkIdeal_ofSectionOn (structureSheaf ℝ (Fin 2 → ℝ) realPlane) planeChart
     mem_planeChart circleSection x
 

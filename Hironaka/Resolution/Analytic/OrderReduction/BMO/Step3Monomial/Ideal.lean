@@ -163,8 +163,8 @@ theorem ord_monomialIdeal (x : N) :
   choose! g hg using fun c : Fin Φ.nextComp =>
     Φ.exists_generator_stalkIdeal_pieceIdeal hF hΦ (x := x) (c := c)
   have hstalk : (Φ.monomialIdeal hF hΦ).stalkIdeal x =
-      Ideal.span {∏ c ∈ (Finset.univ.filter fun c : Fin Φ.nextComp => x ∈ Φ.piece c),
-        g c ^ Φ.a c.1} := by
+      Ideal.span
+        {∏ c ∈ (Finset.univ.filter fun c : Fin Φ.nextComp => x ∈ Φ.piece c), g c ^ Φ.a c.1} := by
     rw [monomialIdeal, IdealSheaf.stalkIdeal_finset_prod, ← Finset.prod_filter_mul_prod_filter_not
       Finset.univ (fun c : Fin Φ.nextComp => x ∈ Φ.piece c)]
     have h2 : ∏ c ∈ (Finset.univ.filter fun c : Fin Φ.nextComp => ¬ x ∈ Φ.piece c),

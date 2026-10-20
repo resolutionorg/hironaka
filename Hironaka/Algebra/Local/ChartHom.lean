@@ -11,6 +11,7 @@ public import Hironaka.Algebra.Local.ChartRing
 import Hironaka.Algebra.Local.ChartCompletion
 import Mathlib.Combinatorics.Matroid.Init
 import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
+import Mathlib.RingTheory.Flat.Localization
 
 /-!
 # Ring maps out of the chart ring: existence, the chart origin, and flatness

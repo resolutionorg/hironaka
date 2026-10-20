@@ -12,6 +12,7 @@ import Hironaka.Algebra.RegularSmooth.SchemeForms
 import Hironaka.Algebra.RegularSmooth.Trdeg
 import Hironaka.Algebra.Smooth.SpreadOut
 import Hironaka.Scheme.Smooth.AdaptedCoordinates
+import Mathlib.Algebra.Module.SpanRankOperations
 
 /-!
 # Differentials of a regular system of parameters at a closed point

@@ -506,8 +506,8 @@ theorem stalkIdeal_markedTransform_chainKIdeal [IsRegularLocalRing ((blowUp Z).p
       epsOrderC C a b (Function.update δ (Fin.last r) 0) i.succ -
         epsOrderC C a b (Function.update δ (Fin.last r) 0) i.castSucc) :
     (K.markedTransform Z 1).stalkIdeal q =
-      span {monomialOf D.z'
-          (D.newExp (epsOrderC C a b (Function.update δ (Fin.last r) 0) 0 - 1) b)} *
+      span
+        {monomialOf D.z' (D.newExp (epsOrderC C a b (Function.update δ (Fin.last r) 0) 0 - 1) b)} *
         chainKIdeal (D.z' ∘ D.newChain σ hmem)
           fun i => monomialOf D.z' (D.newExp (Dexp i) (a i)) := by
   rw [markedTransform_one_eq,

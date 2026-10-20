@@ -6,6 +6,7 @@ Authors: Chris Elliott (Resolution): formalization performed by Claude Fable 5.1
 module
 
 public import Mathlib.Algebra.Order.Antidiag.Finsupp
+public import Mathlib.Data.Finsupp.Antidiagonal
 public import Mathlib.Data.Finsupp.Fin
 public import Mathlib.Data.Finsupp.Weight
 public import Mathlib.Topology.Algebra.InfiniteSum.Defs

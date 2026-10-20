@@ -278,7 +278,8 @@ theorem coord_pieceAmbient_eq {G : Opens (Fin n → 𝕜)} (q : pieceAmbient.{u}
 def pieceCoordSection (G : Opens (Fin n → 𝕜)) (k : Fin n) :
     (structureSheaf 𝕜 (Fin n → 𝕜) (pieceAmbient.{u} 𝕜 G)).presheaf.obj (op ⊤) :=
   sectionOfContMDiffOn (fun w => pieceCoord G w k) ⊤
-    ((contMDiff_iff_contDiff.mpr (contDiff_apply 𝕜 𝕜 k)).comp (contMDiff_pieceCoord G)).contMDiffOn
+    ((contMDiff_iff_contDiff.mpr (contDiff_apply 𝕜 (fun _ => 𝕜) k)).comp
+      (contMDiff_pieceCoord G)).contMDiffOn
 
 theorem germ_pieceCoordSection {G : Opens (Fin n → 𝕜)} (q : pieceAmbient.{u} 𝕜 G) (k : Fin n) :
     (structureSheaf 𝕜 (Fin n → 𝕜) (pieceAmbient.{u} 𝕜 G)).presheaf.germ ⊤ q (Opens.mem_top q)

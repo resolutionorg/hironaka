@@ -9,6 +9,8 @@ public import Mathlib.RingTheory.RegularLocalRing.Defs
 import Hironaka.Algebra.Local.Regular
 import Hironaka.Algebra.Local.RegularSystem
 import Mathlib.RingTheory.KrullDimension.Regular
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+import Mathlib.RingTheory.Ideal.Quotient.Noetherian
 
 /-!
 # Regular quotients of a regular local ring

@@ -590,8 +590,8 @@ theorem stalkIdeal_controlledTransformAlong_chainKIdeal
       epsOrderC C a b (Function.update δ (Fin.last r) 0) i.succ -
         epsOrderC C a b (Function.update δ (Fin.last r) 0) i.castSucc) :
     (K.controlledTransformAlong (blowUpπ Z) (Z.comap (blowUpπ Z)) 1).stalkIdeal q =
-      span {D.ε ^ (epsOrderC C a b (Function.update δ (Fin.last r) 0) 0 - 1) *
-          monomialOf D.wHat b} *
+      span
+        {D.ε ^ (epsOrderC C a b (Function.update δ (Fin.last r) 0) 0 - 1) * monomialOf D.wHat b} *
         chainKIdeal (fun i => D.wHat (σ i)) (fun i => D.ε ^ Dexp i * monomialOf D.wHat (a i)) := by
   classical
   rw [D.stalkIdeal_controlledTransformAlong_one, hK, D.map_span_mul_chainKIdeal]

@@ -219,7 +219,7 @@ theorem exists_smoothWindow_of_mem_smoothLocus (hE : IsEmpty TX.E.ι) [IsReduced
     have hsnd : Smooth (pullback.snd (Scheme.Opens.ι W) TX.I.subschemeι ≫
         (TX.I.subschemeι ≫ (TX.X.left ↘ Spec (.of k)))) := by
       rw [← Scheme.Hom.smoothLocus_eq_top_iff, ← Scheme.Hom.preimage_smoothLocus_eq, eq_top_iff]
-      refine SetLike.le_def.mpr fun p _ => ?_
+      refine IsConcreteLE.le_iff.mpr fun p _ => ?_
       change pullback.snd (Scheme.Opens.ι W) TX.I.subschemeι p ∈
         (TX.I.subschemeι ≫ (TX.X.left ↘ Spec (.of k))).smoothLocus
       by_contra hp

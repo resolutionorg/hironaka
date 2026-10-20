@@ -236,7 +236,7 @@ theorem colon_comap_le_comap_of_flat (π : B ⟶ X) (D J : X.IdealSheafData)
       rw [hp, Ideal.mem_comap]
       exact hsQ
     · -- some `t ∈ J(U)Γ(U')` is outside `Q`
-      obtain ⟨t, htI, htQ⟩ := SetLike.not_le_iff_exists.mp hJQ
+      obtain ⟨t, htI, htQ⟩ := IsConcreteLE.not_le_iff_exists.mp hJQ
       exact ⟨t, htQ, Ideal.mul_mem_right u _ htI⟩
   · -- `e ∉ Q`: take `t = e`
     exact ⟨e b, heQ, by rw [mul_comm]; exact hu⟩

@@ -199,7 +199,7 @@ theorem exists_mem_ideal_MC_ordElem_eq_one (I : X.IdealSheafData) {m : ℕ} (hm 
     rw [h1] at this
     have h21 : (2 : ℕ) ≤ 1 := by exact_mod_cast this
     omega
-  obtain ⟨a, haJ, ha2⟩ := SetLike.not_le_iff_exists.mp hnle
+  obtain ⟨a, haJ, ha2⟩ := IsConcreteLE.not_le_iff_exists.mp hnle
   have ha1 : ordElem a = 1 := ordElem_eq_one_iff.mpr ⟨hle haJ, ha2⟩
   obtain ⟨U, hxU⟩ := exists_affineOpens_mem x
   let _ : Algebra Γ(X, U.1) (X.presheaf.stalk x) :=

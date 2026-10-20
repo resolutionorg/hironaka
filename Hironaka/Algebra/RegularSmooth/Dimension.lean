@@ -14,6 +14,7 @@ public import Mathlib.RingTheory.Smooth.StandardSmooth
 import Hironaka.Algebra.RegularSmooth.Cotangent
 import Hironaka.Algebra.RegularSmooth.SmoothImpliesRegular
 import Hironaka.Algebra.RegularSmooth.Trdeg
+import Mathlib.Algebra.Module.SpanRankOperations
 import Mathlib.RingTheory.Smooth.Field
 import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
 

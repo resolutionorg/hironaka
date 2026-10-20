@@ -18,6 +18,7 @@ import Mathlib.Data.EReal.Operations
 import Mathlib.Data.Nat.Choose.Multinomial
 import Mathlib.Topology.Algebra.InfiniteSum.Order
 import Mathlib.Topology.MetricSpace.Bounded
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
 
 /-!
 # Lifting the chain form across a smooth hypersurface

@@ -10,6 +10,7 @@ import Hironaka.Algebra.Local.RegularSystem
 import Hironaka.Algebra.RegularSmooth.Cotangent
 import Hironaka.Scheme.Smooth.AdaptedCoordinates
 import Hironaka.Scheme.Smooth.DifferentialBasis
+import Mathlib.Algebra.Module.SpanRankOperations
 
 /-!
 # The differential basis at an arbitrary point

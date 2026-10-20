@@ -606,7 +606,7 @@ theorem contMDiffOn_π : ContMDiffOn 𝓘(K, Kn.{u} K n) 𝓘(K, Kn.{u} K (n - c
 theorem π_Θ {v : Kn.{u} K (n - c)} (hv : v ∈ D.G') : D.π (D.Θ v) = v := by
   unfold π
   rw [D.e_Θ hv]
-  exact ULift.ext _ _ (projCompl_embedCompl D.σ v.down)
+  exact ULift.ext (projCompl_embedCompl D.σ v.down)
 
 theorem Θ_mem_source {v : Kn.{u} K (n - c)} (hv : v ∈ D.G') : D.Θ v ∈ D.e.source :=
   D.e.map_target hv.1

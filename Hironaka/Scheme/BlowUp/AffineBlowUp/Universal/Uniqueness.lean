@@ -64,8 +64,9 @@ theorem stalkIdeal_comap_specIdealSheaf_eq_span (f : Y ⟶ Spec (.of R)) (V : Y.
     (a : I) (hI : I.map (sectionsHom f V.1) = Ideal.span {sectionsHom f V.1 a}) {z : Y}
     (hz : z ∈ V.1) :
     ((specIdealSheaf I).comap f).stalkIdeal z =
-      Ideal.span {f.stalkMap z ((Spec (.of R)).presheaf.germ ⊤ (f z) (Opens.mem_top _)
-        ((Scheme.ΓSpecIso (.of R)).inv.hom a))} := by
+      Ideal.span
+        {f.stalkMap z ((Spec (.of R)).presheaf.germ ⊤ (f z) (Opens.mem_top _)
+          ((Scheme.ΓSpecIso (.of R)).inv.hom a))} := by
   rw [Scheme.IdealSheafData.stalkIdeal_eq_map_germ _ V hz, ideal_comap_specIdealSheaf, hI,
       Ideal.map_span,
     Set.image_singleton]

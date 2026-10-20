@@ -104,9 +104,9 @@ theorem contDiffOn_extendComplFun (σ : Fin s ↪ Fin n)
   refine contDiffOn_pi.mpr fun j => ?_
   by_cases h : j ∈ Set.range σ
   · simp only [extendComplFun, dite_eq_left h]
-    exact (contDiff_apply 𝕜 𝕜 j).contDiffOn
+    exact (contDiff_apply 𝕜 (fun _ => 𝕜) j).contDiffOn
   · simp only [extendComplFun, dite_eq_right h]
-    exact (contDiff_apply 𝕜 𝕜 _).comp_contDiffOn
+    exact (contDiff_apply 𝕜 (fun _ => 𝕜) _).comp_contDiffOn
       (hf.comp (contDiff_projCompl σ).contDiffOn fun z hz => hz)
 
 /-- A partial homeomorphism `θ` of `𝕜^{n-s}` extended to `𝕜^n` by the identity on the coordinates

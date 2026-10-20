@@ -141,7 +141,7 @@ theorem contMDiff_baseFun [IsManifold 𝓘(K, E') ω N] (ψ' : E' ≃L[K] (Fin n
     exact (extendSection_of_mem K E _ hy).trans (sheafHom_apply F (chartSourceOpens χ) _ y hy')
   -- `χ ∘ F = ψ'⁻¹ ∘ (g i)_i` on `W`
   have hG : ContMDiffOn 𝓘(K, E) 𝓘(K, Fin n → K) ω (fun y i => g i y) W :=
-    contMDiffOn_pi_space.mpr hg
+    contMDiffOn_pi_module_iff.mpr hg
   have hχF : ContMDiffOn 𝓘(K, E) 𝓘(K, E') ω (χ ∘ baseFun F) W := by
     refine (((ψ'.symm : (Fin n → K) →L[K] E').contMDiff).comp_contMDiffOn hG).congr ?_
     intro y hy

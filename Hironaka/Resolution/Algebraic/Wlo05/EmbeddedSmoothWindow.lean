@@ -294,7 +294,7 @@ theorem vanishingIdeal_iSup_strictTransformSeq_take_comap_eq_top
       hopen.isClosed_compl⟩
   have hle : (⨆ c' ∈ F, (((bmoOneRun T hm).take n₀).strictTransformSeq c' (Fin.last _)).support)
       ≤ Z' := by
-    refine iSup₂_le fun c' hc' => SetLike.le_def.mpr fun x hx => ?_
+    refine iSup₂_le fun c' hc' => IsConcreteLE.le_iff.mpr fun x hx => ?_
     change x ∉ Set.range (((bmoOneRun T hm).take n₀).pullbackStageHom j (Fin.last _))
     rintro ⟨y, rfl⟩
     have h1 := stageMap_mem_support_of_mem_strictTransformSeq_support _ c' (Fin.last _) hx

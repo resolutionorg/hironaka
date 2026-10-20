@@ -97,8 +97,9 @@ theorem map_stalkIdeal_eq_span_of_eq_span (Z : X.IdealSheafData) (V : X.Opens) (
     (hF : (Z.comap π).stalkIdeal (φ T) =
       span {π.stalkMap (φ T) (X.presheaf.germ V (π (φ T)) (hx' ▸ hxV) s)}) :
     ((Z.comap π).stalkIdeal (φ T)).map (φ.stalkMap T).hom =
-      span {ψ.stalkMap T ((Spec (X.presheaf.stalk x)).presheaf.germ ⊤ (ψ T) trivial
-        ((Scheme.ΓSpecIso (X.presheaf.stalk x)).inv (X.presheaf.germ V x hxV s)))} := by
+      span
+        {ψ.stalkMap T ((Spec (X.presheaf.stalk x)).presheaf.germ ⊤ (ψ T) trivial
+          ((Scheme.ΓSpecIso (X.presheaf.stalk x)).inv (X.presheaf.germ V x hxV s)))} := by
   rw [hF, Ideal.map_span, Set.image_singleton, stalkMap_stalkMap_germ_eq φ ψ π hw T hx']
 
 /-- The stalk isomorphism of a base change of `Spec 𝒪_{X,x} → X`, composed with an isomorphism

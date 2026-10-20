@@ -123,9 +123,10 @@ theorem isRegular_reesInitialGraded_degreeOne :
 `c t^k/(x_j t)^k` is a multiple of `x_j/1`. -/
 theorem ker_chartInitialMap :
     RingHom.ker (chartInitialMap A n r hrn a) =
-      Ideal.span {fromZeroRingHom (grading (centerIdeal A n r))
-        (Submonoid.powers (degreeOne (centerIdeal A n r) a))
-        ((gradingZeroEquiv (centerIdeal A n r)).symm (a : MvPolynomial (Fin n) A))} := by
+      Ideal.span
+        {fromZeroRingHom (grading (centerIdeal A n r))
+          (Submonoid.powers (degreeOne (centerIdeal A n r) a))
+          ((gradingZeroEquiv (centerIdeal A n r)).symm (a : MvPolynomial (Fin n) A))} := by
   have hreg := isRegular_reesInitialGraded_degreeOne A n r hrn a j hj ha
   apply le_antisymm
   · intro z hz
@@ -172,8 +173,9 @@ theorem ker_chartInitialMap :
 `x_j · R[I/x_j]`. -/
 theorem ker_chartQuotientMap :
     RingHom.ker (chartQuotientMap A n r hrn a) =
-      Ideal.span {algebraMap (MvPolynomial (Fin n) A) (affineBlowUpAlgebra (centerIdeal A n r) a)
-        (a : MvPolynomial (Fin n) A)} := by
+      Ideal.span
+        {algebraMap (MvPolynomial (Fin n) A) (affineBlowUpAlgebra (centerIdeal A n r) a)
+          (a : MvPolynomial (Fin n) A)} := by
   ext x
   rw [RingHom.mem_ker, chartQuotientMap, RingHom.comp_apply, RingEquiv.toRingHom_eq_coe,
     RingEquiv.coe_toRingHom, ← RingHom.mem_ker, ker_chartInitialMap A n r hrn a j hj ha,

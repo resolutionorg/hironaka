@@ -66,7 +66,7 @@ isomorphism, its inverse being the lift of `𝟙 X` [Kol07, Warning 20]. -/
 theorem Scheme.IdealSheafData.blowUp.isIso_π_of_isInvertible (h : I.IsInvertible) : IsIso
     (blowUpπ I) := by
   have hid : (I.comap (𝟙 X)).IsInvertible := by rw [comap_id]; exact h
-  refine IsIso.mk' ⟨blowUp.lift I (𝟙 X) hid, blowUp.lift_π I (𝟙 X) hid, ?_⟩
+  refine ⟨⟨blowUp.lift I (𝟙 X) hid, ?_, blowUp.lift_π I (𝟙 X) hid⟩⟩
   exact blowUp.hom_ext I (blowUpπ I) (blowUp.isInvertible_comap_π I) _ _
     (by rw [Category.assoc, blowUp.lift_π, Category.comp_id]) (Category.id_comp _)
 
@@ -117,12 +117,12 @@ theorem Scheme.IdealSheafData.blowUp.isIso_π_restrict_compl_support : IsIso
   have hadm' : (I.comap ((blowUpπ I ⁻¹ᵁ W).ι ≫ blowUpπ I)).IsInvertible := by
     rw [comap_comp]
     exact (blowUp.isInvertible_comap_π I).comap_of_isOpenImmersion _
-  refine IsIso.mk' ⟨s', ?_, ?_⟩
-  · rw [← cancel_mono W.ι, Category.assoc, morphismRestrict_ι, ← Category.assoc, hs',
-      blowUp.lift_π, Category.id_comp]
+  refine ⟨⟨s', ?_, ?_⟩⟩
   · rw [← cancel_mono (blowUpπ I ⁻¹ᵁ W).ι, Category.assoc, hs', Category.id_comp]
     exact blowUp.hom_ext I _ hadm' _ _
       (by rw [Category.assoc, blowUp.lift_π, morphismRestrict_ι]) rfl
+  · rw [← cancel_mono W.ι, Category.assoc, morphismRestrict_ι, ← Category.assoc, hs',
+      blowUp.lift_π, Category.id_comp]
 
 /-- If every affine piece is empty, so is the blow-up. -/
 theorem Scheme.IdealSheafData.blowUp.isEmpty_of_forall (h : ∀ U : X.affineOpens, IsEmpty

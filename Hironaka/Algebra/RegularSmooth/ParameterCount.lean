@@ -7,6 +7,7 @@ module
 
 public import Mathlib.RingTheory.RegularLocalRing.Defs
 import Hironaka.Algebra.RegularSmooth.QuotientRegular
+import Mathlib.Algebra.Module.SpanRankOperations
 import Mathlib.LinearAlgebra.Dimension.OrzechProperty
 
 /-!

@@ -171,7 +171,7 @@ theorem reesAlgebra.isInternal_grading : DirectSum.IsInternal (reesAlgebra.gradi
     simp_rw [DirectSum.coeAddMonoidHom_of]
     refine Subtype.ext ?_
     rw [AddSubmonoidClass.coe_finsetSum]
-    exact (as_sum_support (p : R[X])).symm
+    exact (Polynomial.as_sum_support (p : R[X])).symm
 
 /-- **The grading on the Rees algebra**, `reesAlgebra I = ⨁ᵢ Iⁱ tⁱ` as a graded `R`-algebra
 [Hau14, Definition 4.6], from Mathlib's constructor `DirectSum.IsInternal.gradedAlgebra` applied

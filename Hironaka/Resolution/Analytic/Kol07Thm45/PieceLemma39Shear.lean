@@ -138,7 +138,7 @@ theorem contDiff_modelPadExt : ContDiff 𝕜 ω (modelPadExt (𝕜 := 𝕜) σ) 
 
 theorem contDiffOn_modelPadExt_apply (i : Fin n') (O : Opens (Fin n → 𝕜)) :
     ContDiffOn 𝕜 ω (fun v : Fin n → 𝕜 => modelPadExt σ v i) (O : Set (Fin n → 𝕜)) :=
-  ((contDiff_apply 𝕜 𝕜 i).comp (contDiff_modelPadExt σ)).contDiffOn
+  ((contDiff_apply 𝕜 (fun _ => 𝕜) i).comp (contDiff_modelPadExt σ)).contDiffOn
 
 theorem pieceCoord_padExt (w : pieceAmbient.{u} 𝕜 G) :
     pieceCoord (padOpens σ G) (padExt σ G w) = modelPadExt σ (pieceCoord G w) :=
@@ -449,7 +449,7 @@ def shearModelOpens : Opens (Fin n → 𝕜) :=
 theorem contDiffOn_shearModel_modelPadExt (i : Fin (n + m)) :
     ContDiffOn 𝕜 ω (fun v => shearModel O₁ j₂ hj₂ O₂ j₁ hj₁ (modelPadExt (Fin.castAddEmb m) v) i)
       (shearModelOpens O₁ j₂ hj₂ O₂ j₁ hj₁) :=
-  (contDiff_apply 𝕜 𝕜 i).comp_contDiffOn
+  (contDiff_apply 𝕜 (fun _ => 𝕜) i).comp_contDiffOn
     ((contMDiffOn_iff_contDiffOn.mp (shearModel O₁ j₂ hj₂ O₂ j₁ hj₁).contMDiffOn_toFun).comp
       (contDiff_modelPadExt _).contDiffOn fun _ hv => hv)
 
@@ -561,7 +561,7 @@ theorem padStalkMap_eq_comp_germMapOn_shear (y : X.restrictSet V) (hy₁ : E₁.
         simp only [modelPadExt, extend_natAddEmb, Fin.append_left, Pi.zero_apply]]
       rw [map_zero]
       have hk : ContDiffOn 𝕜 ω (fun v : Fin n → 𝕜 => v k) O₁₂ :=
-        (contDiff_apply 𝕜 𝕜 k).contDiffOn
+        (contDiff_apply 𝕜 (fun _ => 𝕜) k).contDiffOn
       have hjj : ContDiffOn 𝕜 ω (fun v : Fin n → 𝕜 => j₁ (j₂ v) k) O₁₂ :=
         (contDiffOn_pi.mp hj₁ k).comp (hj₂.mono Set.inter_subset_left) fun _ hv => hv.2
       rw [modelGerm_congr (contDiffOn_shearModel_modelPadExt O₁ j₂ hj₂ O₂ j₁ hj₁ _) (hk.sub hjj)

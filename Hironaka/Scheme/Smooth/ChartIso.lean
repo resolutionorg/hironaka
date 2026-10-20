@@ -104,8 +104,9 @@ theorem stalkIdeal_exceptionalIdeal_chart (E : EtaleCoordinatesAdapted f n r Z x
     ((affineBlowUp.exceptionalIdeal E.centerIdeal).stalkIdeal
         (affineBlowUp.chart E.centerIdeal (E.coord j hj) p)).map
         ((affineBlowUp.chart E.centerIdeal (E.coord j hj)).stalkMap p).hom =
-      Ideal.span {specGerm (S := .of (affineBlowUpAlgebra E.centerIdeal (E.coord j hj))) p
-        (algebraMap Γ(X, E.U) (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (E.v j))} :=
+      Ideal.span
+        {specGerm (S := .of (affineBlowUpAlgebra E.centerIdeal (E.coord j hj))) p
+          (algebraMap Γ(X, E.U) (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (E.v j))} :=
   stalkIdeal_exceptionalIdeal_chart_map E.centerIdeal (E.coord j hj) p
 
 /-- `π^* : 𝒪_{X,x} → 𝒪_{B,x'}` is the localization of the chart map ([Hau14, Definitions 4.15,

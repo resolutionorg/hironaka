@@ -254,7 +254,7 @@ theorem eventually_regular_pt_of_minimalPrime
         (ULift.up (z.1.1.down + L.symm x') : Kn.{u} ℂ n) :=
       (ContinuousLinearEquiv.ulift : Kn.{u} ℂ n ≃L[ℂ] (Fin n → ℂ)).symm.continuous.comp
         (continuous_const.add L.symm.continuous)
-    exact hc.tendsto' 0 z.1.1 (ULift.ext _ _ (by simp))
+    exact hc.tendsto' 0 z.1.1 (ULift.ext (by simp))
   have hOW' := hpt.eventually hOW
   have hSle := eventually_mem_zeroSet_of_span_le hI'P'
   have hmulg := evalSeries_conv_mul_eventually (convEmbed ℂ e c) h₀'
@@ -413,7 +413,7 @@ theorem exists_regular_pt_of_hyps
         (ULift.up (z.1.1.down + L.symm x') : Kn.{u} ℂ n) :=
       (ContinuousLinearEquiv.ulift : Kn.{u} ℂ n ≃L[ℂ] (Fin n → ℂ)).symm.continuous.comp
         (continuous_const.add L.symm.continuous)
-    exact hc.tendsto' 0 z.1.1 (ULift.ext _ _ (by simp))
+    exact hc.tendsto' 0 z.1.1 (ULift.ext (by simp))
   obtain ⟨x', ⟨hev', hONx⟩, hxS, hgx⟩ :=
     ((hev.and (hpt.eventually hON)).and_frequently hfreq).exists
   obtain ⟨z', hz', hz'W, hreg⟩ := hev' hxS hgx

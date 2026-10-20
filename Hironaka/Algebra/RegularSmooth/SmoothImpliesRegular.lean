@@ -182,7 +182,7 @@ theorem IsStandardSmooth.isRegularLocalRing_localization_atPrime [Algebra.IsStan
   have hli' : LinearIndependent κ fun j =>
       (1 : κ) ⊗ₜ[Localization.AtPrime Q] D k (Localization.AtPrime Q) (f j) := by
     refine LinearIndependent.of_comp π ?_
-    have := Matrix.linearIndependent_rows_iff_isUnit.mpr hM
+    have := Matrix.linearIndependent_row_iff_isUnit.mpr hM
     convert this using 1
     funext j
     exact hπ j

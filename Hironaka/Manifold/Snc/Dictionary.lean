@@ -141,8 +141,8 @@ the stalk of the reduced ideal sheaf are the ideals of the coordinates of the co
 theorem IsSncChartAt.minimalPrimes_stalkIdeal_idealSheaf (hF : F.IsSnc ψ)
     (hc : F.IsSncChartAt ψ φ a c) {P : Ideal ((structureSheaf 𝕜 E M).presheaf.stalk a)}
     (hP : P ∈ ((F.idealSheaf (𝕜 := 𝕜) (E := E)).stalkIdeal a).minimalPrimes) :
-    ∃ i, P = Ideal.span {coord E ψ φ hc.1 hc.2.1 i -
-      const 𝕜 E M a (eval 𝕜 E M a (coord E ψ φ hc.1 hc.2.1 i))} := by
+    ∃ i, P = Ideal.span
+      {coord E ψ φ hc.1 hc.2.1 i - const 𝕜 E M a (eval 𝕜 E M a (coord E ψ φ hc.1 hc.2.1 i))} := by
   rw [hF.stalkIdeal_idealSheaf_eq_span_prod hc] at hP
   obtain ⟨j, -, hPj⟩ := minimalPrimes_span_prod (fun j _ => hc.prime_coord _) hP
   refine ⟨c ⟨j.1, (hF.2.1.point_finite a).mem_toFinset.mp j.2⟩, ?_⟩

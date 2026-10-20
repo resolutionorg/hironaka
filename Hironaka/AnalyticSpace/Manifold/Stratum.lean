@@ -214,7 +214,7 @@ def stratumChart (x : dimOpens X hX d) : OpenPartialHomeomorph (dimOpens X hX d)
     have h : (⟨ULift.up (stratumCoord x w hw'), hz⟩ : analyticSpaceOfOpen K d (chartG X hX d x)) =
         (chartHomeo X hX d x).symm ⟨w.1, hw'⟩ := by
       apply Subtype.ext
-      exact ULift.ext _ _ rfl
+      exact ULift.ext rfl
     rw [h]
     exact congrArg Subtype.val ((chartHomeo X hX d x).apply_symm_apply ⟨w.1, hw'⟩)
   right_inv' z hz := by

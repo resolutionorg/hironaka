@@ -119,8 +119,9 @@ theorem isIdealSheafOf_strictTransform [IsManifold 𝓘(𝕜, E) ω M] (hY : IsC
         Submodule.mem_colon_singleton, one_smul]
       exact Ideal.mem_span_singleton_self _
     · rw [IsBlowUpChart.germMap_coord_of_ne h.contMDiff hφ.1 hΦ hpΦ hki]
-      have hcol' : (Ideal.span {coord E ψ Φ hΦ.mem_maximalAtlas hpΦ (σ i) *
-          coord E ψ Φ hΦ.mem_maximalAtlas hpΦ (σ k₀)}).colon
+      have hcol' : (Ideal.span
+          {coord E ψ Φ hΦ.mem_maximalAtlas hpΦ (σ i) *
+            coord E ψ Φ hΦ.mem_maximalAtlas hpΦ (σ k₀)}).colon
             {coord E ψ Φ hΦ.mem_maximalAtlas hpΦ (σ i)} =
           Ideal.span {coord E ψ Φ hΦ.mem_maximalAtlas hpΦ (σ k₀)} := by
         have := Ideal.colon_span_range_pow_mul

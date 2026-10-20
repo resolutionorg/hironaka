@@ -42,7 +42,7 @@ def affineMap : W → Kn.{u} K n := fun w => ⟨fun i => (a i).1 w⟩
 
 theorem contMDiff_affineMap : ContMDiff 𝓘(K, Kn.{u} K m) 𝓘(K, Kn.{u} K n) ω (affineMap W a) := by
   have h1 : ContMDiff 𝓘(K, Kn.{u} K m) 𝓘(K, Fin n → K) ω (fun w : W => fun i => (a i).1 w) :=
-    contMDiff_pi_space.mpr fun i => (a i).2
+    contMDiff_pi_module_iff.mpr fun i => (a i).2
   let e : (Fin n → K) →L[K] Kn.{u} K n :=
     (ContinuousLinearEquiv.ulift.symm : (Fin n → K) ≃L[K] Kn.{u} K n).toContinuousLinearMap
   exact e.contMDiff.comp h1

@@ -235,8 +235,8 @@ theorem stalkIdeal_markedTransform_logDerivative_le_of_mem [CharZero k]
   have hS1 : (S.strictTransform Z).stalkIdeal q =
       (⨆ i : ℕ, ((S.stalkIdeal (Z.blowUpπ q)).map
         (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ))).colon
-          ((Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-              (y ρ)} ^ i :
+          ((Ideal.span
+            {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ)} ^ i :
             Ideal (chartRing y ρ)) : Set (chartRing y ρ))).map
         (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) := by
     have hK : Z.exceptionalDivisor.IsInvertible := blowUp.isInvertible_comap_π Z
@@ -253,8 +253,8 @@ theorem stalkIdeal_markedTransform_logDerivative_le_of_mem [CharZero k]
       rw [stalkIdeal_saturate_of_isInvertible _ hK, stalkIdeal_comap, hF]
     rw [step1, Ideal.map_iSup]
     refine iSup_congr fun i => ?_
-    have hfg : (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-        (y ρ)} ^ i
+    have hfg : (Ideal.span
+      {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ)} ^ i
         : Ideal (chartRing y ρ)).FG := by
       rw [Ideal.span_singleton_pow]
       exact Submodule.fg_span_singleton _
@@ -292,13 +292,13 @@ theorem stalkIdeal_markedTransform_logDerivative_le_of_mem [CharZero k]
       _ = (L.map (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ))).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) :=
           (Ideal.map_map _ _).symm
-      _ = (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-          (y ρ)} ^ m *
+      _ = (Ideal.span
+        {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ)} ^ m *
             transformIdeal y ρ L m).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) :=
           congrArg (Ideal.map _) (span_pow_mul_transformIdeal y ρ hD).symm
-      _ = (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-          (y ρ) ^ m} *
+      _ = (Ideal.span
+        {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ m} *
             transformIdeal y ρ L m).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) := by
           rw [Ideal.span_singleton_pow]
@@ -313,8 +313,9 @@ theorem stalkIdeal_markedTransform_logDerivative_le_of_mem [CharZero k]
             (transformIdeal y ρ L m).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) :=
           congrArg (· * _) (Ideal.map_span _ _)
-      _ = Ideal.span {algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)
-            (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ m)} *
+      _ = Ideal.span
+        {algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)
+              (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ m)} *
             (transformIdeal y ρ L m).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) :=
           congrArg (fun S : Set (Z.blowUp.presheaf.stalk q) => Ideal.span S * _)
@@ -338,8 +339,8 @@ theorem stalkIdeal_markedTransform_logDerivative_le_of_mem [CharZero k]
       Ideal.logDerivative k
         ((⨆ i : ℕ, ((S.stalkIdeal (Z.blowUpπ q)).map
           (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ))).colon
-            ((Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-                (y ρ)} ^ i :
+            ((Ideal.span
+              {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ)} ^ i :
               Ideal (chartRing y ρ)) : Set (chartRing y ρ))).map
           (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)))
         ((transformIdeal y ρ (I.stalkIdeal (Z.blowUpπ q)) (m + 1)).map

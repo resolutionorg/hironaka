@@ -235,8 +235,9 @@ theorem contDiff_blowUpChartMap : ContDiff 𝕜 ω (blowUpChartMap (𝕜 := 𝕜
   refine contDiff_pi.mpr fun j => ?_
   simp only [blowUpChartMap]
   split_ifs
-  · exact (contDiff_apply 𝕜 𝕜 (n := ω) (σ i)).mul (contDiff_apply 𝕜 𝕜 (n := ω) j)
-  · exact contDiff_apply 𝕜 𝕜 (n := ω) j
+  · exact (contDiff_apply 𝕜 (fun _ => 𝕜) (n := ω) (σ i)).mul
+      (contDiff_apply 𝕜 (fun _ => 𝕜) (n := ω) j)
+  · exact contDiff_apply 𝕜 (fun _ => 𝕜) (n := ω) j
 
 /-! ### The exceptional set and the inverse chart map -/
 

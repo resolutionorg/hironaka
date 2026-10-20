@@ -6,6 +6,7 @@ Authors: Chris Elliott (Resolution): formalization performed by Claude Fable 5.1
 module
 
 public import Hironaka.Algebra.Local.ChartRing
+public import Mathlib.RingTheory.Ideal.Height
 import Hironaka.Algebra.Local.Chart
 import Hironaka.Algebra.Local.Regular
 import Hironaka.Algebra.Local.RegularSystem

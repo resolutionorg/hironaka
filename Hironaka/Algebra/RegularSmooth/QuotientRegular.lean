@@ -6,6 +6,9 @@ Authors: Chris Elliott (Resolution): formalization performed by Claude Fable 5.1
 module
 
 public import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.Algebra.Module.SpanRankOperations
+import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+import Mathlib.RingTheory.Ideal.Quotient.Noetherian
 
 /-!
 # Quotients of a regular local ring by part of a regular system of parameters

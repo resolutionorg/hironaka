@@ -193,7 +193,7 @@ theorem realInclusion_apply (p : Kn.{u} ℝ n) :
 
 theorem realInclusion_injective : Function.Injective (realInclusion n) := by
   intro p q h
-  exact ULift.ext p q (funext fun i =>
+  exact ULift.ext (funext fun i =>
     Complex.ofReal_injective (congrFun (congrArg ULift.down h) i))
 
 /-- The inclusion `ℝⁿ ⊆ ℂⁿ` as a map of the underlying spaces of `(ℝⁿ, 𝒜_{ℝⁿ} ⊗_ℝ ℂ)` and

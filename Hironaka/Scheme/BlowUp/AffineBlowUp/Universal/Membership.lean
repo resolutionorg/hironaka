@@ -210,9 +210,10 @@ in the chart's stalk, the germs of `b` and of `a` generate the same ideal. -/
 theorem stalkIdeal_exceptionalIdeal_chart_eq_span_iff (x' : Spec (.of (affineBlowUpAlgebra I b)))
     (a : I) :
     (affineBlowUp.exceptionalIdeal I).stalkIdeal (affineBlowUp.chart I b x') =
-        Ideal.span {(affineBlowUp.π I).stalkMap (affineBlowUp.chart I b x')
-          ((Spec (.of R)).presheaf.germ ⊤ (affineBlowUp.π I (affineBlowUp.chart I b x'))
-            (Opens.mem_top _) ((Scheme.ΓSpecIso (.of R)).inv.hom a))} ↔
+        Ideal.span
+          {(affineBlowUp.π I).stalkMap (affineBlowUp.chart I b x')
+            ((Spec (.of R)).presheaf.germ ⊤ (affineBlowUp.π I (affineBlowUp.chart I b x'))
+              (Opens.mem_top _) ((Scheme.ΓSpecIso (.of R)).inv.hom a))} ↔
       Ideal.span {specGerm x' (algebraMap R (affineBlowUpAlgebra I b) b)} =
         Ideal.span {specGerm x' (algebraMap R (affineBlowUpAlgebra I b) a)} := by
   set j := affineBlowUp.chart I b
@@ -247,8 +248,9 @@ property. -/
 theorem affineBlowUp.mem_chart_iff (a : I) (x : affineBlowUp I) :
     x ∈ (affineBlowUp.chart I a).opensRange ↔
       (affineBlowUp.exceptionalIdeal I).stalkIdeal x =
-        Ideal.span {(affineBlowUp.π I).stalkMap x ((Spec (.of R)).presheaf.germ ⊤
-          (affineBlowUp.π I x) (Opens.mem_top _) ((Scheme.ΓSpecIso (.of R)).inv.hom a))} := by
+        Ideal.span
+          {(affineBlowUp.π I).stalkMap x ((Spec (.of R)).presheaf.germ ⊤
+            (affineBlowUp.π I x) (Opens.mem_top _) ((Scheme.ΓSpecIso (.of R)).inv.hom a))} := by
   obtain ⟨b, hb⟩ := affineBlowUp.exists_mem_opensRange_chart I x
   obtain ⟨x', rfl⟩ := Scheme.Hom.mem_opensRange.mp hb
   rw [stalkIdeal_exceptionalIdeal_chart_eq_span_iff, ← Scheme.Hom.mem_preimage,

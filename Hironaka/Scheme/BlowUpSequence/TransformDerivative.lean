@@ -360,13 +360,13 @@ theorem stalkIdeal_markedTransform_derivative_le_of_mem [CharZero k] [Smooth (Z.
             (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ))).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) :=
           (Ideal.map_map _ _).symm
-      _ = (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-          (y ρ)} ^ m *
+      _ = (Ideal.span
+        {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ)} ^ m *
             transformIdeal y ρ (Ideal.derivative k (I.stalkIdeal (Z.blowUpπ q))) m).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) :=
           congrArg (Ideal.map _) (span_pow_mul_transformIdeal y ρ hD).symm
-      _ = (Ideal.span {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ)
-          (y ρ) ^ m} *
+      _ = (Ideal.span
+        {algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ m} *
             transformIdeal y ρ (Ideal.derivative k (I.stalkIdeal (Z.blowUpπ q))) m).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) := by
           rw [Ideal.span_singleton_pow]
@@ -381,8 +381,9 @@ theorem stalkIdeal_markedTransform_derivative_le_of_mem [CharZero k] [Smooth (Z.
             (transformIdeal y ρ (Ideal.derivative k (I.stalkIdeal (Z.blowUpπ q))) m).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) :=
           congrArg (· * _) (Ideal.map_span _ _)
-      _ = Ideal.span {algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)
-            (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ m)} *
+      _ = Ideal.span
+        {algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)
+              (algebraMap (X.presheaf.stalk (Z.blowUpπ q)) (chartRing y ρ) (y ρ) ^ m)} *
             (transformIdeal y ρ (Ideal.derivative k (I.stalkIdeal (Z.blowUpπ q))) m).map
               (algebraMap (chartRing y ρ) (Z.blowUp.presheaf.stalk q)) :=
           congrArg (fun S : Set (Z.blowUp.presheaf.stalk q) => Ideal.span S * _)

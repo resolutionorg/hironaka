@@ -78,8 +78,9 @@ theorem affineBlowUp.mem_chart_of_generates (f : Y ⟶ Spec (.of R))
     (hf : ((specIdealSheaf I).comap f).IsInvertible) (g : Y ⟶ affineBlowUp I)
     (hg : g ≫ affineBlowUp.π I = f) (y : Y) (a : I)
     (ha : ((specIdealSheaf I).comap f).stalkIdeal y =
-      Ideal.span {f.stalkMap y ((Spec (.of R)).presheaf.germ ⊤ (f y)
-        (Opens.mem_top _) ((Scheme.ΓSpecIso (.of R)).inv.hom a))}) :
+      Ideal.span
+        {f.stalkMap y ((Spec (.of R)).presheaf.germ ⊤ (f y)
+          (Opens.mem_top _) ((Scheme.ΓSpecIso (.of R)).inv.hom a))}) :
     g y ∈ (affineBlowUp.chart I a).opensRange := by
   obtain ⟨b, hb⟩ := affineBlowUp.exists_mem_opensRange_chart I (g y)
   obtain ⟨u, hu, hmem⟩ := affineBlowUp.exists_factor_of_mem_chart I b a (g y) hb
@@ -88,8 +89,9 @@ theorem affineBlowUp.mem_chart_of_generates (f : Y ⟶ Spec (.of R))
   have hstalk := (affineBlowUp.mem_chart_iff I b (g y)).mp hb
   -- pull back along `g♯_y`: `(I·𝒪_Y)_y = (f♯b)`
   have hJb : ((specIdealSheaf I).comap f).stalkIdeal y =
-      Ideal.span {f.stalkMap y ((Spec (.of R)).presheaf.germ ⊤ (f y) (Opens.mem_top _)
-        ((Scheme.ΓSpecIso (.of R)).inv.hom b))} := by
+      Ideal.span
+        {f.stalkMap y ((Spec (.of R)).presheaf.germ ⊤ (f y) (Opens.mem_top _)
+          ((Scheme.ΓSpecIso (.of R)).inv.hom b))} := by
     rw [stalkIdeal_comap_of_comp_π I f g hg y, hstalk, Ideal.map_span, Set.image_singleton,
       stalkMap_comp_π_germ I f g hg y b]
   -- `f♯a = f♯b · g♯u`

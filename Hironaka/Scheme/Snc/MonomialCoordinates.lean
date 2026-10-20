@@ -100,8 +100,8 @@ theorem stalkMap_ne_zero [PerfectField k] (f : X ⟶ Spec (.of k)) [Smooth f] (E
     (Z : X.IdealSheafData) (hZ : E.HasSncWith Z) (a' : Z.blowUp)
     (ha' : a' ∈ Z.exceptionalDivisor.support) {n : ℕ}
     {z : Fin n → X.presheaf.stalk (Z.blowUpπ a')} {j : Fin n}
-    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span {Z.blowUpπ.stalkMap a'
-        (z j)}) :
+    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span
+      {Z.blowUpπ.stalkMap a' (z j)}) :
     Z.blowUpπ.stalkMap a' (z j) ≠ 0 := by
   intro h0
   apply stalkIdeal_comap_π_ne_bot f E.component Z (hasSncWith_data E Z hZ) a' ha'
@@ -219,8 +219,8 @@ theorem exists_chart_index' [PerfectField k] (f : X ⟶ Spec (.of k))
     (hV : (E.component v).stalkIdeal (Z.blowUpπ a') = Ideal.span {z ⟨n - k, by omega⟩})
     (hZa : Z.stalkIdeal (Z.blowUpπ a') = Ideal.span (z '' {i | n - k ≤ i.val})) :
     ∃ j : Fin n, n - k ≤ j.val ∧
-      Z.exceptionalDivisor.stalkIdeal a' = Ideal.span {Z.blowUpπ.stalkMap a'
-          (z j)} ∧
+      Z.exceptionalDivisor.stalkIdeal a' = Ideal.span
+        {Z.blowUpπ.stalkMap a' (z j)} ∧
       (∀ i : Fin n, n - k ≤ i.val → ∃ y : Z.blowUp.presheaf.stalk a',
         Z.blowUpπ.stalkMap a' (z i) = y * Z.blowUpπ.stalkMap a' (z j)) ∧
       (a' ∈ ((E.component v).strictTransform Z).support → j.val ≠ n - k) := by
@@ -246,8 +246,8 @@ theorem mem_maximalIdeal_iff_mem_support_strictTransform [PerfectField k] (f : X
     (hZa : Z.stalkIdeal (Z.blowUpπ a') = Ideal.span (z '' {i | n - k ≤ i.val}))
         {j : Fin n}
     (_hj : n - k ≤ j.val)
-    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span {Z.blowUpπ.stalkMap a'
-        (z j)})
+    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span
+      {Z.blowUpπ.stalkMap a' (z j)})
     {i : E.ι} {c : Fin n}
     (hc : (E.component i).stalkIdeal (Z.blowUpπ a') = Ideal.span {z c})
         (hcs : n - k ≤ c.val)
@@ -274,8 +274,8 @@ theorem exists_isRegularSystemOfParameters_induced' [PerfectField k] (f : X ⟶ 
     (hZa : Z.stalkIdeal (Z.blowUpπ a') = Ideal.span (z '' {i | n - k ≤ i.val}))
         {j : Fin n}
     (hj : n - k ≤ j.val)
-    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span {Z.blowUpπ.stalkMap a'
-        (z j)})
+    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span
+      {Z.blowUpπ.stalkMap a' (z j)})
     (w : Fin n → Z.blowUp.presheaf.stalk a')
     (hw : ∀ i : Fin n, i.val < n - k ∨ i = j → w i = Z.blowUpπ.stalkMap a' (z i))
     (hw' : ∀ i : Fin n, n - k ≤ i.val → i ≠ j →
@@ -305,8 +305,8 @@ theorem stalkIdeal_strictTransform_hypersurface [PerfectField k] (f : X ⟶ Spec
     (hZa : Z.stalkIdeal (Z.blowUpπ a') = Ideal.span (z '' {i | n - k ≤ i.val}))
         {j : Fin n}
     (_hj : n - k ≤ j.val)
-    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span {Z.blowUpπ.stalkMap a'
-        (z j)})
+    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span
+      {Z.blowUpπ.stalkMap a' (z j)})
     (_hjV : j.val ≠ n - k) {y : Z.blowUp.presheaf.stalk a'}
     (hy : Z.blowUpπ.stalkMap a' (z ⟨n - k,
         by omega⟩) = y * Z.blowUpπ.stalkMap a' (z j)) :
@@ -331,8 +331,8 @@ theorem exists_shiftCoords_chartOrigin' [PerfectField k] (f : X ⟶ Spec (.of k)
     (hZa : Z.stalkIdeal (Z.blowUpπ a') = Ideal.span (z '' {i | n - k ≤ i.val}))
         {j : Fin n}
     (hj : n - k ≤ j.val)
-    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span {Z.blowUpπ.stalkMap a'
-        (z j)})
+    (hF : Z.exceptionalDivisor.stalkIdeal a' = Ideal.span
+      {Z.blowUpπ.stalkMap a' (z j)})
     (hrat : IsIso (Z.blowUpπ.residueFieldMap a')) :
     ∃ z' : Fin n → X.presheaf.stalk (Z.blowUpπ a'),
       IsRegularSystemOfParameters z' ∧
@@ -378,8 +378,8 @@ theorem exists_coordinates_chartOrigin [PerfectField k] (f : X ⟶ Spec (.of k))
       n - k ≤ j.val ∧
       (a' ∈ ((E.component v).strictTransform Z).support → j.val = n - 1) ∧
       (a' ∉ ((E.component v).strictTransform Z).support → j.val = n - k) ∧
-      Z.exceptionalDivisor.stalkIdeal a' = Ideal.span {Z.blowUpπ.stalkMap a'
-          (z j)} ∧
+      Z.exceptionalDivisor.stalkIdeal a' = Ideal.span
+        {Z.blowUpπ.stalkMap a' (z j)} ∧
       ∃ w : Fin n → Z.blowUp.presheaf.stalk a', IsRegularSystemOfParameters w ∧
         (∀ i : Fin n, i.val < n - k ∨ i = j → w i = Z.blowUpπ.stalkMap a' (z i)) ∧
         (∀ i : Fin n, n - k ≤ i.val → i ≠ j →

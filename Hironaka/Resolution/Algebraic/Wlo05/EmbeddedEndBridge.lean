@@ -77,7 +77,7 @@ theorem iInf_componentIdeals_eq (TX : Triple k) [IsReduced TX.I.subscheme] :
     rw [← le_support_iff_le_vanishingIdeal, ← SetLike.coe_subset_coe, Closeds.coe_closure]
     exact TX.I.support.isClosed.closure_subset_iff.mpr (Set.singleton_subset_iff.mpr hη.1)
   have hsupp : TX.I.support = ⨆ c ∈ componentIdeals TX, c.support := by
-    refine le_antisymm (SetLike.le_def.mpr fun x hx => ?_)
+    refine le_antisymm (IsConcreteLE.le_iff.mpr fun x hx => ?_)
       (iSup₂_le fun c hc => support_antitone (hle c hc))
     have hx' : x ∈ ⋃ c ∈ componentIdeals TX, (c.support : Set TX.X.left) := by
       rw [← coe_support_eq_biUnion_componentIdeals]
@@ -164,7 +164,7 @@ theorem BED_comap_composite_eq_strictTransform_mul_sncDivisor_of_embeddedEnd :
     ((BED TX).exceptionalAt j).comap ((BED TX).stageMapBetween (Fin.last _) j.succ (Fin.le_last _)),
     isIdealOfSncDivisor_prod_comap_exceptionalAt ⟨TX, 1⟩ (BED TX) hrun, ?_, ?_⟩
   · rw [support_finset_prod]
-    refine iSup₂_le fun j _ => SetLike.le_def.mpr fun b hb => ?_
+    refine iSup₂_le fun j _ => IsConcreteLE.le_iff.mpr fun b hb => ?_
     rw [mem_support_comap_iff_apply] at hb
     exact preimage_stageMapBetween_support_subset (BED TX) TX.E (Fin.le_last _)
       (support_exceptionalAt_le_support_totalTransformSeq (BED TX) TX.E j hb)

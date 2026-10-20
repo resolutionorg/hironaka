@@ -7,6 +7,7 @@ module
 
 public import Mathlib.RingTheory.RegularLocalRing.Defs
 import Mathlib.RingTheory.KrullDimension.Regular
+import Mathlib.RingTheory.Ideal.Quotient.Noetherian
 import Mathlib.RingTheory.LocalRing.MaximalIdeal.Square
 
 /-!

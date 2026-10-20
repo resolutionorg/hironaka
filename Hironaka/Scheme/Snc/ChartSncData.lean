@@ -93,17 +93,20 @@ transform is `(y_c y_j)`, `(y_c)`, `(y_j)` or `(1)`. -/
 theorem totalTransformData_chart (hjq : chartCoord E hj j ∈ q) {ι : Type*}
     (D : ι → X.IdealSheafData) (c' : {i : ι // x₀ ∈ (D i).support} → Fin n)
     (hc'inj : Function.Injective c') (T : ι → Ideal (Localization.AtPrime q))
-    (hT : ∀ i (h : x₀ ∈ (D i).support), T i = span {algebraMap
-      (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (Localization.AtPrime q)
-      (algebraMap Γ(X, E.U) (affineBlowUpAlgebra E.centerIdeal (E.coord j hj))
-        (E.v (c' ⟨i, h⟩)))})
+    (hT : ∀ i (h : x₀ ∈ (D i).support), T i = span
+      {algebraMap
+        (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (Localization.AtPrime q)
+        (algebraMap Γ(X, E.U) (affineBlowUpAlgebra E.centerIdeal (E.coord j hj))
+          (E.v (c' ⟨i, h⟩)))})
     (hT' : ∀ i, x₀ ∉ (D i).support → T i = ⊤) :
-    TotalTransformData (span {algebraMap (affineBlowUpAlgebra E.centerIdeal (E.coord j hj))
-      (Localization.AtPrime q)
-      (algebraMap Γ(X, E.U) (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (E.v j))}) T ∧
-    ∀ i (h : x₀ ∈ (D i).support), T i ≤ span {algebraMap
-      (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (Localization.AtPrime q)
-      (algebraMap Γ(X, E.U) (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (E.v j))} →
+    TotalTransformData (span
+      {algebraMap (affineBlowUpAlgebra E.centerIdeal (E.coord j hj))
+        (Localization.AtPrime q)
+        (algebraMap Γ(X, E.U) (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (E.v j))}) T ∧
+    ∀ i (h : x₀ ∈ (D i).support), T i ≤ span
+      {algebraMap
+        (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (Localization.AtPrime q)
+        (algebraMap Γ(X, E.U) (affineBlowUpAlgebra E.centerIdeal (E.coord j hj)) (E.v j))} →
       (c' ⟨i, h⟩).val < r := by
   classical
   let _ := f.sectionsAlgebra E.U.1

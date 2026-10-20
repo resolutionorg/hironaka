@@ -150,8 +150,9 @@ include hc in
 of `c`, then localized). -/
 theorem map_algebraMap_away_frac :
     I.map (algebraMap R (Localization.Away (frac (a := c) ha))) =
-      Ideal.span {algebraMap (affineBlowUpAlgebra I c) (Localization.Away (frac (a := c) ha))
-        (algebraMap R (affineBlowUpAlgebra I c) c)} := by
+      Ideal.span
+        {algebraMap (affineBlowUpAlgebra I c) (Localization.Away (frac (a := c) ha))
+          (algebraMap R (affineBlowUpAlgebra I c) c)} := by
   rw [IsScalarTower.algebraMap_eq R (affineBlowUpAlgebra I c)
     (Localization.Away (frac (a := c) ha)), ← Ideal.map_map, map_algebraMap_eq_span_singleton hc,
     Ideal.map_span, Set.image_singleton]

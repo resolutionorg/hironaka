@@ -155,7 +155,7 @@ theorem exists_derivation_dual [PerfectField k] [Smooth f] (x : X) {n : ℕ}
     have h0 := (Fintype.linearIndependent_iff.mp hli) (fun i => bκ.repr v i) hv'
     exact bκ.repr.map_eq_zero_iff.mp (Finsupp.ext h0)
   have hinj'' : Function.Injective (l.lTensor (ResidueField (X.presheaf.stalk x))) := by
-    rw [← LinearMap.baseChange_eq_ltensor]
+    rw [← LinearMap.baseChange_eq_lTensor]
     exact hinj'
   obtain ⟨l', hl'⟩ :=
     (IsLocalRing.split_injective_iff_lTensor_residueField_injective l).mpr hinj''

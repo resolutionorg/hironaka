@@ -76,7 +76,7 @@ theorem Ideal.colon_pow_eq_self_of_isPrime {R : Type*} [CommRing R] {p J : Ideal
     Submodule.mem_colon.mpr fun s _ => by rw [smul_eq_mul]; exact p.mul_mem_right s hr
   rw [Submodule.mem_colon] at hr
   have hJi : ¬ J ^ i ≤ p := fun h => hJ (Ideal.IsPrime.le_of_pow_le h)
-  obtain ⟨y, hyJ, hyp⟩ := SetLike.not_le_iff_exists.mp hJi
+  obtain ⟨y, hyJ, hyp⟩ := IsConcreteLE.not_le_iff_exists.mp hJi
   have h := hr y hyJ
   rw [smul_eq_mul] at h
   exact (hp.mem_or_mem h).resolve_right hyp

@@ -16,17 +16,17 @@ path = "../"
 
 # The resolution doc-gen4 fork (emits only this repository's modules and links Mathlib and core references
 # out to the hosted mathlib4_docs; see RESOLUTION_FORK.md in the fork). Pinned to a commit on top of its
-# `resolution/v4.34.0` branch, which must match the parent's toolchain: after a toolchain bump, re-pin to
+# `resolution/v4.35.0` branch, which must match the parent's toolchain: after a toolchain bump, re-pin to
 # the fork's branch for the new version and re-run `lake update doc-gen4` in this directory.
 [[require]]
 name = "doc-gen4"
 git = "https://github.com/resolutionorg/doc-gen4"
-rev = "a021b8272b1ceb0e218cb2e5ae4d4032d9db9e33"
+rev = "01573c9920429565c3f9e8a72f142c38eba4f3b1"
 
 # Mathlib LAST so its transitive dependency pins win, keeping the shared package directory valid.
 # Keep this rev in sync with the parent lakefile.toml's Mathlib pin.
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "v4.34.0"
+rev = "v4.35.0"
 

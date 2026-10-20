@@ -508,8 +508,9 @@ theorem centerClassifiedAt_of_comap_chain {Y : Scheme.{u}} (g : Y ⟶ X) [IsClos
     have hres := map_chainKIdeal_succAbove_of_trivial (Function.update z (σ t) x) (σ t) φ hφk σ t
       rfl σ' hσ' a (ha' t) ht
     have hK'' : (K.comap g).stalkIdeal q' =
-        Ideal.span {monomialOf (fun i => φ (Function.update z (σ t) x ((σ t).succAbove i)))
-            (a 0 ∘ (σ t).succAbove)} *
+        Ideal.span
+          {monomialOf (fun i => φ (Function.update z (σ t) x ((σ t).succAbove i)))
+              (a 0 ∘ (σ t).succAbove)} *
           chainKIdeal ((fun i => φ (Function.update z (σ t) x ((σ t).succAbove i))) ∘ σ')
             (fun i => monomialOf (fun i => φ (Function.update z (σ t) x ((σ t).succAbove i)))
               (a (Fin.succ i) ∘ (σ t).succAbove)) := by
@@ -570,8 +571,9 @@ theorem centerClassifiedAt_of_comap_chain {Y : Scheme.{u}} (g : Y ⟶ X) [IsClos
       have hres := map_chainIdeal_succAbove_of_trivial (Function.update z (σ t) x) (σ t) φ hφk σ t
         rfl σ' hσ' a (ha' t) ht
       have hI'' : (K.comap g).stalkIdeal q' =
-          Ideal.span {monomialOf (fun i => φ (Function.update z (σ t) x ((σ t).succAbove i)))
-              (a 0 ∘ (σ t).succAbove)} *
+          Ideal.span
+            {monomialOf (fun i => φ (Function.update z (σ t) x ((σ t).succAbove i)))
+                (a 0 ∘ (σ t).succAbove)} *
             chainIdeal ((fun i => φ (Function.update z (σ t) x ((σ t).succAbove i))) ∘ σ')
               (fun i => monomialOf (fun i => φ (Function.update z (σ t) x ((σ t).succAbove i)))
                 (a (Fin.succ i) ∘ (σ t).succAbove)) := by

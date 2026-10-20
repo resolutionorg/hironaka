@@ -141,7 +141,7 @@ theorem chainRelativeAt_of_le_isSmoothDivisor (f : X ⟶ Spec (CommRingCat.of k)
       have h21 : ((2 : ℕ) : ℕ∞) ≤ 1 := h.trans (hord p hp)
       exact absurd (by exact_mod_cast h21 : (2 : ℕ) ≤ 1) (by norm_num)
     rw [IdealSheafData.le_ord_iff] at h2
-    exact SetLike.not_le_iff_exists.mp h2
+    exact IsConcreteLE.not_le_iff_exists.mp h2
   -- the chain form of `N(J)`, then S4 restores `M(J)`
   have hNchain : ChainRelativeAt E (nonmonomialPart J E) Γ p := by
     refine ⟨n, z, c, r, σ, fun _ => (0 : Fin n → ℕ), (0 : Fin n → ℕ), hcoords,

@@ -19,6 +19,7 @@ import Hironaka.Analytic.Rueckert.PolyEvalFunction
 import Hironaka.Analytic.Rueckert.RootBranch
 import Hironaka.Analytic.Rueckert.UFD
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
+import Mathlib.Analysis.Analytic.Constructions
 import Mathlib.Combinatorics.Matroid.Init
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.RingTheory.Polynomial.RationalRoot
@@ -99,10 +100,10 @@ theorem pow_mul_eval_sub_clearPoly_mem_span (e : Fin d ↪ Fin n) (i i₀ : Fin 
     (Qf B : Polynomial (Conv ℂ d)) (A : Conv ℂ d) :
     convEmbed ℂ e A ^ Qf.natDegree * (Qf.map (convEmbed ℂ e).toRingHom).eval (convX ℂ i) -
         ((clearPoly Qf B A).map (convEmbed ℂ e).toRingHom).eval (convX ℂ i₀) ∈
-      Ideal.span {convEmbed ℂ e A * convX ℂ i -
-        (B.map (convEmbed ℂ e).toRingHom).eval (convX ℂ i₀)} := by
-  set I : Ideal (Conv ℂ n) := Ideal.span {convEmbed ℂ e A * convX ℂ i -
-    (B.map (convEmbed ℂ e).toRingHom).eval (convX ℂ i₀)} with hI
+      Ideal.span
+        {convEmbed ℂ e A * convX ℂ i - (B.map (convEmbed ℂ e).toRingHom).eval (convX ℂ i₀)} := by
+  set I : Ideal (Conv ℂ n) := Ideal.span
+    {convEmbed ℂ e A * convX ℂ i - (B.map (convEmbed ℂ e).toRingHom).eval (convX ℂ i₀)} with hI
   rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_mul, map_pow, mk_eval_map_eq_eval₂,
     mk_eval_map_eq_eval₂]
   have hrel : ((Ideal.Quotient.mk I).comp (convEmbed ℂ e).toRingHom) A *

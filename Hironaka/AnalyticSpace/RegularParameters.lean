@@ -12,6 +12,7 @@ import Hironaka.Manifold.Germ.StalkNoetherian
 import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
 import Mathlib.Combinatorics.Matroid.Init
 import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Algebra.Module.SpanRankOperations
 
 /-!
 # Germs with independent differentials are part of a regular system of parameters

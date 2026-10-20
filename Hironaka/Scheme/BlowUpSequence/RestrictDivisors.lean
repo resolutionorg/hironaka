@@ -319,11 +319,10 @@ theorem strictTransform_comap_blowUpMap_of_hasSncWith (f : X ⟶ Spec (.of k)) [
         (g.ker.comap D.blowUpπ).stalkIdeal x' = span {z j} ∨
         (g.ker.comap D.blowUpπ).stalkIdeal x' = ⊤ := hshape iH
     have hshapeK : (a (toLex (Sum.inl i)) ≠ j ∧
-        (((E.component i).comap D.blowUpπ).stalkIdeal x' = span {z (a (toLex
-            (Sum.inl i))) * z
-      j} ∨
-          ((E.component i).comap D.blowUpπ).stalkIdeal x' = span {z (a (toLex
-              (Sum.inl i)))})) ∨
+        (((E.component i).comap D.blowUpπ).stalkIdeal x' = span
+          {z (a (toLex (Sum.inl i))) * z j} ∨
+          ((E.component i).comap D.blowUpπ).stalkIdeal x' = span
+            {z (a (toLex (Sum.inl i)))})) ∨
         ((E.component i).comap D.blowUpπ).stalkIdeal x' = span {z j} ∨
         ((E.component i).comap D.blowUpπ).stalkIdeal x' = ⊤ := hshape (toLex
             (Sum.inl i))
@@ -339,8 +338,8 @@ theorem strictTransform_comap_blowUpMap_of_hasSncWith (f : X ⟶ Spec (.of k)) [
       stalkIdeal_strictTransformAlong_eq_iSup D g.ker x'
     have hFmax : D.exceptionalDivisor.stalkIdeal x' ≤ maximalIdeal _ :=
       (Scheme.IdealSheafData.mem_support_iff_stalkIdeal_le_maximalIdeal _ _).mp hx'F
-    have hH : a iH ≠ j ∧ (g.ker.comap D.blowUpπ).stalkIdeal x' = span {z
-        (a iH) * z j} := by
+    have hH : a iH ≠ j ∧ (g.ker.comap D.blowUpπ).stalkIdeal x' = span
+      {z (a iH) * z j} := by
       rcases hshapeH with ⟨hne, hTH | hTH⟩ | hTH | hTH
       · exact ⟨hne, hTH⟩
       · exfalso

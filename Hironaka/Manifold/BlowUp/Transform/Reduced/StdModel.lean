@@ -122,8 +122,9 @@ def stdExceptional : IdealSheaf (structureSheaf 𝕜 (Kn.{u} 𝕜 n) (Kn.{u} �
 ideals of the coordinate germ `x_{σ i}`. -/
 theorem stalkIdeal_stdExceptional (x : Kn.{u} 𝕜 n) :
     (stdExceptional 𝕜 σ i).stalkIdeal x =
-      Ideal.span {(structureSheaf 𝕜 (Kn.{u} 𝕜 n) (Kn.{u} 𝕜 n)).presheaf.germ ⊤ x trivial
-        (AnalyticSpace.coordSection 𝕜 n (σ i))} := by
+      Ideal.span
+        {(structureSheaf 𝕜 (Kn.{u} 𝕜 n) (Kn.{u} 𝕜 n)).presheaf.germ ⊤ x trivial
+          (AnalyticSpace.coordSection 𝕜 n (σ i))} := by
   rw [stdExceptional, IdealSheaf.stalkIdeal_ofStalks]
 
 /-- The cosupport of the model's exceptional ideal sheaf is the

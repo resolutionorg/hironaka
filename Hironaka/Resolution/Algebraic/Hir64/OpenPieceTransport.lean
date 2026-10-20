@@ -307,12 +307,12 @@ theorem isIso_blowUpπ_restrict_of_comap_eq_top (D : X.IdealSheafData) (W : X.Op
   have hadm' : (D.comap ((D.blowUpπ ⁻¹ᵁ W).ι ≫ D.blowUpπ)).IsInvertible := by
     rw [comap_comp]
     exact (blowUp.isInvertible_comap_π D).comap_of_isOpenImmersion _
-  refine IsIso.mk' ⟨s', ?_, ?_⟩
-  · rw [← cancel_mono W.ι, Category.assoc, morphismRestrict_ι, ← Category.assoc, hs',
-      blowUp.lift_π, Category.id_comp]
+  refine ⟨⟨s', ?_, ?_⟩⟩
   · rw [← cancel_mono (D.blowUpπ ⁻¹ᵁ W).ι, Category.assoc, hs', Category.id_comp]
     exact blowUp.hom_ext D _ hadm' _ _
       (by rw [Category.assoc, blowUp.lift_π, morphismRestrict_ι]) rfl
+  · rw [← cancel_mono W.ι, Category.assoc, morphismRestrict_ι, ← Category.assoc, hs',
+      blowUp.lift_π, Category.id_comp]
 
 /-- Over an open `W` missing the image of every centre, every stage map of the succession is an
 isomorphism: each blow-up map is one over the preimage of `W`, and the restriction of a composite
